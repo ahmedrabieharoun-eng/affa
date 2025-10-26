@@ -35,11 +35,14 @@ class FirebaseConfigLoader {
             const firebaseConfig = await this.loadFirebaseConfig();
             
             // تهيئة Firebase
-            if (typeof firebase !== 'undefined' && firebase.apps.length === 0) {
-                firebase.initializeApp(firebaseConfig);
-                console.log('✅ Firebase initialized successfully');
-                return firebase.database();
-            } else if (firebase.apps.length > 0) {
+            if (typeof firebase !== 'undefined') {
+                // التحقق إذا كان Firebase مثبتاً مسبقاً
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                    console.log('✅ Firebase initialized successfully');
+                } else {
+                    console.log('✅ Firebase already initialized');
+                }
                 return firebase.database();
             }
             

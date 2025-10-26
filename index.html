@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta name='admaven-placement' content='Bqja6qdC7'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TON Rewards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <!-- تم إزالة تحميل config.js -->
+    
+    <style>
+        /* كل الـ CSS يبقى كما هو بدون تغيير */
+        :root {
+            --font-family: 'Poppins', sans-serif;
+            --primary-color: #E74C3C;
+            --secondary-color: #F39C12;
+            --background-light: #FDFEFE;
+            --surface-light: #FFFFFF;
+            --text-primary-light: #2C3E50;
+            --text-secondary-light: #808B96;
+            --border-light: #EAEDED;
+            --background-dark: #1B2631;
+            --surface-dark: #283747;
+            --text-primary-dark: #FDFEFE;
+            --text-secondary-dark: #ABB2B9;
+            --border-dark: #566573;
+            --success: #27AE60;
+            --danger: #C0392B;
+            --pending: #F39C12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            transition: background-color 0.3s, color 0.3s;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.light-theme {
+            background-color: var(--background-light);
+            color: var(--text-primary-light);
+        }
+
+        body.dark-theme {
+            background-color: var(--background-dark);
+            color: var(--text-primary-dark);
+        }
+
+        #app {
+            max-width: 500px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        .page {
+            display: none;
+            padding: 15px;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-header {
+            padding: 25px 15px;
+            border-bottom: 1px solid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .light-theme .profile-header {
+            background-color: var(--surface-light);
+            border-bottom-color: var(--border-light);
+        }
+
+        .dark-theme .profile-header {
+            background-color: var(--surface-dark);
+            border-bottom-color: var(--border-dark);
+        }
+
+        #user-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        #user-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        #user-balance-container {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        #user-balance {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid;
+        }
+
+        .light-theme .stat-card {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .stat-card {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .stat-card h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .light-theme .stat-card h3 {
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .stat-card h3 {
+            color: var(--text-secondary-dark);
+        }
+
+        .stat-card p {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .chart-container, .earning-wallet-card {
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid;
+        }
+
+        .light-theme .chart-container, .light-theme .earning-wallet-card {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .chart-container, .dark-theme .earning-wallet-card {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 150px;
+            border-left: 1px solid;
+            border-bottom: 1px solid;
+            padding-top: 10px;
+        }
+
+        .light-theme .chart {
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .chart {
+            border-color: var(--border-dark);
+        }
+
+        .bar {
+            width: 12%;
+            background: linear-gradient(to top, var(--primary-color), var(--secondary-color));
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .bar .tooltip {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary-color);
+            color: white;
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .bar:hover .tooltip {
+            opacity: 1;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.75rem;
+            margin-top: 5px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .light-theme .history-item {
+            background-color: var(--surface-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .dark-theme .history-item {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .history-details p {
+            margin: 0;
+        }
+
+        .history-details p:first-child {
+            font-weight: 600;
+        }
+
+        .history-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            text-transform: capitalize;
+        }
+
+        .status-completed {
+            background-color: var(--success);
+        }
+
+        .status-pending {
+            background-color: var(--pending);
+        }
+
+        .status-rejected {
+            background-color: var(--danger);
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        .light-theme .progress-bar-bg {
+            background-color: var(--border-light);
+        }
+
+        .dark-theme .progress-bar-bg {
+            background-color: var(--border-dark);
+        }
+
+        .progress-bar-fg {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+
+        form input, form select, form textarea {
+            transition: all 0.2s ease-in-out;
+            border: 1px solid;
+        }
+
+        .light-theme form input, .light-theme form select {
+            border-color: var(--border-light);
+        }
+
+        .dark-theme form input, .dark-theme form select {
+            border-color: var(--border-dark);
+        }
+
+        form input:focus, form select:focus, form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .popup-content {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .light-theme .popup-content {
+            background-color: var(--surface-light);
+        }
+
+        .dark-theme .popup-content {
+            background-color: var(--surface-dark);
+        }
+
+        .popup-content h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .popup-content p {
+            margin-bottom: 20px;
+        }
+
+        .popup-close-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            background-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .popup-loader .spinner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 4px solid;
+            border-color: var(--primary-color) transparent;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #app-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .light-theme #app-loader {
+            background-color: var(--background-light);
+        }
+
+        .dark-theme #app-loader {
+            background-color: var(--background-dark);
+        }
+
+        #app-loader .spinner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 5px solid;
+            border-color: var(--primary-color) transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        #loading-progress {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .light-theme #loading-progress {
+            color: var(--text-primary-light);
+        }
+
+        .dark-theme #loading-progress {
+            color: var(--text-primary-dark);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid;
+            z-index: 1000;
+        }
+
+        .light-theme .bottom-nav {
+            background-color: var(--surface-light);
+            border-top-color: var(--border-light);
+        }
+
+        .dark-theme .bottom-nav {
+            background-color: var(--surface-dark);
+            border-top-color: var(--border-dark);
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: var(--font-family);
+            font-size: 0.75rem;
+            transition: color 0.2s;
+            flex-grow: 1;
+        }
+
+        .light-theme .nav-btn {
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .nav-btn {
+            color: var(--text-secondary-dark);
+        }
+
+        .nav-btn i {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-btn.active {
+            color: var(--primary-color);
+        }
+
+        .task-container {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .light-theme .task-container {
+            background-color: var(--surface-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .dark-theme .task-container {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .task-icon-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .task-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .task-info p {
+            font-size: 0.85rem;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .action-btn:disabled {
+            background: #808B96;
+            cursor: not-allowed;
+        }
+
+        .leaderboard-toggle {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+
+        .toggle-btn {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .light-theme .toggle-btn {
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .toggle-btn {
+            color: var(--text-secondary-dark);
+        }
+
+        .toggle-btn.active {
+            font-weight: 700;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .leaderboard-list {
+            list-style: none;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+
+        .light-theme .leaderboard-item {
+            background-color: var(--surface-light);
+        }
+
+        .dark-theme .leaderboard-item {
+            background-color: var(--surface-dark);
+        }
+
+        .rank {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            width: 40px;
+        }
+
+        .leaderboard-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            flex-grow: 1;
+        }
+
+        .leaderboard-score {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .subscription-container {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid;
+        }
+
+        .light-theme .subscription-container {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .subscription-container {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid;
+        }
+
+        .light-theme .channel-item {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .channel-item {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .channel-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .channel-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .channel-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-subscribed {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .status-not-subscribed {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .check-subscription-btn {
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .countdown-display {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(231, 76, 60, 0.1);
+            text-align: center;
+        }
+
+        .withdraw-container {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid;
+        }
+
+        .light-theme .withdraw-container {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .withdraw-container {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .withdraw-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .withdraw-header i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .withdraw-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 12px;
+            color: var(--text-secondary-light);
+            z-index: 1;
+        }
+
+        .dark-theme .input-with-icon i {
+            color: var(--text-secondary-dark);
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border-radius: 8px;
+            border: 1px solid;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .light-theme .input-with-icon input {
+            border-color: var(--border-light);
+            background-color: var(--surface-light);
+        }
+
+        .dark-theme .input-with-icon input {
+            border-color: var(--border-dark);
+            background-color: var(--surface-dark);
+        }
+
+        .input-with-icon input:focus {
+            outline: none;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+
+        .validation-message {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .validation-success {
+            color: var(--success);
+        }
+
+        .validation-error {
+            color: var(--danger);
+        }
+
+        .validation-info {
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .validation-info {
+            color: var(--text-secondary-dark);
+        }
+
+        .example-addresses {
+            font-size: 0.75rem;
+            margin-top: 8px;
+            opacity: 0.7;
+            font-family: monospace;
+        }
+
+        .withdraw-amount-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.8rem;
+        }
+
+        .withdraw-amount-info span:last-child {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .withdraw-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .withdraw-btn-enabled {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .withdraw-btn-disabled {
+            background: #808B96;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .referral-notice {
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .method-details {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .light-theme .method-details {
+            background-color: rgba(231, 76, 60, 0.05);
+            border: 1px solid var(--border-light);
+        }
+
+        .dark-theme .method-details {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--border-dark);
+        }
+
+        .method-details.active {
+            display: block;
+        }
+
+        .method-details ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .method-details li {
+            margin-bottom: 5px;
+        }
+
+        .method-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .fee-info {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .time-info {
+            color: var(--pending);
+            font-weight: 600;
+        }
+
+        .instant-info {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .contest-container {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid;
+        }
+
+        .light-theme .contest-container {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .contest-container {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .contest-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .contest-timer {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .contest-info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contest-info-card {
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid;
+        }
+
+        .light-theme .contest-info-card {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .contest-info-card {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .contest-info-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 5px 0;
+        }
+
+        .contest-info-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .contest-info-label {
+            color: var(--text-secondary-dark);
+        }
+
+        .contest-guide {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .contest-guide h4 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .contest-guide ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .contest-guide li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .contest-prizes-compact {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .prize-compact-item {
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .prize-rank-compact {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .prize-amount-compact {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .contest-leaderboard-compact {
+            margin-top: 20px;
+        }
+
+        .contest-leaderboard-item-compact {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .light-theme .contest-leaderboard-item-compact {
+            background-color: var(--surface-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .dark-theme .contest-leaderboard-item-compact {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .contest-leaderboard-item-compact.current-user {
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.2), rgba(243, 156, 18, 0.2));
+            border: 2px solid var(--primary-color);
+        }
+
+        .contest-rank-compact {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 0.85rem;
+        }
+
+        .contest-rank-compact.top-3 {
+            font-size: 1rem;
+        }
+
+        .contest-user-info-compact {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contest-user-details {
+            flex-grow: 1;
+        }
+
+        .contest-user-name-compact {
+            font-weight: 600;
+            margin-bottom: 2px;
+            font-size: 0.9rem;
+        }
+
+        .contest-user-points-compact {
+            font-size: 0.8rem;
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .contest-user-points-compact {
+            color: var(--text-secondary-dark);
+        }
+
+        .contest-user-score-compact {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        .contest-user-prize {
+            font-size: 0.8rem;
+            color: var(--success);
+            font-weight: 600;
+            background: rgba(39, 174, 96, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .view-full-leaderboard {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .view-full-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .view-full-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .daily-login-task {
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.1), rgba(243, 156, 18, 0.1));
+            border: 2px solid var(--primary-color);
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .login-streak {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme .login-streak {
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .streak-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .streak-count {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .streak-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .streak-label {
+            color: var(--text-secondary-dark);
+        }
+
+        .streak-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        .calendar-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 4px;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 65px;
+            justify-content: space-between;
+            font-size: 0.75rem;
+        }
+
+        .light-theme .calendar-day {
+            background-color: var(--surface-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .dark-theme .calendar-day {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .calendar-day.completed {
+            background: linear-gradient(45deg, var(--success), #2ecc71);
+            border-color: var(--success);
+        }
+
+        .calendar-day.current {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-color: var(--primary-color);
+        }
+
+        .calendar-day.future {
+            opacity: 0.6;
+        }
+
+        .day-number {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .calendar-day.completed .day-number,
+        .calendar-day.current .day-number {
+            color: white;
+        }
+
+        .day-reward {
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .calendar-day.completed .day-reward,
+        .calendar-day.current .day-reward {
+            color: white;
+        }
+
+        .day-status {
+            font-size: 0.55rem;
+            padding: 2px 4px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .calendar-day.completed .day-status {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .calendar-day.current .day-status {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .calendar-day.future .day-status {
+            background: var(--border-light);
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .calendar-day.future .day-status {
+            background: var(--border-dark);
+            color: var(--text-secondary-dark);
+        }
+
+        .claim-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .next-reward {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .reward-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .reward-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .reward-label {
+            color: var(--text-secondary-dark);
+        }
+
+        .claim-daily-btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            min-width: 120px;
+        }
+
+        .claim-daily-btn:disabled {
+            background: #808B96;
+            cursor: not-allowed;
+        }
+
+        .daily-login-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .daily-login-header i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .referral-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .referral-stat-card {
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid;
+        }
+
+        .light-theme .referral-stat-card {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .referral-stat-card {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .referral-stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .referral-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .referral-stat-label {
+            color: var(--text-secondary-dark);
+        }
+
+        .referral-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid;
+        }
+
+        .light-theme .referral-list {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .referral-list {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .referral-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid;
+        }
+
+        .light-theme .referral-list-item {
+            border-bottom-color: var(--border-light);
+        }
+
+        .dark-theme .referral-list-item {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .referral-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .referral-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .referral-user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .referral-user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .referral-earnings {
+            font-weight: 700;
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+
+        .claim-referral-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .claim-referral-btn:disabled {
+            background: #808B96;
+            cursor: not-allowed;
+        }
+
+        .code-input-container {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .code-input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid;
+            font-family: monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .light-theme .code-input {
+            border-color: var(--border-light);
+            background-color: var(--surface-light);
+        }
+
+        .dark-theme .code-input {
+            border-color: var(--border-dark);
+            background-color: var(--surface-dark);
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+
+        .redeem-code-btn {
+            padding: 12px 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .redeem-code-btn:disabled {
+            background: #808B96;
+            cursor: not-allowed;
+        }
+
+        .code-info {
+            font-size: 0.8rem;
+            color: var(--text-secondary-light);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .dark-theme .code-info {
+            color: var(--text-secondary-dark);
+        }
+
+        .ad-channel-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid;
+            background: linear-gradient(45deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+        }
+
+        .light-theme .ad-channel-item {
+            border-color: var(--border-light);
+        }
+
+        .dark-theme .ad-channel-item {
+            border-color: var(--border-dark);
+        }
+
+        .ad-channel-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .ad-channel-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .ad-channel-details {
+            flex: 1;
+        }
+
+        .ad-channel-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .ad-channel-description {
+            font-size: 0.8rem;
+            color: var(--text-secondary-light);
+            margin-bottom: 5px;
+        }
+
+        .dark-theme .ad-channel-description {
+            color: var(--text-secondary-dark);
+        }
+
+        .ad-channel-contact {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .ad-channel-reward {
+            text-align: right;
+            margin-right: 15px;
+        }
+
+        .ad-reward-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .ad-reward-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary-light);
+        }
+
+        .dark-theme .ad-reward-label {
+            color: var(--text-secondary-dark);
+        }
+
+        .subscribe-ad-btn {
+            padding: 8px 15px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .subscribe-ad-btn:disabled {
+            background: #808B96;
+            cursor: not-allowed;
+        }
+
+        .banned-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #c0392b, #e74c3c);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .banned-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .banned-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .banned-message {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            max-width: 400px;
+        }
+
+        .banned-contact {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <!-- شاشة الحظر -->
+    <div id="banned-page" class="banned-container">
+        <div class="banned-icon">🚫</div>
+        <div class="banned-title">Account Banned</div>
+        <div class="banned-message" id="banned-reason">Your account has been suspended for violating our terms of service.</div>
+        <div class="banned-contact">If you believe this is a mistake, please contact @aborabie777</div>
+    </div>
+
+    <div id="app-loader"><div class="spinner" style="width:50px;height:50px;border-radius:50%;border:5px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;"></div><p id="loading-progress">0%</p></div>
+    <div id="popup" class="popup-overlay"><div class="popup-content"><div id="popup-body"></div></div></div>
+    
+    <!-- شاشة الاشتراك الإجباري -->
+    <div id="subscription-page" style="display: none;">
+        <div class="subscription-container">
+            <h2 style="color: var(--primary-color); margin-bottom: 10px;">📢 Required Subscription</h2>
+            <p style="margin-bottom: 20px;">You must subscribe to our channels to use the bot and earn rewards!</p>
+            
+            <div id="channels-list">
+                <!-- سيتم إضافة القنوات هنا ديناميكياً -->
+            </div>
+            
+            <!-- قسم إعلانات القنوات -->
+            <div id="ad-channels-section" style="margin-top: 30px; display: none;">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">🎯 Advertised Channels</h3>
+                <p style="margin-bottom: 15px; font-size: 0.9rem;">Subscribe to these channels for extra rewards!</p>
+                <div id="ad-channels-list">
+                    <!-- سيتم إضافة قنوات الإعلانات هنا ديناميكياً -->
+                </div>
+                <p style="margin-top: 15px; font-size: 0.8rem; color: var(--text-secondary-light); text-align: center;">
+                    💡 Want to advertise your channel here? Contact @aborabie777
+                </p>
+            </div>
+            
+            <button id="check-subscription-btn" class="action-btn" style="margin-top: 20px; width: 100%;">
+                🔄 Check Subscription
+            </button>
+            
+            <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
+                After subscribing, click the button above to verify
+            </p>
+
+            <!-- زر التخطي للتطوير فقط -->
+            <button id="skip-subscription-btn" style="margin-top: 10px; padding: 8px 15px; background: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
+                🚨 Skip for Testing (Dev Only)
+            </button>
+        </div>
+    </div>
+
+    <div id="app" style="display: none;">
+        <header class="profile-header">
+            <img id="user-photo" src="https://via.placeholder.com/80" alt="User">
+            <h1 id="user-name">Loading...</h1>
+            <div id="user-balance-container">Main Balance: <span id="user-balance">0.0000</span> TON</div>
+        </header>
+        <main id="main-content">
+            <div id="home-page" class="page active">
+                <div class="stats-grid">
+                    <div class="stat-card"><h3>Today's Ads</h3><p id="daily-ads-watched">0 / 0</p></div>
+                    <div class="stat-card"><h3>Total Referrals</h3><p id="referral-count">0</p></div>
+                    <div class="stat-card"><h3>Total Ads Watched</h3><p id="total-ads-watched">0</p></div>
+                    <div class="stat-card"><h3>Total Income</h3><p id="total-earned">0.0000</p></div>
+                </div>
+                <div id="earnings-graph-container" class="chart-container">
+                    <h3>Last 7 Days Earnings</h3>
+                    <div id="earnings-chart" class="chart"></div><div id="earnings-chart-labels" class="chart-labels"></div>
+                </div>
+                <div id="dynamic-links-container" style="margin-top: 20px;"></div>
+            </div>
+            <div id="tasks-page" class="page">
+                <div class="earning-wallet-card">
+                    <h3>Earning Wallet</h3>
+                    <p style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin: 10px 0;"><span id="earning-wallet-balance">0.0000</span> TON</p>
+                    <small>Minimum 0.001 TON to move to main balance.</small>
+                    <button id="move-to-balance-btn" class="action-btn" style="width:100%; margin-top: 15px;" disabled>Move to Main Balance</button>
+                </div>
+                <div id="ad-progress-container" class="progress-container" style="margin-top:20px;"></div>
+                <div id="ad-task-container"></div>
+                
+                <!-- مهمة التسجيل اليومي المحسنة -->
+                <div id="daily-login-task-container"></div>
+                
+                <!-- خانة إدخال الأكواد -->
+                <div id="redeem-code-container" style="margin-top: 20px;">
+                    <div class="task-container" style="flex-direction: column; align-items: stretch;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <i class="fas fa-ticket-alt" style="font-size: 1.5rem; color: var(--primary-color);"></i>
+                            <h3>Redeem Code</h3>
+                        </div>
+                        <p style="margin-bottom: 15px; font-size: 0.9rem;">Enter a code to earn contest points!</p>
+                        
+                        <div class="code-input-container">
+                            <input type="text" id="redeem-code-input" class="code-input" placeholder="ENTER_CODE_HERE" maxlength="20">
+                            <button id="redeem-code-btn" class="redeem-code-btn">Redeem</button>
+                        </div>
+                        
+                        <div class="code-info">
+                            💡 Codes give contest points only, not TON
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>Bonus Tasks</h2><div id="dynamic-tasks-container"></div>
+            </div>
+            <div id="contest-page" class="page">
+                <div class="contest-container">
+                    <div class="contest-header">
+                        <h2>🏆 Weekly Contest</h2>
+                        <p>Compete with other users and win amazing prizes!</p>
+                    </div>
+                    
+                    <div class="contest-timer">
+                        <div id="contest-countdown">Loading...</div>
+                    </div>
+                    
+                    <div class="contest-info-cards">
+                        <div class="contest-info-card">
+                            <div class="contest-info-value" id="user-contest-points">0</div>
+                            <div class="contest-info-label">Your Points</div>
+                        </div>
+                        <div class="contest-info-card">
+                            <div class="contest-info-value" id="user-contest-rank">-</div>
+                            <div class="contest-info-label">Your Rank</div>
+                        </div>
+                    </div>
+                    
+                    <div class="contest-guide">
+                        <h4>🎯 How to Earn Points:</h4>
+                        <ul>
+                            <li><strong>+1 Point</strong> for every ad watched</li>
+                            <li><strong>+15 Points</strong> for every successful referral</li>
+                            <li><strong>+10-50 Points</strong> for redeeming codes</li>
+                            <li>Compete for <strong>2 TON</strong> in total prizes!</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="contest-prizes-compact">
+                        <div class="prize-compact-item">
+                            <div class="prize-rank-compact">🥇 1st</div>
+                            <div class="prize-amount-compact">0.6 TON</div>
+                        </div>
+                        <div class="prize-compact-item">
+                            <div class="prize-rank-compact">🥈 2nd</div>
+                            <div class="prize-amount-compact">0.4 TON</div>
+                        </div>
+                        <div class="prize-compact-item">
+                            <div class="prize-rank-compact">🥉 3rd</div>
+                            <div class="prize-amount-compact">0.25 TON</div>
+                        </div>
+                        <div class="prize-compact-item">
+                            <div class="prize-rank-compact">4th-5th</div>
+                            <div class="prize-amount-compact">0.2 TON</div>
+                        </div>
+                        <div class="prize-compact-item">
+                            <div class="prize-rank-compact">6th-8th</div>
+                            <div class="prize-amount-compact">0.1 TON</div>
+                        </div>
+                        <div class="prize-compact-item">
+                            <div class="prize-rank-compact">9th-10th</div>
+                            <div class="prize-amount-compact">0.05 TON</div>
+                        </div>
+                    </div>
+                    
+                    <div class="contest-leaderboard-compact">
+                        <h3>🏅 Top 10 Leaders</h3>
+                        <div id="contest-leaderboard-compact-list">
+                            <!-- سيتم إضافة قائمة المتصدرين المختصرة هنا -->
+                        </div>
+                        <div class="view-full-leaderboard">
+                            <button class="view-full-btn" onclick="showFullLeaderboard()">
+                                View Full Leaderboard (Top 50)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="leaderboard-page" class="page">
+                <h2>Leaderboard</h2>
+                <div class="leaderboard-toggle">
+                    <button class="toggle-btn active" data-board="referral">Top Referrers</button>
+                    <button class="toggle-btn" data-board="earning">Top Earners</button>
+                </div>
+                <div id="referral-board"><ul class="leaderboard-list" id="referral-leaderboard-list"></ul></div>
+                <div id="earning-board" style="display: none;"><ul class="leaderboard-list" id="earning-leaderboard-list"></ul></div>
+            </div>
+            <div id="profile-page" class="page">
+                <div id="referral-section"></div>
+                <div id="withdraw-section"></div>
+                <div id="withdrawal-history-section" style="margin-top: 20px;">
+                    <h2>Withdrawal History</h2><div id="withdrawal-history-list"></div>
+                </div>
+            </div>
+        </main>
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-page="home-page"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nav-btn" data-page="tasks-page"><i class="fas fa-tasks"></i><span>Tasks</span></button>
+            <button class="nav-btn" data-page="contest-page"><i class="fas fa-trophy"></i><span>Contest</span></button>
+            <button class="nav-btn" data-page="leaderboard-page"><i class="fas fa-ranking-star"></i><span>Ranking</span></button>
+            <button class="nav-btn" data-page="profile-page"><i class="fas fa-user-alt"></i><span>Profile</span></button>
+        </nav>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <!-- أضف تحميل config-loader.js -->
+    <script src="config-loader.js"></script>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tg = window.Telegram?.WebApp || {};
+        
+        // ✅ التهيئة الجديدة لـ Firebase
+        let firebaseDB = null;
+
+        const initializeAppWithFirebase = async () => {
+            try {
+                firebaseDB = await FirebaseConfigLoader.initializeFirebase();
+                console.log('✅ Firebase DB initialized successfully');
+                return firebaseDB;
+            } catch (error) {
+                console.error('❌ Failed to initialize Firebase:', error);
+                throw error;
+            }
+        };
+
+        // ✅ متغيرات جديدة من Firebase
+        let dailyLoginRewards = [0.0001, 0.0002, 0.0004, 0.0008, 0.0016, 0.0032, 0.0064];
+        let minAdDuration = 15000;
+        let isUserBanned = false;
+        let banReason = "";
+
+        // باقي المتغيرات تبقى كما هي
+        let lastAdWatchTime = 0;
+        let adStartTime = 0;
+        let isAdInProgress = false;
+        let adWatchTimer = null;
+
+        let appConfig = {}; let userState = {}; let tgUser = {}; let earningWalletBalance = 0;
+        let leaderboardData = { referral: [], earning: [] };
+        let userTransactions = [];
+        let isSubscribedToAllChannels = false;
+
+        // ✅ بيانات المسابقة
+        let contestData = {
+            userPoints: 0,
+            userRank: 0,
+            leaderboard: [],
+            endTime: null,
+            durationDays: 7
+        };
+
+        // ✅ بيانات التسجيل اليومي
+        let dailyLoginData = {
+            currentStreak: 0,
+            lastLoginDate: null,
+            claimedDays: []
+        };
+
+        // ✅ بيانات نظام الإحالات الجديد
+        let referralData = {
+            totalEarnings: 0,
+            pendingEarnings: 0,
+            referredUsers: []
+        };
+
+        // ✅ بيانات الأكواد
+        let redeemedCodes = [];
+
+        // ✅ قائمة القنوات المطلوبة للاشتراك
+        let requiredChannels = [];
+
+        // ✅ قنوات الإعلانات
+        let adChannels = [];
+
+        const popup = document.getElementById('popup');
+        const popupBody = document.getElementById('popup-body');
+        const loadingProgress = document.getElementById('loading-progress');
+
+        const showPopup = (content) => { popupBody.innerHTML = content; popup.style.display = 'flex'; };
+        const closePopup = () => { popup.style.display = 'none'; };
+        const updateProgress = (percentage) => { loadingProgress.textContent = `${percentage}%`; };
+
+        // ✅ دالة للتحقق من حالة الحظر
+        const checkUserBanStatus = async (db) => {
+            try {
+                const banRef = db.ref(`bannedUsers/${tgUser.id}`);
+                const banSnap = await banRef.once('value');
+                const banData = banSnap.val();
+                
+                if (banData && banData.isBanned) {
+                    isUserBanned = true;
+                    banReason = banData.reason || "Violation of terms of service";
+                    showBannedPage();
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Error checking ban status:', error);
+                return false;
+            }
+        };
+
+        // ✅ دالة لعرض صفحة الحظر
+        const showBannedPage = () => {
+            document.getElementById('banned-reason').textContent = banReason;
+            document.getElementById('banned-page').style.display = 'flex';
+            document.getElementById('app-loader').style.display = 'none';
+            document.getElementById('subscription-page').style.display = 'none';
+            document.getElementById('app').style.display = 'none';
+        };
+
+        // ✅ دالة لتحميل الإعدادات من Firebase
+        const loadDynamicSettings = async (db) => {
+            try {
+                const settingsRef = db.ref('settings');
+                const settingsSnap = await settingsRef.once('value');
+                const settings = settingsSnap.val();
+                
+                if (settings) {
+                    if (settings.dailyLoginRewards && Array.isArray(settings.dailyLoginRewards)) {
+                        dailyLoginRewards = settings.dailyLoginRewards;
+                    }
+                    
+                    if (settings.minAdDuration) {
+                        minAdDuration = settings.minAdDuration;
+                    }
+                    
+                    console.log('✅ Dynamic settings loaded:', { dailyLoginRewards, minAdDuration });
+                }
+            } catch (error) {
+                console.error('Error loading dynamic settings:', error);
+            }
+        };
+
+        // ✅ دالة لتحميل قنوات الاشتراك الإجباري من Firebase
+        const loadRequiredChannels = async (db) => {
+            try {
+                const channelsRef = db.ref('requiredChannels');
+                const channelsSnap = await channelsRef.once('value');
+                const channels = channelsSnap.val();
+                
+                if (channels && Array.isArray(channels)) {
+                    requiredChannels = channels;
+                } else {
+                    requiredChannels = [
+                        {
+                            id: 'earnmoney174688',
+                            name: 'Earn Money Public',
+                            username: 'earnmoney174688',
+                            url: 'https://t.me/earnmoney174688',
+                            icon: 'https://img.icons8.com/ios-filled/100/group.png'
+                        },
+                        {
+                            id: 'earnmoney139482',
+                            name: 'Earn Money Withdrawals',
+                            username: 'earnmoney139482', 
+                            url: 'https://t.me/earnmoney139482',
+                            icon: 'https://img.icons8.com/ios-filled/100/money-bag.png'
+                        },
+                        {
+                            id: 'earnmoneywithredone',
+                            name: 'Earn Money With Redone',
+                            username: 'EarnMoneyWithRedone',
+                            url: 'https://t.me/EarnMoneyWithRedone',
+                            icon: 'https://img.icons8.com/ios-filled/100/rocket.png'
+                        }
+                    ];
+                }
+                
+                console.log('✅ Required channels loaded:', requiredChannels);
+            } catch (error) {
+                console.error('Error loading required channels:', error);
+            }
+        };
+
+        // باقي الكود يبقى كما هو مع استبدال firebase.database() بـ firebaseDB
+        // ... [كل الدوال والكود المتبقي يبقى كما هو مع التعديلات التالية]
+        
+        // في جميع الأماكن التي تستخدم firebase.database() استخدم firebaseDB بدلاً منها
+        // مثال في دالة loadUserData:
+        const loadUserData = async (db) => {
+            // استخدام db بدلاً من firebase.database()
+            // ... باقي الكود
+        };
+
+        // ✅ دالة محسنة لتهيئة التطبيق
+        const initApp = async () => {
+            try {
+                if (tg.ready) { tg.ready(); try { tg.expand(); } catch(e){} }
+                
+                if (tg.colorScheme && tg.colorScheme === 'dark') { 
+                    document.body.className = 'dark-theme'; 
+                } else { 
+                    document.body.className = 'light-theme'; 
+                }
+
+                tgUser = (tg.initDataUnsafe && tg.initDataUnsafe.user) || {};
+                if (!tgUser || !tgUser.id) { 
+                    console.warn("Telegram user not available in this environment."); 
+                    tgUser = { id: 'dev_user_' + Date.now(), first_name: 'Dev', last_name: 'User' };
+                }
+
+                console.log('📱 Telegram WebApp Data:', {
+                    user: tgUser,
+                    initData: tg.initData,
+                    initDataUnsafe: tg.initDataUnsafe
+                });
+
+                updateProgress(10); 
+                
+                // ✅ التهيئة الجديدة لـ Firebase
+                await initializeAppWithFirebase();
+                
+                updateProgress(20);
+
+                await loadDynamicSettings(firebaseDB);
+                updateProgress(25);
+                
+                await loadRequiredChannels(firebaseDB);
+                updateProgress(27);
+
+                const configSnapshot = await firebaseDB.ref('config').once('value');
+                appConfig = configSnapshot.val() || {};
+                
+                appConfig.referralBonus = appConfig.referralBonus || 0.001;
+                appConfig.botUsername = appConfig.botUsername || "Aborabie777_bot";
+                appConfig.minimumWithdrawReferrals = appConfig.minimumWithdrawReferrals || 0;
+                
+                console.log('🔧 Firebase Config Loaded:', {
+                    botToken: appConfig.botToken ? '✅ Loaded' : '❌ Missing',
+                    botUsername: appConfig.botUsername,
+                    adValue: appConfig.adValue,
+                    dailyAdLimit: appConfig.dailyAdLimit
+                });
+                
+                updateProgress(40);
+
+                await loadContestData(firebaseDB);
+                updateProgress(45);
+
+                await loadDailyLoginData(firebaseDB);
+                updateProgress(47);
+
+                await loadReferralData(firebaseDB);
+                updateProgress(48);
+
+                await loadRedeemedCodes(firebaseDB);
+                updateProgress(49);
+
+                await loadAdChannels(firebaseDB);
+                updateProgress(50);
+
+                showPopup(`
+                    <div style="margin-bottom:10px;">
+                        <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
+                    </div>
+                    <h2>Checking Subscription</h2>
+                    <p>Verifying channel subscriptions...</p>
+                `);
+
+                const { subscriptionResults, allSubscribed, allSuccessful } = await checkAllSubscriptions();
+                closePopup();
+                
+                if (!allSubscribed) {
+                    document.getElementById('app-loader').style.display = 'none';
+                    document.getElementById('subscription-page').style.display = 'block';
+                    updateSubscriptionUI(subscriptionResults);
+                    await renderAdChannels();
+                    
+                    document.getElementById('check-subscription-btn').addEventListener('click', async () => {
+                        document.getElementById('check-subscription-btn').disabled = true;
+                        document.getElementById('check-subscription-btn').textContent = 'Checking...';
+                        
+                        showPopup(`
+                            <div style="margin-bottom:10px;">
+                                <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
+                            </div>
+                            <h2>Checking Subscription</h2>
+                            <p>Verifying channel subscriptions...</p>
+                        `);
+
+                        const newResults = await checkAllSubscriptions();
+                        closePopup();
+                        
+                        document.getElementById('check-subscription-btn').disabled = false;
+                        document.getElementById('check-subscription-btn').textContent = '🔄 Check Subscription';
+                        
+                        updateSubscriptionUI(newResults.subscriptionResults);
+                        await renderAdChannels();
+                        
+                        if (newResults.allSubscribed) {
+                            document.getElementById('subscription-page').style.display = 'none';
+                            await continueAppInitialization();
+                        } else {
+                            try {
+                                if (tg.showAlert) tg.showAlert("Please subscribe to all channels first!");
+                            } catch(e) {}
+                        }
+                    });
+
+                    document.getElementById('skip-subscription-btn').addEventListener('click', () => {
+                        if (confirm('🚨 This is for development only! Are you sure you want to skip subscription?')) {
+                            skipSubscription();
+                        }
+                    });
+                    
+                    return;
+                }
+                
+                await continueAppInitialization();
+                
+            } catch (error) { 
+                console.error("Initialization failed:", error); 
+                try { 
+                    if (tg.showAlert) tg.showAlert("Failed to load app data. Please try again."); 
+                } catch(e){} 
+            }
+        };
+
+        // ✅ دالة لمتابعة تهيئة التطبيق بعد التحقق من الاشتراك
+        const continueAppInitialization = async () => {
+            try {
+                updateProgress(50);
+                await loadUserData(firebaseDB);
+                updateProgress(60);
+
+                const referralBoardPromise = firebaseDB.ref('users').orderByChild('referrals').limitToLast(10).once('value');
+                const earningBoardPromise = firebaseDB.ref('users').orderByChild('totalEarned').limitToLast(10).once('value');
+                const historyPromise = loadTransactionHistory(firebaseDB);
+
+                const [referralBoardSnap, earningBoardSnap] = await Promise.all([referralBoardPromise, earningBoardPromise, historyPromise]);
+                updateProgress(80);
+
+                referralBoardSnap.forEach(child => { leaderboardData.referral.push(child.val()); });
+                earningBoardSnap.forEach(child => { leaderboardData.earning.push(child.val()); });
+                leaderboardData.referral.reverse(); 
+                leaderboardData.earning.reverse();
+                updateProgress(90);
+
+                loadAdSdk(appConfig.adZoneId);
+                earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id || 'guest'}`) || '0');
+
+                renderUI(); 
+                setupNavigation(); 
+                setupEventListeners();
+                updateProgress(100);
+
+                setTimeout(() => {
+                    document.getElementById('app-loader').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
+                }, 300);
+            } catch (error) {
+                console.error("Error in continueAppInitialization:", error);
+            }
+        };
+
+        // باقي الدوال تبقى كما هي مع استبدال firebase.database() بـ firebaseDB
+        // ... [كل الدوال المتبقية]
+
+        // ✅ بدء التطبيق
+        initApp();
+    });
+
+    // إضافة keyframes للـ spinner
+    (function addSpinKeyframes(){ 
+        const style = document.createElement('style'); 
+        style.innerHTML='@keyframes spin{to{transform:rotate(360deg)}}'; 
+        document.head.appendChild(style); 
+    })();
+    </script>
+</body>
+</html>

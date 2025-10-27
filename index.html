@@ -1314,14 +1314,15 @@
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="firebase-config.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram?.WebApp || {};
         
+        // ✅ تهيئة Firebase
+        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lBazkwOUNGblc0Wk1lQkVNMXl4UmJRYlc5dzZVTm81OCIsImF1dGhEb21haW4iOiJlYXJuLW1vbmV5LWMzYmFkLmZpcmViYXNlYXBwLmNvbSIsImRhdGFiYXNlVVJMIjoiaHR0cHM6Ly9lYXJuLW1vbmV5LWMzYmFkLWRlZmF1bHQtcnRkYi5maXJlYmFzZWlvLmNvbSIsInByb2plY3RJZCI6ImVhcm4tbW9uZXktYzNiYWQiLCJzdG9yYWdlQnVja2V0IjoiZWFybi1tb25leS1jM2JhZC5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIxMDIyNjg4NTY2MDExIiwiYXBwSWQiOiIxOjEwMjI2ODg1NjYwMTE6d2ViOjY5MGY2ZmFhMTlkZDMzMzdhMmVlNWUiLCJtZWFzdXJlbWVudElkIjoiRy0wQ0gxTEJGTEgyIn0="));
+
         const NOTIFICATION_USERNAME = "aborabie777";
 
         // ✅ متغيرات جديدة من Firebase
@@ -1403,39 +1404,276 @@
         const closePopup = () => { popup.style.display = 'none'; };
         const updateProgress = (percentage) => { loadingProgress.textContent = `${percentage}%`; };
 
-        // ✅ دالة للمصادقة باستخدام Telegram User ID
-        const signInWithTelegramId = async (telegramUserId) => {
+        // ✅ دالة لإنشاء بصمة فريدة للجهاز
+        const generateDeviceFingerprint = async () => {
+            const components = [];
+            
             try {
-                // محاولة تسجيل الدخول بشكل مجهول أولاً
-                const userCredential = await firebase.auth().signInAnonymously();
-                const user = userCredential.user;
+                // معلومات المتصفح
+                components.push(navigator.userAgent);
+                components.push(navigator.language);
+                components.push(navigator.hardwareConcurrency || 'unknown');
+                components.push(screen.width + 'x' + screen.height);
+                components.push(screen.colorDepth);
+                components.push(new Date().getTimezoneOffset());
                 
-                console.log('✅ Signed in anonymously with UID:', user.uid);
+                // Canvas fingerprinting
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 200;
+                canvas.height = 50;
                 
-                return user.uid;
+                ctx.textBaseline = 'top';
+                ctx.font = '14px Arial';
+                ctx.fillStyle = '#f60';
+                ctx.fillRect(125, 1, 62, 20);
+                ctx.fillStyle = '#069';
+                ctx.fillText('BrowserFingerprint', 2, 15);
+                ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+                ctx.fillText('BrowserFingerprint', 4, 17);
+                
+                const canvasData = canvas.toDataURL();
+                components.push(canvasData);
+                
+                // WebGL fingerprinting
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        components.push(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL));
+                        components.push(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
+                    }
+                }
+                
+                // Audio fingerprinting
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const analyser = audioContext.createAnalyser();
+                oscillator.connect(analyser);
+                analyser.connect(audioContext.destination);
+                oscillator.start(0);
+                
+                const data = new Float32Array(analyser.frequencyBinCount);
+                analyser.getFloatFrequencyData(data);
+                components.push(data.join(','));
+                
+                oscillator.stop();
+                audioContext.close();
                 
             } catch (error) {
-                console.error('❌ Authentication failed:', error);
+                console.log('Fingerprint generation partial:', error);
+            }
+            
+            // إنشاء هاش فريد من المكونات
+            const fingerprintString = components.join('|');
+            let hash = 0;
+            for (let i = 0; i < fingerprintString.length; i++) {
+                const char = fingerprintString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            
+            return Math.abs(hash).toString(36) + '_' + Date.now().toString(36);
+        };
+
+        // ✅ دالة للحصول على عنوان IP
+        const getUserIP = async () => {
+            try {
+                // استخدام خدمة خارجية للحصول على IP
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Error getting IP:', error);
                 
-                // Fallback: حاول استخدام الطريقة القديمة إذا فشلت المصادقة
+                // بديل إذا فشلت الخدمة
                 try {
-                    const userCredential = await firebase.auth().signInAnonymously();
-                    console.log('✅ Fallback authentication successful');
-                    return userCredential.user.uid;
+                    const response = await fetch('https://api64.ipify.org?format=json');
+                    const data = await response.json();
+                    return data.ip;
                 } catch (fallbackError) {
-                    console.error('❌ Fallback authentication also failed:', fallbackError);
-                    throw error;
+                    console.error('Fallback IP service also failed:', fallbackError);
+                    return 'unknown';
                 }
             }
         };
 
-        // ✅ دالة للتحقق من حالة الحظر
+        // ✅ دالة للتحقق من تعدد الحسابات
+        const checkMultiAccount = async (db, userId, userData) => {
+            try {
+                const deviceFingerprint = await generateDeviceFingerprint();
+                const userIP = await getUserIP();
+                
+                console.log('🔍 Checking multi-account protection:', {
+                    userId,
+                    deviceFingerprint: deviceFingerprint.substring(0, 20) + '...',
+                    userIP
+                });
+                
+                // حفظ بصمة الجهاز و IP للمستخدم الحالي
+                const userRef = db.ref(`users/${userId}`);
+                await userRef.update({
+                    deviceFingerprint,
+                    ipAddress: userIP,
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP
+                });
+                
+                // البحث عن حسابات أخرى بنفس البصمة أو IP
+                const usersRef = db.ref('users');
+                const snapshot = await usersRef.once('value');
+                
+                let duplicateAccounts = [];
+                let sameIPAccounts = [];
+                
+                snapshot.forEach(child => {
+                    const otherUser = child.val();
+                    if (otherUser.id !== userId) {
+                        // التحقق من نفس بصمة الجهاز
+                        if (otherUser.deviceFingerprint === deviceFingerprint) {
+                            duplicateAccounts.push({
+                                id: otherUser.id,
+                                name: `${otherUser.firstName || ''} ${otherUser.lastName || ''}`.trim(),
+                                reason: 'Same device fingerprint'
+                            });
+                        }
+                        
+                        // التحقق من نفس عنوان IP (في آخر 24 ساعة)
+                        if (otherUser.ipAddress === userIP) {
+                            const lastLogin = otherUser.lastLogin || 0;
+                            const timeDiff = Date.now() - lastLogin;
+                            const hoursDiff = timeDiff / (1000 * 60 * 60);
+                            
+                            if (hoursDiff < 24) { // نفس IP في آخر 24 ساعة
+                                sameIPAccounts.push({
+                                    id: otherUser.id,
+                                    name: `${otherUser.firstName || ''} ${otherUser.lastName || ''}`.trim(),
+                                    reason: `Same IP address (${hoursDiff.toFixed(1)} hours ago)`
+                                });
+                            }
+                        }
+                    }
+                });
+                
+                const results = {
+                    deviceFingerprint,
+                    userIP,
+                    duplicateAccounts,
+                    sameIPAccounts,
+                    isSuspicious: duplicateAccounts.length > 0 || sameIPAccounts.length > 2
+                };
+                
+                console.log('📊 Multi-account check results:', results);
+                
+                // إذا كان هناك اشتباه في تعدد الحسابات
+                if (results.isSuspicious) {
+                    await handleSuspiciousActivity(db, userId, results);
+                }
+                
+                return results;
+                
+            } catch (error) {
+                console.error('Error in multi-account check:', error);
+                return {
+                    deviceFingerprint: 'error',
+                    userIP: 'error',
+                    duplicateAccounts: [],
+                    sameIPAccounts: [],
+                    isSuspicious: false
+                };
+            }
+        };
+
+        // ✅ دالة للتعامل مع النشاط المشبوه
+        const handleSuspiciousActivity = async (db, userId, checkResults) => {
+            try {
+                const suspiciousRef = db.ref(`suspiciousActivities/${userId}`);
+                
+                const activityData = {
+                    timestamp: firebase.database.ServerValue.TIMESTAMP,
+                    deviceFingerprint: checkResults.deviceFingerprint,
+                    ipAddress: checkResults.userIP,
+                    duplicateAccounts: checkResults.duplicateAccounts,
+                    sameIPAccounts: checkResults.sameIPAccounts,
+                    action: 'detected'
+                };
+                
+                await suspiciousRef.set(activityData);
+                
+                // إرسال إشعار للمسؤول
+                await sendAdminAlert(db, userId, checkResults);
+                
+                console.log('🚨 Suspicious activity detected and logged for user:', userId);
+                
+            } catch (error) {
+                console.error('Error handling suspicious activity:', error);
+            }
+        };
+
+        // ✅ دالة لإرسال تنبيه للمسؤول
+        const sendAdminAlert = async (db, userId, checkResults) => {
+            try {
+                const botToken = appConfig.botToken;
+                if (!botToken) return;
+                
+                const userRef = db.ref(`users/${userId}`);
+                const userSnap = await userRef.once('value');
+                const userData = userSnap.val();
+                
+                let alertMessage = `
+🚨 MULTI-ACCOUNT ALERT 🚨
+
+👤 Suspicious User:
+• ID: ${userId}
+• Name: ${userData.firstName || 'N/A'} ${userData.lastName || ''}
+• Username: @${userData.username || 'N/A'}
+
+📊 Detection Results:
+• Device Fingerprint: ${checkResults.deviceFingerprint.substring(0, 20)}...
+• IP Address: ${checkResults.userIP}
+• Same Device Accounts: ${checkResults.duplicateAccounts.length}
+• Same IP Accounts (24h): ${checkResults.sameIPAccounts.length}
+                `.trim();
+                
+                if (checkResults.duplicateAccounts.length > 0) {
+                    alertMessage += '\n\n📱 Same Device Accounts:';
+                    checkResults.duplicateAccounts.forEach(acc => {
+                        alertMessage += `\n• ${acc.name} (${acc.id}) - ${acc.reason}`;
+                    });
+                }
+                
+                if (checkResults.sameIPAccounts.length > 0) {
+                    alertMessage += '\n\n🌐 Same IP Accounts:';
+                    checkResults.sameIPAccounts.forEach(acc => {
+                        alertMessage += `\n• ${acc.name} (${acc.id}) - ${acc.reason}`;
+                    });
+                }
+                
+                const adminChatId = appConfig.adminChatId || "6294480939";
+                
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: adminChatId,
+                        text: alertMessage
+                    })
+                });
+                
+            } catch (error) {
+                console.error('Error sending admin alert:', error);
+            }
+        };
+
+        // ✅ دالة محسنة للتحقق من الحظر بناءً على البصمة و IP
         const checkUserBanStatus = async (db) => {
             try {
-                const currentUser = firebase.auth().currentUser;
-                if (!currentUser) return false;
-
-                const banRef = db.ref(`bannedUsers/${currentUser.uid}`);
+                const deviceFingerprint = await generateDeviceFingerprint();
+                const userIP = await getUserIP();
+                
+                // التحقق من حظر المستخدم بال ID
+                const banRef = db.ref(`bannedUsers/${tgUser.id}`);
                 const banSnap = await banRef.once('value');
                 const banData = banSnap.val();
                 
@@ -1445,6 +1683,29 @@
                     showBannedPage();
                     return true;
                 }
+                
+                // التحقق من حظر البصمة
+                const fingerprintBanRef = db.ref('bannedFingerprints').orderByValue().equalTo(deviceFingerprint);
+                const fingerprintBanSnap = await fingerprintBanRef.once('value');
+                
+                if (fingerprintBanSnap.exists()) {
+                    isUserBanned = true;
+                    banReason = "Device banned for multi-account violation";
+                    showBannedPage();
+                    return true;
+                }
+                
+                // التحقق من حظر IP
+                const ipBanRef = db.ref('bannedIPs').orderByValue().equalTo(userIP);
+                const ipBanSnap = await ipBanRef.once('value');
+                
+                if (ipBanSnap.exists()) {
+                    isUserBanned = true;
+                    banReason = "IP address banned for suspicious activity";
+                    showBannedPage();
+                    return true;
+                }
+                
                 return false;
             } catch (error) {
                 console.error('Error checking ban status:', error);
@@ -1452,9 +1713,24 @@
             }
         };
 
-        // ✅ دالة لعرض صفحة الحظر
+        // ✅ دالة محسنة لعرض صفحة الحظر
         const showBannedPage = () => {
-            document.getElementById('banned-reason').textContent = banReason;
+            let banMessage = "Your account has been suspended for violating our terms of service.";
+            
+            if (banReason.includes("multi-account") || banReason.includes("Device banned") || banReason.includes("IP address banned")) {
+                banMessage = `
+🚫 Account Restricted
+
+${banReason}
+
+Our system has detected suspicious activity associated with your account. 
+This may include creating multiple accounts from the same device or IP address.
+
+If you believe this is a mistake, please contact support with your User ID: ${tgUser.id}
+                `.trim();
+            }
+            
+            document.getElementById('banned-reason').innerHTML = banMessage.replace(/\n/g, '<br>');
             document.getElementById('banned-page').style.display = 'flex';
             document.getElementById('app-loader').style.display = 'none';
             document.getElementById('subscription-page').style.display = 'none';
@@ -1485,6 +1761,98 @@
                 console.error('Error loading dynamic settings:', error);
             }
         };
+
+        // ✅ دالة محسنة لتحميل بيانات المستخدم مع التحقق من الحظر وتعدد الحسابات
+        const loadUserData = async (db) => {
+            // التحقق أولاً من حالة الحظر
+            const isBanned = await checkUserBanStatus(db);
+            if (isBanned) {
+                return;
+            }
+
+            // التحقق من تعدد الحسابات
+            await checkMultiAccount(db, tgUser.id, tgUser);
+
+            // باقي الكود الأصلي...
+            const referralParam = getReferralParam();
+            let referralIdCandidate = null;
+
+            if (referralParam && referralParam.trim() !== '') {
+                const cleanParam = referralParam.trim();
+                if (!isNaN(Number(cleanParam))) {
+                    referralIdCandidate = Number(cleanParam);
+                    console.log('✅ Valid referral ID found:', referralIdCandidate);
+                } else {
+                    console.log('❌ Invalid referral ID format:', cleanParam);
+                }
+            }
+
+            const localUserId = (tgUser && tgUser.id) ? tgUser.id : ('guest_' + (Date.now()));
+
+            const userRef = db.ref(`users/${localUserId}`);
+            const snapshot = await userRef.once('value');
+            let userData = snapshot.val();
+
+            if (!userData) {
+                const deviceFingerprint = await generateDeviceFingerprint();
+                const userIP = await getUserIP();
+                
+                userData = {
+                    id: localUserId,
+                    firstName: (tgUser && tgUser.first_name) || '',
+                    lastName: (tgUser && tgUser.last_name) || '',
+                    username: (tgUser && tgUser.username) || '',
+                    photoUrl: (tgUser && tgUser.photo_url) || '',
+                    balance: 0, 
+                    referrals: 0, 
+                    referredBy: referralIdCandidate, 
+                    totalEarned: 0,
+                    lifetimeAdCount: 0, 
+                    lastAdWatchDate: '1970-01-01', 
+                    dailyAdCount: 0, 
+                    breakUntil: 0, 
+                    completedTasks: {}, 
+                    welcomed: false,
+                    joinDate: new Date().toISOString(),
+                    subscribedToChannels: isSubscribedToAllChannels,
+                    deviceFingerprint: deviceFingerprint,
+                    ipAddress: userIP,
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP
+                };
+                await userRef.set(userData);
+
+                if (referralIdCandidate && referralIdCandidate != localUserId && isSubscribedToAllChannels) {
+                    await processReferral(referralIdCandidate, localUserId, db);
+                }
+            } else {
+                // تحديث معلومات البصمة و IP
+                const deviceFingerprint = await generateDeviceFingerprint();
+                const userIP = await getUserIP();
+                
+                await userRef.update({
+                    deviceFingerprint: deviceFingerprint,
+                    ipAddress: userIP,
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP
+                });
+
+                if (referralIdCandidate && referralIdCandidate != localUserId && !userData.referredBy && isSubscribedToAllChannels) {
+                    console.log('🔄 Processing referral for existing user:', referralIdCandidate);
+                    await userRef.update({ referredBy: referralIdCandidate });
+                    await processReferral(referralIdCandidate, localUserId, db);
+                }
+            }
+
+            const today = new Date().toISOString().slice(0, 10);
+            if (userData.lastAdWatchDate !== today) {
+                userData.dailyAdCount = 0; 
+                userData.lastAdWatchDate = today;
+                await userRef.update({ dailyAdCount: 0, lastAdWatchDate: today });
+            }
+            userState = userData;
+        };
+
+        // باقي الدوال تبقى كما هي مع التعديلات البسيطة...
+        // [يتبع باقي الكود الأصلي مع التكامل مع الدوال الجديدة]
 
         // ✅ دالة محسنة لمشاهدة الإعلان باستخدام الوقت من Firebase
         const handleWatchAd = async () => {
@@ -1569,20 +1937,14 @@
                 const adValue = parseFloat(appConfig.adValue || 0);
 
                 earningWalletBalance += adValue;
-                
-                // ✅ تحديث localStorage باستخدام auth.uid
-                const currentUser = firebase.auth().currentUser;
-                if (currentUser) {
-                    localStorage.setItem(`earningWallet_${currentUser.uid}`, earningWalletBalance.toString());
-                }
+                localStorage.setItem(`earningWallet_${tgUser.id || 'guest'}`, earningWalletBalance.toString());
 
                 userState.dailyAdCount++;
                 userState.lifetimeAdCount++;
                 userState.totalEarned = (userState.totalEarned || 0) + adValue;
 
                 const db = firebase.database(); 
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                const userRef = db.ref(`users/${currentUserId}`);
+                const userRef = db.ref(`users/${tgUser.id}`);
                 const updates = {};
                 updates.dailyAdCount = userState.dailyAdCount;
                 updates.lifetimeAdCount = userState.lifetimeAdCount;
@@ -1595,11 +1957,11 @@
                 await userRef.update(updates);
 
                 const today = new Date().toISOString().slice(0, 10);
-                await db.ref(`userEarnings/${currentUserId}/${today}`).set(firebase.database.ServerValue.increment(adValue));
+                await db.ref(`userEarnings/${tgUser.id}/${today}`).set(firebase.database.ServerValue.increment(adValue));
 
                 // ✅ تحديث أرباح الإحالات للمُحيل
                 if (userState.referredBy) {
-                    await updateReferralEarnings(currentUserId, adValue);
+                    await updateReferralEarnings(tgUser.id, adValue);
                 }
 
                 await updateContestPointsOnAdWatch();
@@ -1630,9 +1992,6 @@
         const claimDailyLoginBonus = async () => {
             try {
                 const db = firebase.database();
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
                 const today = new Date().toDateString();
                 
                 if (dailyLoginData.claimedDays && dailyLoginData.claimedDays.includes(today)) {
@@ -1646,7 +2005,7 @@
                 const currentDay = Math.min(dailyLoginData.currentStreak, dailyLoginRewards.length) - 1;
                 const rewardAmount = dailyLoginRewards[currentDay] || dailyLoginRewards[dailyLoginRewards.length - 1] || 0.0001;
                 
-                const userRef = db.ref(`users/${currentUserId}`);
+                const userRef = db.ref(`users/${tgUser.id}`);
                 await userRef.child('balance').set(firebase.database.ServerValue.increment(rewardAmount));
                 userState.balance = (userState.balance || 0) + rewardAmount;
                 
@@ -1655,7 +2014,7 @@
                 }
                 dailyLoginData.claimedDays.push(today);
                 
-                const dailyLoginRef = db.ref(`dailyLogin/${currentUserId}`);
+                const dailyLoginRef = db.ref(`dailyLogin/${tgUser.id}`);
                 await dailyLoginRef.set(dailyLoginData);
                 
                 try{ 
@@ -1668,6 +2027,7 @@
             } catch (error) {
                 console.error('Error claiming daily login bonus:', error);
                 try{ 
+
                     if (tg.showAlert) tg.showAlert("Failed to claim daily bonus. Please try again."); 
                 }catch{} 
             }
@@ -1930,11 +2290,8 @@
                 e.target.textContent = 'Claiming...';
                 
                 try {
-                    const db = firebase.database();
-                    const currentUser = firebase.auth().currentUser;
-                    const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                    
-                    const userRef = db.ref(`users/${currentUserId}`);
+                    const db = firebase.database(); 
+                    const userRef = db.ref(`users/${tgUser.id}`);
                     await userRef.child(`completedTasks/${taskId}`).set(true);
                     await userRef.child('balance').set(firebase.database.ServerValue.increment(task.reward));
                     userState.balance = (userState.balance || 0) + task.reward;
@@ -1953,77 +2310,6 @@
                     e.target.textContent = 'Claim Bonus'; 
                 }
             }
-        };
-
-        // ✅ دالة محسنة لتحميل بيانات المستخدم مع التحقق من الحظر
-        const loadUserData = async (db) => {
-            // التحقق أولاً من حالة الحظر
-            const isBanned = await checkUserBanStatus(db);
-            if (isBanned) {
-                return;
-            }
-
-            const referralParam = getReferralParam();
-            let referralIdCandidate = null;
-
-            if (referralParam && referralParam.trim() !== '') {
-                const cleanParam = referralParam.trim();
-                if (!isNaN(Number(cleanParam))) {
-                    referralIdCandidate = Number(cleanParam);
-                    console.log('✅ Valid referral ID found:', referralIdCandidate);
-                } else {
-                    console.log('❌ Invalid referral ID format:', cleanParam);
-                }
-            }
-
-            const currentUser = firebase.auth().currentUser;
-            const localUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-
-            const userRef = db.ref(`users/${localUserId}`);
-            const snapshot = await userRef.once('value');
-            let userData = snapshot.val();
-
-            if (!userData) {
-                userData = {
-                    id: localUserId,
-                    telegramId: tgUser.id,
-                    firstName: (tgUser && tgUser.first_name) || '',
-                    lastName: (tgUser && tgUser.last_name) || '',
-                    username: (tgUser && tgUser.username) || '',
-                    photoUrl: (tgUser && tgUser.photo_url) || '',
-                    balance: 0, 
-                    referrals: 0, 
-                    referredBy: referralIdCandidate, 
-                    totalEarned: 0,
-                    lifetimeAdCount: 0, 
-                    lastAdWatchDate: '1970-01-01', 
-                    dailyAdCount: 0, 
-                    breakUntil: 0, 
-                    completedTasks: {}, 
-                    welcomed: false,
-                    joinDate: new Date().toISOString(),
-                    subscribedToChannels: isSubscribedToAllChannels
-                };
-                await userRef.set(userData);
-
-                if (referralIdCandidate && referralIdCandidate != localUserId && isSubscribedToAllChannels) {
-                    await processReferral(referralIdCandidate, localUserId, db);
-                }
-            } else {
-                if (referralIdCandidate && referralIdCandidate != localUserId && !userData.referredBy && isSubscribedToAllChannels) {
-                    console.log('🔄 Processing referral for existing user:', referralIdCandidate);
-                    await userRef.update({ referredBy: referralIdCandidate });
-                    await processReferral(referralIdCandidate, localUserId, db);
-                }
-            }
-
-            const today = new Date().toISOString().slice(0, 10);
-            if (userData.lastAdWatchDate !== today) {
-                userData.dailyAdCount = 0; 
-                userData.lastAdWatchDate = today;
-                await userRef.update({ dailyAdCount: 0, lastAdWatchDate: today });
-            }
-            userState = userData;
         };
 
         // ✅ دالة محسنة لتهيئة التطبيق
@@ -2050,21 +2336,13 @@
                 });
 
                 updateProgress(10); 
-                
-                // ✅ تهيئة Firebase مع المصادقة
-                firebase.initializeApp(firebaseConfig);
-                
-                // ✅ تسجيل الدخول بشكل مجهول باستخدام Telegram User ID
-                updateProgress(15);
-                await signInWithTelegramId(tgUser.id);
-                updateProgress(20);
-                
+                firebase.initializeApp(firebaseConfig); 
                 const db = firebase.database();
-                updateProgress(25);
+                updateProgress(20);
 
                 // تحميل الإعدادات الديناميكية
                 await loadDynamicSettings(db);
-                updateProgress(30);
+                updateProgress(25);
 
                 const configSnapshot = await db.ref('config').once('value');
                 appConfig = configSnapshot.val() || {};
@@ -2171,7 +2449,6 @@
                 await loadUserData(db);
                 updateProgress(60);
 
-                // ✅ تحديث استعلامات leaderboard
                 const referralBoardPromise = db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
                 const earningBoardPromise = db.ref('users').orderByChild('totalEarned').limitToLast(10).once('value');
                 const historyPromise = loadTransactionHistory(db);
@@ -2179,25 +2456,14 @@
                 const [referralBoardSnap, earningBoardSnap] = await Promise.all([referralBoardPromise, earningBoardPromise, historyPromise]);
                 updateProgress(80);
 
-                referralBoardSnap.forEach(child => { 
-                    if (child.val()) leaderboardData.referral.push(child.val()); 
-                });
-                earningBoardSnap.forEach(child => { 
-                    if (child.val()) leaderboardData.earning.push(child.val()); 
-                });
+                referralBoardSnap.forEach(child => { leaderboardData.referral.push(child.val()); });
+                earningBoardSnap.forEach(child => { leaderboardData.earning.push(child.val()); });
                 leaderboardData.referral.reverse(); 
                 leaderboardData.earning.reverse();
                 updateProgress(90);
 
                 loadAdSdk(appConfig.adZoneId);
-                
-                // ✅ تحديث localStorage باستخدام auth.uid
-                const currentUser = firebase.auth().currentUser;
-                if (currentUser) {
-                    earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${currentUser.uid}`) || '0');
-                } else {
-                    earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id || 'guest'}`) || '0');
-                }
+                earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id || 'guest'}`) || '0');
 
                 renderUI(); 
                 setupNavigation(); 
@@ -2231,10 +2497,7 @@
                     contestData.endTime = contestConfig.endTime;
                 }
                 
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const userContestRef = db.ref(`contest/participants/${currentUserId}`);
+                const userContestRef = db.ref(`contest/participants/${tgUser.id}`);
                 const userContestSnap = await userContestRef.once('value');
                 const userContestData = userContestSnap.val() || { points: 0, adsWatched: 0, referrals: 0 };
                 
@@ -2251,7 +2514,7 @@
                 
                 contestData.userRank = 0;
                 contestData.leaderboard.forEach((participant, index) => {
-                    if (participant.userId === currentUserId) {
+                    if (participant.userId === tgUser.id) {
                         contestData.userRank = index + 1;
                     }
                 });
@@ -2264,10 +2527,7 @@
         // ✅ دالة لتحميل بيانات التسجيل اليومي
         const loadDailyLoginData = async (db) => {
             try {
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const dailyLoginRef = db.ref(`dailyLogin/${currentUserId}`);
+                const dailyLoginRef = db.ref(`dailyLogin/${tgUser.id}`);
                 const dailyLoginSnap = await dailyLoginRef.once('value');
                 const savedData = dailyLoginSnap.val();
                 
@@ -2284,9 +2544,6 @@
 
         // ✅ دالة للتحقق من التسجيل اليومي
         const checkDailyLogin = async (db) => {
-            const currentUser = firebase.auth().currentUser;
-            const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-            
             const today = new Date().toDateString();
             const lastLogin = dailyLoginData.lastLoginDate;
             
@@ -2303,7 +2560,7 @@
                 
                 dailyLoginData.lastLoginDate = today;
                 
-                const dailyLoginRef = db.ref(`dailyLogin/${currentUserId}`);
+                const dailyLoginRef = db.ref(`dailyLogin/${tgUser.id}`);
                 await dailyLoginRef.set(dailyLoginData);
             }
         };
@@ -2311,10 +2568,7 @@
         // ✅ دالة لتحميل بيانات نظام الإحالات الجديد
         const loadReferralData = async (db) => {
             try {
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const referralRef = db.ref(`referrals/${currentUserId}`);
+                const referralRef = db.ref(`referrals/${tgUser.id}`);
                 const referralSnap = await referralRef.once('value');
                 const savedData = referralSnap.val();
                 
@@ -2323,7 +2577,7 @@
                 }
                 
                 // تحميل قائمة المستخدمين الذين تمت دعوتهم
-                const referredUsersRef = db.ref('users').orderByChild('referredBy').equalTo(currentUserId);
+                const referredUsersRef = db.ref('users').orderByChild('referredBy').equalTo(tgUser.id);
                 const referredUsersSnap = await referredUsersRef.once('value');
                 
                 referralData.referredUsers = [];
@@ -2347,10 +2601,7 @@
         // ✅ دالة لتحميل بيانات الأكواد
         const loadRedeemedCodes = async (db) => {
             try {
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const redeemedCodesRef = db.ref(`redeemedCodes/${currentUserId}`);
+                const redeemedCodesRef = db.ref(`redeemedCodes/${tgUser.id}`);
                 const redeemedCodesSnap = await redeemedCodesRef.once('value');
                 const savedCodes = redeemedCodesSnap.val();
                 
@@ -2579,17 +2830,18 @@
 
         // ✅ دالة لتحميل بيانات المستخدم الأساسية بدون اشتراك
         const loadBasicUserData = async (db) => {
-            const currentUser = firebase.auth().currentUser;
-            const localUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+            const localUserId = (tgUser && tgUser.id) ? tgUser.id : ('guest_' + (Date.now()));
 
             const userRef = db.ref(`users/${localUserId}`);
             const snapshot = await userRef.once('value');
             let userData = snapshot.val();
 
             if (!userData) {
+                const deviceFingerprint = await generateDeviceFingerprint();
+                const userIP = await getUserIP();
+                
                 userData = {
                     id: localUserId,
-                    telegramId: tgUser.id,
                     firstName: (tgUser && tgUser.first_name) || '',
                     lastName: (tgUser && tgUser.last_name) || '',
                     username: (tgUser && tgUser.username) || '',
@@ -2604,7 +2856,10 @@
                     completedTasks: {}, 
                     welcomed: false,
                     joinDate: new Date().toISOString(),
-                    subscribedToChannels: false
+                    subscribedToChannels: false,
+                    deviceFingerprint: deviceFingerprint,
+                    ipAddress: userIP,
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP
                 };
                 await userRef.set(userData);
             }
@@ -2633,10 +2888,7 @@
         const updateContestPointsOnAdWatch = async () => {
             try {
                 const db = firebase.database();
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const userContestRef = db.ref(`contest/participants/${currentUserId}`);
+                const userContestRef = db.ref(`contest/participants/${tgUser.id}`);
                 
                 const userContestSnap = await userContestRef.once('value');
                 const currentData = userContestSnap.val() || { 
@@ -2645,7 +2897,7 @@
                     referrals: 0,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: currentUserId
+                    userId: tgUser.id
                 };
                 
                 const newPoints = (currentData.points || 0) + 1;
@@ -2656,7 +2908,7 @@
                     adsWatched: newAdsWatched,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: currentUserId,
+                    userId: tgUser.id,
                     lastActivity: firebase.database.ServerValue.TIMESTAMP
                 });
                 
@@ -2706,8 +2958,7 @@
         const updateReferralEarnings = async (referredUserId, earnings) => {
             try {
                 const db = firebase.database();
-                const currentUser = firebase.auth().currentUser;
-                const referrerId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                const referrerId = tgUser.id;
                 
                 if (!referrerId) return;
                 
@@ -2760,12 +3011,8 @@
         const loadTransactionHistory = async (db) => {
             userTransactions = [];
             const statuses = ['pending', 'completed', 'rejected'];
-            
-            const currentUser = firebase.auth().currentUser;
-            const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-            
             const historyPromises = statuses.map(status => 
-                db.ref(`withdrawals/${status}`).orderByChild('userId').equalTo(currentUserId).once('value')
+                db.ref(`withdrawals/${status}`).orderByChild('userId').equalTo(tgUser.id).once('value')
             );
             const snapshots = await Promise.all(historyPromises);
             snapshots.forEach(snap => { 
@@ -2823,12 +3070,8 @@
                 date.setDate(today.getDate() - i); 
                 dates.push(date.toISOString().slice(0, 10)); 
             }
-            
-            const currentUser = firebase.auth().currentUser;
-            const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-            
             const earningsPromises = dates.map(date => 
-                firebase.database().ref(`userEarnings/${currentUserId}/${date}`).once('value')
+                firebase.database().ref(`userEarnings/${tgUser.id}/${date}`).once('value')
             );
             try {
                 const snapshots = await Promise.all(earningsPromises);
@@ -2867,18 +3110,10 @@
             btn.textContent = 'Moving...';
             try {
                 const db = firebase.database();
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                await db.ref(`users/${currentUserId}/balance`).set(firebase.database.ServerValue.increment(earningWalletBalance));
+                await db.ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(earningWalletBalance));
                 userState.balance = (userState.balance || 0) + earningWalletBalance;
                 earningWalletBalance = 0;
-                
-                // ✅ تحديث localStorage باستخدام auth.uid
-                if (currentUser) {
-                    localStorage.setItem(`earningWallet_${currentUser.uid}`, '0');
-                }
-                
+                localStorage.setItem(`earningWallet_${tgUser.id}`, '0');
                 try{ 
                     if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); 
                     if (tg.showAlert) tg.showAlert("Successfully moved to main balance!"); 
@@ -3008,15 +3243,7 @@
         };
 
         const copyReferralLink = () => {
-            const currentUser = firebase.auth().currentUser;
-            const currentUserId = currentUser ? currentUser.uid : tgUser.id;
-            
-            const botUsername = appConfig.botUsername || "Aborabie777_bot";
-            const refLink = `https://t.me/${botUsername}?startapp=${currentUserId}`;
-            
-            const refLinkInput = document.createElement('input');
-            refLinkInput.value = refLink;
-            document.body.appendChild(refLinkInput);
+            const refLinkInput = document.getElementById('referral-link');
             refLinkInput.select();
             refLinkInput.setSelectionRange(0, 99999);
             try {
@@ -3032,8 +3259,6 @@
                     if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); 
                     if (tg.showAlert) tg.showAlert("Referral link copied!"); 
                 }catch{}
-            } finally {
-                document.body.removeChild(refLinkInput);
             }
         };
 
@@ -3095,8 +3320,8 @@
             
             // ✅ تعديل أسماء طرق السحب
             const withdrawMethods = [
-                { name: 'FaucetPay', min: 0.0001, icon: 'https://img.icons8.com/ios-filled/100/email.png' },
-                { name: 'TON', min: 0.05, icon: 'https://img.icons8.com/ios-filled/100/wallet.png' }
+                { name: 'FaucetPay', min: 0.0001, icon: 'https://img.icons8.com/ios-filled/100/email.png' }, // ✅ تغيير من 0.00001 إلى 0.0001
+                { name: 'TON', min: 0.05, icon: 'https://img.icons8.com/ios-filled/100/wallet.png' } // ✅ تغيير من TONKeeper إلى TON
             ];
             
             if (appConfig.withdrawMethods) { 
@@ -3531,7 +3756,7 @@
             // ✅ تعديل الحد الأدنى للسحب
             let minAmount = 0.001;
             if (selectedMethod === 'FaucetPay') {
-                minAmount = 0.0001;
+                minAmount = 0.0001; // ✅ تغيير من 0.00001 إلى 0.0001
             } else if (selectedMethod === 'TON') {
                 minAmount = 0.05;
             }
@@ -3555,10 +3780,7 @@
             btn.textContent = 'Submitting...';
             const db = firebase.database();
             try {
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const userRef = db.ref(`users/${currentUserId}`);
+                const userRef = db.ref(`users/${tgUser.id}`);
                 userState.balance = (userState.balance || 0) - amount;
                 renderUI();
 
@@ -3566,7 +3788,7 @@
                 const reqId = db.ref('withdrawals/pending').push().key;
                 const newRequest = { 
                     id: reqId, 
-                    userId: currentUserId, 
+                    userId: tgUser.id, 
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(), 
                     username: tgUser.username || '',
                     method: selectedMethod, 
@@ -3688,10 +3910,7 @@
                 
                 // ✅ حفظ الكود المستخدم
                 redeemedCodes.push(code);
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const redeemedCodesRef = db.ref(`redeemedCodes/${currentUserId}`);
+                const redeemedCodesRef = db.ref(`redeemedCodes/${tgUser.id}`);
                 await redeemedCodesRef.set(redeemedCodes);
                 
                 try{ 
@@ -3724,10 +3943,7 @@
         const awardContestPoints = async (points) => {
             try {
                 const db = firebase.database();
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                
-                const userContestRef = db.ref(`contest/participants/${currentUserId}`);
+                const userContestRef = db.ref(`contest/participants/${tgUser.id}`);
                 
                 const userContestSnap = await userContestRef.once('value');
                 const currentData = userContestSnap.val() || { 
@@ -3736,7 +3952,7 @@
                     referrals: 0,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: currentUserId
+                    userId: tgUser.id
                 };
                 
                 const newPoints = (currentData.points || 0) + points;
@@ -3745,7 +3961,7 @@
                     points: newPoints,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: currentUserId,
+                    userId: tgUser.id,
                     lastActivity: firebase.database.ServerValue.TIMESTAMP
                 });
                 
@@ -3760,8 +3976,6 @@
         const claimReferralEarnings = async () => {
             try {
                 const db = firebase.database();
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
                 
                 if (referralData.pendingEarnings <= 0) {
                     try{ 
@@ -3770,14 +3984,14 @@
                     return;
                 }
                 
-                const userRef = db.ref(`users/${currentUserId}`);
+                const userRef = db.ref(`users/${tgUser.id}`);
                 await userRef.child('balance').set(firebase.database.ServerValue.increment(referralData.pendingEarnings));
                 userState.balance = (userState.balance || 0) + referralData.pendingEarnings;
                 
                 referralData.totalEarnings += referralData.pendingEarnings;
                 referralData.pendingEarnings = 0;
                 
-                const referralRef = db.ref(`referrals/${currentUserId}`);
+                const referralRef = db.ref(`referrals/${tgUser.id}`);
                 await referralRef.set(referralData);
                 
                 try{ 
@@ -3841,9 +4055,7 @@
             
             top10.forEach((participant, index) => {
                 const rank = index + 1;
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                const isCurrentUser = participant.userId === currentUserId;
+                const isCurrentUser = participant.userId === tgUser.id;
                 
                 let rankIcon = rank;
                 if (rank === 1) rankIcon = '🥇';
@@ -3926,9 +4138,7 @@
             
             top50.forEach((participant, index) => {
                 const rank = index + 1;
-                const currentUser = firebase.auth().currentUser;
-                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
-                const isCurrentUser = participant.userId === currentUserId;
+                const isCurrentUser = participant.userId === tgUser.id;
                 const prizeAmount = getPrizeForRank(rank);
                 const prizeText = prizeAmount > 0 ? `${prizeAmount} TON` : '';
                 
@@ -3975,10 +4185,9 @@
             
             const referralBonus = appConfig.referralBonus || 0.001;
             const botUsername = appConfig.botUsername || "Aborabie777_bot";
-            const currentUser = firebase.auth().currentUser;
-            const currentUserId = currentUser ? currentUser.uid : tgUser.id;
+            const userId = tgUser.id || '';
             
-            const refLink = `https://t.me/${botUsername}?startapp=${currentUserId}`;
+            const refLink = `https://t.me/${botUsername}?startapp=${userId}`;
             
             let referredUsersHTML = '';
             if (referralData.referredUsers.length > 0) {
@@ -4056,5 +4265,3 @@
     </script>
 </body>
 </html>
-
-

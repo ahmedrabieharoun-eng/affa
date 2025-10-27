@@ -1,699 +1,3 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta name='admaven-placement' content='Bqja6qdC7'>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>TON Rewards</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    <style>
-        /* الأنماط تبقى كما هي */
-        :root {
-            --font-family: 'Poppins', sans-serif;
-            --primary-color: #E74C3C; --secondary-color: #F39C12;
-            --background-light: #FDFEFE; --surface-light: #FFFFFF; --text-primary-light: #2C3E50; --text-secondary-light: #808B96; --border-light: #EAEDED;
-            --background-dark: #1B2631; --surface-dark: #283747; --text-primary-dark: #FDFEFE; --text-secondary-dark: #ABB2B9; --border-dark: #566573;
-            --success: #27AE60; --danger: #C0392B; --pending: #F39C12;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); transition: background-color 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; }
-        body.light-theme { background-color: var(--background-light); color: var(--text-primary-light); }
-        body.dark-theme { background-color: var(--background-dark); color: var(--text-primary-dark); }
-        #app { max-width: 500px; margin: 0 auto; padding-bottom: 80px; }
-        .page { display: none; padding: 15px; }
-        .page.active { display: block; animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* باقي الأنماط تبقى كما هي */
-        
-        /* أنماط التحذير */
-        .warning-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #f39c12, #e67e22);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .warning-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .warning-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .warning-message {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            max-width: 400px;
-        }
-        
-        .warning-continue-btn {
-            padding: 12px 30px;
-            background: white;
-            color: #f39c12;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .warning-continue-btn:hover {
-            background: #f8f9fa;
-            transform: translateY(-2px);
-        }
-
-        /* أنماط التحقق من التوقيع */
-        .security-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #2c3e50, #34495e);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .security-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .security-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .security-message {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            max-width: 400px;
-        }
-        
-        .security-details {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 15px;
-            background: rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 8px;
-            font-family: monospace;
-        }
-
-        /* باقي الأنماط تبقى كما هي */
-    </style>
-</head>
-<body class="dark-theme">
-    <!-- شاشة التحذير -->
-    <div id="warning-page" class="warning-container">
-        <div class="warning-icon">⚠️</div>
-        <div class="warning-title">Security Warning</div>
-        <div class="warning-message" id="warning-reason">Security verification warning detected.</div>
-        <button class="warning-continue-btn" id="warning-continue-btn">Continue Anyway</button>
-    </div>
-
-    <!-- شاشة التحقق من التوقيع -->
-    <div id="security-page" class="security-container">
-        <div class="security-icon">🔒</div>
-        <div class="security-title">Security Verification</div>
-        <div class="security-message" id="security-reason">Verifying Telegram authentication...</div>
-        <div class="security-details" id="security-details"></div>
-    </div>
-
-    <!-- شاشة الحظر -->
-    <div id="banned-page" class="banned-container">
-        <div class="banned-icon">🚫</div>
-        <div class="banned-title">Account Banned</div>
-        <div class="banned-message" id="banned-reason">Your account has been suspended for violating our terms of service.</div>
-        <div class="banned-contact">If you believe this is a mistake, please contact @aborabie777</div>
-    </div>
-
-    <div id="app-loader"><div class="spinner" style="width:50px;height:50px;border-radius:50%;border:5px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;"></div><p id="loading-progress">0%</p></div>
-    <div id="popup" class="popup-overlay"><div class="popup-content"><div id="popup-body"></div></div></div>
-    
-    <!-- شاشة الاشتراك الإجباري -->
-    <div id="subscription-page" style="display: none;">
-        <div class="subscription-container">
-            <h2 style="color: var(--primary-color); margin-bottom: 10px;">📢 Required Subscription</h2>
-            <p style="margin-bottom: 20px;">You must subscribe to our channels to use the bot and earn rewards!</p>
-            
-            <div id="channels-list">
-                <!-- سيتم إضافة القنوات هنا ديناميكياً -->
-            </div>
-            
-            <!-- قسم إعلانات القنوات -->
-            <div id="ad-channels-section" style="margin-top: 30px; display: none;">
-                <h3 style="color: var(--primary-color); margin-bottom: 15px;">🎯 Advertised Channels</h3>
-                <p style="margin-bottom: 15px; font-size: 0.9rem;">Subscribe to these channels for extra rewards!</p>
-                <div id="ad-channels-list">
-                    <!-- سيتم إضافة قنوات الإعلانات هنا ديناميكياً -->
-                </div>
-                <p style="margin-top: 15px; font-size: 0.8rem; color: var(--text-secondary-light); text-align: center;">
-                    💡 Want to advertise your channel here? Contact @aborabie777
-                </p>
-            </div>
-            
-            <button id="check-subscription-btn" class="action-btn" style="margin-top: 20px; width: 100%;">
-                🔄 Check Subscription
-            </button>
-            
-            <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
-                After subscribing, click the button above to verify
-            </p>
-
-            <!-- زر التخطي للتطوير فقط -->
-            <button id="skip-subscription-btn" style="margin-top: 10px; padding: 8px 15px; background: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
-                🚨 Skip for Testing (Dev Only)
-            </button>
-        </div>
-    </div>
-
-    <div id="app" style="display: none;">
-        <!-- باقي محتوى التطبيق يبقى كما هو -->
-        <header class="profile-header">
-            <img id="user-photo" src="https://via.placeholder.com/80" alt="User">
-            <h1 id="user-name">Loading...</h1>
-            <div id="user-balance-container">Main Balance: <span id="user-balance">0.0000</span> TON</div>
-        </header>
-        <main id="main-content">
-            <div id="home-page" class="page active">
-                <div class="stats-grid">
-                    <div class="stat-card"><h3>Today's Ads</h3><p id="daily-ads-watched">0 / 0</p></div>
-                    <div class="stat-card"><h3>Total Referrals</h3><p id="referral-count">0</p></div>
-                    <div class="stat-card"><h3>Total Ads Watched</h3><p id="total-ads-watched">0</p></div>
-                    <div class="stat-card"><h3>Total Income</h3><p id="total-earned">0.0000</p></div>
-                </div>
-                <div id="earnings-graph-container" class="chart-container">
-                    <h3>Last 7 Days Earnings</h3>
-                    <div id="earnings-chart" class="chart"></div><div id="earnings-chart-labels" class="chart-labels"></div>
-                </div>
-                <div id="dynamic-links-container" style="margin-top: 20px;"></div>
-            </div>
-            <div id="tasks-page" class="page">
-                <div class="earning-wallet-card">
-                    <h3>Earning Wallet</h3>
-                    <p style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin: 10px 0;"><span id="earning-wallet-balance">0.0000</span> TON</p>
-                    <small>Minimum 0.001 TON to move to main balance.</small>
-                    <button id="move-to-balance-btn" class="action-btn" style="width:100%; margin-top: 15px;" disabled>Move to Main Balance</button>
-                </div>
-                <div id="ad-progress-container" class="progress-container" style="margin-top:20px;"></div>
-                <div id="ad-task-container"></div>
-                
-                <!-- مهمة التسجيل اليومي المحسنة -->
-                <div id="daily-login-task-container"></div>
-                
-                <!-- خانة إدخال الأكواد -->
-                <div id="redeem-code-container" style="margin-top: 20px;">
-                    <div class="task-container" style="flex-direction: column; align-items: stretch;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <i class="fas fa-ticket-alt" style="font-size: 1.5rem; color: var(--primary-color);"></i>
-                            <h3>Redeem Code</h3>
-                        </div>
-                        <p style="margin-bottom: 15px; font-size: 0.9rem;">Enter a code to earn contest points!</p>
-                        
-                        <div class="code-input-container">
-                            <input type="text" id="redeem-code-input" class="code-input" placeholder="ENTER_CODE_HERE" maxlength="20">
-                            <button id="redeem-code-btn" class="redeem-code-btn">Redeem</button>
-                        </div>
-                        
-                        <div class="code-info">
-                            💡 Codes give contest points only, not TON
-                        </div>
-                    </div>
-                </div>
-                
-                <h2>Bonus Tasks</h2><div id="dynamic-tasks-container"></div>
-            </div>
-            <div id="contest-page" class="page">
-                <div class="contest-container">
-                    <div class="contest-header">
-                        <h2>🏆 Weekly Contest</h2>
-                        <p>Compete with other users and win amazing prizes!</p>
-                    </div>
-                    
-                    <div class="contest-timer">
-                        <div id="contest-countdown">Loading...</div>
-                    </div>
-                    
-                    <div class="contest-info-cards">
-                        <div class="contest-info-card">
-                            <div class="contest-info-value" id="user-contest-points">0</div>
-                            <div class="contest-info-label">Your Points</div>
-                        </div>
-                        <div class="contest-info-card">
-                            <div class="contest-info-value" id="user-contest-rank">-</div>
-                            <div class="contest-info-label">Your Rank</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contest-guide">
-                        <h4>🎯 How to Earn Points:</h4>
-                        <ul>
-                            <li><strong>+1 Point</strong> for every ad watched</li>
-                            <li><strong>+15 Points</strong> for every successful referral</li>
-                            <li><strong>+10-50 Points</strong> for redeeming codes</li>
-                            <li>Compete for <strong>2 TON</strong> in total prizes!</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="contest-prizes-compact">
-                        <div class="prize-compact-item">
-                            <div class="prize-rank-compact">🥇 1st</div>
-                            <div class="prize-amount-compact">0.6 TON</div>
-                        </div>
-                        <div class="prize-compact-item">
-                            <div class="prize-rank-compact">🥈 2nd</div>
-                            <div class="prize-amount-compact">0.4 TON</div>
-                        </div>
-                        <div class="prize-compact-item">
-                            <div class="prize-rank-compact">🥉 3rd</div>
-                            <div class="prize-amount-compact">0.25 TON</div>
-                        </div>
-                        <div class="prize-compact-item">
-                            <div class="prize-rank-compact">4th-5th</div>
-                            <div class="prize-amount-compact">0.2 TON</div>
-                        </div>
-                        <div class="prize-compact-item">
-                            <div class="prize-rank-compact">6th-8th</div>
-                            <div class="prize-amount-compact">0.1 TON</div>
-                        </div>
-                        <div class="prize-compact-item">
-                            <div class="prize-rank-compact">9th-10th</div>
-                            <div class="prize-amount-compact">0.05 TON</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contest-leaderboard-compact">
-                        <h3>🏅 Top 10 Leaders</h3>
-                        <div id="contest-leaderboard-compact-list">
-                            <!-- سيتم إضافة قائمة المتصدرين المختصرة هنا -->
-                        </div>
-                        <div class="view-full-leaderboard">
-                            <button class="view-full-btn" onclick="showFullLeaderboard()">
-                                View Full Leaderboard (Top 50)
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="leaderboard-page" class="page">
-                <h2>Leaderboard</h2>
-                <div class="leaderboard-toggle">
-                    <button class="toggle-btn active" data-board="referral">Top Referrers</button>
-                    <button class="toggle-btn" data-board="earning">Top Earners</button>
-                </div>
-                <div id="referral-board"><ul class="leaderboard-list" id="referral-leaderboard-list"></ul></div>
-                <div id="earning-board" style="display: none;"><ul class="leaderboard-list" id="earning-leaderboard-list"></ul></div>
-            </div>
-            <div id="profile-page" class="page">
-                <div id="referral-section"></div>
-                <div id="withdraw-section"></div>
-                <div id="withdrawal-history-section" style="margin-top: 20px;">
-                    <h2>Withdrawal History</h2><div id="withdrawal-history-list"></div>
-                </div>
-            </div>
-        </main>
-        <nav class="bottom-nav">
-            <button class="nav-btn active" data-page="home-page"><i class="fas fa-home"></i><span>Home</span></button>
-            <button class="nav-btn" data-page="tasks-page"><i class="fas fa-tasks"></i><span>Tasks</span></button>
-            <button class="nav-btn" data-page="contest-page"><i class="fas fa-trophy"></i><span>Contest</span></button>
-            <button class="nav-btn" data-page="leaderboard-page"><i class="fas fa-ranking-star"></i><span>Ranking</span></button>
-            <button class="nav-btn" data-page="profile-page"><i class="fas fa-user-alt"></i><span>Profile</span></button>
-        </nav>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- إضافة مكتبة crypto-js للتحقق من التوقيع -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const tg = window.Telegram?.WebApp || {};
-        
-        // ✅ إعدادات Firebase
-        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lBazkwOUNGblc0Wk1lQkVNMXl4UmJRYlc5dzZVTm81OCIsImF1dGhEb21haW4iOiJlYXJuLW1vbmV5LWMzYmFkLmZpcmViYXNlYXBwLmNvbSIsImRhdGFiYXNlVVJMIjoiaHR0cHM6Ly9lYXJuLW1vbmV5LWMzYmFkLWRlZmF1bHQtcnRkYi5maXJlYmFzZWlvLmNvbSIsInByb2plY3RJZCI6ImVhcm4tbW9uZXktYzNiYWQiLCJzdG9yYWdlQnVja2V0IjoiZWFybi1tb25leS1jM2JhZC5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIxMDIyNjg4NTY2MDExIiwiYXBwSWQiOiIxOjEwMjI2ODg1NjYwMTE6d2ViOjY5MGY2ZmFhMTlkZDMzMzdhMmVlNWUiLCJtZWFzdXJlbWVudElkIjoiRy0wQ0gxTEJGTEgyIn0="));
-
-        const NOTIFICATION_USERNAME = "aborabie777";
-
-        // ✅ متغيرات جديدة من Firebase
-        let dailyLoginRewards = [0.0001, 0.0002, 0.0004, 0.0008, 0.0016, 0.0032, 0.0064]; // القيم الافتراضية
-        let minAdDuration = 15000; // 15 ثانية افتراضياً
-        let isUserBanned = false;
-        let banReason = "";
-
-        // باقي المتغيرات تبقى كما هي
-        let lastAdWatchTime = 0;
-        let adStartTime = 0;
-        let isAdInProgress = false;
-        let adWatchTimer = null;
-
-        let appConfig = {}; let userState = {}; let tgUser = {}; let earningWalletBalance = 0;
-        let leaderboardData = { referral: [], earning: [] };
-        let userTransactions = [];
-        let isSubscribedToAllChannels = false;
-
-        // ✅ بيانات المسابقة
-        let contestData = {
-            userPoints: 0,
-            userRank: 0,
-            leaderboard: [],
-            endTime: null,
-            durationDays: 7
-        };
-
-        // ✅ بيانات التسجيل اليومي
-        let dailyLoginData = {
-            currentStreak: 0,
-            lastLoginDate: null,
-            claimedDays: []
-        };
-
-        // ✅ بيانات نظام الإحالات الجديد
-        let referralData = {
-            totalEarnings: 0,
-            pendingEarnings: 0,
-            referredUsers: []
-        };
-
-        // ✅ بيانات الأكواد
-        let redeemedCodes = [];
-
-        // ✅ قائمة القنوات المطلوبة للاشتراك
-        const requiredChannels = [
-            {
-                id: 'earnmoney174688',
-                name: 'Earn Money Public',
-                username: 'earnmoney174688',
-                url: 'https://t.me/earnmoney174688',
-                icon: 'https://img.icons8.com/ios-filled/100/group.png'
-            },
-            {
-                id: 'earnmoney139482',
-                name: 'Earn Money Withdrawals',
-                username: 'earnmoney139482', 
-                url: 'https://t.me/earnmoney139482',
-                icon: 'https://img.icons8.com/ios-filled/100/money-bag.png'
-            },
-            {
-                id: 'earnmoneywithredone',
-                name: 'Earn Money With Redone',
-                username: 'EarnMoneyWithRedone',
-                url: 'https://t.me/EarnMoneyWithRedone',
-                icon: 'https://img.icons8.com/ios-filled/100/rocket.png'
-            }
-        ];
-
-        // ✅ قنوات الإعلانات
-        let adChannels = [];
-
-        const popup = document.getElementById('popup');
-        const popupBody = document.getElementById('popup-body');
-        const loadingProgress = document.getElementById('loading-progress');
-
-        const showPopup = (content) => { popupBody.innerHTML = content; popup.style.display = 'flex'; };
-        const closePopup = () => { popup.style.display = 'none'; };
-        const updateProgress = (percentage) => { loadingProgress.textContent = `${percentage}%`; };
-
-        // ✅ دالة للتحقق من توقيع initData الخاص بـ Telegram
-        const verifyTelegramInitData = async (initData) => {
-            try {
-                console.log('🔐 Starting Telegram initData verification...');
-                
-                // إذا لم يكن هناك initData، نعود بقيمة false
-                if (!initData) {
-                    console.warn('❌ No initData provided');
-                    return { valid: false, reason: 'initData is missing' };
-                }
-
-                // استخراج المعلمات من initData
-                const params = new URLSearchParams(initData);
-                const hash = params.get('hash');
-                
-                if (!hash) {
-                    console.warn('❌ No hash found in initData');
-                    return { valid: false, reason: 'Invalid cryptographic signature' };
-                }
-
-                // إزالة hash من المعلمات للتحقق
-                params.delete('hash');
-                
-                // ترتيب المعلمات أبجدياً
-                const sortedParams = Array.from(params.entries())
-                    .sort(([a], [b]) => a.localeCompare(b))
-                    .map(([key, value]) => `${key}=${value}`)
-                    .join('\n');
-
-                console.log('📋 Sorted parameters for verification:', sortedParams);
-
-                // الحصول على Bot Token من Firebase
-                const db = firebase.database();
-                const configSnapshot = await db.ref('config').once('value');
-                const config = configSnapshot.val() || {};
-                const botToken = config.botToken;
-
-                if (!botToken) {
-                    console.error('❌ Bot token not found in Firebase config');
-                    return { valid: false, reason: 'Bot configuration error' };
-                }
-
-                console.log('✅ Bot token retrieved from Firebase');
-
-                // إنشاء مفتاح سرّي من Bot Token باستخدام HMAC-SHA256
-                const secretKey = CryptoJS.HmacSHA256(botToken, 'WebAppData');
-                
-                // حساب التوقيع المتوقع
-                const dataCheckString = sortedParams;
-                const expectedHash = CryptoJS.HmacSHA256(dataCheckString, secretKey).toString(CryptoJS.enc.Hex);
-                
-                console.log('🔍 Hash comparison:', {
-                    received: hash,
-                    expected: expectedHash,
-                    match: hash === expectedHash
-                });
-
-                // مقارنة التوقيعات
-                if (hash === expectedHash) {
-                    console.log('✅ Telegram initData verification SUCCESSFUL');
-                    return { valid: true };
-                } else {
-                    console.error('❌ Telegram initData verification FAILED - Hash mismatch');
-                    return { valid: false, reason: 'Invalid cryptographic signature' };
-                }
-
-            } catch (error) {
-                console.error('❌ Error verifying Telegram initData:', error);
-                return { valid: false, reason: 'Verification error: ' + error.message };
-            }
-        };
-
-        // ✅ دالة محسنة للتحقق من أمان التطبيق - المعدلة حسب المتطلبات
-        const checkAppSecurity = async () => {
-            try {
-                console.log('🔒 Starting comprehensive security check...');
-                
-                // عرض شاشة التحقق
-                document.getElementById('security-page').style.display = 'flex';
-                document.getElementById('app-loader').style.display = 'none';
-                document.getElementById('security-reason').textContent = 'Verifying Telegram authentication...';
-
-                // التحقق من وجود Telegram WebApp
-                if (!window.Telegram || !window.Telegram.WebApp) {
-                    document.getElementById('security-reason').textContent = 'Telegram WebApp not detected. Please open this app through Telegram.';
-                    document.getElementById('security-details').textContent = 'Error: Telegram WebApp SDK not found';
-                    return false;
-                }
-
-                // التحقق من initData - ✅ التعديل هنا: إذا كان initData مفقوداً نمنع فتح الموقع
-                const initData = tg.initData;
-                if (!initData) {
-                    document.getElementById('security-reason').textContent = 'Authentication data not found. Please try reopening the app.';
-                    document.getElementById('security-details').textContent = 'Error: initData is missing';
-                    return false; // ❌ نمنع فتح الموقع
-                }
-
-                document.getElementById('security-reason').textContent = 'Verifying cryptographic signature...';
-                document.getElementById('security-details').textContent = 'Checking initData signature...';
-
-                // التحقق من توقيع initData
-                const verificationResult = await verifyTelegramInitData(initData);
-                
-                if (!verificationResult.valid) {
-                    // ✅ التعديل هنا: إذا كان السبب هو توقيع غير صالح، نعرض تحذير ونسمح بالاستمرار
-                    if (verificationResult.reason === 'Invalid cryptographic signature') {
-                        console.warn('⚠️ Invalid signature detected - showing warning but allowing access');
-                        
-                        // إخفاء شاشة التحقق وإظهار شاشة التحذير
-                        document.getElementById('security-page').style.display = 'none';
-                        document.getElementById('warning-page').style.display = 'flex';
-                        document.getElementById('warning-reason').textContent = 
-                            'Security Warning: Invalid cryptographic signature detected. ' +
-                            'This may indicate a security issue. Continue at your own risk.';
-                        
-                        // انتظار قرار المستخدم
-                        return new Promise((resolve) => {
-                            document.getElementById('warning-continue-btn').onclick = () => {
-                                document.getElementById('warning-page').style.display = 'none';
-                                resolve(true); // السماح بالاستمرار
-                            };
-                        });
-                    } else {
-                        // ❌ لأي سبب آخر (مثل initData مفقود) نمنع فتح الموقع
-                        document.getElementById('security-reason').textContent = verificationResult.reason;
-                        document.getElementById('security-details').textContent = 'Security verification failed';
-                        return false;
-                    }
-                }
-
-                // التحقق من وجود بيانات المستخدم
-                const user = tg.initDataUnsafe?.user;
-                if (!user || !user.id) {
-                    document.getElementById('security-reason').textContent = 'User authentication failed. Please try again.';
-                    document.getElementById('security-details').textContent = 'Error: User data not found in initData';
-                    return false;
-                }
-
-                console.log('✅ All security checks passed');
-                document.getElementById('security-page').style.display = 'none';
-                return true;
-
-            } catch (error) {
-                console.error('❌ Security check failed:', error);
-                document.getElementById('security-reason').textContent = 'Security verification error. Please contact support.';
-                document.getElementById('security-details').textContent = `Error: ${error.message}`;
-                return false;
-            }
-        };
-
-        // ✅ دالة للتحقق من حالة الحظر
-        const checkUserBanStatus = async (db) => {
-            try {
-                const banRef = db.ref(`bannedUsers/${tgUser.id}`);
-                const banSnap = await banRef.once('value');
-                const banData = banSnap.val();
-                
-                if (banData && banData.isBanned) {
-                    isUserBanned = true;
-                    banReason = banData.reason || "Violation of terms of service";
-                    showBannedPage();
-                    return true;
-                }
-                return false;
-            } catch (error) {
-                console.error('Error checking ban status:', error);
-                return false;
-            }
-        };
-
-        // ✅ دالة لعرض صفحة الحظر
-        const showBannedPage = () => {
-            document.getElementById('banned-reason').textContent = banReason;
-            document.getElementById('banned-page').style.display = 'flex';
-            document.getElementById('app-loader').style.display = 'none';
-            document.getElementById('subscription-page').style.display = 'none';
-            document.getElementById('app').style.display = 'none';
-            document.getElementById('security-page').style.display = 'none';
-            document.getElementById('warning-page').style.display = 'none';
-        };
-
-        // ✅ دالة لتحميل الإعدادات من Firebase
-        const loadDynamicSettings = async (db) => {
-            try {
-                const settingsRef = db.ref('settings');
-                const settingsSnap = await settingsRef.once('value');
-                const settings = settingsSnap.val();
-                
-                if (settings) {
-                    // تحميل مكافآت التسجيل اليومي
-                    if (settings.dailyLoginRewards && Array.isArray(settings.dailyLoginRewards)) {
-                        dailyLoginRewards = settings.dailyLoginRewards;
-                    }
-                    
-                    // تحميل وقت مشاهدة الإعلان الأدنى
-                    if (settings.minAdDuration) {
-                        minAdDuration = settings.minAdDuration;
-                    }
-                    
-                    console.log('✅ Dynamic settings loaded:', { dailyLoginRewards, minAdDuration });
-                }
-            } catch (error) {
-                console.error('Error loading dynamic settings:', error);
-            }
-        };
-
-        // ✅ دالة محسنة لمشاهدة الإعلان باستخدام الوقت من Firebase
-        const handleWatchAd = async () => {
-            if (isUserBanned) {
-                try{ 
-                    if (tg.showAlert) tg.showAlert("Your account is banned. Contact support."); 
-                }catch{} 
-                return; 
-            }
-
-            if (!isSubscribedToAllChannels) {
-                try{ 
-                    if (tg.showAlert) tg.showAlert("Please subscribe to all required channels first!"); 
-                }catch{} 
-                return; 
-            }
-
-            if (userState.dailyAdCount >= appConfig.dailyAdLimit) { 
-                try{ 
-                    if (tg.showAlert) tg.showAlert("You have reached your daily ad watch limit."); 
-                }catch{} 
-                return; 
-            }
-            
-            const currentTime = Date.now();
-            if (userState.breakUntil && currentTime < userState.breakUntil) {
-                const remaining = Math.ceil((userState.breakUntil - currentTime) / 60000);
-                try{ 
-                    if (tg.showAlert) tg.showAlert(`Please wait for ${remaining} more minutes.`); 
-                }catch{} 
-                return;
-            }
-
-            const adFunction = window['show_' + appConfig.adZoneId];
-            if (typeof adFunction !== 'function') {
-                try{ 
-                    if (tg.showAlert) tg.showAlert("Ad network is not ready yet. Please wait a few seconds and try again."); 
-                }catch{} 
-                return;
-            }
-
-            const watchBtn = document.getElementById('watch-ad-btn');
-            if (watchBtn) {
-                watchBtn.disabled = true;
-                watchBtn.textContent = 'Loading...';
-            }
-
             showPopup(`
                 <div style="margin-bottom:10px;">
                     <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
@@ -731,14 +35,20 @@
                 const adValue = parseFloat(appConfig.adValue || 0);
 
                 earningWalletBalance += adValue;
-                localStorage.setItem(`earningWallet_${tgUser.id || 'guest'}`, earningWalletBalance.toString());
+                
+                // ✅ تحديث localStorage باستخدام auth.uid
+                const currentUser = firebase.auth().currentUser;
+                if (currentUser) {
+                    localStorage.setItem(`earningWallet_${currentUser.uid}`, earningWalletBalance.toString());
+                }
 
                 userState.dailyAdCount++;
                 userState.lifetimeAdCount++;
                 userState.totalEarned = (userState.totalEarned || 0) + adValue;
 
                 const db = firebase.database(); 
-                const userRef = db.ref(`users/${tgUser.id}`);
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                const userRef = db.ref(`users/${currentUserId}`);
                 const updates = {};
                 updates.dailyAdCount = userState.dailyAdCount;
                 updates.lifetimeAdCount = userState.lifetimeAdCount;
@@ -751,11 +61,11 @@
                 await userRef.update(updates);
 
                 const today = new Date().toISOString().slice(0, 10);
-                await db.ref(`userEarnings/${tgUser.id}/${today}`).set(firebase.database.ServerValue.increment(adValue));
+                await db.ref(`userEarnings/${currentUserId}/${today}`).set(firebase.database.ServerValue.increment(adValue));
 
                 // ✅ تحديث أرباح الإحالات للمُحيل
                 if (userState.referredBy) {
-                    await updateReferralEarnings(tgUser.id, adValue);
+                    await updateReferralEarnings(currentUserId, adValue);
                 }
 
                 await updateContestPointsOnAdWatch();
@@ -786,6 +96,9 @@
         const claimDailyLoginBonus = async () => {
             try {
                 const db = firebase.database();
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
                 const today = new Date().toDateString();
                 
                 if (dailyLoginData.claimedDays && dailyLoginData.claimedDays.includes(today)) {
@@ -799,7 +112,7 @@
                 const currentDay = Math.min(dailyLoginData.currentStreak, dailyLoginRewards.length) - 1;
                 const rewardAmount = dailyLoginRewards[currentDay] || dailyLoginRewards[dailyLoginRewards.length - 1] || 0.0001;
                 
-                const userRef = db.ref(`users/${tgUser.id}`);
+                const userRef = db.ref(`users/${currentUserId}`);
                 await userRef.child('balance').set(firebase.database.ServerValue.increment(rewardAmount));
                 userState.balance = (userState.balance || 0) + rewardAmount;
                 
@@ -808,7 +121,7 @@
                 }
                 dailyLoginData.claimedDays.push(today);
                 
-                const dailyLoginRef = db.ref(`dailyLogin/${tgUser.id}`);
+                const dailyLoginRef = db.ref(`dailyLogin/${currentUserId}`);
                 await dailyLoginRef.set(dailyLoginData);
                 
                 try{ 
@@ -821,7 +134,6 @@
             } catch (error) {
                 console.error('Error claiming daily login bonus:', error);
                 try{ 
-
                     if (tg.showAlert) tg.showAlert("Failed to claim daily bonus. Please try again."); 
                 }catch{} 
             }
@@ -1084,8 +396,11 @@
                 e.target.textContent = 'Claiming...';
                 
                 try {
-                    const db = firebase.database(); 
-                    const userRef = db.ref(`users/${tgUser.id}`);
+                    const db = firebase.database();
+                    const currentUser = firebase.auth().currentUser;
+                    const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                    
+                    const userRef = db.ref(`users/${currentUserId}`);
                     await userRef.child(`completedTasks/${taskId}`).set(true);
                     await userRef.child('balance').set(firebase.database.ServerValue.increment(task.reward));
                     userState.balance = (userState.balance || 0) + task.reward;
@@ -1114,7 +429,6 @@
                 return;
             }
 
-            // باقي الكود كما هو...
             const referralParam = getReferralParam();
             let referralIdCandidate = null;
 
@@ -1128,7 +442,8 @@
                 }
             }
 
-            const localUserId = (tgUser && tgUser.id) ? tgUser.id : ('guest_' + (Date.now()));
+            const currentUser = firebase.auth().currentUser;
+            const localUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
 
             const userRef = db.ref(`users/${localUserId}`);
             const snapshot = await userRef.once('value');
@@ -1137,6 +452,7 @@
             if (!userData) {
                 userData = {
                     id: localUserId,
+                    telegramId: tgUser.id,
                     firstName: (tgUser && tgUser.first_name) || '',
                     lastName: (tgUser && tgUser.last_name) || '',
                     username: (tgUser && tgUser.username) || '',
@@ -1176,19 +492,9 @@
             userState = userData;
         };
 
-        // ✅ دالة محسنة لتهيئة التطبيق مع التحقق من التوقيع - المعدلة حسب المتطلبات
+        // ✅ دالة محسنة لتهيئة التطبيق
         const initApp = async () => {
             try {
-                // التحقق من أمان التطبيق أولاً
-                const isSecure = await checkAppSecurity();
-                if (!isSecure) {
-                    console.error('❌ App security check failed');
-                    return;
-                }
-
-                // إذا وصلنا إلى هنا، يعني أن التحقق تم بنجاح أو المستخدم اختار الاستمرار رغم التحذير
-                console.log('✅ Security check passed or user chose to continue');
-
                 if (tg.ready) { tg.ready(); try { tg.expand(); } catch(e){} }
                 
                 if (tg.colorScheme && tg.colorScheme === 'dark') { 
@@ -1210,13 +516,21 @@
                 });
 
                 updateProgress(10); 
-                firebase.initializeApp(firebaseConfig); 
-                const db = firebase.database();
+                
+                // ✅ تهيئة Firebase مع المصادقة
+                firebase.initializeApp(firebaseConfig);
+                
+                // ✅ تسجيل الدخول بشكل مجهول باستخدام Telegram User ID
+                updateProgress(15);
+                await signInWithTelegramId(tgUser.id);
                 updateProgress(20);
+                
+                const db = firebase.database();
+                updateProgress(25);
 
                 // تحميل الإعدادات الديناميكية
                 await loadDynamicSettings(db);
-                updateProgress(25);
+                updateProgress(30);
 
                 const configSnapshot = await db.ref('config').once('value');
                 appConfig = configSnapshot.val() || {};
@@ -1323,6 +637,7 @@
                 await loadUserData(db);
                 updateProgress(60);
 
+                // ✅ تحديث استعلامات leaderboard
                 const referralBoardPromise = db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
                 const earningBoardPromise = db.ref('users').orderByChild('totalEarned').limitToLast(10).once('value');
                 const historyPromise = loadTransactionHistory(db);
@@ -1330,14 +645,25 @@
                 const [referralBoardSnap, earningBoardSnap] = await Promise.all([referralBoardPromise, earningBoardPromise, historyPromise]);
                 updateProgress(80);
 
-                referralBoardSnap.forEach(child => { leaderboardData.referral.push(child.val()); });
-                earningBoardSnap.forEach(child => { leaderboardData.earning.push(child.val()); });
+                referralBoardSnap.forEach(child => { 
+                    if (child.val()) leaderboardData.referral.push(child.val()); 
+                });
+                earningBoardSnap.forEach(child => { 
+                    if (child.val()) leaderboardData.earning.push(child.val()); 
+                });
                 leaderboardData.referral.reverse(); 
                 leaderboardData.earning.reverse();
                 updateProgress(90);
 
                 loadAdSdk(appConfig.adZoneId);
-                earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id || 'guest'}`) || '0');
+                
+                // ✅ تحديث localStorage باستخدام auth.uid
+                const currentUser = firebase.auth().currentUser;
+                if (currentUser) {
+                    earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${currentUser.uid}`) || '0');
+                } else {
+                    earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id || 'guest'}`) || '0');
+                }
 
                 renderUI(); 
                 setupNavigation(); 
@@ -1371,7 +697,10 @@
                     contestData.endTime = contestConfig.endTime;
                 }
                 
-                const userContestRef = db.ref(`contest/participants/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const userContestRef = db.ref(`contest/participants/${currentUserId}`);
                 const userContestSnap = await userContestRef.once('value');
                 const userContestData = userContestSnap.val() || { points: 0, adsWatched: 0, referrals: 0 };
                 
@@ -1388,7 +717,7 @@
                 
                 contestData.userRank = 0;
                 contestData.leaderboard.forEach((participant, index) => {
-                    if (participant.userId === tgUser.id) {
+                    if (participant.userId === currentUserId) {
                         contestData.userRank = index + 1;
                     }
                 });
@@ -1401,7 +730,10 @@
         // ✅ دالة لتحميل بيانات التسجيل اليومي
         const loadDailyLoginData = async (db) => {
             try {
-                const dailyLoginRef = db.ref(`dailyLogin/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const dailyLoginRef = db.ref(`dailyLogin/${currentUserId}`);
                 const dailyLoginSnap = await dailyLoginRef.once('value');
                 const savedData = dailyLoginSnap.val();
                 
@@ -1418,6 +750,9 @@
 
         // ✅ دالة للتحقق من التسجيل اليومي
         const checkDailyLogin = async (db) => {
+            const currentUser = firebase.auth().currentUser;
+            const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+            
             const today = new Date().toDateString();
             const lastLogin = dailyLoginData.lastLoginDate;
             
@@ -1434,7 +769,7 @@
                 
                 dailyLoginData.lastLoginDate = today;
                 
-                const dailyLoginRef = db.ref(`dailyLogin/${tgUser.id}`);
+                const dailyLoginRef = db.ref(`dailyLogin/${currentUserId}`);
                 await dailyLoginRef.set(dailyLoginData);
             }
         };
@@ -1442,7 +777,10 @@
         // ✅ دالة لتحميل بيانات نظام الإحالات الجديد
         const loadReferralData = async (db) => {
             try {
-                const referralRef = db.ref(`referrals/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const referralRef = db.ref(`referrals/${currentUserId}`);
                 const referralSnap = await referralRef.once('value');
                 const savedData = referralSnap.val();
                 
@@ -1451,7 +789,7 @@
                 }
                 
                 // تحميل قائمة المستخدمين الذين تمت دعوتهم
-                const referredUsersRef = db.ref('users').orderByChild('referredBy').equalTo(tgUser.id);
+                const referredUsersRef = db.ref('users').orderByChild('referredBy').equalTo(currentUserId);
                 const referredUsersSnap = await referredUsersRef.once('value');
                 
                 referralData.referredUsers = [];
@@ -1475,7 +813,10 @@
         // ✅ دالة لتحميل بيانات الأكواد
         const loadRedeemedCodes = async (db) => {
             try {
-                const redeemedCodesRef = db.ref(`redeemedCodes/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const redeemedCodesRef = db.ref(`redeemedCodes/${currentUserId}`);
                 const redeemedCodesSnap = await redeemedCodesRef.once('value');
                 const savedCodes = redeemedCodesSnap.val();
                 
@@ -1704,7 +1045,8 @@
 
         // ✅ دالة لتحميل بيانات المستخدم الأساسية بدون اشتراك
         const loadBasicUserData = async (db) => {
-            const localUserId = (tgUser && tgUser.id) ? tgUser.id : ('guest_' + (Date.now()));
+            const currentUser = firebase.auth().currentUser;
+            const localUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
 
             const userRef = db.ref(`users/${localUserId}`);
             const snapshot = await userRef.once('value');
@@ -1713,6 +1055,7 @@
             if (!userData) {
                 userData = {
                     id: localUserId,
+                    telegramId: tgUser.id,
                     firstName: (tgUser && tgUser.first_name) || '',
                     lastName: (tgUser && tgUser.last_name) || '',
                     username: (tgUser && tgUser.username) || '',
@@ -1756,7 +1099,10 @@
         const updateContestPointsOnAdWatch = async () => {
             try {
                 const db = firebase.database();
-                const userContestRef = db.ref(`contest/participants/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const userContestRef = db.ref(`contest/participants/${currentUserId}`);
                 
                 const userContestSnap = await userContestRef.once('value');
                 const currentData = userContestSnap.val() || { 
@@ -1765,7 +1111,7 @@
                     referrals: 0,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: tgUser.id
+                    userId: currentUserId
                 };
                 
                 const newPoints = (currentData.points || 0) + 1;
@@ -1776,7 +1122,7 @@
                     adsWatched: newAdsWatched,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: tgUser.id,
+                    userId: currentUserId,
                     lastActivity: firebase.database.ServerValue.TIMESTAMP
                 });
                 
@@ -1826,7 +1172,8 @@
         const updateReferralEarnings = async (referredUserId, earnings) => {
             try {
                 const db = firebase.database();
-                const referrerId = tgUser.id;
+                const currentUser = firebase.auth().currentUser;
+                const referrerId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
                 
                 if (!referrerId) return;
                 
@@ -1879,8 +1226,12 @@
         const loadTransactionHistory = async (db) => {
             userTransactions = [];
             const statuses = ['pending', 'completed', 'rejected'];
+            
+            const currentUser = firebase.auth().currentUser;
+            const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+            
             const historyPromises = statuses.map(status => 
-                db.ref(`withdrawals/${status}`).orderByChild('userId').equalTo(tgUser.id).once('value')
+                db.ref(`withdrawals/${status}`).orderByChild('userId').equalTo(currentUserId).once('value')
             );
             const snapshots = await Promise.all(historyPromises);
             snapshots.forEach(snap => { 
@@ -1938,8 +1289,12 @@
                 date.setDate(today.getDate() - i); 
                 dates.push(date.toISOString().slice(0, 10)); 
             }
+            
+            const currentUser = firebase.auth().currentUser;
+            const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+            
             const earningsPromises = dates.map(date => 
-                firebase.database().ref(`userEarnings/${tgUser.id}/${date}`).once('value')
+                firebase.database().ref(`userEarnings/${currentUserId}/${date}`).once('value')
             );
             try {
                 const snapshots = await Promise.all(earningsPromises);
@@ -1978,10 +1333,18 @@
             btn.textContent = 'Moving...';
             try {
                 const db = firebase.database();
-                await db.ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(earningWalletBalance));
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                await db.ref(`users/${currentUserId}/balance`).set(firebase.database.ServerValue.increment(earningWalletBalance));
                 userState.balance = (userState.balance || 0) + earningWalletBalance;
                 earningWalletBalance = 0;
-                localStorage.setItem(`earningWallet_${tgUser.id}`, '0');
+                
+                // ✅ تحديث localStorage باستخدام auth.uid
+                if (currentUser) {
+                    localStorage.setItem(`earningWallet_${currentUser.uid}`, '0');
+                }
+                
                 try{ 
                     if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); 
                     if (tg.showAlert) tg.showAlert("Successfully moved to main balance!"); 
@@ -2111,7 +1474,15 @@
         };
 
         const copyReferralLink = () => {
-            const refLinkInput = document.getElementById('referral-link');
+            const currentUser = firebase.auth().currentUser;
+            const currentUserId = currentUser ? currentUser.uid : tgUser.id;
+            
+            const botUsername = appConfig.botUsername || "Aborabie777_bot";
+            const refLink = `https://t.me/${botUsername}?startapp=${currentUserId}`;
+            
+            const refLinkInput = document.createElement('input');
+            refLinkInput.value = refLink;
+            document.body.appendChild(refLinkInput);
             refLinkInput.select();
             refLinkInput.setSelectionRange(0, 99999);
             try {
@@ -2127,6 +1498,8 @@
                     if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); 
                     if (tg.showAlert) tg.showAlert("Referral link copied!"); 
                 }catch{}
+            } finally {
+                document.body.removeChild(refLinkInput);
             }
         };
 
@@ -2188,8 +1561,8 @@
             
             // ✅ تعديل أسماء طرق السحب
             const withdrawMethods = [
-                { name: 'FaucetPay', min: 0.0001, icon: 'https://img.icons8.com/ios-filled/100/email.png' }, // ✅ تغيير من 0.00001 إلى 0.0001
-                { name: 'TON', min: 0.05, icon: 'https://img.icons8.com/ios-filled/100/wallet.png' } // ✅ تغيير من TONKeeper إلى TON
+                { name: 'FaucetPay', min: 0.0001, icon: 'https://img.icons8.com/ios-filled/100/email.png' },
+                { name: 'TON', min: 0.05, icon: 'https://img.icons8.com/ios-filled/100/wallet.png' }
             ];
             
             if (appConfig.withdrawMethods) { 
@@ -2624,7 +1997,7 @@
             // ✅ تعديل الحد الأدنى للسحب
             let minAmount = 0.001;
             if (selectedMethod === 'FaucetPay') {
-                minAmount = 0.0001; // ✅ تغيير من 0.00001 إلى 0.0001
+                minAmount = 0.0001;
             } else if (selectedMethod === 'TON') {
                 minAmount = 0.05;
             }
@@ -2648,7 +2021,10 @@
             btn.textContent = 'Submitting...';
             const db = firebase.database();
             try {
-                const userRef = db.ref(`users/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const userRef = db.ref(`users/${currentUserId}`);
                 userState.balance = (userState.balance || 0) - amount;
                 renderUI();
 
@@ -2656,7 +2032,7 @@
                 const reqId = db.ref('withdrawals/pending').push().key;
                 const newRequest = { 
                     id: reqId, 
-                    userId: tgUser.id, 
+                    userId: currentUserId, 
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(), 
                     username: tgUser.username || '',
                     method: selectedMethod, 
@@ -2778,7 +2154,10 @@
                 
                 // ✅ حفظ الكود المستخدم
                 redeemedCodes.push(code);
-                const redeemedCodesRef = db.ref(`redeemedCodes/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const redeemedCodesRef = db.ref(`redeemedCodes/${currentUserId}`);
                 await redeemedCodesRef.set(redeemedCodes);
                 
                 try{ 
@@ -2811,7 +2190,10 @@
         const awardContestPoints = async (points) => {
             try {
                 const db = firebase.database();
-                const userContestRef = db.ref(`contest/participants/${tgUser.id}`);
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                
+                const userContestRef = db.ref(`contest/participants/${currentUserId}`);
                 
                 const userContestSnap = await userContestRef.once('value');
                 const currentData = userContestSnap.val() || { 
@@ -2820,7 +2202,7 @@
                     referrals: 0,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: tgUser.id
+                    userId: currentUserId
                 };
                 
                 const newPoints = (currentData.points || 0) + points;
@@ -2829,7 +2211,7 @@
                     points: newPoints,
                     userName: `${userState.firstName || ''} ${userState.lastName || ''}`.trim(),
                     username: tgUser.username || '',
-                    userId: tgUser.id,
+                    userId: currentUserId,
                     lastActivity: firebase.database.ServerValue.TIMESTAMP
                 });
                 
@@ -2844,6 +2226,8 @@
         const claimReferralEarnings = async () => {
             try {
                 const db = firebase.database();
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
                 
                 if (referralData.pendingEarnings <= 0) {
                     try{ 
@@ -2852,14 +2236,14 @@
                     return;
                 }
                 
-                const userRef = db.ref(`users/${tgUser.id}`);
+                const userRef = db.ref(`users/${currentUserId}`);
                 await userRef.child('balance').set(firebase.database.ServerValue.increment(referralData.pendingEarnings));
                 userState.balance = (userState.balance || 0) + referralData.pendingEarnings;
                 
                 referralData.totalEarnings += referralData.pendingEarnings;
                 referralData.pendingEarnings = 0;
                 
-                const referralRef = db.ref(`referrals/${tgUser.id}`);
+                const referralRef = db.ref(`referrals/${currentUserId}`);
                 await referralRef.set(referralData);
                 
                 try{ 
@@ -2923,7 +2307,9 @@
             
             top10.forEach((participant, index) => {
                 const rank = index + 1;
-                const isCurrentUser = participant.userId === tgUser.id;
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                const isCurrentUser = participant.userId === currentUserId;
                 
                 let rankIcon = rank;
                 if (rank === 1) rankIcon = '🥇';
@@ -3006,7 +2392,9 @@
             
             top50.forEach((participant, index) => {
                 const rank = index + 1;
-                const isCurrentUser = participant.userId === tgUser.id;
+                const currentUser = firebase.auth().currentUser;
+                const currentUserId = currentUser ? currentUser.uid : `telegram_${tgUser.id}`;
+                const isCurrentUser = participant.userId === currentUserId;
                 const prizeAmount = getPrizeForRank(rank);
                 const prizeText = prizeAmount > 0 ? `${prizeAmount} TON` : '';
                 
@@ -3053,9 +2441,10 @@
             
             const referralBonus = appConfig.referralBonus || 0.001;
             const botUsername = appConfig.botUsername || "Aborabie777_bot";
-            const userId = tgUser.id || '';
+            const currentUser = firebase.auth().currentUser;
+            const currentUserId = currentUser ? currentUser.uid : tgUser.id;
             
-            const refLink = `https://t.me/${botUsername}?startapp=${userId}`;
+            const refLink = `https://t.me/${botUsername}?startapp=${currentUserId}`;
             
             let referredUsersHTML = '';
             if (referralData.referredUsers.length > 0) {

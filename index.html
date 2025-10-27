@@ -1108,9 +1108,62 @@
             font-size: 0.9rem;
             opacity: 0.8;
         }
+
+        /* أنماط التحقق من التوقيع */
+        .security-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .security-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .security-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .security-message {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            max-width: 400px;
+        }
+        
+        .security-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 15px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body class="dark-theme">
+    <!-- شاشة التحقق من التوقيع -->
+    <div id="security-page" class="security-container">
+        <div class="security-icon">🔒</div>
+        <div class="security-title">Security Verification</div>
+        <div class="security-message" id="security-reason">Verifying Telegram authentication...</div>
+        <div class="security-details" id="security-details"></div>
+    </div>
+
     <!-- شاشة الحظر -->
     <div id="banned-page" class="banned-container">
         <div class="banned-icon">🚫</div>
@@ -1315,12 +1368,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- إضافة مكتبة crypto-js للتحقق من التوقيع -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram?.WebApp || {};
         
-        // ✅ إعدادات Firebase مشفرة وغير مرئية
+        // ✅ إعدادات Firebase
         const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lBazkwOUNGblc0Wk1lQkVNMXl4UmJRYlc5dzZVTm81OCIsImF1dGhEb21haW4iOiJlYXJuLW1vbmV5LWMzYmFkLmZpcmViYXNlYXBwLmNvbSIsImRhdGFiYXNlVVJMIjoiaHR0cHM6Ly9lYXJuLW1vbmV5LWMzYmFkLWRlZmF1bHQtcnRkYi5maXJlYmFzZWlvLmNvbSIsInByb2plY3RJZCI6ImVhcm4tbW9uZXktYzNiYWQiLCJzdG9yYWdlQnVja2V0IjoiZWFybi1tb25leS1jM2JhZC5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIxMDIyNjg4NTY2MDExIiwiYXBwSWQiOiIxOjEwMjI2ODg1NjYwMTE6d2ViOjY5MGY2ZmFhMTlkZDMzMzdhMmVlNWUiLCJtZWFzdXJlbWVudElkIjoiRy0wQ0gxTEJGTEgyIn0="));
 
         const NOTIFICATION_USERNAME = "aborabie777";
@@ -1404,6 +1459,135 @@
         const closePopup = () => { popup.style.display = 'none'; };
         const updateProgress = (percentage) => { loadingProgress.textContent = `${percentage}%`; };
 
+        // ✅ دالة للتحقق من توقيع initData الخاص بـ Telegram
+        const verifyTelegramInitData = async (initData) => {
+            try {
+                console.log('🔐 Starting Telegram initData verification...');
+                
+                // إذا لم يكن هناك initData، نعود بقيمة false
+                if (!initData) {
+                    console.warn('❌ No initData provided');
+                    return false;
+                }
+
+                // استخراج المعلمات من initData
+                const params = new URLSearchParams(initData);
+                const hash = params.get('hash');
+                
+                if (!hash) {
+                    console.warn('❌ No hash found in initData');
+                    return false;
+                }
+
+                // إزالة hash من المعلمات للتحقق
+                params.delete('hash');
+                
+                // ترتيب المعلمات أبجدياً
+                const sortedParams = Array.from(params.entries())
+                    .sort(([a], [b]) => a.localeCompare(b))
+                    .map(([key, value]) => `${key}=${value}`)
+                    .join('\n');
+
+                console.log('📋 Sorted parameters for verification:', sortedParams);
+
+                // الحصول على Bot Token من Firebase
+                const db = firebase.database();
+                const configSnapshot = await db.ref('config').once('value');
+                const config = configSnapshot.val() || {};
+                const botToken = config.botToken;
+
+                if (!botToken) {
+                    console.error('❌ Bot token not found in Firebase config');
+                    return false;
+                }
+
+                console.log('✅ Bot token retrieved from Firebase');
+
+                // إنشاء مفتاح سرّي من Bot Token باستخدام HMAC-SHA256
+                const secretKey = CryptoJS.HmacSHA256(botToken, 'WebAppData');
+                
+                // حساب التوقيع المتوقع
+                const dataCheckString = sortedParams;
+                const expectedHash = CryptoJS.HmacSHA256(dataCheckString, secretKey).toString(CryptoJS.enc.Hex);
+                
+                console.log('🔍 Hash comparison:', {
+                    received: hash,
+                    expected: expectedHash,
+                    match: hash === expectedHash
+                });
+
+                // مقارنة التوقيعات
+                if (hash === expectedHash) {
+                    console.log('✅ Telegram initData verification SUCCESSFUL');
+                    return true;
+                } else {
+                    console.error('❌ Telegram initData verification FAILED - Hash mismatch');
+                    return false;
+                }
+
+            } catch (error) {
+                console.error('❌ Error verifying Telegram initData:', error);
+                return false;
+            }
+        };
+
+        // ✅ دالة محسنة للتحقق من أمان التطبيق
+        const checkAppSecurity = async () => {
+            try {
+                console.log('🔒 Starting comprehensive security check...');
+                
+                // عرض شاشة التحقق
+                document.getElementById('security-page').style.display = 'flex';
+                document.getElementById('app-loader').style.display = 'none';
+                document.getElementById('security-reason').textContent = 'Verifying Telegram authentication...';
+
+                // التحقق من وجود Telegram WebApp
+                if (!window.Telegram || !window.Telegram.WebApp) {
+                    document.getElementById('security-reason').textContent = 'Telegram WebApp not detected. Please open this app through Telegram.';
+                    document.getElementById('security-details').textContent = 'Error: Telegram WebApp SDK not found';
+                    return false;
+                }
+
+                // التحقق من initData
+                const initData = tg.initData;
+                if (!initData) {
+                    document.getElementById('security-reason').textContent = 'Authentication data not found. Please try reopening the app.';
+                    document.getElementById('security-details').textContent = 'Error: initData is missing';
+                    return false;
+                }
+
+                document.getElementById('security-reason').textContent = 'Verifying cryptographic signature...';
+                document.getElementById('security-details').textContent = 'Checking initData signature...';
+
+                // التحقق من توقيع initData
+                const isSignatureValid = await verifyTelegramInitData(initData);
+                
+                if (!isSignatureValid) {
+                    document.getElementById('security-reason').textContent = 'Security verification failed. This may be a phishing attempt.';
+                    document.getElementById('security-details').textContent = 'Error: Invalid cryptographic signature';
+                    return false;
+                }
+
+                // التحقق من وجود بيانات المستخدم
+                const user = tg.initDataUnsafe?.user;
+                if (!user || !user.id) {
+                    document.getElementById('security-reason').textContent = 'User authentication failed. Please try again.';
+                    document.getElementById('security-details').textContent = 'Error: User data not found in initData';
+                    return false;
+                }
+
+                console.log('✅ All security checks passed');
+                document.getElementById('security-page').style.display = 'none';
+                return true;
+
+            } catch (error) {
+                console.error('❌ Security check failed:', error);
+                document.getElementById('security-reason').textContent = 'Security verification error. Please contact support.';
+                document.getElementById('security-details').textContent = `Error: ${error.message}`;
+                return false;
+            }
+        };
+
         // ✅ دالة للتحقق من حالة الحظر
         const checkUserBanStatus = async (db) => {
             try {
@@ -1431,6 +1615,7 @@
             document.getElementById('app-loader').style.display = 'none';
             document.getElementById('subscription-page').style.display = 'none';
             document.getElementById('app').style.display = 'none';
+            document.getElementById('security-page').style.display = 'none';
         };
 
         // ✅ دالة لتحميل الإعدادات من Firebase
@@ -1631,6 +1816,7 @@
             } catch (error) {
                 console.error('Error claiming daily login bonus:', error);
                 try{ 
+
                     if (tg.showAlert) tg.showAlert("Failed to claim daily bonus. Please try again."); 
                 }catch{} 
             }
@@ -1985,9 +2171,16 @@
             userState = userData;
         };
 
-        // ✅ دالة محسنة لتهيئة التطبيق
+        // ✅ دالة محسنة لتهيئة التطبيق مع التحقق من التوقيع
         const initApp = async () => {
             try {
+                // التحقق من أمان التطبيق أولاً
+                const isSecure = await checkAppSecurity();
+                if (!isSecure) {
+                    console.error('❌ App security check failed');
+                    return;
+                }
+
                 if (tg.ready) { tg.ready(); try { tg.expand(); } catch(e){} }
                 
                 if (tg.colorScheme && tg.colorScheme === 'dark') { 

@@ -1,2050 +1,1317 @@
+
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-    <meta name='admaven-placement' content='Bqja6qdC7'>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>🚀 Elite Coin Master</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    <style>
-        :root {
-            --font-family: 'Tajawal', sans-serif;
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --premium-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
-            
-            --background-dark: #0f0f23;
-            --surface-dark: #1a1a2e;
-            --surface-dark-hover: #252547;
-            --text-primary-dark: #ffffff;
-            --text-secondary-dark: #b0b0d6;
-            --border-dark: #2d2d5a;
-            --accent-glow: rgba(102, 126, 234, 0.3);
-            
-            --success: #00ff88;
-            --danger: #ff4757;
-            --pending: #ffa502;
-            --info: #2ed573;
-            --premium: #ffd700;
-        }
-
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-
-        body { 
-            font-family: var(--font-family); 
-            background: var(--background-dark); 
-            color: var(--text-primary-dark);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
-            50% { box-shadow: 0 0 40px var(--accent-glow); }
-        }
-
-        @keyframes slideIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px) scale(0.9); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0) scale(1); 
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
-            40%, 43% { transform: translate3d(0,-20px,0); }
-            70% { transform: translate3d(0,-10px,0); }
-            90% { transform: translate3d(0,-4px,0); }
-        }
-
-        @keyframes rotate3d {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-
-        @keyframes progressFill {
-            0% { width: 0%; }
-            100% { width: attr(data-progress); }
-        }
-
-        /* Main App Structure */
-        #app { 
-            max-width: 500px; 
-            margin: 0 auto; 
-            min-height: 100vh;
-            background: var(--background-dark);
-            position: relative;
-            overflow: hidden;
-        }
-
-        #app::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(250, 112, 154, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .page { 
-            display: none; 
-            padding: 15px; 
-            position: relative;
-            z-index: 1;
-            animation: slideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .page.active { 
-            display: block; 
-        }
-
-        /* Enhanced Header */
-        .profile-header {
-            padding: 35px 25px;
-            background: var(--surface-dark);
-            border-radius: 0 0 35px 35px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border-bottom: 3px solid var(--border-dark);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .profile-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--primary-gradient);
-        }
-
-        .profile-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        #user-photo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 4px solid;
-            border-image: var(--primary-gradient) 1;
-            object-fit: cover;
-            margin-bottom: 20px;
-            animation: float 4s ease-in-out infinite;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        #user-name {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 12px;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .balance-container {
-            background: var(--surface-dark);
-            border-radius: 25px;
-            padding: 25px;
-            margin: 15px 0;
-            border: 2px solid var(--border-dark);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .balance-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
-        }
-
-        .balance-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--premium-gradient);
-        }
-
-        .balance-amount {
-            font-size: 3rem;
-            font-weight: 900;
-            text-align: center;
-            margin: 15px 0;
-            background: var(--premium-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: pulse 3s infinite;
-            text-shadow: 0 0 30px rgba(250, 112, 154, 0.5);
-        }
-
-        .balance-label {
-            text-align: center;
-            color: var(--text-secondary-dark);
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .balance-subtext {
-            text-align: center;
-            color: var(--text-secondary-dark);
-            font-size: 0.9rem;
-            margin-top: 8px;
-            opacity: 0.8;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-            margin: 25px 0;
-        }
-
-        .stat-card {
-            background: var(--surface-dark);
-            padding: 25px 20px;
-            border-radius: 22px;
-            text-align: center;
-            border: 2px solid var(--border-dark);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.6s;
-        }
-
-        .stat-card:hover::before {
-            left: 100%;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            border-color: #667eea;
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.25);
-        }
-
-        .stat-card h3 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-secondary-dark);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .stat-card p {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        /* Task Containers */
-        .task-container {
-            background: var(--surface-dark);
-            padding: 28px;
-            border-radius: 28px;
-            margin-bottom: 22px;
-            border: 2px solid var(--border-dark);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .task-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
-        }
-
-        .task-container:hover {
-            transform: translateY(-6px);
-            border-color: #667eea;
-            box-shadow: 0 18px 40px rgba(102, 126, 234, 0.25);
-        }
-
-        .task-header {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 18px;
-        }
-
-        .task-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            background: var(--primary-gradient);
-            animation: float 4s ease-in-out infinite;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .task-info h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .task-info p {
-            color: var(--text-secondary-dark);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .task-reward {
-            background: rgba(0, 255, 136, 0.1);
-            padding: 12px 18px;
-            border-radius: 15px;
-            margin: 15px 0;
-            border-left: 4px solid var(--success);
-        }
-
-        .task-reward strong {
-            color: var(--success);
-            font-size: 1.1rem;
-        }
-
-        /* Buttons */
-        .action-btn {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 18px 28px;
-            border-radius: 18px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .action-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .action-btn:hover::before {
-            left: 100%;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-        }
-
-        .action-btn:active {
-            transform: translateY(-1px);
-        }
-
-        .action-btn:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .action-btn:disabled:hover::before {
-            left: -100%;
-        }
-
-        /* Premium Button */
-        .premium-btn {
-            background: var(--premium-gradient);
-            animation: glow 3s ease-in-out infinite;
-            box-shadow: 0 8px 25px rgba(250, 112, 154, 0.4);
-        }
-
-        .premium-btn:hover {
-            box-shadow: 0 15px 40px rgba(250, 112, 154, 0.5);
-        }
-
-        /* Success Button */
-        .success-btn {
-            background: var(--success-gradient);
-            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
-        }
-
-        .success-btn:hover {
-            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.5);
-        }
-
-        /* Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            max-width: 500px;
-            margin: 0 auto;
-            background: var(--surface-dark);
-            border-radius: 28px 28px 0 0;
-            padding: 18px 12px;
-            display: flex;
-            justify-content: space-around;
-            border-top: 3px solid var(--border-dark);
-            z-index: 1000;
-            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary-dark);
-            padding: 12px 18px;
-            border-radius: 18px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            position: relative;
-            min-width: 70px;
-        }
-
-        .nav-btn i {
-            font-size: 1.5rem;
-            transition: all 0.4s ease;
-        }
-
-        .nav-btn.active {
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .nav-btn.active i {
-            transform: scale(1.3);
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: bounce 2s infinite;
-        }
-
-        .nav-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--danger);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 1.5s infinite;
-            font-weight: 800;
-            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
-        }
-
-        /* Progress Bars */
-        .progress-container {
-            margin: 28px 0;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .progress-bar {
-            height: 14px;
-            background: var(--surface-dark);
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            border: 2px solid var(--border-dark);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--success-gradient);
-            border-radius: 10px;
-            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
-            animation: progressFill 1.5s ease-out;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        /* Cards */
-        .feature-card {
-            background: var(--surface-dark);
-            padding: 28px;
-            border-radius: 28px;
-            margin-bottom: 22px;
-            border: 2px solid var(--border-dark);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary-gradient);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            border-color: #667eea;
-            box-shadow: 0 20px 45px rgba(102, 126, 234, 0.25);
-        }
-
-        /* Coin Display */
-        .coin-display {
-            text-align: center;
-            padding: 35px 25px;
-            background: var(--surface-dark);
-            border-radius: 28px;
-            margin: 25px 0;
-            border: 3px solid;
-            border-image: var(--premium-gradient) 1;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(250, 112, 154, 0.2);
-        }
-
-        .coin-display::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(250, 112, 154, 0.1) 0%, transparent 70%);
-        }
-
-        .coin-amount {
-            font-size: 4rem;
-            font-weight: 900;
-            margin: 18px 0;
-            background: var(--premium-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(250, 112, 154, 0.6);
-            animation: pulse 2.5s infinite;
-        }
-
-        .coin-label {
-            font-size: 1.3rem;
-            color: var(--text-secondary-dark);
-            font-weight: 700;
-            letter-spacing: 0.8px;
-        }
-
-        /* Loader */
-        #app-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--background-dark);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .loader-content {
-            text-align: center;
-            animation: slideIn 1s ease;
-        }
-
-        .loader-spinner {
-            width: 90px;
-            height: 90px;
-            border: 5px solid rgba(102, 126, 234, 0.3);
-            border-top: 5px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1.2s linear infinite;
-            margin-bottom: 25px;
-            box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .loader-text {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-            text-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .loader-progress {
-            font-size: 1.1rem;
-            color: var(--text-secondary-dark);
-            font-weight: 600;
-        }
-
-        /* Popup */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 15, 35, 0.95);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            backdrop-filter: blur(15px);
-        }
-
-        .popup-content {
-            background: var(--surface-dark);
-            padding: 35px;
-            border-radius: 28px;
-            border: 3px solid var(--border-dark);
-            max-width: 90%;
-            max-height: 90%;
-            overflow-y: auto;
-            position: relative;
-            animation: slideIn 0.5s ease;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-
-        .popup-close {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            background: none;
-            border: none;
-            color: var(--text-secondary-dark);
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .popup-close:hover {
-            color: var(--danger);
-            background: rgba(255, 71, 87, 0.1);
-            transform: rotate(90deg);
-        }
-
-        /* Contest Elements */
-        .contest-timer {
-            background: var(--premium-gradient);
-            color: white;
-            padding: 25px;
-            border-radius: 22px;
-            text-align: center;
-            margin: 25px 0;
-            font-weight: 800;
-            font-size: 1.4rem;
-            animation: glow 3s ease-in-out infinite;
-            box-shadow: 0 10px 30px rgba(250, 112, 154, 0.4);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .prize-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin: 25px 0;
-        }
-
-        .prize-item {
-            background: var(--surface-dark);
-            padding: 18px;
-            border-radius: 18px;
-            text-align: center;
-            border: 2px solid var(--border-dark);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .prize-item:hover {
-            transform: scale(1.08);
-            border-color: #667eea;
-            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .prize-rank {
-            font-size: 1.3rem;
-            font-weight: 900;
-            margin-bottom: 8px;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .prize-amount {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--success);
-        }
-
-        /* Leaderboard */
-        .leaderboard-item {
-            display: flex;
-            align-items: center;
-            padding: 18px;
-            margin: 12px 0;
-            background: var(--surface-dark);
-            border-radius: 18px;
-            border: 2px solid var(--border-dark);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .leaderboard-item:hover {
-            transform: translateX(8px);
-            border-color: #667eea;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .leaderboard-rank {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 900;
-            margin-right: 18px;
-            font-size: 1.2rem;
-            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        .leaderboard-user {
-            flex: 1;
-        }
-
-        .leaderboard-name {
-            font-weight: 800;
-            margin-bottom: 4px;
-            font-size: 1.1rem;
-        }
-
-        .leaderboard-points {
-            color: var(--text-secondary-dark);
-            font-size: 0.95rem;
-        }
-
-        .leaderboard-score {
-            font-weight: 900;
-            font-size: 1.3rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 700;
-            color: var(--text-secondary-dark);
-            font-size: 1.1rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 18px;
-            background: var(--surface-dark);
-            border: 2px solid var(--border-dark);
-            border-radius: 18px;
-            color: var(--text-primary-dark);
-            font-size: 1.1rem;
-            transition: all 0.4s ease;
-            font-weight: 600;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 25px rgba(102, 126, 234, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* Notification Badge */
-        .notification-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--danger-gradient);
-            color: white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 1.5s infinite;
-            font-weight: 900;
-            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
-            z-index: 2;
-        }
-
-        /* Achievement Styles */
-        .achievement-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(102, 126, 234, 0.15);
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin: 5px;
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            animation: pulse 3s infinite;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .page {
-                padding: 12px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .balance-amount {
-                font-size: 2.5rem;
-            }
-            
-            .coin-amount {
-                font-size: 3rem;
-            }
-            
-            .task-container {
-                padding: 22px;
-            }
-            
-            .feature-card {
-                padding: 22px;
-            }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--surface-dark);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-gradient);
-            border-radius: 10px;
-            border: 2px solid var(--surface-dark);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-gradient);
-        }
-
-        /* Particle Background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--primary-gradient);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Shine Effect */
-        .shine-effect {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .shine-effect::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AdX Crypto — MiniApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --secondary: #f59e0b;
+      --accent: #10b981;
+      --background: #0f172a;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #07133b 0%, #0f172a 40%, #0b3a6f 100%);
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      line-height: 1.5;
+    }
+    
+    .app {
+      width: 100%;
+      max-width: 400px;
+      height: 680px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    .header {
+      padding: 20px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 10;
+    }
+    
+    .header-content h1 {
+      font-weight: 800;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    
+    .header-content .subtitle {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    
+    .user-info {
+      text-align: right;
+    }
+    
+    .user-name {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .today-date {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .panel-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .balance-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .balance-amount {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .daily-stats {
+      text-align: right;
+    }
+    
+    .ads-count {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+    
+    .pill {
+      background: rgba(6, 182, 212, 0.12);
+      color: #065f68;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    
+    .progress-container {
+      margin-top: 12px;
+    }
+    
+    .progress-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+    
+    .watch-ad-card {
+      text-align: center;
+    }
+    
+    .section-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .note {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 12px;
+    }
+    
+    .channel-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    
+    .channel-info h3 {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--secondary);
+      margin-bottom: 2px;
+    }
+    
+    .channel-info p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    .btn-channel {
+      background: linear-gradient(135deg, var(--secondary), #f59e0b);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 12px;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+      }
+    }
+    
+    .btn-channel:hover {
+      transform: translateY(-1px);
+    }
+    
+    .how-it-works {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .how-it-works-text h3 {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .how-it-works-text p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    .min-withdraw {
+      text-align: right;
+    }
+    
+    .min-withdraw-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    .min-withdraw-amount {
+      font-weight: 700;
+      font-size: 16px;
+    }
+    
+    .nav-bottom {
+      height: 80px;
+      display: flex;
+      background: white;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 8px;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
+    }
+    
+    .tab-btn {
+      flex: 1;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-weight: 600;
+      font-size: 12px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+    
+    .tab-btn:not(.active) {
+      color: var(--text-secondary);
+    }
+    
+    .tab-icon {
+      font-size: 18px;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    .spinner {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .withdraw-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    
+    .withdraw-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 12px;
+    }
+    
+    .btn-ghost:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    
+    .withdraw-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    
+    .btn-secondary {
+      flex: 1;
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(59, 130, 246, 0.05);
+    }
+    
+    .btn-icon {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn-icon:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    
+    .referral-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      background: #f8fafc;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    
+    .stat-card {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    .ban-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      flex: 1;
+    }
+    
+    .ban-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+    
+    .ban-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #ef4444;
+      margin-bottom: 12px;
+    }
+    
+    .ban-message {
+      font-size: 16px;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    
+    .ban-support-btn {
+      background: linear-gradient(135deg, #ef4444, #f87171);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    
+    .readonly-input {
+      background-color: #f8fafc;
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+    
+    /* Scrollbar styling */
+    .main-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .main-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .main-content::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+    
+    .main-content::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  </style>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="//libtl.com/sdk.js" data-zone="10075454" data-sdk="show_10075454" defer></script>
+  <script src="nonce.js"></script>
 </head>
 <body>
-    <!-- Particle Background -->
-    <div class="particles" id="particles"></div>
-
-    <!-- Loading Screen -->
-    <div id="app-loader">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <div class="loader-text">🚀 Elite Coin Master</div>
-            <div class="loader-progress" id="loading-progress">0%</div>
-        </div>
+  <div class="app">
+    <div class="header">
+      <div class="header-content">
+        <h1>AdX Crypto</h1>
+        <div class="subtitle">Earn USDT by watching rewarded ads</div>
+      </div>
+      <div class="user-info">
+        <div id="userName" class="user-name">Loading...</div>
+        <div id="todayDate" class="today-date">--</div>
+      </div>
     </div>
 
-    <!-- Banned Page -->
-    <div id="banned-page" class="page" style="display: none;">
-        <div class="feature-card" style="text-align: center; padding: 60px 25px;">
-            <div style="font-size: 5rem; margin-bottom: 25px; animation: bounce 2s infinite;">🚫</div>
-            <h2 style="color: var(--danger); margin-bottom: 18px; font-size: 2rem;">Account Suspended</h2>
-            <p id="banned-reason" style="color: var(--text-secondary-dark); margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6;">
-                Your account has been temporarily suspended for violating our terms of service.
-            </p>
-            <p style="color: var(--text-secondary-dark); font-size: 1rem;">
-                Contact support: @aborabie777
-            </p>
+    <div id="mainContent" class="main-content">
+      <!-- HOME PANEL -->
+      <div id="panel-home" class="panel">
+        <div class="panel-content">
+          <div class="card">
+            <div class="balance-section">
+              <div>
+                <div class="text-sm text-secondary">Your Balance</div>
+                <div id="balance" class="balance-amount">Loading...</div>
+              </div>
+              <div class="daily-stats">
+                <div class="text-sm text-secondary">Daily Ads</div>
+                <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+                  <div id="adsCount" class="ads-count">0/200</div>
+                  <div id="adsRemainingPill" class="pill">200 left</div>
+                </div>
+              </div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-label">Progress</div>
+              <div class="progress-bar">
+                <div id="progressBar" class="progress-fill" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card watch-ad-card">
+            <div class="section-title">Watch rewarded ad</div>
+            <div class="section-subtitle">Each ad = <strong>0.00015 USDT</strong>. Daily limit is <strong>200 ads</strong>.</div>
+
+            <button id="watchBtn" class="btn-primary">
+              <span id="watchBtnText">🎬 Watch Ad & Earn 0.00015</span>
+              <span id="watchBtnSpinner" class="spinner hidden"></span>
+            </button>
+
+            <div class="note">Remaining clicks may be limited to prevent fraud.</div>
+          </div>
+
+          <div class="card channel-card">
+            <div class="channel-info">
+              <h3>📢 Join Our Channel</h3>
+              <p>Get updates & withdrawal news</p>
+            </div>
+            <button id="joinChannelBtn" class="btn-channel">Join</button>
+          </div>
+
+          <div class="card how-it-works">
+            <div class="how-it-works-text">
+              <h3>How it works</h3>
+              <p>Tap Watch → Ad loads & plays → Reward credited on success.</p>
+            </div>
+            <div class="min-withdraw">
+              <div class="min-withdraw-label">Min withdraw</div>
+              <div class="min-withdraw-amount">0.05 USDT</div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- WITHDRAW PANEL -->
+      <div id="panel-withdraw" class="panel hidden">
+        <div class="panel-content">
+          <div class="card">
+            <div class="section-title">Withdraw</div>
+            <div class="section-subtitle">Enter your FaucetPay email or username. Withdraw limits: <strong>0.05 - 1 USDT</strong></div>
+
+            <input id="faucetpayId" placeholder="Enter FaucetPay Email or Username" class="withdraw-input" />
+            <button id="updateFaucetpayIdBtn" class="btn-ghost">Set FaucetPay Account</button>
+
+            <div class="section-subtitle">Enter amount to withdraw (min: 0.05 USDT, max: 1 USDT)</div>
+            <input id="withdrawAmount" type="number" min="0.05" max="1" step="0.0001" placeholder="0.05" class="withdraw-input" />
+
+            <div class="withdraw-actions">
+              <button id="withdrawBtn" class="btn-secondary">💸 Request Withdraw</button>
+              <button id="refreshWithdrawHistory" class="btn-icon" title="Refresh">⟳</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">Recent Withdrawals</div>
+            <div id="withdrawList" class="section-subtitle">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REFERRALS PANEL -->
+      <div id="panel-referrals" class="panel hidden">
+        <div class="panel-content">
+          <div class="card">
+            <div class="section-title">Invite Friends</div>
+            <div class="section-subtitle">Share your referral link and earn <strong>0.005 USDT</strong> for each friend who watches 200 ads (once per friend)!</div>
+
+            <input id="referralLink" readonly class="referral-input" placeholder="Loading referral link..." />
+            <button id="copyReferralLink" class="btn-primary">📋 Copy Referral Link</button>
+          </div>
+
+          <div class="card">
+            <div class="section-title">Referral Stats</div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div id="referralCount" class="stat-value">0</div>
+                <div class="stat-label">Total Referrals</div>
+              </div>
+              <div class="stat-card">
+                <div id="rewardedReferrals" class="stat-value">0</div>
+                <div class="stat-label">Rewarded</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUPPORT PANEL -->
+      <div id="panel-support" class="panel hidden">
+        <div class="panel-content">
+          <div class="card">
+            <div class="section-title">Contact Support</div>
+            <div class="section-subtitle">For help, open the Telegram chat with our support.</div>
+            <button id="supportBtn" class="btn-primary">📞 Contact Support</button>
+            <div class="note" style="margin-top: 16px;">Or join our channel for updates.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAN PANEL -->
+      <div id="panel-ban" class="panel hidden">
+        <div class="ban-panel">
+          <img src="https://i.ibb.co/9Crc5Dw/BLOCK.jpg" alt="Banned" class="ban-icon">
+          <div class="ban-title">Account Banned</div>
+          <div id="banMessage" class="ban-message">Your account has been banned due to suspicious activity.</div>
+          <button id="banSupportBtn" class="ban-support-btn">Contact Support</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Subscription Page -->
-    <div id="subscription-page" class="page" style="display: none;">
-        <div class="feature-card">
-            <h2 style="text-align: center; margin-bottom: 25px; font-size: 1.8rem;">📢 Required Channels</h2>
-            <p style="text-align: center; color: var(--text-secondary-dark); margin-bottom: 35px; font-size: 1.1rem; line-height: 1.6;">
-                Subscribe to our channels to unlock all features and start earning coins!
-            </p>
+    <div class="nav-bottom">
+      <button id="navHome" class="tab-btn active" data-target="panel-home">
+        <span class="tab-icon">🏠</span>
+        <span>Home</span>
+      </button>
+      <button id="navWithdraw" class="tab-btn" data-target="panel-withdraw">
+        <span class="tab-icon">💸</span>
+        <span>Withdraw</span>
+      </button>
+      <button id="navReferrals" class="tab-btn" data-target="panel-referrals">
+        <span class="tab-icon">👥</span>
+        <span>Referrals</span>
+      </button>
+      <button id="navSupport" class="tab-btn" data-target="panel-support">
+        <span class="tab-icon">📞</span>
+        <span>Support</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // جميع المتغيرات والدوال تبقى كما هي مع تعديلات طفيفة للتكيف مع التصميم الجديد
+    const API_BASE = 'api.php';
+
+    // العناصر الجديدة في التصميم
+    const referralCountEl = document.getElementById('referralCount');
+    const rewardedReferralsEl = document.getElementById('rewardedReferrals');
+
+    // باقي العناصر تبقى كما هي مع تعديلات طفيفة للتكيف مع التصميم الجديد
+    const userNameEl = document.getElementById('userName');
+    const todayDateEl = document.getElementById('todayDate');
+    const balanceEl = document.getElementById('balance');
+    const adsCountEl = document.getElementById('adsCount');
+    const adsRemainingPill = document.getElementById('adsRemainingPill');
+    const progressBar = document.getElementById('progressBar');
+    const watchBtn = document.getElementById('watchBtn');
+    const watchBtnSpinner = document.getElementById('watchBtnSpinner');
+    const watchBtnText = document.getElementById('watchBtnText');
+    const faucetpayIdInput = document.getElementById('faucetpayId');
+    const updateFaucetpayIdBtn = document.getElementById('updateFaucetpayIdBtn');
+    const withdrawBtn = document.getElementById('withdrawBtn');
+    const withdrawAmountInput = document.getElementById('withdrawAmount');
+    const withdrawList = document.getElementById('withdrawList');
+    const supportBtn = document.getElementById('supportBtn');
+    const referralLinkInput = document.getElementById('referralLink');
+    const copyReferralLinkBtn = document.getElementById('copyReferralLink');
+    const mainContent = document.getElementById('mainContent');
+    const navBottom = document.querySelector('.nav-bottom');
+    const banPanel = document.getElementById('panel-ban');
+    const banMessage = document.getElementById('banMessage');
+    const banSupportBtn = document.getElementById('banSupportBtn');
+    const navHome = document.getElementById('navHome');
+    const navWithdraw = document.getElementById('navWithdraw');
+    const navReferrals = document.getElementById('navReferrals');
+    const navSupport = document.getElementById('navSupport');
+    const panelHome = document.getElementById('panel-home');
+    const panelWithdraw = document.getElementById('panel-withdraw');
+    const panelReferrals = document.getElementById('panel-referrals');
+    const panelSupport = document.getElementById('panel-support');
+    const joinChannelBtn = document.getElementById('joinChannelBtn');
+
+    let telegramId = 'guest-' + Date.now();
+    let userId = null;
+    let currentBalance = 0;
+    const DAILY_LIMIT = 200;
+    let todaysCount = 0;
+    let isProcessingAd = false;
+    let initData = '';
+    let csrfToken = '';
+    let referrerId = '';
+    let faucetpayId = '';
+    let faucetpayIdSet = false;
+    const MIN_WITHDRAW = 0.05;
+    const MAX_WITHDRAW = 1.00;
+
+    function getReferrerId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('start') || '';
+    }
+
+    function formatDateYMD(d) {
+      return d.toISOString().slice(0,10);
+    }
+
+    const todayYMD = formatDateYMD(new Date());
+    todayDateEl.innerText = todayYMD;
+
+    function initTelegramWebApp() {
+        if (window.Telegram && Telegram.WebApp) {
+            Telegram.WebApp.ready();
+            Telegram.WebApp.expand();
             
-            <div id="channels-list">
-                <!-- Channels will be loaded here -->
-            </div>
-            
-            <button id="check-subscription-btn" class="action-btn success-btn" style="width: 100%; margin-top: 25px; padding: 20px;">
-                🔄 Verify Subscription
-            </button>
-        </div>
-    </div>
-
-    <!-- Main App -->
-    <div id="app" style="display: none;">
-        <!-- Header -->
-        <header class="profile-header">
-            <img id="user-photo" src="https://via.placeholder.com/100" alt="User">
-            <h1 id="user-name">Loading...</h1>
-            <div class="balance-container">
-                <div class="balance-amount" id="user-coins">0</div>
-                <div class="balance-label">💰 Elite Coins</div>
-                <div class="balance-subtext" id="coins-value">= 0.0000 TON</div>
-            </div>
-            <div style="display: flex; gap: 15px; margin-top: 20px;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--success);" id="user-ton">0.0000</div>
-                    <div style="font-size: 0.9rem; color: var(--text-secondary-dark);">TON Balance</div>
-                </div>
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 1.3rem; font-weight: 800; color: #667eea;" id="referral-count">0</div>
-                    <div style="font-size: 0.9rem; color: var(--text-secondary-dark);">Referrals</div>
-                </div>
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--pending);" id="contest-points-header">0</div>
-                    <div style="font-size: 0.9rem; color: var(--text-secondary-dark);">Contest Points</div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main id="main-content">
-            <!-- Home Page -->
-            <div id="home-page" class="page active">
-                <!-- Quick Stats -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>📊 Today's Ads</h3>
-                        <p id="daily-ads-watched">0/50</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>🎯 Total Points</h3>
-                        <p id="total-points">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>👥 Referrals</h3>
-                        <p id="total-referrals">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>💰 Total Earned</h3>
-                        <p id="total-earned">0</p>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="feature-card">
-                    <h3 style="margin-bottom: 20px; font-size: 1.5rem;">⚡ Quick Actions</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <button class="action-btn" onclick="showPage('tasks-page')">
-                            <i class="fas fa-tasks"></i> Tasks
-                        </button>
-                        <button class="action-btn" onclick="showPage('contest-page')">
-                            <i class="fas fa-trophy"></i> Contest
-                        </button>
-                        <button class="action-btn success-btn" onclick="showPage('convert-page')">
-                            <i class="fas fa-exchange-alt"></i> Convert
-                        </button>
-                        <button class="action-btn" onclick="showPage('referral-page')">
-                            <i class="fas fa-users"></i> Referrals
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Daily Progress -->
-                <div class="feature-card">
-                    <h3 style="margin-bottom: 20px; font-size: 1.5rem;">📈 Daily Progress</h3>
-                    <div class="progress-container">
-                        <div class="progress-header">
-                            <span>Ad Watching Progress</span>
-                            <span id="ad-progress-text">0/50</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="ad-progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: 15px;">
-                        <span style="color: var(--text-secondary-dark); font-size: 0.95rem;">
-                            Complete daily ads to earn bonus rewards!
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Recent Activity -->
-                <div class="feature-card">
-                    <h3 style="margin-bottom: 20px; font-size: 1.5rem;">🔄 Recent Activity</h3>
-                    <div id="recent-activity">
-                        <p style="text-align: center; color: var(--text-secondary-dark); padding: 30px; font-size: 1.1rem;">
-                            No recent activity. Start completing tasks to see your progress here!
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tasks Page -->
-            <div id="tasks-page" class="page">
-                <div class="feature-card">
-                    <h2 style="margin-bottom: 25px; text-align: center; font-size: 1.8rem;">🎯 Earn Coins</h2>
-                    
-                    <!-- Watch Ad Task -->
-                    <div class="task-container">
-                        <div class="task-header">
-                            <div class="task-icon">
-                                <i class="fas fa-play-circle"></i>
-                            </div>
-                            <div class="task-info">
-                                <h3>Watch Rewarded Ad</h3>
-                                <p>Watch a short video advertisement and earn coins instantly</p>
-                            </div>
-                        </div>
-                        <div class="task-reward">
-                            <strong>🎁 Reward: 1,000 Coins + 10 Contest Points</strong>
-                        </div>
-                        <button id="watch-ad-btn" class="action-btn success-btn" style="width: 100%;">
-                            🎥 Watch Ad +1,000 🪙
-                        </button>
-                    </div>
-
-                    <!-- Bonus Tasks -->
-                    <h3 style="margin: 35px 0 20px 0; font-size: 1.6rem; text-align: center;">✨ Bonus Tasks</h3>
-                    <div id="bonus-tasks-container">
-                        <!-- Bonus tasks will be loaded here -->
-                    </div>
-
-                    <!-- Advertiser Task -->
-                    <div class="task-container" style="border-image: var(--premium-gradient) 1;">
-                        <div class="task-header">
-                            <div class="task-icon" style="background: var(--premium-gradient);">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="task-info">
-                                <h3>Add Your Channel</h3>
-                                <p>Advertise your channel to our active user base and reach thousands of potential subscribers</p>
-                            </div>
-                        </div>
-                        <div class="task-reward">
-                            <strong>💎 Premium: Only 0.05 TON per 100 users who complete the task</strong>
-                        </div>
-                        <button onclick="showPage('advertiser-page')" class="action-btn premium-btn" style="width: 100%;">
-                            📢 Add Your Channel
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Convert Page -->
-            <div id="convert-page" class="page">
-                <div class="feature-card">
-                    <h2 style="margin-bottom: 25px; text-align: center; font-size: 1.8rem;">💱 Convert Coins</h2>
-                    
-                    <div class="coin-display">
-                        <div class="coin-label">Your Available Coins</div>
-                        <div class="coin-amount" id="convert-coins-amount">0</div>
-                        <div style="color: var(--text-secondary-dark); margin-top: 15px; font-size: 1.1rem;">
-                            💡 Minimum Conversion: 1,000,000 coins = 0.1 TON
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">🪙 Coins to Convert:</label>
-                        <input type="number" id="convert-amount" class="form-input" placeholder="Enter amount of coins to convert" min="1000000" max="100000000">
-                        <div style="display: flex; justify-content: space-between; margin-top: 8px;">
-                            <small style="color: var(--text-secondary-dark);">Min: 1,000,000</small>
-                            <small style="color: var(--text-secondary-dark);" id="available-coins">Available: 0</small>
-                        </div>
-                    </div>
-
-                    <div style="background: rgba(0, 255, 136, 0.15); padding: 20px; border-radius: 18px; margin: 25px 0; border-left: 4px solid var(--success);">
-                        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.2rem;">
-                            <span>You will receive:</span>
-                            <span id="convert-result" style="color: var(--success);">0.0000 TON</span>
-                        </div>
-                        <div style="margin-top: 8px; color: var(--text-secondary-dark); font-size: 0.95rem;">
-                            💰 Conversion rate: 1,000,000 coins = 0.1 TON
-                        </div>
-                    </div>
-
-                    <button id="convert-btn" class="action-btn success-btn" style="width: 100%; padding: 20px; font-size: 1.2rem;" disabled>
-                        💰 Convert to TON
-                    </button>
-
-                    <div style="text-align: center; margin-top: 20px;">
-                        <small style="color: var(--text-secondary-dark);">
-                            ⚡ Instant conversion • No fees • Direct to your wallet
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contest Page -->
-            <div id="contest-page" class="page">
-                <div class="feature-card">
-                    <h2 style="text-align: center; margin-bottom: 20px; font-size: 1.8rem;">🏆 Weekly Contest</h2>
-                    <p style="text-align: center; color: var(--text-secondary-dark); margin-bottom: 25px; font-size: 1.1rem; line-height: 1.6;">
-                        Compete with users worldwide and win amazing TON prizes! New contest every week.
-                    </p>
-
-                    <div class="contest-timer" id="contest-timer">
-                        ⌛ Loading contest timer...
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Your Points</h3>
-                            <p id="contest-points">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Your Rank</h3>
-                            <p id="contest-rank">-</p>
-                        </div>
-                    </div>
-
-                    <h3 style="margin: 30px 0 18px 0; font-size: 1.5rem;">🎯 How to Earn Points</h3>
-                    <div style="background: rgba(102, 126, 234, 0.15); padding: 20px; border-radius: 18px; margin-bottom: 25px; border-left: 4px solid #667eea;">
-                        <div style="display: flex; justify-content: space-between; margin: 10px 0; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <span>📺 Watch Ad</span>
-                            <span style="color: var(--success); font-weight: 700;">+10 points</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin: 10px 0; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <span>👥 Referral</span>
-                            <span style="color: var(--success); font-weight: 700;">+150 points</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin: 10px 0; padding: 8px 0;">
-                            <span>⭐ Bonus Task</span>
-                            <span style="color: var(--success); font-weight: 700;">+75 points</span>
-                        </div>
-                    </div>
-
-                    <h3 style="margin: 30px 0 18px 0; font-size: 1.5rem;">🏅 Weekly Prizes</h3>
-                    <div class="prize-grid">
-                        <div class="prize-item">
-                            <div class="prize-rank">🥇 1st</div>
-                            <div class="prize-amount">0.6 TON</div>
-                        </div>
-                        <div class="prize-item">
-                            <div class="prize-rank">🥈 2nd</div>
-                            <div class="prize-amount">0.4 TON</div>
-                        </div>
-                        <div class="prize-item">
-                            <div class="prize-rank">🥉 3rd</div>
-                            <div class="prize-amount">0.25 TON</div>
-                        </div>
-                        <div class="prize-item">
-                            <div class="prize-rank">4th-5th</div>
-                            <div class="prize-amount">0.15 TON</div>
-                        </div>
-                        <div class="prize-item">
-                            <div class="prize-rank">6th-10th</div>
-                            <div class="prize-amount">0.1 TON</div>
-                        </div>
-                        <div class="prize-item">
-                            <div class="prize-rank">11th-20th</div>
-                            <div class="prize-amount">0.05 TON</div>
-                        </div>
-                    </div>
-
-                    <button onclick="showFullLeaderboard()" class="action-btn" style="width: 100%; margin-top: 25px; padding: 18px;">
-                        📊 View Full Leaderboard
-                    </button>
-                </div>
-            </div>
-
-            <!-- Referral Page -->
-            <div id="referral-page" class="page">
-                <div class="feature-card">
-                    <h2 style="text-align: center; margin-bottom: 25px; font-size: 1.8rem;">👥 Refer & Earn</h2>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Total Referrals</h3>
-                            <p id="ref-total">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Coins Earned</h3>
-                            <p id="ref-earned">0</p>
-                        </div>
-                    </div>
-
-                    <div style="background: rgba(102, 126, 234, 0.15); padding: 25px; border-radius: 18px; margin: 25px 0; border-left: 4px solid #667eea;">
-                        <h4 style="margin-bottom: 15px; color: var(--success); font-size: 1.3rem;">🎁 Referral Rewards</h4>
-                        <p style="margin-bottom: 10px; font-size: 1.1rem;">• <strong>10%</strong> of your referrals' earnings</p>
-                        <p style="margin-bottom: 10px; font-size: 1.1rem;">• <strong>15,000 coins</strong> per successful referral</p>
-                        <p style="font-size: 1.1rem;">• <strong>150 contest points</strong> per referral</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">🔗 Your Referral Link:</label>
-                        <input type="text" id="referral-link" class="form-input" readonly style="font-weight: 600; letter-spacing: 0.5px;">
-                    </div>
-
-                    <button id="copy-ref-btn" class="action-btn" style="width: 100%; margin-bottom: 20px; padding: 18px;">
-                        📋 Copy Referral Link
-                    </button>
-
-                    <h3 style="margin: 30px 0 18px 0; font-size: 1.5rem;">👤 Your Referrals</h3>
-                    <div id="referrals-list">
-                        <p style="text-align: center; color: var(--text-secondary-dark); padding: 30px; font-size: 1.1rem;">
-                            No referrals yet. Share your link with friends to start earning!
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Advertiser Page -->
-            <div id="advertiser-page" class="page">
-                <div class="feature-card">
-                    <h2 style="text-align: center; margin-bottom: 25px; font-size: 1.8rem;">📢 Advertise Your Channel</h2>
-                    
-                    <div style="background: var(--premium-gradient); padding: 25px; border-radius: 18px; margin-bottom: 30px;">
-                        <h3 style="color: white; margin-bottom: 12px; font-size: 1.4rem;">💎 Premium Placement</h3>
-                        <p style="color: white; opacity: 0.95; font-size: 1.1rem; line-height: 1.5;">
-                            Get your channel featured in our bonus tasks section and reach thousands of active users!
-                        </p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">🔗 Channel Username:</label>
-                        <input type="text" id="channel-username" class="form-input" placeholder="@yourchannel" style="font-weight: 600;">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">📛 Channel Name:</label>
-                        <input type="text" id="channel-name" class="form-input" placeholder="Your Channel Name" style="font-weight: 600;">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">🎁 Reward Amount (Coins):</label>
-                        <input type="number" id="channel-reward" class="form-input" value="7500" min="1000" max="50000" style="font-weight: 600;">
-                        <small style="color: var(--text-secondary-dark); margin-top: 5px; display: block;">
-                            Recommended: 7,500 coins for good conversion
-                        </small>
-                    </div>
-
-                    <div style="background: rgba(250, 112, 154, 0.15); padding: 20px; border-radius: 18px; margin: 25px 0; border-left: 4px solid #fa709a;">
-                        <h4 style="margin-bottom: 12px; color: #fa709a; font-size: 1.3rem;">💰 Pricing</h4>
-                        <p style="margin-bottom: 8px; font-size: 1.1rem; font-weight: 700;">0.05 TON per 100 users</p>
-                        <p style="font-size: 1rem; color: var(--text-secondary-dark);">
-                            You only pay for users who successfully complete the task and subscribe to your channel
-                        </p>
-                    </div>
-
-                    <button id="submit-channel-btn" class="action-btn premium-btn" style="width: 100%; padding: 20px; font-size: 1.2rem;">
-                        🚀 Submit Channel for Review
-                    </button>
-
-                    <div style="text-align: center; margin-top: 20px;">
-                        <small style="color: var(--text-secondary-dark);">
-                            ⏳ Approval within 24 hours • 📞 Contact: @aborabie777
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <button class="nav-btn active" data-page="home-page">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </button>
-            <button class="nav-btn" data-page="tasks-page">
-                <i class="fas fa-tasks"></i>
-                <span>Tasks</span>
-                <span class="nav-badge" id="tasks-badge" style="display: none;">3</span>
-            </button>
-            <button class="nav-btn" data-page="contest-page">
-                <i class="fas fa-trophy"></i>
-                <span>Contest</span>
-            </button>
-            <button class="nav-btn" data-page="convert-page">
-                <i class="fas fa-exchange-alt"></i>
-                <span>Convert</span>
-            </button>
-            <button class="nav-btn" data-page="referral-page">
-                <i class="fas fa-users"></i>
-                <span>Referrals</span>
-            </button>
-        </nav>
-    </div>
-
-    <!-- Popup -->
-    <div id="popup" class="popup-overlay">
-        <div class="popup-content">
-            <button class="popup-close" onclick="closePopup()">&times;</button>
-            <div id="popup-body"></div>
-        </div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const tg = window.Telegram?.WebApp || {};
-        
-        // Firebase Configuration
-        const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lBazkwOUNGblc0Wk1lQkVNMXl4UmJRYlc5dzZVTm81OCIsImF1dGhEb21haW4iOiJlYXJuLW1vbmV5LWMzYmFkLmZpcmViYXNlYXBwLmNvbSIsImRhdGFiYXNlVVJMIjoiaHR0cHM6Ly9lYXJuLW1vbmV5LWMzYmFkLWRlZmF1bHQtcnRkYi5maXJlYmFzZWlvLmNvbSIsInByb2plY3RJZCI6ImVhcm4tbW9uZXktYzNiYWQiLCJzdG9yYWdlQnVja2V0IjoiZWFybi1tb25leS1jM2JhZC5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIxMDIyNjg4NTY2MDExIiwiYXBwSWQiOiIxOjEwMjI2ODg1NjYwMTE6d2ViOjY5MGY2ZmFhMTlkZDMzMzdhMmVlNWUiLCJtZWFzdXJlbWVudElkIjoiRy0wQ0gxTEJGTEgyIn0="));
-
-        // App State
-        let appConfig = {};
-        let userState = {
-            coins: 0,
-            tonBalance: 0,
-            referrals: 0,
-            dailyAdCount: 0,
-            totalPoints: 0,
-            completedTasks: {}
-        };
-        let tgUser = {};
-        let isSubscribedToAllChannels = false;
-
-        // DOM Elements
-        const popup = document.getElementById('popup');
-        const popupBody = document.getElementById('popup-body');
-        const loadingProgress = document.getElementById('loading-progress');
-
-        // Create Particle Background
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Random properties
-                const size = Math.random() * 6 + 2;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const delay = Math.random() * 5;
-                const duration = Math.random() * 10 + 10;
-                
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animationDuration = `${duration}s`;
-                
-                particlesContainer.appendChild(particle);
+            const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+            initData = Telegram.WebApp.initData || '';
+            if (initDataUnsafe.user) {
+                telegramId = String(initDataUnsafe.user.id);
+                let displayName = 'Welcome';
+                if (initDataUnsafe.user.first_name) {
+                    displayName = `Hi, ${initDataUnsafe.user.first_name}`;
+                }
+                userNameEl.innerText = displayName;
+            } else {
+                userNameEl.innerText = 'Welcome';
             }
+        } else {
+            console.error('Telegram WebApp SDK not loaded');
         }
+    }
+    initTelegramWebApp();
 
-        // Utility Functions
-        const showPopup = (content) => { 
-            popupBody.innerHTML = content; 
-            popup.style.display = 'flex'; 
-        };
-
-        const closePopup = () => { 
-            popup.style.display = 'none'; 
-        };
-
-        const updateProgress = (percentage) => { 
-            loadingProgress.textContent = `${percentage}%`; 
-        };
-
-        const showPage = (pageId) => {
-            document.querySelectorAll('.page').forEach(page => page.style.display = 'none');
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    async function apiRequest(action, data = {}) {
+        try {
+            const requestData = {
+                ...data,
+                telegram_id: telegramId,
+                init_data: initData,
+                csrf_token: csrfToken,
+                referrer_id: referrerId,
+                action: action
+            };
             
-            document.getElementById(pageId).style.display = 'block';
-            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
-        };
-
-        // Initialize App
-        const initApp = async () => {
-            try {
-                updateProgress(10);
-                
-                // Create particle background
-                createParticles();
-                updateProgress(20);
-
-                // Initialize Firebase
-                firebase.initializeApp(firebaseConfig);
-                const db = firebase.database();
-                updateProgress(40);
-
-                // Load configuration
-                const configSnapshot = await db.ref('config').once('value');
-                appConfig = configSnapshot.val() || {};
-                updateProgress(60);
-
-                // Initialize Telegram user
-                tgUser = tg.initDataUnsafe?.user || { 
-                    id: 'dev_user_' + Date.now(), 
-                    first_name: 'Dev', 
-                    last_name: 'User' 
-                };
-                updateProgress(80);
-
-                // Load user data
-                await loadUserData(db);
-                updateProgress(90);
-
-                // Setup event listeners
-                setupEventListeners();
-                updateProgress(100);
-
-                // Show main app
-                setTimeout(() => {
-                    document.getElementById('app-loader').style.display = 'none';
-                    document.getElementById('app').style.display = 'block';
-                    renderUI();
-                    startContestTimer();
-                }, 800);
-
-            } catch (error) {
-                console.error('Initialization failed:', error);
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 4rem; margin-bottom: 20px;">😔</div>
-                        <h2 style="margin-bottom: 15px;">Initialization Failed</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            Please refresh the page and try again.
-                        </p>
-                        <button class="action-btn" onclick="window.location.reload()">🔄 Refresh</button>
-                    </div>
-                `);
-            }
-        };
-
-        const loadUserData = async (db) => {
-            const userRef = db.ref(`users/${tgUser.id}`);
-            const snapshot = await userRef.once('value');
+            const finalPayload = generateNoncePayload(requestData);
             
-            if (!snapshot.exists()) {
-                // Create new user
-                const newUser = {
-                    id: tgUser.id,
-                    firstName: tgUser.first_name || '',
-                    lastName: tgUser.last_name || '',
-                    username: tgUser.username || '',
-                    photoUrl: tgUser.photo_url || 'https://via.placeholder.com/100',
-                    coins: 5000, // Starting bonus
-                    tonBalance: 0,
-                    referrals: 0,
-                    dailyAdCount: 0,
-                    totalPoints: 0,
-                    completedTasks: {},
-                    joinDate: new Date().toISOString(),
-                    lastActive: new Date().toISOString()
-                };
-                await userRef.set(newUser);
-                userState = newUser;
-            } else {
-                userState = snapshot.val();
-                
-                // Reset daily count if new day
-                const today = new Date().toDateString();
-                const lastActive = new Date(userState.lastActive).toDateString();
-                if (today !== lastActive) {
-                    userState.dailyAdCount = 0;
-                    await userRef.update({
-                        dailyAdCount: 0,
-                        lastActive: new Date().toISOString()
-                    });
-                }
-            }
-        };
-
-        const setupEventListeners = () => {
-            // Navigation
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const pageId = e.currentTarget.dataset.page;
-                    showPage(pageId);
-                });
+            const response = await fetch(API_BASE, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(finalPayload)
             });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error(`API request failed for action ${action}:`, error);
+            return { success: false, 'message': 'Network error: ' + error.message };
+        }
+    }
 
-            // Watch ad button
-            document.getElementById('watch-ad-btn').addEventListener('click', handleWatchAd);
-
-            // Convert functionality
-            document.getElementById('convert-amount').addEventListener('input', updateConvertResult);
-            document.getElementById('convert-btn').addEventListener('click', handleConvert);
-
-            // Copy referral link
-            document.getElementById('copy-ref-btn').addEventListener('click', copyReferralLink);
-
-            // Advertiser submit
-            document.getElementById('submit-channel-btn').addEventListener('click', handleChannelSubmit);
-        };
-
-        const handleWatchAd = async () => {
-            const btn = document.getElementById('watch-ad-btn');
-            btn.disabled = true;
-            btn.textContent = '⏳ Loading Ad...';
-
-            // Show loading popup
-            showPopup(`
-                <div style="text-align: center;">
-                    <div class="loader-spinner" style="margin: 20px auto;"></div>
-                    <h2 style="margin-bottom: 15px;">Loading Advertisement</h2>
-                    <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                        Please wait while we load the ad...
-                    </p>
-                </div>
-            `);
-
-            try {
-                // Simulate ad loading and watching
-                await new Promise(resolve => setTimeout(resolve, 4000));
+    async function getUserData() {
+        try {
+            referrerId = getReferrerId();
+            const data = await apiRequest('get_user');
+            if (data.success) {
+                userId = data.user.id;
+                currentBalance = parseFloat(data.user.balance || 0);
+                todaysCount = parseInt(data.user.daily_count || 0);
+                faucetpayId = data.user.faucetpay_id || '';
+                faucetpayIdSet = !!faucetpayId;
+                csrfToken = data.csrf_token;
                 
-                // Award coins and points
-                userState.coins += 1000;
-                userState.totalPoints += 10;
-                userState.dailyAdCount += 1;
-
-                // Update Firebase
-                const db = firebase.database();
-                const userRef = db.ref(`users/${tgUser.id}`);
-                await userRef.update({
-                    coins: userState.coins,
-                    totalPoints: userState.totalPoints,
-                    dailyAdCount: userState.dailyAdCount,
-                    lastActive: new Date().toISOString()
-                });
-
-                closePopup();
-
-                // Show success message
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 5rem; margin-bottom: 20px; animation: bounce 1s;">🎉</div>
-                        <h2 style="margin-bottom: 15px; color: var(--success);">Success!</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 25px; font-size: 1.1rem;">
-                            You earned <strong style="color: var(--success);">1,000 coins</strong> and <strong style="color: var(--success);">10 contest points</strong>!
-                        </p>
-                        <button class="action-btn success-btn" onclick="closePopup()" style="padding: 15px 30px;">
-                            🎊 Awesome!
-                        </button>
-                    </div>
-                `);
-
-                renderUI();
-
-            } catch (error) {
-                console.error('Ad error:', error);
-                closePopup();
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 5rem; margin-bottom: 20px;">😔</div>
-                        <h2 style="margin-bottom: 15px; color: var(--danger);">Ad Failed</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            Please try again later. Make sure you have a stable internet connection.
-                        </p>
-                        <button class="action-btn" onclick="closePopup()">OK</button>
-                    </div>
-                `);
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '🎥 Watch Ad +1,000 🪙';
-            }
-        };
-
-        const updateConvertResult = () => {
-            const amount = parseInt(document.getElementById('convert-amount').value) || 0;
-            const tonAmount = (amount / 10000000).toFixed(4); // 1M coins = 0.1 TON
-            document.getElementById('convert-result').textContent = `${tonAmount} TON`;
-            
-            const btn = document.getElementById('convert-btn');
-            const hasEnoughCoins = amount <= userState.coins;
-            const meetsMinimum = amount >= 1000000;
-            
-            btn.disabled = !(hasEnoughCoins && meetsMinimum);
-            
-            if (!hasEnoughCoins) {
-                btn.title = "Insufficient coins";
-            } else if (!meetsMinimum) {
-                btn.title = "Minimum 1,000,000 coins required";
-            } else {
-                btn.title = "Click to convert coins to TON";
-            }
-        };
-
-        const handleConvert = async () => {
-            const amount = parseInt(document.getElementById('convert-amount').value);
-            
-            if (amount < 1000000) {
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 4rem; margin-bottom: 20px;">⚠️</div>
-                        <h2 style="margin-bottom: 15px;">Minimum Required</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            Minimum conversion is <strong>1,000,000 coins</strong>.
-                        </p>
-                        <button class="action-btn" onclick="closePopup()">OK</button>
-                    </div>
-                `);
-                return;
-            }
-
-            if (amount > userState.coins) {
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 4rem; margin-bottom: 20px;">💸</div>
-                        <h2 style="margin-bottom: 15px;">Insufficient Coins</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            You don't have enough coins for this conversion.
-                        </p>
-                        <button class="action-btn" onclick="closePopup()">OK</button>
-                    </div>
-                `);
-                return;
-            }
-
-            const tonAmount = amount / 10000000;
-            userState.coins -= amount;
-            userState.tonBalance += parseFloat(tonAmount);
-
-            const db = firebase.database();
-            const userRef = db.ref(`users/${tgUser.id}`);
-            await userRef.update({
-                coins: userState.coins,
-                tonBalance: userState.tonBalance
-            });
-
-            showPopup(`
-                <div style="text-align: center;">
-                    <div style="font-size: 5rem; margin-bottom: 20px; animation: bounce 1s;">💰</div>
-                    <h2 style="margin-bottom: 15px; color: var(--success);">Conversion Successful!</h2>
-                    <p style="color: var(--text-secondary-dark); margin-bottom: 25px; font-size: 1.1rem;">
-                        You converted <strong style="color: var(--success);">${amount.toLocaleString()} coins</strong><br>
-                        to <strong style="color: var(--success);">${tonAmount} TON</strong>
-                    </p>
-                    <button class="action-btn success-btn" onclick="closePopup()" style="padding: 15px 30px;">
-                        🎉 Great!
-                    </button>
-                </div>
-            `);
-
-            renderUI();
-        };
-
-        const copyReferralLink = () => {
-            const link = `https://t.me/${appConfig.botUsername || 'EliteCoinMasterBot'}?start=${tgUser.id}`;
-            navigator.clipboard.writeText(link).then(() => {
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 4rem; margin-bottom: 20px; animation: bounce 1s;">📋</div>
-                        <h2 style="margin-bottom: 15px; color: var(--success);">Link Copied!</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            Share your referral link with friends and start earning!
-                        </p>
-                        <button class="action-btn" onclick="closePopup()">OK</button>
-                    </div>
-                `);
-            }).catch(() => {
-                // Fallback for older browsers
-                const tempInput = document.createElement('input');
-                tempInput.value = link;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 4rem; margin-bottom: 20px;">📋</div>
-                        <h2 style="margin-bottom: 15px;">Link Copied!</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            Share your referral link with friends!
-                        </p>
-                        <button class="action-btn" onclick="closePopup()">OK</button>
-                    </div>
-                `);
-            });
-        };
-
-        const handleChannelSubmit = async () => {
-            const username = document.getElementById('channel-username').value.trim();
-            const name = document.getElementById('channel-name').value.trim();
-            const reward = parseInt(document.getElementById('channel-reward').value);
-
-            if (!username || !name) {
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 4rem; margin-bottom: 20px;">❌</div>
-                        <h2 style="margin-bottom: 15px;">Missing Information</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            Please fill in all required fields.
-                        </p>
-                        <button class="action-btn" onclick="closePopup()">OK</button>
-                    </div>
-                `);
-                return;
-            }
-
-            if (reward < 1000 || reward > 50000) {
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 4rem; margin-bottom: 20px;">⚠️</div>
-                        <h2 style="margin-bottom: 15px;">Invalid Reward</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                            Reward must be between 1,000 and 50,000 coins.
-                        </p>
-                        <button class="action-btn" onclick="closePopup()">OK</button>
-                    </div>
-                `);
-                return;
-            }
-
-            // Show processing popup
-            showPopup(`
-                <div style="text-align: center;">
-                    <div class="loader-spinner" style="margin: 20px auto;"></div>
-                    <h2 style="margin-bottom: 15px;">Processing...</h2>
-                    <p style="color: var(--text-secondary-dark); margin-bottom: 20px;">
-                        Your channel is being submitted for review.
-                    </p>
-                </div>
-            `);
-
-            // Simulate API call
-            setTimeout(() => {
-                closePopup();
-                showPopup(`
-                    <div style="text-align: center;">
-                        <div style="font-size: 5rem; margin-bottom: 20px; animation: bounce 1s;">✅</div>
-                        <h2 style="margin-bottom: 15px; color: var(--success);">Submitted Successfully!</h2>
-                        <p style="color: var(--text-secondary-dark); margin-bottom: 25px; font-size: 1.1rem; line-height: 1.5;">
-                            Your channel <strong>${name}</strong> has been submitted for review.<br>
-                            We'll contact you at <strong>${username}</strong> within 24 hours.
-                        </p>
-                        <button class="action-btn success-btn" onclick="closePopup()" style="padding: 15px 30px;">
-                            🎉 Thank You!
-                        </button>
-                    </div>
-                `);
-                
-                // Reset form
-                document.getElementById('channel-username').value = '';
-                document.getElementById('channel-name').value = '';
-                document.getElementById('channel-reward').value = '7500';
-            }, 3000);
-        };
-
-        const startContestTimer = () => {
-            const timerElement = document.getElementById('contest-timer');
-            const endTime = new Date();
-            endTime.setDate(endTime.getDate() + 7); // 7 days from now
-            
-            function updateTimer() {
-                const now = new Date().getTime();
-                const distance = endTime - now;
-                
-                if (distance < 0) {
-                    timerElement.innerHTML = "🎉 Contest Ended! New contest starting soon...";
-                    return;
+                if (faucetpayIdSet) {
+                    faucetpayIdInput.value = faucetpayId;
+                    faucetpayIdInput.readOnly = true;
+                    faucetpayIdInput.classList.add('readonly-input');
+                    updateFaucetpayIdBtn.disabled = true;
+                    updateFaucetpayIdBtn.innerText = 'FaucetPay Account Set';
+                } else {
+                    faucetpayIdInput.value = '';
+                    faucetpayIdInput.readOnly = false;
+                    faucetpayIdInput.classList.remove('readonly-input');
+                    updateFaucetpayIdBtn.disabled = false;
+                    updateFaucetpayIdBtn.innerText = 'Set FaucetPay Account';
                 }
                 
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                timerElement.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }
-            
-            updateTimer();
-            setInterval(updateTimer, 1000);
-        };
-
-        const renderUI = () => {
-            // Update user info
-            document.getElementById('user-name').textContent = `${tgUser.first_name || 'User'} ${tgUser.last_name || ''}`.trim();
-            document.getElementById('user-photo').src = tgUser.photo_url || 'https://via.placeholder.com/100';
-            
-            // Update balances
-            document.getElementById('user-coins').textContent = userState.coins.toLocaleString();
-            document.getElementById('user-ton').textContent = userState.tonBalance.toFixed(4);
-            document.getElementById('referral-count').textContent = userState.referrals;
-            document.getElementById('contest-points-header').textContent = userState.totalPoints;
-            
-            // Update coin value
-            const coinValue = (userState.coins / 10000000).toFixed(4);
-            document.getElementById('coins-value').textContent = `= ${coinValue} TON`;
-            
-            // Update stats
-            document.getElementById('daily-ads-watched').textContent = `${userState.dailyAdCount}/50`;
-            document.getElementById('total-points').textContent = userState.totalPoints;
-            document.getElementById('total-referrals').textContent = userState.referrals;
-            document.getElementById('total-earned').textContent = userState.tonBalance.toFixed(4);
-            
-            // Update progress
-            const progress = (userState.dailyAdCount / 50) * 100;
-            document.getElementById('ad-progress-fill').style.width = `${progress}%`;
-            document.getElementById('ad-progress-text').textContent = `${userState.dailyAdCount}/50`;
-            
-            // Update convert page
-            document.getElementById('convert-coins-amount').textContent = userState.coins.toLocaleString();
-            document.getElementById('available-coins').textContent = `Available: ${userState.coins.toLocaleString()}`;
-            document.getElementById('convert-amount').value = '';
-            document.getElementById('convert-result').textContent = '0.0000 TON';
-            document.getElementById('convert-btn').disabled = true;
-            
-            // Update referral page
-            document.getElementById('ref-total').textContent = userState.referrals;
-            document.getElementById('ref-earned').textContent = (userState.referrals * 15000).toLocaleString();
-            document.getElementById('referral-link').value = `https://t.me/${appConfig.botUsername || 'EliteCoinMasterBot'}?start=${tgUser.id}`;
-            
-            // Update contest page
-            document.getElementById('contest-points').textContent = userState.totalPoints;
-            document.getElementById('contest-rank').textContent = userState.totalPoints > 0 ? '#' + (Math.floor(Math.random() * 50) + 1) : '-';
-            
-            // Update tasks badge
-            const tasksBadge = document.getElementById('tasks-badge');
-            const availableTasks = 3; // Static for now
-            if (availableTasks > 0) {
-                tasksBadge.textContent = availableTasks;
-                tasksBadge.style.display = 'flex';
+                refreshUI();
+            } else if (data.is_banned) {
+                showBanPanel(data.ban_reason);
             } else {
-                tasksBadge.style.display = 'none';
+                console.error('Failed to get user data:', data.message);
+                setTimeout(getUserData, 2000);
             }
-        };
+        } catch (error) {
+            console.error('Error connecting to server:', error);
+            setTimeout(getUserData, 2000);
+        }
+    }
 
-        const showFullLeaderboard = () => {
-            showPopup(`
-                <div style="text-align: center; max-height: 70vh; overflow-y: auto;">
-                    <h2 style="margin-bottom: 20px; font-size: 1.8rem;">🏆 Full Leaderboard</h2>
-                    <p style="color: var(--text-secondary-dark); margin-bottom: 25px; font-size: 1.1rem;">
-                        Top 50 participants in the current weekly contest
-                    </p>
-                    
-                    <div style="background: rgba(102, 126, 234, 0.1); padding: 20px; border-radius: 18px; margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 15px; padding: 0 10px;">
-                            <span>Rank</span>
-                            <span>Player</span>
-                            <span>Points</span>
-                        </div>
+    async function updateFaucetPayId(faucetpay_id) {
+        if (!csrfToken) {
+            await getUserData();
+            return false;
+        }
+        
+        const data = await apiRequest('update_faucetpay_id', { faucetpay_id });
+        if (data.success) {
+            faucetpayId = faucetpay_id;
+            faucetpayIdSet = true;
+            faucetpayIdInput.value = faucetpay_id;
+            faucetpayIdInput.readOnly = true;
+            faucetpayIdInput.classList.add('readonly-input');
+            updateFaucetpayIdBtn.disabled = true;
+            updateFaucetpayIdBtn.innerText = 'FaucetPay Account Set';
+            csrfToken = data.csrf_token;
+            alert('FaucetPay account set successfully!');
+            refreshUI();
+            return true;
+        } else if (data.is_banned) {
+            showBanPanel(data.ban_reason);
+            return false;
+        } else {
+            if (data.message && data.message.includes('token')) {
+                await getUserData();
+            }
+            console.error('Failed to update FaucetPay ID:', data.message);
+            alert('Failed to set FaucetPay account. Please try again.');
+            return false;
+        }
+    }
+
+    function showBanPanel(reason) {
+        // إخفاء جميع الألواح وإظهار لوحة الحظر فقط
+        const panels = document.querySelectorAll('.panel');
+        panels.forEach(panel => {
+            if (panel.id !== 'panel-ban') {
+                panel.classList.add('hidden');
+            }
+        });
+        banPanel.classList.remove('hidden');
+        banMessage.innerText = `Your account has been banned due to: ${reason}. Please contact support for assistance.`;
+        
+        // إخفاء شريط التنقل السفلي
+        navBottom.classList.add('hidden');
+    }
+
+    async function getReferralInfo() {
+        try {
+            const data = await apiRequest('get_referral_info');
+            console.log('Referral API response:', data);
+            if (data.success) {
+                referralLinkInput.value = data.referral_link || 'Error loading link';
+                referralCountEl.textContent = data.referral_count || 0;
+                rewardedReferralsEl.textContent = data.rewarded_referrals || 0;
+            } else if (data.is_banned) {
+                showBanPanel(data.ban_reason);
+            } else {
+                console.error('Failed to load referral info:', data.message);
+                referralLinkInput.value = 'Error loading referral link';
+            }
+        } catch (error) {
+            console.error('Error loading referral info:', error);
+            referralLinkInput.value = 'Error loading referral link';
+        }
+    }
+
+    async function creditReward() {
+        if (!csrfToken) {
+            await getUserData();
+            return false;
+        }
+        
+        const data = await apiRequest('credit_reward', { user_id: userId });
+        if (data.success) {
+            currentBalance += 0.00015;
+            csrfToken = data.csrf_token;
+            refreshUI();
+            return true;
+        } else if (data.is_banned) {
+            showBanPanel(data.ban_reason);
+            return false;
+        } else {
+            if (data.message && data.message.includes('token')) {
+                await getUserData();
+            }
+            console.error('Failed to credit reward:', data.message);
+            return false;
+        }
+    }
+
+    async function incrementDailyCount() {
+        if (!csrfToken) {
+            await getUserData();
+            return false;
+        }
+        
+        const data = await apiRequest('increment_daily', { user_id: userId });
+        if (data.success) {
+            todaysCount++;
+            csrfToken = data.csrf_token;
+            refreshUI();
+            return true;
+        } else if (data.is_banned) {
+            showBanPanel(data.ban_reason);
+            return false;
+        } else {
+            if (data.message && data.message.includes('token')) {
+                await getUserData();
+            }
+            console.error('Failed to increment daily count:', data.message);
+            return false;
+        }
+    }
+
+    async function createWithdrawal(amount) {
+        if (!csrfToken) {
+            await getUserData();
+            return false;
+        }
+        
+        const data = await apiRequest('create_withdrawal', { 
+            user_id: userId, 
+            amount: amount 
+        });
+        if (data.success) {
+            currentBalance -= amount;
+            csrfToken = data.csrf_token;
+            refreshUI();
+            return true;
+        } else if (data.is_banned) {
+            showBanPanel(data.ban_reason);
+            return false;
+        } else {
+            if (data.message && data.message.includes('token')) {
+                await getUserData();
+            }
+            console.error('Failed to create withdrawal:', data.message);
+            return false;
+        }
+    }
+
+    async function loadWithdrawHistory() {
+        try {
+            const data = await apiRequest('get_withdrawals', { user_id: userId });
+            if (data.success) {
+                withdrawList.innerHTML = data.withdrawals.length ? 
+                    data.withdrawals.map(w => {
+                        const date = new Date(w.created_at);
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
                         
-                        ${Array.from({length: 10}, (_, i) => `
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 10px; margin: 8px 0; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-                                <div style="font-weight: 800; color: #667eea; min-width: 40px;">#${i + 1}</div>
-                                <div style="flex: 1; text-align: left; padding: 0 15px;">
-                                    <div style="font-weight: 700;">Player ${i + 1}</div>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary-dark);">@player${i + 1}</div>
-                                </div>
-                                <div style="font-weight: 800; color: var(--success); min-width: 60px; text-align: right;">${(50 - i) * 25}</div>
+                        return `
+                        <div style="padding:10px;border-radius:10px;margin-bottom:8px;background:#f8fafc;">
+                            <div style="display:flex;justify-content:space-between;">
+                                <div style="font-weight:700">${parseFloat(w.amount).toFixed(4)} USDT</div>
+                                <div class="text-secondary">${w.status}</div>
                             </div>
-                        `).join('')}
-                        
-                        <div style="text-align: center; margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px;">
-                            <div style="font-weight: 700; color: var(--text-secondary-dark);">
-                                And ${40} more participants...
-                            </div>
+                            <div class="text-secondary text-sm">${w.faucetpay_id} · ${formattedDate}</div>
                         </div>
-                    </div>
-                    
-                    <button class="action-btn" onclick="closePopup()" style="width: 100%; padding: 15px;">
-                        Close Leaderboard
-                    </button>
-                </div>
-            `);
-        };
+                    `}).join('') : '<div class="text-secondary">No withdrawals yet.</div>';
+            } else if (data.is_banned) {
+                showBanPanel(data.ban_reason);
+            } else {
+                withdrawList.innerHTML = '<div class="text-secondary">Failed to load withdrawals</div>';
+                console.error('Failed to load withdrawals:', data.message);
+            }
+        } catch (error) {
+            console.error('Error loading withdrawal history:', error);
+            withdrawList.innerHTML = '<div class="text-secondary">Error loading withdrawals</div>';
+        }
+    }
 
-        // Global functions for HTML onclick handlers
-        window.showPage = showPage;
-        window.closePopup = closePopup;
-        window.showFullLeaderboard = showFullLeaderboard;
+    function refreshUI() {
+        balanceEl.innerText = `${currentBalance.toFixed(4)} USDT`;
+        adsCountEl.innerText = `${todaysCount}/${DAILY_LIMIT}`;
+        const remaining = Math.max(0, DAILY_LIMIT - todaysCount);
+        adsRemainingPill.innerText = `${remaining} left`;
+        progressBar.style.width = Math.min(100, Math.round((todaysCount/DAILY_LIMIT)*100)) + '%';
+        
+        const canWatch = todaysCount < DAILY_LIMIT;
+        watchBtn.disabled = !canWatch || isProcessingAd || !csrfToken;
+        
+        if (isProcessingAd) {
+            watchBtnText.innerText = 'Processing...';
+        } else if (canWatch) {
+            watchBtnText.innerText = '🎬 Watch Ad & Earn 0.00015';
+        } else if (!csrfToken) {
+            watchBtnText.innerText = 'Token expired, refreshing...';
+        } else {
+            watchBtnText.innerText = 'Daily limit reached';
+        }
+        
+        // تحديث حالة أزرار السحب
+        const amount = parseFloat(withdrawAmountInput.value);
+        const validAmount = !isNaN(amount) && amount >= MIN_WITHDRAW && amount <= MAX_WITHDRAW && amount <= currentBalance;
+        withdrawBtn.disabled = !faucetpayIdSet || !validAmount;
+        
+        updateFaucetpayIdBtn.disabled = !faucetpayIdInput.value.trim() || faucetpayIdSet;
+        
+        // تحديث placeholder لحقل المبلغ
+        withdrawAmountInput.placeholder = `Min: ${MIN_WITHDRAW}, Max: ${MAX_WITHDRAW}`;
+        withdrawAmountInput.min = MIN_WITHDRAW;
+        withdrawAmountInput.max = MAX_WITHDRAW;
+    }
 
-        // Start the app
-        initApp();
+    function setAdProcessing(on) {
+        isProcessingAd = on;
+        watchBtnSpinner.classList.toggle('hidden', !on);
+        refreshUI();
+    }
+
+    function setActiveTab(tab) {
+        try {
+            const panels = [panelHome, panelWithdraw, panelReferrals, panelSupport, banPanel];
+            const buttons = [navHome, navWithdraw, navReferrals, navSupport];
+            
+            // إخفاء جميع الألواح
+            panels.forEach(panel => panel.classList.add('hidden'));
+            
+            // تحديث حالة الأزرار
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // إظهار اللوحة المطلوبة وتحديث الزر النشط
+            if (tab === 'home' && !banPanel.classList.contains('hidden')) {
+                console.log('Cannot switch to home: user is banned');
+                return;
+            } else if (tab === 'home') {
+                navHome.classList.add('active');
+                panelHome.classList.remove('hidden');
+            } else if (tab === 'withdraw') {
+                navWithdraw.classList.add('active');
+                panelWithdraw.classList.remove('hidden');
+                loadWithdrawHistory();
+            } else if (tab === 'referrals') {
+                navReferrals.classList.add('active');
+                panelReferrals.classList.remove('hidden');
+                getReferralInfo();
+            } else if (tab === 'support') {
+                navSupport.classList.add('active');
+                panelSupport.classList.remove('hidden');
+            } else {
+                console.error('Invalid tab:', tab);
+            }
+        } catch (error) {
+            console.error('Error in setActiveTab:', error);
+        }
+    }
+
+    // أحداث النقر على الأزرار
+    joinChannelBtn.addEventListener('click', () => {
+        window.open('https://t.me/AdXCryptoo', '_blank');
     });
 
-    // Add spin animation
-    (function addSpinKeyframes(){ 
-        const style = document.createElement('style'); 
-        style.innerHTML='@keyframes spin{to{transform:rotate(360deg)}}'; 
-        document.head.appendChild(style); 
-    })();
-    </script>
+    navHome.addEventListener('click', () => setActiveTab('home'));
+    navWithdraw.addEventListener('click', () => setActiveTab('withdraw'));
+    navReferrals.addEventListener('click', () => setActiveTab('referrals'));
+    navSupport.addEventListener('click', () => setActiveTab('support'));
+
+    // باقي الأحداث تبقى كما هي
+    watchBtn.addEventListener('click', async () => {
+        if (isProcessingAd || !csrfToken || todaysCount >= DAILY_LIMIT) return;
+        
+        setAdProcessing(true);
+        
+        try {
+            let adShown = false;
+            if (typeof show_10075454 !== 'undefined') {
+                try {
+                    await show_10075454({ ymid: telegramId });
+                    adShown = true;
+                } catch (adError) {
+                    console.error('Ad network error:', adError);
+                }
+            }
+            
+            if (!adShown) {
+                await showFallbackAd();
+            }
+           
+            const rewardSuccess = await creditReward();
+            if (rewardSuccess) {
+                const countSuccess = await incrementDailyCount();
+                if (countSuccess) {
+                    watchBtnText.innerText = '✅ Reward Credited!';
+                    setTimeout(() => refreshUI(), 1500);
+                }
+            } else {
+                alert('Failed to credit reward. Please slow down your watching..');
+            }
+        } catch (err) {
+            console.error('Ad process error:', err);
+            alert('Ad failed. Try again.');
+        } finally {
+            setAdProcessing(false);
+        }
+    });
+
+    withdrawBtn.addEventListener('click', async () => {
+        if (!faucetpayIdSet) {
+            alert('Please set your FaucetPay account first.');
+            return;
+        }
+        
+        const amount = parseFloat(withdrawAmountInput.value);
+        if (isNaN(amount) || amount < MIN_WITHDRAW || amount > MAX_WITHDRAW) {
+            alert(`Invalid amount. Withdrawal must be between ${MIN_WITHDRAW} and ${MAX_WITHDRAW} USDT.`);
+            return;
+        }
+        
+        if (amount > currentBalance) {
+            alert('Insufficient balance. You cannot withdraw more than your current balance.');
+            return;
+        }
+        
+        withdrawBtn.disabled = true;
+        withdrawBtn.innerText = 'Processing...';
+        
+        try {
+            const success = await createWithdrawal(amount);
+            if (success) {
+                alert('Withdrawal submitted successfully!');
+                withdrawAmountInput.value = '';
+                loadWithdrawHistory();
+            } else {
+                alert('Failed to submit withdrawal. Please try again.');
+            }
+        } catch (error) {
+            console.error('Withdrawal error:', error);
+            alert('Error submitting withdrawal. Please try again.');
+        } finally {
+            withdrawBtn.disabled = false;
+            withdrawBtn.innerText = '💸 Request Withdraw';
+            refreshUI();
+        }
+    });
+
+    updateFaucetpayIdBtn.addEventListener('click', async () => {
+        const faucetpay_id = faucetpayIdInput.value.trim();
+        if (!faucetpay_id) {
+            alert('Please enter your FaucetPay email or username.');
+            return;
+        }
+        
+        if (faucetpayIdSet) {
+            alert('FaucetPay account is already set and cannot be changed.');
+            return;
+        }
+        
+        updateFaucetpayIdBtn.disabled = true;
+        updateFaucetpayIdBtn.innerText = 'Setting...';
+        
+        try {
+            const success = await updateFaucetPayId(faucetpay_id);
+            if (!success) {
+                alert('Failed to set FaucetPay account. Please try again.');
+            }
+        } catch (error) {
+            console.error('Update FaucetPay ID error:', error);
+            alert('Error setting FaucetPay account. Please try again.');
+        } finally {
+            updateFaucetpayIdBtn.disabled = false;
+            updateFaucetpayIdBtn.innerText = 'Set FaucetPay Account';
+            refreshUI();
+        }
+    });
+
+    copyReferralLinkBtn.addEventListener('click', () => {
+        referralLinkInput.select();
+        document.execCommand('copy');
+        alert('Referral link copied to clipboard!');
+    });
+
+    supportBtn.addEventListener('click', () => {
+        window.open('https://t.me/AdxCryptoChat', '_blank');
+    });
+
+    banSupportBtn.addEventListener('click', () => {
+        window.open('https://t.me/AdxCryptoChat', '_blank');
+    });
+
+    faucetpayIdInput.addEventListener('input', refreshUI);
+    withdrawAmountInput.addEventListener('input', refreshUI);
+    document.getElementById('refreshWithdrawHistory').addEventListener('click', loadWithdrawHistory);
+
+    async function showFallbackAd() {
+        return new Promise(resolve => {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;align-items:center;justify-content:center;color:white;';
+            overlay.innerHTML = `
+                <div style="background:white;color:black;padding:20px;border-radius:12px;text-align:center;max-width:300px;">
+                    <h3 style="color:#3b82f6;margin-bottom:10px;">Sponsored Ad</h3>
+                    <p style="margin-bottom:10px;">Ad loading... Please wait 5 seconds</p>
+                    <div id="adTimer" style="font-weight:bold;color:#ef4444;font-size:18px">5</div>
+                    <button id="closeAd" style="margin-top:15px;padding:8px 16px;background:#3b82f6;color:white;border:none;border-radius:6px;cursor:pointer;">Close</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            
+            let time = 5;
+            const timerElement = document.getElementById('adTimer');
+            const timer = setInterval(() => {
+                time--;
+                timerElement.textContent = time;
+                if (time <= 0) {
+                    clearInterval(timer);
+                    document.body.removeChild(overlay);
+                    resolve();
+                }
+            }, 1000);
+            
+            document.getElementById('closeAd').addEventListener('click', () => {
+                clearInterval(timer);
+                document.body.removeChild(overlay);
+                resolve();
+            });
+        });
+    }
+
+    // تهيئة التطبيق
+    getUserData();
+    setActiveTab('home');
+    
+    // تحديث الواجهة كل ثانيتين
+    setInterval(() => {
+        if (!banPanel.classList.contains('hidden')) return;
+        refreshUI();
+    }, 2000);
+  </script>
 </body>
 </html>

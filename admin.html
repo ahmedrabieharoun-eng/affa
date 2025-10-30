@@ -3,129 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم Firebase</title>
+    <title>لوحة تحكم Firebase الكاملة</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
         }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex;
+            min-height: 100vh;
         }
-        .header {
+
+        /* الشريط الجانبي */
+        .sidebar {
+            width: 280px;
             background: #2c3e50;
             color: white;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 20px 0;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            right: 0;
+            top: 0;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #34495e;
             margin-bottom: 20px;
         }
+
+        .sidebar-header h1 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        .collections-list {
+            list-style: none;
+        }
+
+        .collection-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border-right: 3px solid transparent;
+        }
+
+        .collection-item:hover {
+            background: #34495e;
+        }
+
+        .collection-item.active {
+            background: #34495e;
+            border-right-color: #3498db;
+        }
+
+        .collection-name {
+            font-weight: 500;
+        }
+
+        .collection-count {
+            background: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            float: left;
+            margin-top: 2px;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            margin-right: 280px;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
+
         .stat-card {
             background: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
         }
-        .users-table {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .stat-card h3 {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
         }
-        table {
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* جدول البيانات */
+        .data-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #34495e;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .data-table {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
-            padding: 12px;
+
+        .data-table th {
+            background: #ecf0f1;
+            padding: 12px 15px;
             text-align: right;
-            border-bottom: 1px solid #ddd;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #bdc3c7;
         }
-        th {
-            background: #34495e;
-            color: white;
+
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+            max-width: 300px;
+            word-wrap: break-word;
         }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .json-view {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
         .btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            margin: 0 2px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
         }
-        .btn-edit {
+
+        .btn-primary {
             background: #3498db;
             color: white;
         }
-        .btn-delete {
+
+        .btn-danger {
             background: #e74c3c;
             color: white;
         }
-        .btn-save {
+
+        .btn-success {
             background: #27ae60;
             color: white;
         }
-        .loading {
-            text-align: center;
-            padding: 20px;
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* البحث */
+        .search-box {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            
+            .main-content {
+                margin-right: 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>لوحة تحكم Firebase</h1>
-            <p>إدارة المستخدمين والبيانات</p>
+        <!-- الشريط الجانبي -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>🔥 Firebase Dashboard</h1>
+                <p>إدارة جميع بيانات المشروع</p>
+            </div>
+            
+            <ul class="collections-list" id="collectionsList">
+                <li class="collection-item active" data-collection="all">
+                    <span class="collection-name">جميع المجموعات</span>
+                    <span class="collection-count" id="totalCount">0</span>
+                </li>
+                <!-- سيتم إضافة المجموعات ديناميكياً -->
+            </ul>
         </div>
 
-        <div class="stats" id="stats">
-            <div class="stat-card">
-                <h3>إجمالي المستخدمين</h3>
-                <p id="totalUsers">0</p>
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
+            <div class="header">
+                <h1>لوحة تحكم Firebase الشاملة</h1>
+                <p>عرض وإدارة جميع البيانات في قاعدة البيانات</p>
             </div>
-            <div class="stat-card">
-                <h3>أعلى عدد إحالات</h3>
-                <p id="maxReferrals">0</p>
-            </div>
-            <div class="stat-card">
-                <h3>متوسط الإحالات</h3>
-                <p id="avgReferrals">0</p>
-            </div>
-        </div>
 
-        <div class="users-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>الاسم</th>
-                        <th>البريد الإلكتروني</th>
-                        <th>عدد الإحالات</th>
-                        <th>تاريخ التسجيل</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody id="usersTableBody">
-                    <tr>
-                        <td colspan="6" class="loading">جاري تحميل البيانات...</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- الإحصائيات -->
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>إجمالي المجموعات</h3>
+                    <div class="number" id="totalCollections">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>إجمالي المستندات</h3>
+                    <div class="number" id="totalDocuments">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>أحدث تحديث</h3>
+                    <div class="number" id="lastUpdate">-</div>
+                </div>
+            </div>
+
+            <!-- صندوق البحث -->
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 ابحث في البيانات...">
+            </div>
+
+            <!-- عرض البيانات -->
+            <div class="data-section">
+                <div class="section-header">
+                    <h2 id="currentCollection">جميع البيانات</h2>
+                    <button class="btn btn-primary" onclick="refreshData()">🔄 تحديث</button>
+                </div>
+                
+                <div id="dataContainer">
+                    <div class="loading">جاري تحميل البيانات...</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     
     <script>
         // تكوين Firebase
@@ -136,14 +330,15 @@
             storageBucket: "ton-up-422b5.firebasestorage.app",
             messagingSenderId: "1097862104173",
             appId: "1:1097862104173:web:752c30106f7e9fc553ab64",
-            measurementId: "G-R5YGH5QY0W"
+            measurementId: "G-R5YGH5QY0W",
+            databaseURL: "https://earnmoney124553-default-rdb.firebaseio.com"
         };
 
         // تهيئة Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        const auth = firebase.auth();
+        const rdb = firebase.database();
     </script>
-    <script src="app.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html>

@@ -3,958 +3,1449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم Firebase</title>
+    <title>لوحة تحكم TON Rewards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --primary: #2980B9; --secondary: #2C3E50; --light: #ECF0F1; --dark: #34495E;
+            --success: #27AE60; --danger: #C0392B; --surface: #FFFFFF;
+            --warning: #F39C12; --info: #3498DB;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--light); direction: rtl; }
+        #app-container { transition: filter 0.3s; }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 25px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .header h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 2.5rem;
-            background: linear-gradient(45deg, #2c3e50, #3498db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .header p {
-            color: #7f8c8d;
-            font-size: 1.2rem;
-        }
-
-        .connection-status {
-            background: #34495e;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
+        /* Login Page Styles */
+        #login-page {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
-
-        .status-connected {
-            background: #27ae60;
-        }
-
-        .status-disconnected {
-            background: #e74c3c;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-card h3 {
-            color: #7f8c8d;
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
-        .stat-card .number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .controls {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            backdrop-filter: blur(10px);
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 300px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 45px 12px 15px;
-            border: 2px solid #bdc3c7;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .search-box input:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #7f8c8d;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
             align-items: center;
-            gap: 8px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-        }
-
-        .btn-success {
-            background: linear-gradient(45deg, #27ae60, #229954);
-            color: white;
-        }
-
-        .btn-warning {
-            background: linear-gradient(45deg, #f39c12, #e67e22);
-            color: white;
-        }
-
-        .btn-danger {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 25px;
-        }
-
-        .sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            padding: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .sidebar h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #ecf0f1;
-        }
-
-        .collections-list {
-            list-style: none;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .collection-item {
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .login-card {
+            background-color: var(--surface);
             border-radius: 10px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 2px solid transparent;
-        }
-
-        .collection-item:hover {
-            background: #f8f9fa;
-            border-color: #3498db;
-        }
-
-        .collection-item.active {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            border-color: #2980b9;
-        }
-
-        .collection-name {
-            font-weight: 600;
-        }
-
-        .collection-count {
-            background: #e74c3c;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .collection-item.active .collection-count {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .data-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .section-header {
-            background: linear-gradient(45deg, #34495e, #2c3e50);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .data-table-container {
-            overflow-x: auto;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        .data-table th {
-            background: #ecf0f1;
-            padding: 15px;
-            text-align: right;
-            font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 3px solid #bdc3c7;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .data-table th:hover {
-            background: #d5dbdb;
-        }
-
-        .data-table td {
-            padding: 15px;
-            border-bottom: 1px solid #ecf0f1;
-            max-width: 300px;
-            word-wrap: break-word;
-            vertical-align: top;
-        }
-
-        .data-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .json-view {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 12px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            max-height: 150px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-        }
-
-        .field-value {
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 60px;
-            color: #7f8c8d;
-            font-size: 1.1rem;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-sm {
-            padding: 8px 12px;
-            font-size: 0.85rem;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 5% auto;
             padding: 30px;
-            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
         }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .login-card h2 {
+            text-align: center;
             margin-bottom: 25px;
+            color: var(--secondary);
         }
-
-        .close {
-            font-size: 28px;
-            cursor: pointer;
-            color: #7f8c8d;
-            transition: color 0.3s;
-        }
-
-        .close:hover {
-            color: #e74c3c;
-        }
-
-        .form-group {
+        .login-card .form-group {
             margin-bottom: 20px;
         }
-
-        .form-group label {
+        .login-card label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
-            color: #2c3e50;
+            font-weight: 500;
+            color: var(--dark);
         }
-
-        .form-control {
+        .login-card input {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #bdc3c7;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Tajawal', sans-serif;
+            transition: border 0.3s;
         }
-
-        .form-control:focus {
-            border-color: #3498db;
+        .login-card input:focus {
+            border-color: var(--primary);
             outline: none;
         }
-
-        textarea.form-control {
-            height: 200px;
-            resize: vertical;
-            font-family: 'Courier New', monospace;
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-
-        mark {
-            background: #ffeaa7;
-            padding: 2px 4px;
-            border-radius: 3px;
+        .login-btn:hover {
+            background-color: #2471A3;
         }
-
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar {
-                order: 2;
-            }
-            
-            .data-section {
-                order: 1;
-            }
+        .error-message {
+            color: var(--danger);
+            text-align: center;
+            margin-top: 15px;
+            display: none;
         }
+        
+        /* Top Bar */
+        #top-bar {
+            background-color: var(--secondary); color: white; padding: 0 15px;
+            display: flex; align-items: center; justify-content: space-between; height: 60px;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        #menu-toggle { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        #page-title { font-size: 1.2rem; }
+        #logout-btn { background: none; border: none; color: white; cursor: pointer; font-size: 1rem; }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .controls {
-                flex-direction: column;
-            }
-            
-            .search-box {
-                min-width: auto;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
+        /* Sidebar */
+        #sidebar {
+            position: fixed; top: 0; right: 0; width: 260px; height: 100vh;
+            background-color: var(--secondary); color: white; z-index: 2000;
+            transform: translateX(100%); transition: transform 0.3s ease-in-out;
+            display: flex; flex-direction: column;
+        }
+        #sidebar.open { transform: translateX(0); }
+        #sidebar-header { padding: 20px; text-align: center; }
+        #sidebar-header .close-btn { position: absolute; top: 15px; left: 20px; font-size: 1.8rem; cursor: pointer; }
+        .nav-menu { list-style: none; padding: 0; margin: 0; }
+        .nav-menu li { padding: 15px 20px; cursor: pointer; border-right: 4px solid transparent; transition: all 0.2s; }
+        .nav-menu li:hover, .nav-menu li.active { background-color: var(--dark); border-right-color: var(--primary); }
+        .nav-menu li i { margin-left: 12px; width: 20px; text-align: center; }
+        #sidebar-logout-btn { margin-top: auto; }
+
+        /* Overlay */
+        #overlay {
+            position: fixed; top: 0; right: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); z-index: 1999; display: none;
+        }
+        #overlay.show { display: block; }
+        
+        /* Main Content */
+        #main-content { padding: 20px; }
+        .page { display: none; } .page.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Cards */
+        .card { background-color: var(--surface); border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        h1, h3, h4 { color: var(--secondary); margin-bottom: 15px; }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; }
+        thead { display: none; }
+        tr { display: block; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; padding: 10px; }
+        td { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
+        td:last-child { border-bottom: none; }
+        td::before { content: attr(data-label); font-weight: bold; margin-left: 10px; }
+        .action-buttons { text-align: left; width: 100%; }
+        .action-btn { padding: 8px 12px; border: none; border-radius: 5px; color: white; cursor: pointer; margin: 2px; font-family: 'Tajawal', sans-serif; }
+        
+        /* Forms */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; text-align: right; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        .btn-success { background-color: var(--success); } .btn-danger { background-color: var(--danger); } .btn-primary { background-color: var(--primary); } .btn-warning { background-color: var(--warning); }
+        .btn-info { background-color: var(--info); }
+        .dynamic-item-list { list-style: none; padding-right: 0; }
+        .dynamic-item-list li { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--light); }
+        .withdraw-method-group { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+        
+        /* New Styles */
+        .user-status-banned { background-color: rgba(192, 57, 43, 0.1); border-right: 4px solid var(--danger); }
+        .user-status-banned td:first-child::before { content: "🚫 " attr(data-label); }
+        .settings-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 768px) { .settings-grid { grid-template-columns: 1fr 1fr; } }
+        .setting-card { background-color: var(--surface); border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        /* Search Box */
+        .search-box { margin-bottom: 20px; }
+        .search-box input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
+        
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-card { background-color: var(--surface); border-radius: 8px; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .stat-value { font-size: 2rem; font-weight: bold; margin: 10px 0; }
+        .stat-label { color: var(--dark); font-size: 0.9rem; }
+        
+        /* User Details */
+        .user-details-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 768px) { .user-details-grid { grid-template-columns: 1fr 1fr; } }
+        .user-info-card { background-color: var(--surface); border-radius: 8px; padding: 15px; }
+        .user-info-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .user-info-item:last-child { border-bottom: none; }
+        
+        /* Tabs */
+        .tabs { display: flex; border-bottom: 1px solid #ddd; margin-bottom: 15px; }
+        .tab { padding: 10px 15px; cursor: pointer; border-bottom: 2px solid transparent; }
+        .tab.active { border-bottom-color: var(--primary); color: var(--primary); font-weight: bold; }
+
+        @media (min-width: 768px) {
+            #app-container { display: flex; }
+            #top-bar { display: none; }
+            #sidebar { position: static; transform: translateX(0); width: 250px; height: 100vh; }
+            #sidebar-header .close-btn { display: none; }
+            #main-content { flex-grow: 1; padding: 30px; }
+            thead { display: table-header-group; }
+            tr { display: table-row; margin-bottom: 0; border: none; padding: 0; }
+            td { display: table-cell; padding: 12px; border-bottom: 1px solid #ddd; }
+            td::before { display: none; }
+            .action-buttons { text-align: right; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- الهيدر -->
-        <div class="header">
-            <h1>🚀 لوحة تحكم Firebase</h1>
-            <p>عرض وإدارة جميع البيانات في قاعدة البيانات</p>
-            
-            <div class="connection-status" id="connectionStatus">
-                <span>⏳ جاري التوصيل بقاعدة البيانات...</span>
+    <!-- Login Page -->
+    <div id="login-page">
+        <div class="login-card">
+            <h2><i class="fas fa-shield-alt"></i> تسجيل الدخول للإدارة</h2>
+            <div class="form-group">
+                <label for="username">اسم المستخدم</label>
+                <input type="text" id="username" placeholder="أدخل اسم المستخدم">
             </div>
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور">
+            </div>
+            <button class="login-btn" id="login-button">تسجيل الدخول</button>
+            <div class="error-message" id="login-error">اسم المستخدم أو كلمة المرور غير صحيحة</div>
         </div>
+    </div>
 
-        <!-- الإحصائيات -->
-        <div class="stats">
-            <div class="stat-card">
-                <h3>📊 إجمالي المجموعات</h3>
-                <div class="number" id="totalCollections">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>📄 إجمالي المستندات</h3>
-                <div class="number" id="totalDocuments">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>🕒 آخر تحديث</h3>
-                <div class="number" id="lastUpdate">-</div>
-            </div>
-            <div class="stat-card">
-                <h3>⚡ الحالة</h3>
-                <div class="number" id="statusText">جاري التحميل...</div>
-            </div>
-        </div>
-
-        <!-- أدوات التحكم -->
-        <div class="controls">
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="ابحث في جميع البيانات...">
-            </div>
-            <button class="btn btn-success" onclick="showAddDocumentModal()">
-                ➕ إضافة مستند
-            </button>
-            <button class="btn btn-warning" onclick="exportToJSON()">
-                💾 تصدير JSON
-            </button>
-            <button class="btn btn-primary" onclick="refreshData()">
-                🔄 تحديث البيانات
-            </button>
-        </div>
-
-        <!-- المحتوى الرئيسي -->
-        <div class="main-content">
-            <!-- الشريط الجانبي -->
-            <div class="sidebar">
-                <h3>📁 المجموعات</h3>
-                <ul class="collections-list" id="collectionsList">
-                    <li class="collection-item active" data-collection="all">
-                        <span class="collection-name">جميع المجموعات</span>
-                        <span class="collection-count" id="totalCount">0</span>
-                    </li>
+    <!-- Admin Panel (Initially Hidden) -->
+    <div id="app-container" style="display: none;">
+        <aside id="sidebar">
+            <div>
+                <div id="sidebar-header"><h2><i class="fas fa-shield-alt"></i> لوحة التحكم</h2><span class="close-btn">&times;</span></div>
+                <ul class="nav-menu">
+                    <li data-page="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</li>
+                    <li data-page="users"><i class="fas fa-users"></i> إدارة المستخدمين</li>
+                    <li data-page="user-search"><i class="fas fa-search"></i> البحث عن مستخدم</li>
+                    <li data-page="withdrawals"><i class="fas fa-wallet"></i> طلبات السحب المعلقة</li>
+                    <li data-page="history"><i class="fas fa-history"></i> سجل السحوبات</li>
+                    <li data-page="tasks"><i class="fas fa-tasks"></i> المهام والروابط</li>
+                    <li data-page="codes"><i class="fas fa-ticket-alt"></i> إدارة الأكواد</li>
+                    <li data-page="contest"><i class="fas fa-trophy"></i> إدارة المسابقة</li>
+                    <li data-page="settings"><i class="fas fa-cog"></i> إعدادات التطبيق</li>
+                    <li data-page="broadcast"><i class="fas fa-bullhorn"></i> البث الجماعي</li>
                 </ul>
             </div>
+            <button id="sidebar-logout-btn" class="nav-menu"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+        </aside>
+        
+        <div id="overlay"></div>
 
-            <!-- قسم البيانات -->
-            <div class="data-section">
-                <div class="section-header">
-                    <h2 id="currentCollection">📋 جميع البيانات</h2>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary btn-sm" onclick="toggleViewMode()">
-                            🔄 تبديل العرض
-                        </button>
-                    </div>
-                </div>
-                
-                <div id="dataContainer">
-                    <div class="loading">
-                        <p>⏳ جاري تحميل البيانات...</p>
-                        <p>يرجى الانتظار قليلاً</p>
-                    </div>
-                </div>
-            </div>
+        <div id="content-wrapper" style="width: 100%;">
+            <header id="top-bar">
+                <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <h1 id="page-title">لوحة التحكم</h1>
+                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+            </header>
+            <main id="main-content"></main>
         </div>
     </div>
 
-    <!-- Modal لإضافة مستند جديد -->
-    <div id="addDocumentModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>📝 إضافة مستند جديد</h3>
-                <span class="close" onclick="closeAddDocumentModal()">&times;</span>
-            </div>
-            <div class="form-group">
-                <label>اسم المجموعة:</label>
-                <input type="text" id="newDocumentCollection" placeholder="مثال: users" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>بيانات JSON:</label>
-                <textarea id="newDocumentData" placeholder='{"name": "القيمة", "age": 25}' class="form-control"></textarea>
-            </div>
-            <button class="btn btn-success" onclick="addNewDocument()" style="width: 100%; padding: 15px;">
-                ✅ إضافة المستند
-            </button>
-        </div>
-    </div>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
-        // تكوين Firebase
+    document.addEventListener('DOMContentLoaded', () => {
         const firebaseConfig = {
-            apiKey: "AIzaSyAFBsqYvPsQAPrnWvBfIIn0xKbQD8eFfFY",
-            authDomain: "ton-up-422b5.firebaseapp.com",
-            projectId: "ton-up-422b5",
-            storageBucket: "ton-up-422b5.firebasestorage.app",
-            messagingSenderId: "1097862104173",
-            appId: "1:1097862104173:web:752c30106f7e9fc553ab64",
-            measurementId: "G-R5YGH5QY0W"
+            apiKey: "AIzaSyAk909CcFWn4ZMeBEM1yxRbQbW9w6UNo58",
+            authDomain: "earn-money-c3bad.firebaseapp.com",
+            databaseURL: "https://earn-money-c3bad-default-rtdb.firebaseio.com",
+            projectId: "earn-money-c3bad",
+            storageBucket: "earn-money-c3bad.firebasestorage.app",
+            messagingSenderId: "1022688566011",
+            appId: "1:1022688566011:web:690f6faa19dd3337a2ee5e",
+            measurementId: "G-0CH1LBFLH2"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        
+        const loginPage = document.getElementById('login-page');
+        const appContainer = document.getElementById('app-container');
+        const mainContent = document.getElementById('main-content');
+        const pageTitle = document.getElementById('page-title');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const loginButton = document.getElementById('login-button');
+        const loginError = document.getElementById('login-error');
+        const logoutButtons = document.querySelectorAll('#logout-btn, #sidebar-logout-btn');
+
+        // Default admin credentials
+        const DEFAULT_ADMIN_USERNAME = "aborabie";
+        const DEFAULT_ADMIN_PASSWORD = "KLKFijkj-48@#$lk$Uu";
+
+        // Check if admin credentials exist in Firebase, if not, create default
+        const checkAndCreateDefaultAdmin = async () => {
+            const adminSnap = await db.ref('admin').once('value');
+            if (!adminSnap.exists()) {
+                await db.ref('admin').set({
+                    username: DEFAULT_ADMIN_USERNAME,
+                    password: DEFAULT_ADMIN_PASSWORD
+                });
+                console.log("تم إنشاء بيانات المسؤول الافتراضية");
+            }
         };
 
-        // متغيرات عامة
-        let db = null;
-        let collections = [];
-        let currentCollection = 'all';
-        let isConnected = false;
-        let viewMode = 'table'; // 'table' or 'json'
-
-        // تهيئة Firebase عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeFirebase();
-            setupSearch();
-        });
-
-        // دالة تهيئة Firebase
-        function initializeFirebase() {
+        // Login function
+        const login = async (username, password) => {
             try {
-                // تحديث حالة الاتصال
-                updateConnectionStatus('⏳ جاري التوصيل بقاعدة البيانات...', 'status-disconnected');
+                const adminSnap = await db.ref('admin').once('value');
+                const adminData = adminSnap.val();
                 
-                firebase.initializeApp(firebaseConfig);
-                db = firebase.firestore();
-                isConnected = true;
-
-                // تحديث الحالة
-                updateConnectionStatus('✅ متصل بقاعدة البيانات', 'status-connected');
-                
-                // تحميل البيانات
-                loadAllCollections();
-
-            } catch (error) {
-                console.error('خطأ في التهيئة:', error);
-                updateConnectionStatus('❌ خطأ في الاتصال', 'status-disconnected');
-                document.getElementById('dataContainer').innerHTML = `
-                    <div class="loading">
-                        <p>❌ خطأ في الاتصال بقاعدة البيانات</p>
-                        <p>${error.message}</p>
-                        <button class="btn btn-primary" onclick="initializeFirebase()" style="margin-top: 20px;">
-                            🔄 إعادة المحاولة
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        // دالة تحديث حالة الاتصال
-        function updateConnectionStatus(message, className) {
-            const statusElement = document.getElementById('connectionStatus');
-            const statusText = document.getElementById('statusText');
-            
-            statusElement.innerHTML = `<span>${message}</span>`;
-            statusElement.className = `connection-status ${className}`;
-            
-            if (statusText) {
-                statusText.textContent = message.replace(/[⏳✅❌]/g, '').trim();
-            }
-        }
-
-        // دالة تحميل جميع المجموعات
-        async function loadAllCollections() {
-            if (!db) return;
-
-            try {
-                // قائمة المجموعات المحتملة
-                const possibleCollections = [
-                    'users', 'admins', 'settings', 'config', 'products', 'orders', 
-                    'categories', 'posts', 'messages', 'notifications', 'transactions',
-                    'payments', 'profiles', 'sessions', 'logs', 'analytics'
-                ];
-
-                collections = [];
-                let totalDocuments = 0;
-
-                // محاولة تحميل كل مجموعة
-                for (const collectionName of possibleCollections) {
-                    try {
-                        const querySnapshot = await db.collection(collectionName).get();
-                        if (!querySnapshot.empty) {
-                            const documents = [];
-                            
-                            querySnapshot.forEach((doc) => {
-                                documents.push({
-                                    id: doc.id,
-                                    ...doc.data()
-                                });
-                            });
-
-                            collections.push({
-                                name: collectionName,
-                                count: documents.length,
-                                documents: documents
-                            });
-
-                            totalDocuments += documents.length;
-                        }
-                    } catch (error) {
-                        // تجاهل المجموعات غير الموجودة
-                        console.log(`المجموعة ${collectionName} غير موجودة أو لا يمكن الوصول إليها`);
-                    }
+                if (adminData && adminData.username === username && adminData.password === password) {
+                    // Successful login
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    loginPage.style.display = 'none';
+                    appContainer.style.display = 'flex';
+                    initAdminPanel();
+                    return true;
+                } else {
+                    // Failed login
+                    loginError.style.display = 'block';
+                    return false;
                 }
-
-                // تحديث واجهة المستخدم
-                updateCollectionsList();
-                updateStatistics(totalDocuments);
-                displayData();
-
             } catch (error) {
-                console.error('خطأ في تحميل البيانات:', error);
-                document.getElementById('dataContainer').innerHTML = `
-                    <div class="loading">
-                        <p>❌ خطأ في تحميل البيانات</p>
-                        <p>${error.message}</p>
-                    </div>
-                `;
+                console.error("خطأ في تسجيل الدخول:", error);
+                loginError.style.display = 'block';
+                return false;
             }
-        }
+        };
 
-        // دالة تحديث قائمة المجموعات
-        function updateCollectionsList() {
-            const collectionsList = document.getElementById('collectionsList');
-            const totalCount = document.getElementById('totalCount');
-            let totalDocuments = 0;
+        // Logout function
+        const logout = () => {
+            sessionStorage.removeItem('adminLoggedIn');
+            appContainer.style.display = 'none';
+            loginPage.style.display = 'flex';
+            // Clear form fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            loginError.style.display = 'none';
+        };
 
-            // إضافة المجموعات المكتشفة
-            collections.forEach(collection => {
-                totalDocuments += collection.count;
-                
-                const listItem = document.createElement('li');
-                listItem.className = 'collection-item';
-                listItem.setAttribute('data-collection', collection.name);
-                listItem.innerHTML = `
-                    <span class="collection-name">${collection.name}</span>
-                    <span class="collection-count">${collection.count}</span>
-                `;
-                
-                listItem.addEventListener('click', () => switchCollection(collection.name));
-                collectionsList.appendChild(listItem);
-            });
-
-            totalCount.textContent = totalDocuments;
-        }
-
-        // دالة تحديث الإحصائيات
-        function updateStatistics(totalDocuments) {
-            document.getElementById('totalCollections').textContent = collections.length;
-            document.getElementById('totalDocuments').textContent = totalDocuments;
-            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('ar-EG');
-        }
-
-        // دالة تبديل المجموعة
-        function switchCollection(collectionName) {
-            currentCollection = collectionName;
-            
-            // تحديث القائمة الجانبية
-            document.querySelectorAll('.collection-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector(`[data-collection="${collectionName}"]`).classList.add('active');
-            
-            // تحديث العنوان
-            document.getElementById('currentCollection').textContent = 
-                collectionName === 'all' ? '📋 جميع البيانات' : `📁 ${collectionName}`;
-            
-            // عرض البيانات
-            displayData();
-        }
-
-        // دالة عرض البيانات
-        function displayData() {
-            if (viewMode === 'table') {
-                displayTableView();
+        // Check if user is already logged in
+        const checkLoginStatus = () => {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                loginPage.style.display = 'none';
+                appContainer.style.display = 'flex';
+                initAdminPanel();
             } else {
-                displayJSONView();
+                loginPage.style.display = 'flex';
+                appContainer.style.display = 'none';
             }
-        }
+        };
 
-        // دالة عرض البيانات كجدول
-        function displayTableView() {
-            const dataContainer = document.getElementById('dataContainer');
+        // Event listeners for login/logout
+        loginButton.addEventListener('click', async () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
             
-            if (collections.length === 0) {
-                dataContainer.innerHTML = '<div class="loading">📭 لا توجد بيانات</div>';
+            if (!username || !password) {
+                loginError.textContent = 'يرجى إدخال اسم المستخدم وكلمة المرور';
+                loginError.style.display = 'block';
                 return;
             }
+            
+            await login(username, password);
+        });
 
-            let html = '<div class="data-table-container">';
+        // Allow login with Enter key
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loginButton.click();
+            }
+        });
 
-            if (currentCollection === 'all') {
-                // عرض جميع المجموعات
-                collections.forEach(collection => {
-                    if (collection.documents.length > 0) {
-                        html += `
-                            <div style="margin-bottom: 30px;">
-                                <h3 style="background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 15px 20px; margin: 0; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; align-items: center;">
-                                    <span>📁 ${collection.name} (${collection.count})</span>
-                                    <button class="btn btn-primary btn-sm" onclick="switchCollection('${collection.name}')">عرض التفاصيل</button>
-                                </h3>
-                                <table class="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th width="120">🆔 المعرف</th>
-                                            <th>📊 معاينة البيانات</th>
-                                            <th width="180">⚡ الإجراءات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                        `;
+        logoutButtons.forEach(button => {
+            button.addEventListener('click', logout);
+        });
 
-                        collection.documents.slice(0, 3).forEach(doc => {
-                            const preview = JSON.stringify(doc, null, 2).substring(0, 150) + '...';
-                            html += `
-                                <tr>
-                                    <td><strong>${doc.id.substring(0, 10)}...</strong></td>
-                                    <td>
-                                        <div class="json-view">${preview}</div>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="btn btn-primary btn-sm" onclick="showFullData('${collection.name}', '${doc.id}')">عرض</button>
-                                            <button class="btn btn-success btn-sm" onclick="editDocument('${collection.name}', '${doc.id}')">تعديل</button>
-                                            <button class="btn btn-danger btn-sm" onclick="deleteDocument('${collection.name}', '${doc.id}')">حذف</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                        });
+        // Initialize default admin and check login status
+        checkAndCreateDefaultAdmin();
+        checkLoginStatus();
 
-                        if (collection.documents.length > 3) {
-                            html += `
-                                <tr>
-                                    <td colspan="3" style="text-align: center; background: #f8f9fa; color: #7f8c8d;">
-                                        ... وعرض ${collection.documents.length - 3} مستندات إضافية
-                                    </td>
-                                </tr>
-                            `;
-                        }
-
-                        html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        `;
-                    }
-                });
-            } else {
-                // عرض مجموعة محددة
-                const collection = collections.find(col => col.name === currentCollection);
-                if (collection && collection.documents.length > 0) {
-                    const fields = extractAllFields(collection.documents);
+        // Dashboard
+        const renderDashboard = async () => {
+            const usersSnap = await db.ref('users').once('value');
+            const withdrawalsSnap = await db.ref('withdrawals/pending').once('value');
+            const contestSnap = await db.ref('contest/participants').once('value');
+            const codesSnap = await db.ref('codes').once('value');
+            
+            // حساب المستخدمين المحظورين
+            let bannedUsersCount = 0;
+            let totalBalance = 0;
+            let totalReferrals = 0;
+            
+            usersSnap.forEach(child => {
+                const user = child.val();
+                if (user.banned) bannedUsersCount++;
+                totalBalance += user.balance || 0;
+                totalReferrals += user.referrals || 0;
+            });
+            
+            mainContent.innerHTML = `<div id="dashboard" class="page active">
+                <h3>لوحة التحكم الرئيسية</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">إجمالي المستخدمين</div>
+                        <div class="stat-value">${usersSnap.numChildren()}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">المستخدمين المحظورين</div>
+                        <div class="stat-value">${bannedUsersCount}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">طلبات السحب المعلقة</div>
+                        <div class="stat-value">${withdrawalsSnap.numChildren()}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">إجمالي الرصيد</div>
+                        <div class="stat-value">${totalBalance.toFixed(4)}</div>
+                        <div class="stat-label">TON</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">إجمالي الإحالات</div>
+                        <div class="stat-value">${totalReferrals}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">مشاركين في المسابقة</div>
+                        <div class="stat-value">${contestSnap.numChildren()}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">الأكواد النشطة</div>
+                        <div class="stat-value">${codesSnap.numChildren()}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">إجمالي الأرباح</div>
+                        <div class="stat-value">${(totalBalance + totalReferrals * 0.001).toFixed(4)}</div>
+                        <div class="stat-label">TON</div>
+                    </div>
+                </div>
+            </div>`;
+        };
+        
+        // Users Management
+        const renderUsers = async () => {
+            mainContent.innerHTML = '<div class="card"><h3>جاري تحميل المستخدمين...</h3></div>';
+            const snap = await db.ref('users').orderByChild('firstName').once('value'); 
+            let tableContent = '';
+            
+            snap.forEach(child => {
+                const user = child.val();
+                const isBanned = user.banned || false;
+                const statusClass = isBanned ? 'user-status-banned' : '';
+                const banButtonText = isBanned ? 'فك الحظر' : 'حظر المستخدم';
+                const banButtonClass = isBanned ? 'btn-warning' : 'btn-danger';
+                
+                tableContent += `<tr class="${statusClass}">
+                    <td data-label="المستخدم">${user.firstName || ''} ${user.lastName || ''}<br><small>${user.id}</small>${isBanned ? ' <span style="color:red">🚫 محظور</span>' : ''}</td>
+                    <td data-label="الرصيد">${(user.balance || 0).toFixed(4)} TON</td>
+                    <td data-label="الإحالات">${user.referrals || 0}</td>
+                    <td data-label="الإجراءات">
+                        <div class="action-buttons">
+                            <button class="action-btn btn-primary" onclick="window.adminActions.addBalance('${user.id}', '${user.firstName}')">إضافة رصيد</button>
+                            <button class="action-btn btn-danger" onclick="window.adminActions.removeBalance('${user.id}', '${user.firstName}')">خصم رصيد</button>
+                            <button class="action-btn ${banButtonClass}" onclick="window.adminActions.toggleUserBan('${user.id}', '${user.firstName}', ${isBanned})">${banButtonText}</button>
+                            <button class="action-btn btn-info" onclick="window.adminActions.viewUserDetails('${user.id}')">تفاصيل</button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+            
+            mainContent.innerHTML = `<div id="users" class="page active">
+                <h3>إدارة المستخدمين</h3>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المستخدم</th>
+                                <th>الرصيد</th>
+                                <th>الإحالات</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>${tableContent}</tbody>
+                    </table>
+                </div>
+            </div>`;
+        };
+        
+        // User Search
+        const renderUserSearch = () => {
+            mainContent.innerHTML = `<div id="user-search" class="page active">
+                <h3>البحث عن مستخدم</h3>
+                <div class="card">
+                    <div class="search-box">
+                        <input type="text" id="user-search-input" placeholder="أدخل معرف المستخدم (User ID)">
+                    </div>
+                    <button class="action-btn btn-primary" onclick="window.adminActions.searchUser()">بحث</button>
+                </div>
+                <div id="user-search-results"></div>
+            </div>`;
+        };
+        
+        // User Details
+        const renderUserDetails = async (userId) => {
+            const userSnap = await db.ref(`users/${userId}`).once('value');
+            const user = userSnap.val();
+            
+            if (!user) {
+                alert('المستخدم غير موجود');
+                return;
+            }
+            
+            // الحصول على بيانات المسابقة
+            const contestSnap = await db.ref(`contest/participants/${userId}`).once('value');
+            const contestData = contestSnap.val() || { points: 0, adsWatched: 0, referrals: 0 };
+            
+            // الحصول على بيانات التسجيل اليومي
+            const dailyLoginSnap = await db.ref(`dailyLogin/${userId}`).once('value');
+            const dailyLoginData = dailyLoginSnap.val() || { currentStreak: 0, lastLoginDate: null, claimedDays: [] };
+            
+            // الحصول على بيانات الإحالات
+            const referralsSnap = await db.ref('users').orderByChild('referredBy').equalTo(userId).once('value');
+            const referredUsers = [];
+            referralsSnap.forEach(child => {
+                referredUsers.push(child.val());
+            });
+            
+            mainContent.innerHTML = `<div id="user-details" class="page active">
+                <h3>تفاصيل المستخدم: ${user.firstName || ''} ${user.lastName || ''}</h3>
+                <div class="user-details-grid">
+                    <div class="user-info-card">
+                        <h4>المعلومات الأساسية</h4>
+                        <div class="user-info-item">
+                            <span>معرف المستخدم:</span>
+                            <span>${user.id}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>الاسم:</span>
+                            <span>${user.firstName || ''} ${user.lastName || ''}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>اسم المستخدم:</span>
+                            <span>${user.username || 'غير متوفر'}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>تاريخ الانضمام:</span>
+                            <span>${user.joinDate ? new Date(user.joinDate).toLocaleDateString('ar-EG') : 'غير معروف'}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>الحالة:</span>
+                            <span>${user.banned ? '🚫 محظور' : '✅ نشط'}</span>
+                        </div>
+                    </div>
                     
-                    html += `
-                        <table class="data-table">
+                    <div class="user-info-card">
+                        <h4>المعلومات المالية</h4>
+                        <div class="user-info-item">
+                            <span>الرصيد الحالي:</span>
+                            <span>${(user.balance || 0).toFixed(4)} TON</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>إجمالي الأرباح:</span>
+                            <span>${(user.totalEarned || 0).toFixed(4)} TON</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>عدد الإعلانات:</span>
+                            <span>${user.lifetimeAdCount || 0}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>الإعلانات اليوم:</span>
+                            <span>${user.dailyAdCount || 0}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>الإحالات:</span>
+                            <span>${user.referrals || 0}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="user-info-card">
+                        <h4>بيانات المسابقة</h4>
+                        <div class="user-info-item">
+                            <span>النقاط:</span>
+                            <span>${contestData.points || 0}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>الإعلانات المشاهدة:</span>
+                            <span>${contestData.adsWatched || 0}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>الإحالات:</span>
+                            <span>${contestData.referrals || 0}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="user-info-card">
+                        <h4>التسجيل اليومي</h4>
+                        <div class="user-info-item">
+                            <span>التسجيل المتواصل:</span>
+                            <span>${dailyLoginData.currentStreak || 0} يوم</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>آخر تسجيل:</span>
+                            <span>${dailyLoginData.lastLoginDate ? new Date(dailyLoginData.lastLoginDate).toLocaleDateString('ar-EG') : 'غير معروف'}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span>الأيام المطالَب بها:</span>
+                            <span>${dailyLoginData.claimedDays ? dailyLoginData.claimedDays.length : 0}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4>المستخدمين الذين تمت دعوتهم</h4>
+                    ${referredUsers.length > 0 ? 
+                        `<table>
                             <thead>
                                 <tr>
-                    `;
-                    
-                    fields.forEach(field => {
-                        html += `<th>${field}</th>`;
-                    });
-                    
-                    html += `
-                                    <th width="200">⚡ الإجراءات</th>
+                                    <th>المستخدم</th>
+                                    <th>تاريخ الانضمام</th>
+                                    <th>الأرباح</th>
                                 </tr>
                             </thead>
                             <tbody>
-                    `;
-
-                    collection.documents.forEach(doc => {
-                        html += `<tr>`;
-                        
-                        fields.forEach(field => {
-                            const value = doc[field];
-                            html += `<td>${formatValue(value)}</td>`;
-                        });
-                        
-                        html += `
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-primary btn-sm" onclick="showFullData('${collection.name}', '${doc.id}')">عرض</button>
-                                        <button class="btn btn-success btn-sm" onclick="editDocument('${collection.name}', '${doc.id}')">تعديل</button>
-                                        <button class="btn btn-danger btn-sm" onclick="deleteDocument('${collection.name}', '${doc.id}')">حذف</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    html += `
+                                ${referredUsers.map(refUser => `
+                                    <tr>
+                                        <td>${refUser.firstName || ''} ${refUser.lastName || ''}</td>
+                                        <td>${refUser.joinDate ? new Date(refUser.joinDate).toLocaleDateString('ar-EG') : 'غير معروف'}</td>
+                                        <td>${(refUser.totalEarned || 0).toFixed(4)} TON</td>
+                                    </tr>
+                                `).join('')}
                             </tbody>
+                        </table>` : 
+                        '<p>لا يوجد مستخدمين تمت دعوتهم</p>'
+                    }
+                </div>
+                
+                <div class="action-buttons" style="margin-top: 20px;">
+                    <button class="action-btn btn-primary" onclick="window.adminActions.addBalance('${userId}', '${user.firstName}')">إضافة رصيد</button>
+                    <button class="action-btn btn-danger" onclick="window.adminActions.removeBalance('${userId}', '${user.firstName}')">خصم رصيد</button>
+                    <button class="action-btn ${user.banned ? 'btn-warning' : 'btn-danger'}" onclick="window.adminActions.toggleUserBan('${userId}', '${user.firstName}', ${user.banned})">${user.banned ? 'فك الحظر' : 'حظر المستخدم'}</button>
+                    <button class="action-btn btn-info" onclick="window.adminActions.resetContestPoints('${userId}', '${user.firstName}')">إعادة تعيين نقاط المسابقة</button>
+                    <button class="action-btn btn-warning" onclick="renderUsers()">العودة إلى قائمة المستخدمين</button>
+                </div>
+            </div>`;
+        };
+        
+        // Pending Withdrawals
+        const renderWithdrawals = async () => {
+            mainContent.innerHTML = '<div class="card"><h3>جاري تحميل الطلبات...</h3></div>';
+            const snap = await db.ref('withdrawals/pending').orderByChild('timestamp').once('value'); 
+            let tableContent = '';
+            let requests = [];
+            snap.forEach(child => { requests.push(child.val()); });
+            requests.reverse(); // Show newest first
+            requests.forEach(req => {
+                tableContent += `<tr>
+                    <td data-label="المستخدم">${req.userName}<br><small>${new Date(req.timestamp).toLocaleString('ar-EG')}</small></td>
+                    <td data-label="المبلغ"><b>${req.amount.toFixed(4)} TON</b><br><small>${req.method} | ${req.account}</small></td>
+                    <td data-label="الإجراءات">
+                        <div class="action-buttons">
+                            <button class="action-btn btn-success" onclick="window.adminActions.handleWithdrawal('${req.id}', 'approve')">موافقة</button>
+                            <button class="action-btn btn-danger" onclick="window.adminActions.handleWithdrawal('${req.id}', 'reject')">رفض</button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+            mainContent.innerHTML = `<div id="withdrawals" class="page active">
+                <h3>طلبات السحب المعلقة</h3>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المستخدم & التاريخ</th>
+                                <th>المبلغ & التفاصيل</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>${tableContent || '<tr><td colspan=3>لا توجد طلبات معلقة</td></tr>'}</tbody>
+                    </table>
+                </div>
+            </div>`;
+        };
+        
+        // Withdrawal History
+        const renderWithdrawalHistory = async () => {
+            mainContent.innerHTML = '<div class="card"><h3>جاري تحميل السجل...</h3></div>';
+            const completedSnap = await db.ref('withdrawals/completed').orderByChild('timestamp').limitToLast(100).once('value');
+            const rejectedSnap = await db.ref('withdrawals/rejected').orderByChild('timestamp').limitToLast(100).once('value');
+            let completedRows = '', rejectedRows = '';
+            
+            let completed = [];
+            completedSnap.forEach(child => { completed.push(child.val()); });
+            completed.reverse();
+            completed.forEach(req => { 
+                completedRows += `<tr>
+                    <td data-label="المستخدم">${req.userName}</td>
+                    <td data-label="المبلغ">${req.amount.toFixed(4)} TON</td>
+                    <td data-label="التاريخ">${new Date(req.timestamp).toLocaleDateString('ar-EG')}</td>
+                    <td data-label="الحالة">مكتمل</td>
+                </tr>`; 
+            });
+
+            let rejected = [];
+            rejectedSnap.forEach(child => { rejected.push(child.val()); });
+            rejected.reverse();
+            rejected.forEach(req => { 
+                rejectedRows += `<tr>
+                    <td data-label="المستخدم">${req.userName}</td>
+                    <td data-label="المبلغ">${req.amount.toFixed(4)} TON</td>
+                    <td data-label="التاريخ">${new Date(req.timestamp).toLocaleDateString('ar-EG')}</td>
+                    <td data-label="الحالة">مرفوض</td>
+                </tr>`; 
+            });
+            
+            mainContent.innerHTML = `
+                <div id="history" class="page active">
+                    <h3>سجل السحوبات</h3>
+                    <div class="card">
+                        <h4>الطلبات المكتملة</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>المستخدم</th>
+                                    <th>المبلغ</th>
+                                    <th>التاريخ</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody>${completedRows || '<tr><td colspan="4">لا توجد طلبات مكتملة.</td></tr>'}</tbody>
                         </table>
-                    `;
-                } else {
-                    html = '<div class="loading">📭 لا توجد بيانات في هذه المجموعة</div>';
-                }
+                    </div>
+                    <div class="card">
+                        <h4>الطلبات المرفوضة</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>المستخدم</th>
+                                    <th>المبلغ</th>
+                                    <th>التاريخ</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rejectedRows || '<tr><td colspan="4">لا توجد طلبات مرفوضة.</td></tr>'}</tbody>
+                        </table>
+                    </div>
+                </div>`;
+        };
+
+        // Tasks Management
+        const renderTasks = async () => {
+             mainContent.innerHTML = `<div id="tasks" class="page active">
+                <h3>إدارة المهام والروابط</h3>
+                <div class="card" id="tasks-list"><h4>جاري تحميل المهام...</h4></div>
+                <div class="card">
+                    <h4>إضافة مهمة جديدة</h4>
+                    <div class="form-group"><input id="task-name" placeholder="اسم المهمة (مثال: انضم للتليجرام)"></div>
+                    <div class="form-group"><input id="task-url" placeholder="الرابط"></div>
+                    <div class="form-group"><input id="task-reward" type="number" step="any" placeholder="مقدار المكافأة"></div>
+                    <div class="form-group"><input id="task-icon" placeholder="رابط الصورة"></div>
+                    <button class="action-btn btn-primary" onclick="window.adminActions.addTask()">إضافة مهمة</button>
+                </div>
+                <div class="card" id="links-list"><h4>جاري تحميل الروابط...</h4></div>
+                <div class="card">
+                    <h4>إضافة رابط/زر جديد</h4>
+                    <div class="form-group"><input id="link-name" placeholder="اسم الزر (مثال: القناة الرسمية)"></div>
+                    <div class="form-group"><input id="link-url" placeholder="الرابط"></div>
+                    <div class="form-group"><input id="link-icon" placeholder="رابط الصورة"></div>
+                    <button class="action-btn btn-primary" onclick="window.adminActions.addLink()">إضافة رابط</button>
+                </div>
+            </div>`;
+            loadDynamicContent('tasks'); 
+            loadDynamicContent('links');
+        };
+
+        // Codes Management
+        const renderCodes = async () => {
+            mainContent.innerHTML = `<div id="codes" class="page active">
+                <h3>إدارة الأكواد</h3>
+                <div class="card" id="codes-list"><h4>جاري تحميل الأكواد...</h4></div>
+                <div class="card">
+                    <h4>إنشاء كود جديد</h4>
+                    <div class="form-group">
+                        <label>الكود (أحرف كبيرة فقط)</label>
+                        <input id="code-text" placeholder="مثال: WELCOME50" style="text-transform: uppercase;">
+                    </div>
+                    <div class="form-group">
+                        <label>النقاط</label>
+                        <input id="code-points" type="number" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label>الحد الأقصى للاستخدام (0 = لا نهائي)</label>
+                        <input id="code-max-uses" type="number" value="100">
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ الانتهاء (اختياري)</label>
+                        <input id="code-expiry" type="datetime-local">
+                    </div>
+                    <button class="action-btn btn-primary" onclick="window.adminActions.createCode()">إنشاء كود</button>
+                </div>
+            </div>`;
+            await loadCodes();
+        };
+
+        // Contest Management
+        const renderContest = async () => {
+            const contestSnap = await db.ref('contest').once('value');
+            const contestData = contestSnap.val() || {};
+            
+            mainContent.innerHTML = `<div id="contest" class="page active">
+                <h3>إدارة المسابقة</h3>
+                <div class="card">
+                    <h4>إعدادات المسابقة</h4>
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <div class="form-group">
+                                <label>تاريخ انتهاء المسابقة</label>
+                                <input type="datetime-local" id="contest-end-time" value="${contestData.endTime ? new Date(contestData.endTime).toISOString().slice(0, 16) : ''}">
+                            </div>
+                            <div class="form-group">
+                                <label>مدة المسابقة (أيام)</label>
+                                <input type="number" id="contest-duration" value="${contestData.durationDays || 7}">
+                            </div>
+                            <button class="action-btn btn-primary" onclick="window.adminActions.updateContestSettings()">حفظ الإعدادات</button>
+                        </div>
+                        <div class="setting-card">
+                            <div class="form-group">
+                                <label>إعادة تعيين المسابقة</label>
+                                <p>سيتم حذف جميع بيانات المسابقة الحالية</p>
+                                <button class="action-btn btn-danger" onclick="window.adminActions.resetContest()">إعادة تعيين المسابقة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4>قائمة المتصدرين</h4>
+                    <div id="contest-leaderboard"><h4>جاري تحميل المتصدرين...</h4></div>
+                </div>
+            </div>`;
+            await loadContestLeaderboard();
+        };
+
+        // Settings
+        const renderSettings = async () => {
+            const snap = await db.ref('config').once('value'); 
+            const config = snap.val() || {};
+            
+            // الحصول على إعدادات التسجيل اليومي
+            const dailyLoginSnap = await db.ref('settings/dailyLoginRewards').once('value');
+            const dailyLoginRewards = dailyLoginSnap.val() || [0.0001, 0.0002, 0.0004, 0.0008, 0.0016, 0.0032, 0.0064];
+            
+            mainContent.innerHTML = `<div id="settings" class="page active">
+                <h3>إعدادات التطبيق</h3>
+                <div class="card">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="general">الإعدادات العامة</div>
+                        <div class="tab" data-tab="ads">إعدادات الإعلانات</div>
+                        <div class="tab" data-tab="daily">التسجيل اليومي</div>
+                        <div class="tab" data-tab="withdrawal">السحب</div>
+                    </div>
+                    
+                    <div id="general-tab" class="tab-content active">
+                        <div class="settings-grid">
+                            <div class="setting-card">
+                                <h4>إعدادات البوت</h4>
+                                <div class="form-group">
+                                    <label>اسم مستخدم البوت (بدون @)</label>
+                                    <input type="text" id="botUsername" value="${config.botUsername || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>توكن بوت التليجرام</label>
+                                    <input type="text" id="botToken" value="${config.botToken || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>رسالة الترحيب</label>
+                                    <textarea id="welcomeMessage">${config.welcomeMessage || ''}</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <h4>إعدادات الإحالة</h4>
+                                <div class="form-group">
+                                    <label>مكافأة الإحالة (TON)</label>
+                                    <input type="number" step="any" id="referralBonus" value="${config.referralBonus || 0}">
+                                </div>
+                                <div class="form-group">
+                                    <label>الحد الأدنى للإحالات للسحب</label>
+                                    <input type="number" id="minimumWithdrawReferrals" value="${config.minimumWithdrawReferrals || 0}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="ads-tab" class="tab-content">
+                        <div class="settings-grid">
+                            <div class="setting-card">
+                                <h4>إعدادات الإعلانات</h4>
+                                <div class="form-group">
+                                    <label>معرف منطقة الإعلان</label>
+                                    <input type="number" id="adZoneId" value="${config.adZoneId || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>قيمة الإعلان (TON)</label>
+                                    <input type="number" step="any" id="adValue" value="${config.adValue || 0}">
+                                </div>
+                                <div class="form-group">
+                                    <label>الحد اليومي للإعلانات</label>
+                                    <input type="number" id="dailyAdLimit" value="${config.dailyAdLimit || 0}">
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <h4>إعدادات توقيت الإعلانات</h4>
+                                <div class="form-group">
+                                    <label>الحد الأدنى لمشاهدة الإعلان (ثواني)</label>
+                                    <input type="number" id="minAdDuration" value="${config.minAdDuration || 5}">
+                                    <small>الحد الأدنى للوقت الذي يجب أن يشاهده المستخدم لكسب المكافأة</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>مهلة الإعلان (ثواني)</label>
+                                    <input type="number" id="adCooldown" value="${config.adCooldown || 10}">
+                                    <small>الوقت بين الإعلانات بالثواني</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>الإعلانات قبل الاستراحة</label>
+                                    <input type="number" id="adsPerBreak" value="${config.adsPerBreak || 0}">
+                                </div>
+                                <div class="form-group">
+                                    <label>مدة الاستراحة (دقائق)</label>
+                                    <input type="number" id="breakDuration" value="${config.breakDuration || 0}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="daily-tab" class="tab-content">
+                        <div class="setting-card">
+                            <h4>مكافآت التسجيل اليومي</h4>
+                            <p>اضبط المكافآت لكل يوم في سلسلة التسجيل اليومي</p>
+                            <div id="daily-rewards-container">
+                                ${dailyLoginRewards.map((reward, index) => `
+                                    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                                        <label style="min-width: 80px;">اليوم ${index + 1}:</label>
+                                        <input type="number" step="any" value="${reward}" class="daily-reward-input" data-day="${index}">
+                                        <span>TON</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <button class="action-btn btn-primary" onclick="window.adminActions.addDailyRewardDay()">+ إضافة يوم</button>
+                            <button class="action-btn btn-success" onclick="window.adminActions.saveDailyRewards()">حفظ المكافآت</button>
+                        </div>
+                    </div>
+                    
+                    <div id="withdrawal-tab" class="tab-content">
+                        <div class="setting-card">
+                            <h4>طرق السحب</h4>
+                            <div id="withdraw-methods-container"></div>
+                            <button class="action-btn btn-primary" onclick="window.adminActions.addWithdrawMethodField()">+ إضافة طريقة</button>
+                        </div>
+                    </div>
+                    
+                    <hr style="margin: 20px 0;">
+                    <button class="action-btn btn-success" style="width:100%; padding:15px;" onclick="window.adminActions.saveSettings()">حفظ جميع الإعدادات</button>
+                </div>
+            </div>`;
+            renderWithdrawMethods(config.withdrawMethods);
+            setupSettingsTabs();
+        };
+        
+        // Broadcast
+        const renderBroadcast = () => {
+             mainContent.innerHTML = `<div id="broadcast" class="page active">
+                <h3>البث الجماعي</h3>
+                <div class="card">
+                    <p>سيتم إرسال هذه الرسالة لجميع المستخدمين. <strong>هام:</strong> يتطلب هذا وظيفة من جانب الخادم (مثل Cloud Functions في Firebase) للعمل بشكل صحيح.</p>
+                    <div class="form-group">
+                        <textarea id="broadcast-message" rows="5" placeholder="رسالتك هنا..."></textarea>
+                    </div>
+                    <button class="action-btn btn-danger" onclick="window.adminActions.sendBroadcast()">إرسال البث</button>
+                </div>
+            </div>`;
+        };
+
+        // Helper Functions
+        const loadDynamicContent = async (type) => {
+            const container = document.getElementById(`${type}-list`);
+            const snap = await db.ref(`config/${type}`).once('value');
+            let items = [];
+            snap.forEach(child => { items.push({ key: child.key, ...child.val() }); });
+            items.reverse(); // Show newest first
+            
+            let content = `<h4>${type === 'tasks' ? 'المهام الحالية' : 'الروابط الحالية'}</h4>`;
+            if (items.length > 0) {
+                content += '<ul class="dynamic-item-list">';
+                items.forEach(item => {
+                    content += `<li>${item.name} <button class="action-btn btn-danger" style="padding: 5px 8px;" onclick="window.adminActions.deleteDynamicItem('${type}', '${item.key}')"><i class="fas fa-trash"></i></button></li>`;
+                });
+                content += '</ul>';
+            } else { content += `<p>لا توجد ${type === 'tasks' ? 'مهام' : 'روابط'}.</p>`; }
+            container.innerHTML = content;
+        };
+        
+        const loadCodes = async () => {
+            const container = document.getElementById('codes-list');
+            const snap = await db.ref('codes').once('value');
+            let codes = [];
+            snap.forEach(child => { codes.push({ key: child.key, ...child.val() }); });
+            
+            let content = '<h4>الأكواد الحالية</h4>';
+            if (codes.length > 0) {
+                content += '<table><thead><tr><th>الكود</th><th>النقاط</th><th>المستخدم</th><th>الحد الأقصى</th><th>الإجراءات</th></tr></thead><tbody>';
+                codes.forEach(code => {
+                    const usedCount = code.usedCount || 0;
+                    const maxUses = code.maxUses || 0;
+                    const isExpired = code.expires && Date.now() > code.expires;
+                    const isMaxed = maxUses > 0 && usedCount >= maxUses;
+                    const status = isExpired ? 'منتهي' : isMaxed ? 'مكتمل' : 'نشط';
+                    
+                    content += `<tr>
+                        <td>${code.key}</td>
+                        <td>${code.points || 0}</td>
+                        <td>${usedCount}/${maxUses > 0 ? maxUses : '∞'}</td>
+                        <td>${status}</td>
+                        <td>
+                            <button class="action-btn btn-danger" onclick="window.adminActions.deleteCode('${code.key}')">حذف</button>
+                        </td>
+                    </tr>`;
+                });
+                content += '</tbody></table>';
+            } else {
+                content += '<p>لا توجد أكواد.</p>';
             }
-
-            html += '</div>';
-            dataContainer.innerHTML = html;
-        }
-
-        // دالة استخراج جميع الحقول
-        function extractAllFields(documents) {
-            const allFields = new Set(['id']);
-            documents.forEach(doc => {
-                Object.keys(doc).forEach(key => {
-                    allFields.add(key);
+            container.innerHTML = content;
+        };
+        
+        const loadContestLeaderboard = async () => {
+            const container = document.getElementById('contest-leaderboard');
+            const snap = await db.ref('contest/participants').orderByChild('points').limitToLast(50).once('value');
+            let participants = [];
+            snap.forEach(child => { participants.push({ ...child.val(), id: child.key }); });
+            participants.reverse(); // Show highest first
+            
+            let content = '';
+            if (participants.length > 0) {
+                content += '<table><thead><tr><th>الترتيب</th><th>المستخدم</th><th>النقاط</th><th>الإعلانات</th><th>الإحالات</th><th>الإجراءات</th></tr></thead><tbody>';
+                participants.forEach((participant, index) => {
+                    content += `<tr>
+                        <td>${index + 1}</td>
+                        <td>${participant.userName || participant.id}</td>
+                        <td>${participant.points || 0}</td>
+                        <td>${participant.adsWatched || 0}</td>
+                        <td>${participant.referrals || 0}</td>
+                        <td>
+                            <button class="action-btn btn-danger" onclick="window.adminActions.removeContestPoints('${participant.id}', '${participant.userName || participant.id}')">حذف النقاط</button>
+                            <button class="action-btn btn-warning" onclick="window.adminActions.hideFromContest('${participant.id}', '${participant.userName || participant.id}')">إخفاء</button>
+                        </td>
+                    </tr>`;
+                });
+                content += '</tbody></table>';
+            } else {
+                content = '<p>لا يوجد مشاركين في المسابقة.</p>';
+            }
+            container.innerHTML = content;
+        };
+        
+        const renderWithdrawMethods = (methods) => {
+            const container = document.getElementById('withdraw-methods-container'); 
+            container.innerHTML = '';
+            if (methods) {
+                methods.forEach((method, index) => {
+                    container.innerHTML += `
+                        <div class="withdraw-method-group" data-index="${index}">
+                            <input value="${method.name || ''}" placeholder="اسم الطريقة">
+                            <input type="number" step="any" value="${method.min || ''}" placeholder="الحد الأدنى">
+                            <button class="action-btn btn-danger" onclick="this.parentElement.remove()">X</button>
+                        </div>`;
+                });
+            }
+        };
+        
+        const setupSettingsTabs = () => {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
                 });
             });
-            return Array.from(allFields);
-        }
+        };
 
-        // دالة تنسيق القيم
-        function formatValue(value) {
-            if (value === null || value === undefined) {
-                return '<span style="color: #999">-</span>';
-            } else if (typeof value === 'object') {
-                return '<span style="color: #e74c3c">📦 [كائن]</span>';
-            } else if (typeof value === 'boolean') {
-                return value ? '✅ نعم' : '❌ لا';
-            } else if (typeof value === 'number') {
-                return `<strong>${value}</strong>`;
-            } else if (String(value).length > 30) {
-                return `<span class="field-value" title="${value}">${String(value).substring(0, 30)}...</span>`;
-            }
-            return value;
-        }
-
-        // باقي الدوال (showFullData, editDocument, deleteDocument, etc.)
-        // ... [يتبع نفس الدوال السابقة مع تعديلات بسيطة]
-
-        // دالة تبديل وضع العرض
-        function toggleViewMode() {
-            viewMode = viewMode === 'table' ? 'json' : 'table';
-            displayData();
-        }
-
-        // دالة تحديث البيانات
-        function refreshData() {
-            if (!isConnected) {
-                alert('⚠️ يرجى الانتظار حتى اكتمال الاتصال');
-                return;
-            }
-            document.getElementById('dataContainer').innerHTML = '<div class="loading">⏳ جاري تحديث البيانات...</div>';
-            loadAllCollections();
-        }
-
-        // دالة البحث
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
+        // Admin Actions
+        window.adminActions = {
+            // إضافة رصيد
+            addBalance: async (userId, userName) => {
+                const amount = prompt(`أدخل المبلغ للإضافة إلى ${userName}:`);
+                if (amount && !isNaN(parseFloat(amount)) && parseFloat(amount) > 0) { 
+                    try { 
+                        await db.ref(`users/${userId}/balance`).set(firebase.database.ServerValue.increment(parseFloat(amount))); 
+                        alert('تم إضافة الرصيد بنجاح!'); 
+                        renderUsers(); 
+                    } catch (e) { 
+                        alert('خطأ في إضافة الرصيد.'); 
+                    } 
+                } else {
+                    alert('يرجى إدخال مبلغ صحيح موجب.');
+                }
+            },
+            
+            // خصم رصيد
+            removeBalance: async (userId, userName) => {
+                const amount = prompt(`أدخل المبلغ للخصم من ${userName}:`);
+                if (amount && !isNaN(parseFloat(amount)) && parseFloat(amount) > 0) { 
+                    try { 
+                        await db.ref(`users/${userId}/balance`).set(firebase.database.ServerValue.increment(-parseFloat(amount))); 
+                        alert('تم خصم الرصيد بنجاح!'); 
+                        renderUsers(); 
+                    } catch (e) { 
+                        alert('خطأ في خصم الرصيد.'); 
+                    } 
+                } else {
+                    alert('يرجى إدخال مبلغ صحيح موجب.');
+                }
+            },
+            
+            // حظر/فك حظر المستخدم
+            toggleUserBan: async (userId, userName, isCurrentlyBanned) => {
+                const action = isCurrentlyBanned ? 'unban' : 'ban';
+                const confirmMessage = isCurrentlyBanned ? 
+                    `هل أنت متأكد من رغبتك في فك حظر ${userName}?` : 
+                    `هل أنت متأكد من رغبتك في حظر ${userName}? لن يتمكن من استخدام التطبيق.`;
                 
-                if (searchTerm.length < 2) {
-                    displayData();
+                if (confirm(confirmMessage)) {
+                    try {
+                        await db.ref(`users/${userId}/banned`).set(!isCurrentlyBanned);
+                        alert(`تم ${isCurrentlyBanned ? 'فك حظر' : 'حظر'} المستخدم بنجاح!`);
+                        renderUsers();
+                    } catch (e) {
+                        alert('خطأ في تحديث حالة المستخدم.');
+                    }
+                }
+            },
+            
+            // عرض تفاصيل المستخدم
+            viewUserDetails: (userId) => {
+                renderUserDetails(userId);
+            },
+            
+            // البحث عن مستخدم
+            searchUser: async () => {
+                const userId = document.getElementById('user-search-input').value.trim();
+                if (!userId) {
+                    alert('يرجى إدخال معرف المستخدم');
                     return;
                 }
                 
-                filterData(searchTerm);
+                const userSnap = await db.ref(`users/${userId}`).once('value');
+                if (!userSnap.exists()) {
+                    document.getElementById('user-search-results').innerHTML = '<div class="card"><p>المستخدم غير موجود</p></div>';
+                    return;
+                }
+                
+                renderUserDetails(userId);
+            },
+            
+            // إعادة تعيين نقاط المسابقة
+            resetContestPoints: async (userId, userName) => {
+                if (confirm(`هل أنت متأكد من رغبتك في إعادة تعيين نقاط المسابقة لـ ${userName}?`)) {
+                    try {
+                        await db.ref(`contest/participants/${userId}`).remove();
+                        alert('تم إعادة تعيين نقاط المسابقة بنجاح!');
+                        renderUserDetails(userId);
+                    } catch (e) {
+                        alert('خطأ في إعادة تعيين النقاط.');
+                    }
+                }
+            },
+            
+            // معالجة طلبات السحب
+            handleWithdrawal: async (reqId, action) => {
+                const reqRef = db.ref(`withdrawals/pending/${reqId}`); 
+                const snap = await reqRef.once('value'); 
+                const request = snap.val();
+                if (!request) { alert('الطلب غير موجود.'); return; }
+                if (action === 'reject') { 
+                    await db.ref(`users/${request.userId}/balance`).set(firebase.database.ServerValue.increment(request.amount));
+                }
+                const status = action === 'approve' ? 'completed' : 'rejected';
+                await db.ref(`withdrawals/${status}/${reqId}`).set({ ...request, status });
+                await reqRef.remove(); 
+                alert(`تم ${status === 'completed' ? 'الموافقة على' : 'رفض'} الطلب.`); 
+                renderWithdrawals();
+            },
+            
+            // إضافة مهمة
+            addTask: async () => {
+                const data = { 
+                    name: document.getElementById('task-name').value, 
+                    url: document.getElementById('task-url').value, 
+                    reward: parseFloat(document.getElementById('task-reward').value), 
+                    icon: document.getElementById('task-icon').value 
+                };
+                if (!data.name || !data.url || !data.reward || !data.icon) { 
+                    alert('جميع الحقول مطلوبة.'); 
+                    return; 
+                }
+                await db.ref('config/tasks').push(data); 
+                alert('تم إضافة المهمة!'); 
+                renderTasks();
+            },
+            
+            // إضافة رابط
+            addLink: async () => {
+                const data = { 
+                    name: document.getElementById('link-name').value, 
+                    url: document.getElementById('link-url').value, 
+                    icon: document.getElementById('link-icon').value 
+                };
+                if (!data.name || !data.url || !data.icon) { 
+                    alert('الاسم والرابط ورابط الصورة مطلوبة.'); 
+                    return; 
+                }
+                await db.ref('config/links').push(data); 
+                alert('تم إضافة الرابط!'); 
+                renderTasks();
+            },
+            
+            // حذف عنصر ديناميكي
+            deleteDynamicItem: async (type, key) => {
+                if (confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر?')) {
+                    await db.ref(`config/${type}/${key}`).remove(); 
+                    loadDynamicContent(type);
+                }
+            },
+            
+            // إنشاء كود جديد
+            createCode: async () => {
+                const codeText = document.getElementById('code-text').value.trim().toUpperCase();
+                const points = parseInt(document.getElementById('code-points').value) || 10;
+                const maxUses = parseInt(document.getElementById('code-max-uses').value) || 100;
+                const expiry = document.getElementById('code-expiry').value;
+                
+                if (!codeText) {
+                    alert('يرجى إدخال نص الكود');
+                    return;
+                }
+                
+                const codeData = {
+                    points: points,
+                    maxUses: maxUses,
+                    usedCount: 0,
+                    created: firebase.database.ServerValue.TIMESTAMP
+                };
+                
+                if (expiry) {
+                    codeData.expires = new Date(expiry).getTime();
+                }
+                
+                try {
+                    await db.ref(`codes/${codeText}`).set(codeData);
+                    alert('تم إنشاء الكود بنجاح!');
+                    document.getElementById('code-text').value = '';
+                    document.getElementById('code-points').value = '10';
+                    document.getElementById('code-max-uses').value = '100';
+                    document.getElementById('code-expiry').value = '';
+                    await loadCodes();
+                } catch (e) {
+                    alert('خطأ في إنشاء الكود: ' + e.message);
+                }
+            },
+            
+            // حذف كود
+            deleteCode: async (codeText) => {
+                if (confirm(`هل أنت متأكد من رغبتك في حذف الكود ${codeText}?`)) {
+                    try {
+                        await db.ref(`codes/${codeText}`).remove();
+                        alert('تم حذف الكود بنجاح!');
+                        await loadCodes();
+                    } catch (e) {
+                        alert('خطأ في حذف الكود.');
+                    }
+                }
+            },
+            
+            // تحديث إعدادات المسابقة
+            updateContestSettings: async () => {
+                const endTime = document.getElementById('contest-end-time').value;
+                const duration = parseInt(document.getElementById('contest-duration').value) || 7;
+                
+                const contestData = {
+                    durationDays: duration
+                };
+                
+                if (endTime) {
+                    contestData.endTime = new Date(endTime).getTime();
+                }
+                
+                try {
+                    await db.ref('contest').update(contestData);
+                    alert('تم تحديث إعدادات المسابقة بنجاح!');
+                } catch (e) {
+                    alert('خطأ في تحديث إعدادات المسابقة: ' + e.message);
+                }
+            },
+            
+            // إعادة تعيين المسابقة
+            resetContest: async () => {
+                if (confirm('هل أنت متأكد من رغبتك في إعادة تعيين المسابقة؟ سيتم حذف جميع بيانات المسابقة الحالية.')) {
+                    try {
+                        await db.ref('contest/participants').remove();
+                        alert('تم إعادة تعيين المسابقة بنجاح!');
+                        await loadContestLeaderboard();
+                    } catch (e) {
+                        alert('خطأ في إعادة تعيين المسابقة.');
+                    }
+                }
+            },
+            
+            // حذف نقاط المسابقة
+            removeContestPoints: async (userId, userName) => {
+                if (confirm(`هل أنت متأكد من رغبتك في حذف نقاط المسابقة لـ ${userName}?`)) {
+                    try {
+                        await db.ref(`contest/participants/${userId}`).remove();
+                        alert('تم حذف النقاط بنجاح!');
+                        await loadContestLeaderboard();
+                    } catch (e) {
+                        alert('خطأ في حذف النقاط.');
+                    }
+                }
+            },
+            
+            // إخفاء من المسابقة
+            hideFromContest: async (userId, userName) => {
+                if (confirm(`هل أنت متأكد من رغبتك في إخفاء ${userName} من المسابقة?`)) {
+                    try {
+                        await db.ref(`contest/participants/${userId}/hidden`).set(true);
+                        alert('تم إخفاء المستخدم بنجاح!');
+                        await loadContestLeaderboard();
+                    } catch (e) {
+                        alert('خطأ في إخفاء المستخدم.');
+                    }
+                }
+            },
+            
+            // إضافة طريقة سحب
+            addWithdrawMethodField: () => {
+                const container = document.getElementById('withdraw-methods-container');
+                const index = container.children.length;
+                container.innerHTML += `
+                    <div class="withdraw-method-group" data-index="${index}">
+                        <input placeholder="اسم الطريقة">
+                        <input type="number" step="any" placeholder="الحد الأدنى">
+                        <button class="action-btn btn-danger" onclick="this.parentElement.remove()">X</button>
+                    </div>`;
+            },
+            
+            // إضافة يوم لمكافآت التسجيل اليومي
+            addDailyRewardDay: () => {
+                const container = document.getElementById('daily-rewards-container');
+                const dayIndex = container.children.length;
+                container.innerHTML += `
+                    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                        <label style="min-width: 80px;">اليوم ${dayIndex + 1}:</label>
+                        <input type="number" step="any" value="0.0000" class="daily-reward-input" data-day="${dayIndex}">
+                        <span>TON</span>
+                    </div>`;
+            },
+            
+            // حفظ مكافآت التسجيل اليومي
+            saveDailyRewards: async () => {
+                const inputs = document.querySelectorAll('.daily-reward-input');
+                const rewards = [];
+                
+                inputs.forEach(input => {
+                    rewards.push(parseFloat(input.value) || 0);
+                });
+                
+                try {
+                    await db.ref('settings/dailyLoginRewards').set(rewards);
+                    alert('تم حفظ مكافآت التسجيل اليومي بنجاح!');
+                } catch (e) {
+                    alert('خطأ في حفظ المكافآت: ' + e.message);
+                }
+            },
+            
+            // حفظ الإعدادات
+            saveSettings: async () => {
+                const withdrawMethods = [];
+                document.querySelectorAll('#withdraw-methods-container .withdraw-method-group').forEach(group => {
+                    const inputs = group.querySelectorAll('input');
+                    if (inputs[0].value && inputs[1].value) {
+                        withdrawMethods.push({ name: inputs[0].value, min: parseFloat(inputs[1].value) });
+                    }
+                });
+                
+                const settings = {
+                    botUsername: document.getElementById('botUsername').value,
+                    botToken: document.getElementById('botToken').value,
+                    welcomeMessage: document.getElementById('welcomeMessage').value,
+                    adZoneId: parseInt(document.getElementById('adZoneId').value) || 0,
+                    adValue: parseFloat(document.getElementById('adValue').value) || 0,
+                    dailyAdLimit: parseInt(document.getElementById('dailyAdLimit').value) || 0,
+                    adCooldown: parseInt(document.getElementById('adCooldown').value) || 10,
+                    minAdDuration: parseInt(document.getElementById('minAdDuration').value) || 5,
+                    adsPerBreak: parseInt(document.getElementById('adsPerBreak').value) || 0,
+                    breakDuration: parseInt(document.getElementById('breakDuration').value) || 0,
+                    referralBonus: parseFloat(document.getElementById('referralBonus').value) || 0,
+                    minimumWithdrawReferrals: parseInt(document.getElementById('minimumWithdrawReferrals').value) || 0,
+                    withdrawMethods: withdrawMethods
+                };
+                
+                try {
+                    await db.ref('config').set(settings);
+                    alert('تم حفظ الإعدادات بنجاح!');
+                } catch (e) {
+                    alert('خطأ في حفظ الإعدادات: ' + e.message);
+                }
+            },
+            
+            // إرسال بث
+            sendBroadcast: () => {
+                const message = document.getElementById('broadcast-message').value;
+                if (!message) { alert('يرجى إدخال رسالة.'); return; }
+                alert('تم إرسال البث! ملاحظة: يتطلب هذا تنفيذًا من جانب الخادم لإرساله فعليًا لجميع المستخدمين.');
+            }
+        };
+
+        // Initialize Admin Panel
+        const initAdminPanel = () => {
+            renderDashboard();
+            document.querySelectorAll('.nav-menu li').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-menu li').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    const page = this.getAttribute('data-page');
+                    pageTitle.textContent = this.textContent.trim();
+                    if (page === 'dashboard') renderDashboard();
+                    else if (page === 'users') renderUsers();
+                    else if (page === 'user-search') renderUserSearch();
+                    else if (page === 'withdrawals') renderWithdrawals();
+                    else if (page === 'history') renderWithdrawalHistory();
+                    else if (page === 'tasks') renderTasks();
+                    else if (page === 'codes') renderCodes();
+                    else if (page === 'contest') renderContest();
+                    else if (page === 'settings') renderSettings();
+                    else if (page === 'broadcast') renderBroadcast();
+                    if (window.innerWidth < 768) { sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+                });
             });
-        }
-
-        // دالة التصدير
-        function exportToJSON() {
-            const data = {
-                exportedAt: new Date().toISOString(),
-                totalCollections: collections.length,
-                totalDocuments: collections.reduce((sum, col) => sum + col.count, 0),
-                collections: collections
-            };
             
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            document.getElementById('menu-toggle').addEventListener('click', () => {
+                sidebar.classList.add('open'); overlay.classList.add('show');
+            });
             
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `firebase-export-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-        }
-
-        // [يتبع باقي الدوال المشابهة للكود السابق]
-
+            document.querySelector('#sidebar .close-btn').addEventListener('click', () => {
+                sidebar.classList.remove('open'); overlay.classList.remove('show');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open'); overlay.classList.remove('show');
+            });
+        };
+    });
     </script>
 </body>
 </html>

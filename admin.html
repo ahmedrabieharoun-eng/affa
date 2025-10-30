@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة التحكم</title>
+  <title>لوحة التحكم الشاملة</title>
   <script type="module">
     // استيراد مكتبات Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getAuth, getUsers } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getStorage, ref, listAll } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 
     // إعدادات Firebase الخاصة بك
     const firebaseConfig = {
@@ -23,46 +25,85 @@
     // تهيئة Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
+    const storage = getStorage(app);
 
-    // دالة لجلب المستخدمين من Firestore
+    // دالة لجلب المستخدمين
     async function loadUsers() {
-      const tableBody = document.getElementById("usersTableBody");
-      tableBody.innerHTML = "<tr><td colspan='3'>جاري التحميل...</td></tr>";
+      const userTableBody = document.getElementById("usersTableBody");
+      userTableBody.innerHTML = "<tr><td colspan='3'>جاري التحميل...</td></tr>";
 
-      const querySnapshot = await getDocs(collection(db, "users"));
-      tableBody.innerHTML = ""; // مسح الجدول
+      const users = await getUsers(auth);
+      userTableBody.innerHTML = ""; // مسح الجدول
 
-      querySnapshot.forEach((doc) => {
-        const user = doc.data();
+      users.forEach((user) => {
         const row = `
           <tr>
-            <td>${user.name || "بدون اسم"}</td>
+            <td>${user.displayName || "بدون اسم"}</td>
             <td>${user.email || "بدون بريد"}</td>
-            <td>${doc.id}</td>
+            <td>${user.uid}</td>
           </tr>`;
-        tableBody.insertAdjacentHTML("beforeend", row);
+        userTableBody.insertAdjacentHTML("beforeend", row);
       });
 
-      if (querySnapshot.empty) {
-        tableBody.innerHTML = "<tr><td colspan='3'>لا يوجد مستخدمون بعد.</td></tr>";
+      if (users.length === 0) {
+        userTableBody.innerHTML = "<tr><td colspan='3'>لا يوجد مستخدمون بعد.</td></tr>";
       }
     }
 
-    // دالة لإضافة مستخدم جديد (اختياري)
-    async function addUser() {
-      const name = document.getElementById("nameInput").value;
-      const email = document.getElementById("emailInput").value;
-      if (!name || !email) return alert("يرجى إدخال الاسم والبريد الإلكتروني.");
+    // دالة لجلب البيانات من Firestore
+    async function loadData() {
+      const dataTableBody = document.getElementById("dataTableBody");
+      dataTableBody.innerHTML = "<tr><td colspan='3'>جاري التحميل...</td></tr>";
 
-      await addDoc(collection(db, "users"), { name, email });
-      alert("تمت إضافة المستخدم بنجاح ✅");
-      document.getElementById("nameInput").value = "";
-      document.getElementById("emailInput").value = "";
-      loadUsers();
+      const querySnapshot = await getDocs(collection(db, "data"));
+      dataTableBody.innerHTML = ""; // مسح الجدول
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const row = `
+          <tr>
+            <td>${data.name || "بدون اسم"}</td>
+            <td>${data.description || "بدون وصف"}</td>
+            <td>${doc.id}</td>
+          </tr>`;
+        dataTableBody.insertAdjacentHTML("beforeend", row);
+      });
+
+      if (querySnapshot.empty) {
+        dataTableBody.innerHTML = "<tr><td colspan='3'>لا توجد بيانات بعد.</td></tr>";
+      }
     }
 
-    window.addEventListener("load", loadUsers);
-    window.addUser = addUser;
+    // دالة لجلب الملفات من Firebase Storage
+    async function loadFiles() {
+      const filesTableBody = document.getElementById("filesTableBody");
+      filesTableBody.innerHTML = "<tr><td colspan='2'>جاري التحميل...</td></tr>";
+
+      const storageRef = ref(storage, 'files/'); // اختيار مجلد الملفات
+      const fileList = await listAll(storageRef);
+      filesTableBody.innerHTML = ""; // مسح الجدول
+
+      fileList.items.forEach((fileRef) => {
+        const fileName = fileRef.name;
+        const fileRow = `
+          <tr>
+            <td><a href="${await getDownloadURL(fileRef)}" target="_blank">${fileName}</a></td>
+            <td>${fileRef.fullPath}</td>
+          </tr>`;
+        filesTableBody.insertAdjacentHTML("beforeend", fileRow);
+      });
+
+      if (fileList.items.length === 0) {
+        filesTableBody.innerHTML = "<tr><td colspan='2'>لا توجد ملفات بعد.</td></tr>";
+      }
+    }
+
+    window.addEventListener("load", () => {
+      loadUsers();
+      loadData();
+      loadFiles();
+    });
   </script>
 
   <style>
@@ -106,44 +147,13 @@
       background: #2980b9;
       color: white;
     }
-    .form {
-      margin-bottom: 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    input {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      flex: 1;
-      min-width: 200px;
-    }
-    button {
-      padding: 10px 15px;
-      background: #27ae60;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #219150;
-    }
   </style>
 </head>
 <body>
-  <header>لوحة التحكم</header>
+  <header>لوحة التحكم الشاملة</header>
 
   <div class="container">
-    <h2>إضافة مستخدم جديد</h2>
-    <div class="form">
-      <input id="nameInput" placeholder="الاسم" />
-      <input id="emailInput" placeholder="البريد الإلكتروني" />
-      <button onclick="addUser()">إضافة</button>
-    </div>
-
-    <h2>قائمة المستخدمين</h2>
+    <h2>المستخدمين</h2>
     <table>
       <thead>
         <tr>
@@ -157,5 +167,37 @@
       </tbody>
     </table>
   </div>
+
+  <div class="container">
+    <h2>البيانات (Firestore)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>الوصف</th>
+          <th>ID</th>
+        </tr>
+      </thead>
+      <tbody id="dataTableBody">
+        <tr><td colspan="3">جاري التحميل...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container">
+    <h2>الملفات (Storage)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>الملف</th>
+          <th>المسار</th>
+        </tr>
+      </thead>
+      <tbody id="filesTableBody">
+        <tr><td colspan="2">جاري التحميل...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
 </body>
 </html>

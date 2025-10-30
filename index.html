@@ -423,6 +423,7 @@
             margin-bottom: 10px;
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .task-item:hover {
@@ -647,6 +648,163 @@
                 justify-content: center;
             }
         }
+
+        /* نظام السحب */
+        .withdraw-container {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .withdraw-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .method-card {
+            background: var(--bg-surface);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .method-card.active {
+            border-color: var(--secondary-color);
+            background: rgba(210, 105, 30, 0.1);
+        }
+
+        .method-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .method-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
+        }
+
+        .method-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .method-min {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        /* نظام السواب */
+        .swap-container {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .swap-from, .swap-to {
+            margin-bottom: 20px;
+        }
+
+        .swap-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .amount-input {
+            display: flex;
+            align-items: center;
+            background: var(--bg-surface);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .amount-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 1.1rem;
+        }
+
+        .amount-input input:focus {
+            outline: none;
+        }
+
+        .amount-input span {
+            padding: 0 15px;
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .amount-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-surface);
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .swap-info {
+            background: var(--bg-surface);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .swap-info p {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .swap-info p:last-child {
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -738,7 +896,7 @@
                         <i class="fas fa-tasks"></i>
                         المهام السريعة
                     </div>
-                    <div class="task-item">
+                    <div class="task-item" onclick="watchAd()">
                         <div class="task-icon">
                             <i class="fas fa-play"></i>
                         </div>
@@ -751,7 +909,7 @@
                             5,000 RR
                         </div>
                     </div>
-                    <div class="task-item">
+                    <div class="task-item" onclick="inviteFriend()">
                         <div class="task-icon">
                             <i class="fas fa-share-alt"></i>
                         </div>
@@ -811,7 +969,7 @@
                         <i class="fas fa-tasks"></i>
                         جميع المهام
                     </div>
-                    <div class="task-item">
+                    <div class="task-item" onclick="watchAd()">
                         <div class="task-icon">
                             <i class="fas fa-play"></i>
                         </div>
@@ -824,7 +982,7 @@
                             5,000 RR
                         </div>
                     </div>
-                    <div class="task-item">
+                    <div class="task-item" onclick="inviteFriend()">
                         <div class="task-icon">
                             <i class="fas fa-share-alt"></i>
                         </div>
@@ -837,7 +995,7 @@
                             25,000 RR
                         </div>
                     </div>
-                    <div class="task-item">
+                    <div class="task-item" onclick="dailyLogin()">
                         <div class="task-icon">
                             <i class="fas fa-check-circle"></i>
                         </div>
@@ -850,7 +1008,7 @@
                             10,000 RR
                         </div>
                     </div>
-                    <div class="task-item">
+                    <div class="task-item" onclick="completeGame()">
                         <div class="task-icon">
                             <i class="fas fa-gamepad"></i>
                         </div>
@@ -888,7 +1046,7 @@
                                 <div style="font-size: 0.8rem; color: var(--text-muted);">نقاطك</div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" style="width: 100%;">
+                        <button class="btn btn-primary" style="width: 100%;" onclick="startContest()">
                             <i class="fas fa-play"></i>
                             ابدأ اللعب
                         </button>
@@ -917,6 +1075,91 @@
                             <div style="font-weight: 700; color: var(--secondary-color);">4,120 نقطة</div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- صفحة السحب -->
+            <div id="withdraw-page" class="page">
+                <div class="withdraw-container">
+                    <div class="card-title">
+                        <i class="fas fa-wallet"></i>
+                        سحب الأرباح
+                    </div>
+                    
+                    <div class="rat-coin" style="display: inline-flex; margin-bottom: 20px; background: var(--rat-coin-bg); color: var(--rat-coin-text); padding: 10px 20px; border-radius: 20px; border: 1px solid var(--secondary-color);">
+                        <i class="fas fa-coins coin-icon"></i>
+                        <span id="withdraw-balance">1,250,000 RR</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">طريقة السحب:</label>
+                        <div class="withdraw-methods">
+                            <div class="method-card active" onclick="selectMethod(this, 'paypal')">
+                                <i class="fab fa-paypal method-icon"></i>
+                                <div class="method-name">PayPal</div>
+                                <div class="method-min">الحد الأدنى: 100,000 RR</div>
+                            </div>
+                            <div class="method-card" onclick="selectMethod(this, 'bank')">
+                                <i class="fas fa-university method-icon"></i>
+                                <div class="method-name">حساب بنكي</div>
+                                <div class="method-min">الحد الأدنى: 500,000 RR</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">البريد الإلكتروني أو رقم الحساب:</label>
+                        <input type="text" class="form-input" id="withdraw-account" placeholder="أدخل بياناتك">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">المبلغ المراد سحبه (RR):</label>
+                        <input type="number" class="form-input" id="withdraw-amount" placeholder="أدخل المبلغ">
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;" onclick="submitWithdraw()">
+                        <i class="fas fa-paper-plane"></i>
+                        تقديم طلب السحب
+                    </button>
+                </div>
+            </div>
+
+            <!-- صفحة السواب -->
+            <div id="swap-page" class="page">
+                <div class="swap-container">
+                    <div class="card-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        تحويل العملات
+                    </div>
+                    
+                    <div class="swap-from">
+                        <label class="swap-label">من:</label>
+                        <div class="amount-input">
+                            <input type="number" id="swap-from-amount" placeholder="0" value="100000">
+                            <span>RR</span>
+                        </div>
+                        <small style="color: var(--text-muted); margin-top: 5px; display: block;">المتاح: <span id="available-coins">1,250,000</span> RR</small>
+                    </div>
+                    
+                    <div class="swap-to">
+                        <label class="swap-label">إلى:</label>
+                        <div class="amount-display">
+                            <span id="swap-to-amount">0.1</span>
+                            <span>TON</span>
+                        </div>
+                        <small style="color: var(--text-muted); margin-top: 5px; display: block;">سعر الصرف: 1,000,000 RR = 1 TON</small>
+                    </div>
+                    
+                    <div class="swap-info">
+                        <p>الحد الأدنى للتحويل: 100,000 RR</p>
+                        <p>سعر الصرف: 1,000,000 RR = 1 TON</p>
+                        <p>العمولة: 1% من المبلغ المحول</p>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;" onclick="swapCoins()">
+                        <i class="fas fa-sync-alt"></i>
+                        تحويل العملات
+                    </button>
                 </div>
             </div>
 
@@ -983,6 +1226,14 @@
                 <i class="fas fa-trophy nav-icon"></i>
                 <span class="nav-label">المسابقة</span>
             </a>
+            <a href="#" class="nav-item" data-page="withdraw-page">
+                <i class="fas fa-wallet nav-icon"></i>
+                <span class="nav-label">السحب</span>
+            </a>
+            <a href="#" class="nav-item" data-page="swap-page">
+                <i class="fas fa-exchange-alt nav-icon"></i>
+                <span class="nav-label">التحويل</span>
+            </a>
             <a href="#" class="nav-item" data-page="profile-page">
                 <i class="fas fa-user nav-icon"></i>
                 <span class="nav-label">الملف</span>
@@ -993,8 +1244,8 @@
     <!-- البوب أب -->
     <div class="popup-overlay" id="popup">
         <div class="popup-content">
-            <div class="popup-title">تهانينا!</div>
-            <div class="popup-message">لقد ربحت <strong>5,000 RR</strong> من مشاهدة الإعلان!</div>
+            <div class="popup-title" id="popup-title">تهانينا!</div>
+            <div class="popup-message" id="popup-message">لقد ربحت <strong>5,000 RR</strong> من مشاهدة الإعلان!</div>
             <button class="btn btn-success" onclick="closePopup()">
                 <i class="fas fa-check"></i>
                 حسناً
@@ -1003,6 +1254,29 @@
     </div>
 
     <script>
+        // بيانات التطبيق
+        let userData = {
+            balance: 1250000,
+            adsWatched: 15,
+            referrals: 8,
+            totalEarnings: 1250000,
+            deviceFingerprint: generateFingerprint(),
+            ipAddress: ''
+        };
+
+        let settings = {
+            adReward: 5000,
+            referralReward: 25000,
+            dailyLoginReward: 10000,
+            gameReward: 50000,
+            swapRate: 1000000, // 1,000,000 RR = 1 TON
+            minSwapAmount: 100000,
+            minWithdrawAmount: 100000,
+            adWatchTime: 30 // ثانية
+        };
+
+        let selectedWithdrawMethod = 'paypal';
+
         document.addEventListener('DOMContentLoaded', function() {
             // محاكاة تحميل التطبيق
             let progress = 0;
@@ -1021,6 +1295,7 @@
                         setTimeout(() => {
                             appLoader.style.display = 'none';
                             app.style.display = 'block';
+                            initializeApp();
                         }, 500);
                     }, 500);
                 }
@@ -1044,40 +1319,222 @@
                     // إضافة النشاط للعنصر الحالي
                     this.classList.add('active');
                     document.getElementById(targetPage).classList.add('active');
+                    
+                    // تحديث البيانات عند تغيير الصفحة
+                    if (targetPage === 'swap-page') {
+                        updateSwapCalculation();
+                    }
                 });
             });
             
-            // محاكاة مشاهدة إعلان
-            const watchAdButtons = document.querySelectorAll('.task-item');
-            watchAdButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // محاكاة تأخير مشاهدة الإعلان
-                    setTimeout(() => {
-                        document.getElementById('popup').style.display = 'flex';
-                    }, 1500);
-                });
-            });
-            
-            // إغلاق البوب أب
-            window.closePopup = function() {
-                document.getElementById('popup').style.display = 'none';
-            };
-            
-            // محاكاة نظام الحماية
-            const simulateProtectionCheck = () => {
-                // في التطبيق الحقيقي، هنا سيتم التحقق من بصمة الجهاز والعنوان IP
-                const isBanned = Math.random() < 0.1; // 10% فرصة للحظر للمحاكاة فقط
-                
-                if (isBanned) {
-                    document.getElementById('banned-page').style.display = 'flex';
-                    document.getElementById('app-loader').style.display = 'none';
-                    document.getElementById('app').style.display = 'none';
-                }
-            };
-            
-            // محاكاة التحقق من الحماية بعد التحميل
-            setTimeout(simulateProtectionCheck, 3000);
+            // تحديث حساب السواب عند تغيير القيمة
+            document.getElementById('swap-from-amount').addEventListener('input', updateSwapCalculation);
         });
+
+        // تهيئة التطبيق
+        function initializeApp() {
+            // محاكاة الحصول على عنوان IP
+            getUserIP().then(ip => {
+                userData.ipAddress = ip;
+                checkUserBanStatus();
+            });
+            
+            updateUI();
+        }
+
+        // توليد بصمة الجهاز
+        function generateFingerprint() {
+            return 'fingerprint_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+
+        // الحصول على عنوان IP
+        function getUserIP() {
+            return new Promise((resolve) => {
+                // في التطبيق الحقيقي، هنا سيتم الحصول على IP من الخادم
+                // للمحاكاة، نعيد عنوان IP عشوائي
+                const fakeIP = `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+                resolve(fakeIP);
+            });
+        }
+
+        // التحقق من حالة حظر المستخدم
+        function checkUserBanStatus() {
+            // في التطبيق الحقيقي، هنا سيتم التحقق من قاعدة البيانات
+            // للمحاكاة، 5% فرصة للحظر
+            const isBanned = Math.random() < 0.05;
+            
+            if (isBanned) {
+                document.getElementById('banned-page').style.display = 'flex';
+                document.getElementById('app').style.display = 'none';
+            }
+        }
+
+        // تحديث واجهة المستخدم
+        function updateUI() {
+            document.getElementById('user-balance').textContent = formatNumber(userData.balance);
+            document.getElementById('withdraw-balance').textContent = formatNumber(userData.balance) + ' RR';
+            document.getElementById('available-coins').textContent = formatNumber(userData.balance);
+        }
+
+        // تنسيق الأرقام
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // مشاهدة إعلان
+        function watchAd() {
+            showLoadingPopup('جاري تحميل الإعلان...');
+            
+            setTimeout(() => {
+                closePopup();
+                
+                // محاكاة مشاهدة الإعلان
+                showLoadingPopup('جاري عرض الإعلان...');
+                
+                setTimeout(() => {
+                    closePopup();
+                    
+                    // منح المكافأة
+                    userData.balance += settings.adReward;
+                    userData.adsWatched++;
+                    userData.totalEarnings += settings.adReward;
+                    
+                    updateUI();
+                    
+                    showPopup('تهانينا!', `لقد ربحت <strong>${settings.adReward.toLocaleString()} RR</strong> من مشاهدة الإعلان!`);
+                }, 3000);
+            }, 1500);
+        }
+
+        // دعوة صديق
+        function inviteFriend() {
+            userData.balance += settings.referralReward;
+            userData.referrals++;
+            userData.totalEarnings += settings.referralReward;
+            
+            updateUI();
+            
+            showPopup('نجاح!', `لقد ربحت <strong>${settings.referralReward.toLocaleString()} RR</strong> من دعوة صديق!`);
+        }
+
+        // التسجيل اليومي
+        function dailyLogin() {
+            userData.balance += settings.dailyLoginReward;
+            userData.totalEarnings += settings.dailyLoginReward;
+            
+            updateUI();
+            
+            showPopup('تهانينا!', `لقد ربحت <strong>${settings.dailyLoginReward.toLocaleString()} RR</strong> من التسجيل اليومي!`);
+        }
+
+        // إكمال لعبة
+        function completeGame() {
+            userData.balance += settings.gameReward;
+            userData.totalEarnings += settings.gameReward;
+            
+            updateUI();
+            
+            showPopup('مذهل!', `لقد ربحت <strong>${settings.gameReward.toLocaleString()} RR</strong> من إكمال اللعبة!`);
+        }
+
+        // بدء المسابقة
+        function startContest() {
+            showPopup('مسابقة الفئران', 'سيتم بدء المسابقة قريباً! احصل على أكبر عدد من النقاط لتربح جوائز قيمة.');
+        }
+
+        // اختيار طريقة السحب
+        function selectMethod(element, method) {
+            document.querySelectorAll('.method-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            element.classList.add('active');
+            selectedWithdrawMethod = method;
+        }
+
+        // تقديم طلب السحب
+        function submitWithdraw() {
+            const account = document.getElementById('withdraw-account').value;
+            const amount = parseInt(document.getElementById('withdraw-amount').value);
+            
+            if (!account) {
+                showPopup('خطأ', 'يرجى إدخال بيانات الحساب');
+                return;
+            }
+            
+            if (!amount || amount < settings.minWithdrawAmount) {
+                showPopup('خطأ', `الحد الأدنى للسحب هو ${settings.minWithdrawAmount.toLocaleString()} RR`);
+                return;
+            }
+            
+            if (amount > userData.balance) {
+                showPopup('خطأ', 'رصيدك غير كافي');
+                return;
+            }
+            
+            userData.balance -= amount;
+            updateUI();
+            
+            showPopup('تم الطلب', `تم تقديم طلب سحب بقيمة ${amount.toLocaleString()} RR بنجاح. سيتم معالجة الطلب خلال 24-48 ساعة.`);
+            
+            // إعادة تعيين الحقول
+            document.getElementById('withdraw-account').value = '';
+            document.getElementById('withdraw-amount').value = '';
+        }
+
+        // تحديث حساب السواب
+        function updateSwapCalculation() {
+            const fromAmount = parseInt(document.getElementById('swap-from-amount').value) || 0;
+            const toAmount = fromAmount / settings.swapRate;
+            document.getElementById('swap-to-amount').textContent = toAmount.toFixed(6);
+        }
+
+        // تحويل العملات
+        function swapCoins() {
+            const fromAmount = parseInt(document.getElementById('swap-from-amount').value) || 0;
+            
+            if (fromAmount < settings.minSwapAmount) {
+                showPopup('خطأ', `الحد الأدنى للتحويل هو ${settings.minSwapAmount.toLocaleString()} RR`);
+                return;
+            }
+            
+            if (fromAmount > userData.balance) {
+                showPopup('خطأ', 'رصيدك غير كافي');
+                return;
+            }
+            
+            const toAmount = fromAmount / settings.swapRate;
+            const fee = fromAmount * 0.01; // 1% عمولة
+            const netAmount = fromAmount - fee;
+            const netToAmount = netAmount / settings.swapRate;
+            
+            userData.balance -= fromAmount;
+            updateUI();
+            
+            showPopup('تم التحويل', `تم تحويل ${fromAmount.toLocaleString()} RR إلى ${netToAmount.toFixed(6)} TON (بعد خصم العمولة)`);
+            
+            // إعادة تعيين الحقل
+            document.getElementById('swap-from-amount').value = '';
+            updateSwapCalculation();
+        }
+
+        // إظهار البوب أب
+        function showPopup(title, message) {
+            document.getElementById('popup-title').textContent = title;
+            document.getElementById('popup-message').innerHTML = message;
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        // إظهار بوب أب التحميل
+        function showLoadingPopup(message) {
+            document.getElementById('popup-title').textContent = 'جاري المعالجة';
+            document.getElementById('popup-message').textContent = message;
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        // إغلاق البوب أب
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم</title>
+  <script type="module">
+    // استيراد مكتبات Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    // إعدادات Firebase الخاصة بك
+    const firebaseConfig = {
+      apiKey: "AIzaSyAFBsqYvPsQAPrnWvBfIIn0xKbQD8eFfFY",
+      authDomain: "ton-up-422b5.firebaseapp.com",
+      projectId: "ton-up-422b5",
+      storageBucket: "ton-up-422b5.firebasestorage.app",
+      messagingSenderId: "1097862104173",
+      appId: "1:1097862104173:web:752c30106f7e9fc553ab64",
+      measurementId: "G-R5YGH5QY0W"
+    };
+
+    // تهيئة Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // دالة لجلب المستخدمين من Firestore
+    async function loadUsers() {
+      const tableBody = document.getElementById("usersTableBody");
+      tableBody.innerHTML = "<tr><td colspan='3'>جاري التحميل...</td></tr>";
+
+      const querySnapshot = await getDocs(collection(db, "users"));
+      tableBody.innerHTML = ""; // مسح الجدول
+
+      querySnapshot.forEach((doc) => {
+        const user = doc.data();
+        const row = `
+          <tr>
+            <td>${user.name || "بدون اسم"}</td>
+            <td>${user.email || "بدون بريد"}</td>
+            <td>${doc.id}</td>
+          </tr>`;
+        tableBody.insertAdjacentHTML("beforeend", row);
+      });
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = "<tr><td colspan='3'>لا يوجد مستخدمون بعد.</td></tr>";
+      }
+    }
+
+    // دالة لإضافة مستخدم جديد (اختياري)
+    async function addUser() {
+      const name = document.getElementById("nameInput").value;
+      const email = document.getElementById("emailInput").value;
+      if (!name || !email) return alert("يرجى إدخال الاسم والبريد الإلكتروني.");
+
+      await addDoc(collection(db, "users"), { name, email });
+      alert("تمت إضافة المستخدم بنجاح ✅");
+      document.getElementById("nameInput").value = "";
+      document.getElementById("emailInput").value = "";
+      loadUsers();
+    }
+
+    window.addEventListener("load", loadUsers);
+    window.addUser = addUser;
+  </script>
+
+  <style>
+    body {
+      font-family: "Tajawal", sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #3498db;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      width: 90%;
+      margin: 20px auto;
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+      text-align: right;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #2980b9;
+      color: white;
+    }
+    .form {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      flex: 1;
+      min-width: 200px;
+    }
+    button {
+      padding: 10px 15px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #219150;
+    }
+  </style>
+</head>
+<body>
+  <header>لوحة التحكم</header>
+
+  <div class="container">
+    <h2>إضافة مستخدم جديد</h2>
+    <div class="form">
+      <input id="nameInput" placeholder="الاسم" />
+      <input id="emailInput" placeholder="البريد الإلكتروني" />
+      <button onclick="addUser()">إضافة</button>
+    </div>
+
+    <h2>قائمة المستخدمين</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>البريد الإلكتروني</th>
+          <th>ID</th>
+        </tr>
+      </thead>
+      <tbody id="usersTableBody">
+        <tr><td colspan="3">جاري التحميل...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

@@ -1,1816 +1,770 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Rich Rats - مملكة الفئران</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rich Rats - The Wealthy Rat Kingdom</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <style>
         :root {
-            --font-family: 'Poppins', sans-serif;
-            --primary-color: #8B4513; --secondary-color: #D2691E;
-            --accent-color: #000000; --accent-secondary: #333333;
-            --background-light: #F5F5DC; --surface-light: #FFF8DC; --text-primary-light: #2C3E50; --text-secondary-light: #808B96; --border-light: #DEB887;
-            --background-dark: #1A1200; --surface-dark: #2A1F00; --text-primary-dark: #F5F5DC; --text-secondary-dark: #D2B48C; --border-dark: #8B4513;
-            --success: #27AE60; --danger: #C0392B; --pending: #F39C12;
-            --rat-gold: #FFD700; --rat-silver: #C0C0C0; --rat-bronze: #CD7F32;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); transition: background-color 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-        body.light-theme { background-color: var(--background-light); color: var(--text-primary-light); }
-        body.dark-theme { background-color: var(--background-dark); color: var(--text-primary-dark); }
-        #app { max-width: 500px; margin: 0 auto; padding-bottom: 80px; }
-        .page { display: none; padding: 15px; }
-        .page.active { display: block; animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* تصميم شاشة التحميل الجديدة */
-        #app-loader { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            z-index: 9999; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            background: linear-gradient(135deg, var(--background-dark), var(--surface-dark));
-        }
-        .light-theme #app-loader { 
-            background: linear-gradient(135deg, var(--background-light), var(--surface-light));
-        }
-        .loader-container {
-            text-align: center;
-            padding: 30px;
-            border-radius: 20px;
-            background: rgba(139, 69, 19, 0.1);
-            border: 2px solid var(--primary-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 300px;
-            width: 90%;
-        }
-        .rat-loader {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-        }
-        .rat-body {
-            position: absolute;
-            width: 80px;
-            height: 60px;
-            background: var(--accent-color);
-            border-radius: 40px 40px 20px 20px;
-            top: 30px;
-            left: 20px;
-            animation: ratMove 2s infinite alternate;
-        }
-        .rat-ear {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            top: 20px;
-        }
-        .rat-ear.left { left: 15px; }
-        .rat-ear.right { right: 15px; }
-        .rat-eye {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            top: 45px;
-        }
-        .rat-eye.left { left: 30px; }
-        .rat-eye.right { right: 30px; }
-        .rat-nose {
-            position: absolute;
-            width: 12px;
-            height: 8px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            top: 55px;
-            left: 54px;
-        }
-        .rat-tail {
-            position: absolute;
-            width: 40px;
-            height: 8px;
-            background: var(--accent-color);
-            border-radius: 4px;
-            top: 50px;
-            right: 0;
-            transform-origin: left center;
-            animation: tailWag 1s infinite alternate;
-        }
-        .cheese {
-            position: absolute;
-            width: 30px;
-            height: 20px;
-            background: var(--rat-gold);
-            border-radius: 10px;
-            bottom: 10px;
-            right: 10px;
-            transform: rotate(45deg);
-            animation: cheeseGlow 2s infinite alternate;
-        }
-        .cheese::before, .cheese::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--secondary-color);
-            border-radius: 50%;
-        }
-        .cheese::before { top: 5px; left: 5px; }
-        .cheese::after { bottom: 5px; right: 5px; }
-        
-        @keyframes ratMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-        @keyframes tailWag {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(20deg); }
-        }
-        @keyframes cheeseGlow {
-            0% { box-shadow: 0 0 10px var(--rat-gold); }
-            100% { box-shadow: 0 0 20px var(--rat-gold); }
-        }
-        
-        #loading-progress {
-            margin-top: 15px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        .light-theme #loading-progress { color: var(--text-primary-light); } 
-        .dark-theme #loading-progress { color: var(--text-primary-dark); }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(139, 69, 19, 0.2);
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-        
-        /* تصميم الرأس */
-        .profile-header {
-            padding: 25px 15px; 
-            border-bottom: 2px solid;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            text-align: center;
-            background: linear-gradient(135deg, var(--surface-dark), var(--background-dark));
-            border-radius: 0 0 20px 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .light-theme .profile-header { 
-            background: linear-gradient(135deg, var(--surface-light), var(--background-light));
-            border-bottom-color: var(--border-light); 
-        }
-        .dark-theme .profile-header { 
-            border-bottom-color: var(--border-dark); 
-        }
-        .profile-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
-        }
-        #user-photo { 
-            width: 80px; 
-            height: 80px; 
-            border-radius: 50%; 
-            border: 4px solid var(--primary-color); 
-            object-fit: cover; 
-            margin-bottom: 10px; 
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 1;
-        }
-        #user-name { 
-            font-size: 1.4rem; 
-            font-weight: 700; 
-            margin-bottom: 5px; 
-            color: var(--accent-color);
-        }
-        .dark-theme #user-name {
-            color: var(--text-primary-dark);
-        }
-        #user-balance-container { 
-            font-size: 1rem; 
-            font-weight: 500; 
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        #user-balance { 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            color: var(--accent-color);
-            background: rgba(0, 0, 0, 0.1);
-            padding: 5px 10px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .dark-theme #user-balance {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .rr-coin {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            height: 20px;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 50%;
-            font-weight: 800;
-            font-size: 0.8rem;
+            --font-primary: 'Poppins', sans-serif;
+            --font-heading: 'Montserrat', sans-serif;
+            --primary-color: #FFD700; /* Golden Yellow for RR */
+            --secondary-color: #0088CC; /* TON Blue */
+            --background-dark: #1A1A2E;
+            --surface-dark: #16213E;
+            --surface-darker: #0F1530;
+            --text-primary-dark: #FFFFFF;
+            --text-secondary-dark: #B0B0B0;
+            --accent-color: #FF6B35;
+            --success-color: #2ECC71;
+            --danger-color: #E74C3C;
+            --border-radius: 16px;
+            --transition: all 0.3s ease;
         }
 
-        /* تصميم البطاقات */
-        .stats-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            margin: 20px 0; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .stat-card { 
-            padding: 15px; 
-            border-radius: 15px; 
-            text-align: center; 
-            border: 2px solid;
-            background: var(--surface-dark);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--background-dark) 0%, var(--surface-darker) 100%);
+            color: var(--text-primary-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
             position: relative;
-            overflow: hidden;
+            z-index: 10;
         }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-        }
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .light-theme .stat-card { 
-            background-color: var(--surface-light); 
-            border-color: var(--border-light); 
-        }
-        .dark-theme .stat-card { 
-            background-color: var(--surface-dark); 
-            border-color: var(--border-dark); 
-        }
-        .stat-card h3 { 
-            font-size: 0.85rem; 
-            font-weight: 500; 
-            margin-bottom: 8px; 
-            text-transform: uppercase; 
-        }
-        .light-theme .stat-card h3 { color: var(--text-secondary-light); } 
-        .dark-theme .stat-card h3 { color: var(--text-secondary-dark); }
-        .stat-card p { 
-            font-size: 1.4rem; 
-            font-weight: 600; 
-            color: var(--accent-color);
+
+        .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 15px;
         }
-        
-        /* تصميم المهام */
-        .task-container { 
-            padding: 20px; 
-            border-radius: 15px; 
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            border: 2px solid;
-            background: var(--surface-dark);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #FFA500 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s infinite alternate;
             position: relative;
             overflow: hidden;
         }
-        .task-container::before {
+
+        .logo::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
         }
-        .task-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
-        .light-theme .task-container { 
-            background-color: var(--surface-light); 
-            border-color: var(--border-light); 
-        }
-        .dark-theme .task-container { 
-            background-color: var(--surface-dark); 
-            border-color: var(--border-dark); 
-        }
-        .task-icon-img { 
-            width: 50px; 
-            height: 50px; 
-            border-radius: 12px; 
-            object-fit: cover; 
-            border: 2px solid var(--primary-color);
-            padding: 5px;
-            background: rgba(139, 69, 19, 0.1);
-        }
-        .task-info h3 { 
-            font-size: 1.1rem; 
-            font-weight: 600; 
-            margin-bottom: 5px;
-        } 
-        .task-info p { 
-            font-size: 0.85rem; 
+
+        .tagline {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 10px;
             color: var(--text-secondary-dark);
+            font-weight: 300;
         }
-        .light-theme .task-info p {
-            color: var(--text-secondary-light);
-        }
-        .action-btn { 
-            padding: 10px 20px; 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            color: #fff; 
-            border: none; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); 
-            margin-left: auto; 
-            white-space: nowrap;
-            box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
-        }
-        .action-btn:disabled { 
-            background: #808B96; 
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        .action-btn:not(:disabled):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(139, 69, 19, 0.4);
-        }
-        
-        /* تصميم القائمة السفلية */
-        .bottom-nav { 
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            max-width: 500px; 
-            margin: 0 auto; 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 10px 0; 
-            border-top: 2px solid; 
-            z-index: 1000; 
-            background: var(--surface-dark);
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
-        }
-        .light-theme .bottom-nav { 
-            background-color: var(--surface-light); 
-            border-top-color: var(--border-light); 
-        }
-        .dark-theme .bottom-nav { 
-            background-color: var(--surface-dark); 
-            border-top-color: var(--border-dark); 
-        }
-        .nav-btn { 
-            background: none; 
-            border: none; 
-            cursor: pointer; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            font-family: var(--font-family); 
-            font-size: 0.75rem; 
-            transition: color 0.2s; 
-            flex-grow: 1; 
-            padding: 5px;
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-        .light-theme .nav-btn { color: var(--text-secondary-light); } 
-        .dark-theme .nav-btn { color: var(--text-secondary-dark); }
-        .nav-btn i { 
-            font-size: 1.5rem; 
-            margin-bottom: 4px; 
-            transition: all 0.3s;
-        } 
-        .nav-btn.active { 
-            color: var(--primary-color); 
-            background: rgba(139, 69, 19, 0.1);
-            transform: translateY(-5px);
-        }
-        .nav-btn.active i {
-            transform: scale(1.2);
-        }
-        
-        /* تصميم البوب أب */
-        .popup-overlay { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.7); 
-            display: none; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 10000; 
-        }
-        .popup-content { 
-            padding: 30px; 
-            border-radius: 20px; 
-            text-align: center; 
-            max-width: 80%; 
-            background: var(--surface-dark);
-            border: 2px solid var(--primary-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            position: relative;
-        }
-        .light-theme .popup-content { background-color: var(--surface-light); } 
-        .dark-theme .popup-content { background-color: var(--surface-dark); }
-        .popup-content h2 { 
-            margin-bottom: 15px; 
-            color: var(--primary-color); 
-        } 
-        .popup-content p { 
-            margin-bottom: 20px; 
-        }
-        .popup-close-btn { 
-            padding: 10px 25px; 
-            border: none; 
-            border-radius: 10px; 
-            color: #fff; 
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); 
-            cursor: pointer; 
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
-        }
-        .popup-close-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(139, 69, 19, 0.4);
-        }
-        .popup-loader .spinner { 
-            width: 40px; 
-            height: 40px; 
-            border-radius: 50%; 
-            border: 4px solid; 
-            border-color: var(--primary-color) transparent; 
-            animation: spin 1s linear infinite; 
-            margin: 0 auto 15px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        /* تصميم صفحة الحظر */
-        .banned-container {
+
+        /* Loading Animation */
+        .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, #c0392b, #e74c3c);
-            display: none;
+            background: var(--background-dark);
+            display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            color: white;
-            text-align: center;
-            padding: 20px;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        .banned-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
-        .banned-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
+
+        .loading-animation {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            margin-bottom: 30px;
         }
-        .banned-message {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            max-width: 400px;
+
+        .coin-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px dashed var(--primary-color);
+            animation: spin 10s linear infinite;
         }
-        .banned-contact {
-            font-size: 0.9rem;
-            opacity: 0.8;
+
+        .coin-ring::before {
+            content: 'RR';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.5rem;
         }
-        
-        /* تصميم محول العملات */
-        .exchange-container {
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            border: 2px solid;
-            background: var(--surface-dark);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+        .falling-coins {
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
-        .light-theme .exchange-container { 
-            background-color: var(--surface-light); 
-            border-color: var(--border-light); 
-        }
-        .dark-theme .exchange-container { 
-            background-color: var(--surface-dark); 
-            border-color: var(--border-dark); 
-        }
-        .exchange-header {
+
+        .coin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.7rem;
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
         }
-        .exchange-header i {
+
+        .coin:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .coin:nth-child(2) { left: 30%; animation-delay: 0.5s; }
+        .coin:nth-child(3) { left: 50%; animation-delay: 1s; }
+        .coin:nth-child(4) { left: 70%; animation-delay: 1.5s; }
+        .coin:nth-child(5) { left: 90%; animation-delay: 2s; }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary-dark);
+            margin-top: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.5s forwards;
+        }
+
+        .balance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--surface-dark) 0%, var(--surface-darker) 100%);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .balance-card.rr::before {
+            background: var(--primary-color);
+        }
+
+        .balance-card.ton::before {
+            background: var(--secondary-color);
+        }
+
+        .balance-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .balance-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
             font-size: 1.5rem;
-            color: var(--primary-color);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        .exchange-header h3 {
-            font-size: 1.3rem;
+
+        .rr-icon {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #FFA500 100%);
+            color: #000;
+        }
+
+        .ton-icon {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #0066AA 100%);
+            color: white;
+        }
+
+        .balance-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .balance-amount {
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--primary-color);
-            margin: 0;
+            margin-bottom: 10px;
+            font-family: var(--font-heading);
         }
-        .exchange-form {
+
+        .balance-subtitle {
+            color: var(--text-secondary-dark);
+            font-size: 0.9rem;
+        }
+
+        /* Convert Section */
+        .convert-section {
+            background: linear-gradient(135deg, var(--surface-dark) 0%, var(--surface-darker) 100%);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .convert-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .convert-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .convert-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .convert-form {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .form-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
         }
-        .exchange-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .exchange-input {
-            flex: 1;
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 2px solid;
-            background: var(--surface-dark);
-            color: inherit;
-            font-weight: 600;
-        }
-        .light-theme .exchange-input {
-            border-color: var(--border-light);
-            background: var(--surface-light);
-        }
-        .dark-theme .exchange-input {
-            border-color: var(--border-dark);
-            background: var(--surface-dark);
-        }
-        .exchange-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2);
-        }
-        .exchange-select {
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 2px solid;
-            background: var(--surface-dark);
-            color: inherit;
-            font-weight: 600;
-            min-width: 120px;
-        }
-        .light-theme .exchange-select {
-            border-color: var(--border-light);
-            background: var(--surface-light);
-        }
-        .dark-theme .exchange-select {
-            border-color: var(--border-dark);
-            background: var(--surface-dark);
-        }
-        .exchange-rate {
-            text-align: center;
-            padding: 10px;
-            background: rgba(139, 69, 19, 0.1);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin: 10px 0;
-        }
-        .exchange-btn {
-            padding: 14px;
-            font-size: 1rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
-        }
-        .exchange-btn:disabled {
-            background: #808B96;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        .exchange-btn:not(:disabled):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(139, 69, 19, 0.4);
-        }
-        
-        /* تصميم محفظة العملات */
-        .wallet-container {
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            border: 2px solid;
-            background: var(--surface-dark);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        .light-theme .wallet-container { 
-            background-color: var(--surface-light); 
-            border-color: var(--border-light); 
-        }
-        .dark-theme .wallet-container { 
-            background-color: var(--surface-dark); 
-            border-color: var(--border-dark); 
-        }
-        .wallet-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .wallet-header i {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-        }
-        .wallet-header h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 0;
-        }
-        .wallet-balances {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .wallet-balance {
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            border: 2px solid;
-            background: rgba(139, 69, 19, 0.1);
-        }
-        .light-theme .wallet-balance {
-            background: rgba(139, 69, 19, 0.05);
-        }
-        .wallet-balance h4 {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
             color: var(--text-secondary-dark);
         }
-        .light-theme .wallet-balance h4 {
-            color: var(--text-secondary-light);
+
+        .input-with-icon {
+            position: relative;
         }
-        .wallet-amount {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--accent-color);
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary-dark);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-with-icon input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+
+        .input-with-icon .currency {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
+        }
+
+        .convert-arrow {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
         }
-        
-        /* تصميم شارة الفأر */
-        .rat-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            background: var(--accent-color);
-            color: white;
+
+        /* Earning Options */
+        .earning-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .earning-card {
+            background: linear-gradient(135deg, var(--surface-dark) 0%, var(--surface-darker) 100%);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .earning-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .earning-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-color);
+        }
+
+        .earning-icon {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            font-weight: 800;
-            font-size: 0.7rem;
-            margin-right: 5px;
-        }
-        
-        /* تصميم شارة المستوي */
-        .level-badge {
-            display: inline-flex;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #FFA500 100%);
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 5px 10px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 15px;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .earning-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .earning-description {
+            color: var(--text-secondary-dark);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .earning-reward {
+            font-size: 1.5rem;
             font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-family: var(--font-heading);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: none;
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #FFA500 100%);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #0066AA 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fall {
+            0% { top: -20px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes coinRain {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Coin Rain Animation */
+        .coin-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .rain-coin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
             font-size: 0.8rem;
-            margin-left: 10px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: coinRain 5s linear infinite;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-secondary-dark);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .balance-cards, .earning-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .convert-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .convert-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+            
+            .logo-text {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
-<body class="dark-theme">
-    <!-- شاشة الحظر -->
-    <div id="banned-page" class="banned-container">
-        <div class="banned-icon">🚫</div>
-        <div class="banned-title">Account Banned</div>
-        <div class="banned-message" id="banned-reason">Your account has been suspended for violating our terms of service.</div>
-        <div class="banned-contact">If you believe this is a mistake, please contact support</div>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-animation">
+            <div class="coin-ring"></div>
+            <div class="falling-coins">
+                <div class="coin">RR</div>
+                <div class="coin">RR</div>
+                <div class="coin">RR</div>
+                <div class="coin">RR</div>
+                <div class="coin">RR</div>
+            </div>
+        </div>
+        <div class="loading-text">Entering the Rat Kingdom...</div>
     </div>
 
-    <!-- شاشة التحميل الجديدة -->
-    <div id="app-loader">
-        <div class="loader-container">
-            <div class="rat-loader">
-                <div class="rat-body"></div>
-                <div class="rat-ear left"></div>
-                <div class="rat-ear right"></div>
-                <div class="rat-eye left"></div>
-                <div class="rat-eye right"></div>
-                <div class="rat-nose"></div>
-                <div class="rat-tail"></div>
-                <div class="cheese"></div>
-            </div>
-            <h2 style="color: var(--primary-color); margin-bottom: 10px;">Rich Rats</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary-dark);">جاري تحمير المملكة...</p>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
-            </div>
-            <p id="loading-progress">0%</p>
-        </div>
-    </div>
-    
-    <div id="popup" class="popup-overlay">
-        <div class="popup-content">
-            <div id="popup-body"></div>
-        </div>
-    </div>
-    
-    <!-- شاشة الاشتراك الإجباري -->
-    <div id="subscription-page" style="display: none;">
-        <div class="subscription-container">
-            <h2 style="color: var(--primary-color); margin-bottom: 10px;">📢 Required Subscription</h2>
-            <p style="margin-bottom: 20px;">You must subscribe to our channels to use the bot and earn rewards!</p>
-            
-            <div id="channels-list">
-                <!-- سيتم إضافة القنوات هنا ديناميكياً -->
-            </div>
-            
-            <button id="check-subscription-btn" class="action-btn" style="margin-top: 20px; width: 100%;">
-                🔄 Check Subscription
-            </button>
-            
-            <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
-                After subscribing, click the button above to verify
-            </p>
-        </div>
-    </div>
+    <!-- Coin Rain Effect -->
+    <div class="coin-rain" id="coinRain"></div>
 
-    <div id="app" style="display: none;">
-        <header class="profile-header">
-            <img id="user-photo" src="https://via.placeholder.com/80" alt="User">
-            <h1 id="user-name">Loading...</h1>
-            <div id="user-balance-container">Main Balance: <span id="user-balance"><span class="rr-coin">RR</span> 0.0000</span></div>
-            <div id="user-level" class="level-badge" style="margin-top: 5px;">Level 1</div>
+    <!-- Main Content -->
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">RR</div>
+                <h1 class="logo-text">Rich Rats</h1>
+            </div>
+            <p class="tagline">The Wealthy Rat Kingdom - Where Every Click Counts</p>
         </header>
-        <main id="main-content">
-            <div id="home-page" class="page active">
-                <div class="stats-grid">
-                    <div class="stat-card"><h3>Today's Ads</h3><p id="daily-ads-watched">0 / 0</p></div>
-                    <div class="stat-card"><h3>Total Referrals</h3><p id="referral-count">0</p></div>
-                    <div class="stat-card"><h3>Total Ads Watched</h3><p id="total-ads-watched">0</p></div>
-                    <div class="stat-card"><h3>Total Income</h3><p><span class="rr-coin">RR</span> <span id="total-earned">0.0000</span></p></div>
+
+        <main class="main-content">
+            <!-- Balance Cards -->
+            <div class="balance-cards">
+                <div class="balance-card rr">
+                    <div class="balance-header">
+                        <div class="balance-icon rr-icon">RR</div>
+                        <div>
+                            <div class="balance-title">RR Coins</div>
+                            <div class="balance-subtitle">Your Rich Rats Currency</div>
+                        </div>
+                    </div>
+                    <div class="balance-amount">25,430</div>
+                    <div class="balance-subtitle">Available for conversion to TON</div>
                 </div>
-                
-                <!-- محفظة العملات -->
-                <div class="wallet-container">
-                    <div class="wallet-header">
-                        <i class="fas fa-wallet"></i>
-                        <h3>محفظة العملات</h3>
-                    </div>
-                    <div class="wallet-balances">
-                        <div class="wallet-balance">
-                            <h4>عملات RR</h4>
-                            <div class="wallet-amount"><span class="rr-coin">RR</span> <span id="rr-balance">0.0000</span></div>
-                        </div>
-                        <div class="wallet-balance">
-                            <h4>عملات الذهب</h4>
-                            <div class="wallet-amount"><i class="fas fa-coins" style="color: var(--rat-gold);"></i> <span id="gold-balance">0</span></div>
-                        </div>
-                        <div class="wallet-balance">
-                            <h4>عملات الفضة</h4>
-                            <div class="wallet-amount"><i class="fas fa-coins" style="color: var(--rat-silver);"></i> <span id="silver-balance">0</span></div>
-                        </div>
-                        <div class="wallet-balance">
-                            <h4>عملات البرونز</h4>
-                            <div class="wallet-amount"><i class="fas fa-coins" style="color: var(--rat-bronze);"></i> <span id="bronze-balance">0</span></div>
+
+                <div class="balance-card ton">
+                    <div class="balance-header">
+                        <div class="balance-icon ton-icon">TON</div>
+                        <div>
+                            <div class="balance-title">TON Coins</div>
+                            <div class="balance-subtitle">Withdrawable Currency</div>
                         </div>
                     </div>
+                    <div class="balance-amount">0.2543</div>
+                    <div class="balance-subtitle">Ready for withdrawal</div>
                 </div>
-                
-                <!-- محول العملات -->
-                <div class="exchange-container">
-                    <div class="exchange-header">
-                        <i class="fas fa-exchange-alt"></i>
-                        <h3>محول العملات</h3>
-                    </div>
-                    <div class="exchange-form">
-                        <div class="exchange-row">
-                            <input type="number" id="exchange-from-amount" class="exchange-input" placeholder="المبلغ" min="0" step="0.01">
-                            <select id="exchange-from-currency" class="exchange-select">
-                                <option value="gold">عملات الذهب</option>
-                                <option value="silver">عملات الفضة</option>
-                                <option value="bronze">عملات البرونز</option>
-                            </select>
-                        </div>
-                        <div class="exchange-rate" id="exchange-rate-info">
-                            سعر الصرف: 1 عملة ذهب = 10 RR
-                        </div>
-                        <div class="exchange-row">
-                            <input type="number" id="exchange-to-amount" class="exchange-input" placeholder="المبلغ" readonly>
-                            <select id="exchange-to-currency" class="exchange-select" disabled>
-                                <option value="rr">عملات RR</option>
-                            </select>
-                        </div>
-                        <button id="exchange-btn" class="exchange-btn">تحويل العملات</button>
-                    </div>
-                </div>
-                
-                <div id="dynamic-links-container" style="margin-top: 20px;"></div>
             </div>
-            <div id="tasks-page" class="page">
-                <div class="wallet-container">
-                    <div class="wallet-header">
-                        <i class="fas fa-coins"></i>
-                        <h3>محفظة الأرباح</h3>
+
+            <!-- Convert Section -->
+            <div class="convert-section">
+                <div class="convert-header">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h2>Convert RR to TON</h2>
+                </div>
+                <div class="convert-form">
+                    <div class="form-group">
+                        <label>RR Amount</label>
+                        <div class="input-with-icon">
+                            <input type="number" id="rrAmount" value="5000" min="1000" step="100">
+                            <span class="currency">RR</span>
+                        </div>
                     </div>
-                    <div class="wallet-balances">
-                        <div class="wallet-balance">
-                            <h4>عملات الذهب</h4>
-                            <div class="wallet-amount"><i class="fas fa-coins" style="color: var(--rat-gold);"></i> <span id="earning-gold-balance">0</span></div>
-                        </div>
-                        <div class="wallet-balance">
-                            <h4>عملات الفضة</h4>
-                            <div class="wallet-amount"><i class="fas fa-coins" style="color: var(--rat-silver);"></i> <span id="earning-silver-balance">0</span></div>
-                        </div>
-                        <div class="wallet-balance">
-                            <h4>عملات البرونز</h4>
-                            <div class="wallet-amount"><i class="fas fa-coins" style="color: var(--rat-bronze);"></i> <span id="earning-bronze-balance">0</span></div>
+                    
+                    <div class="convert-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>TON Amount</label>
+                        <div class="input-with-icon">
+                            <input type="number" id="tonAmount" value="0.05" readonly>
+                            <span class="currency">TON</span>
                         </div>
                     </div>
                 </div>
-                <div id="tasks-container"></div>
+                <button class="btn btn-primary btn-full" id="convertBtn" style="margin-top: 20px;">
+                    Convert RR to TON
+                </button>
             </div>
-            <div id="referrals-page" class="page">
-                <div class="stat-card" style="grid-column: 1 / -1;">
-                    <h3>Your Referral Link</h3>
-                    <p id="referral-link" style="font-size: 1rem; word-break: break-all; text-align: left; margin-top: 10px; padding: 10px; background: rgba(139, 69, 19, 0.1); border-radius: 10px;"></p>
-                    <button id="copy-referral-link" class="action-btn" style="margin-top: 15px; width: 100%;">📋 Copy Referral Link</button>
-                </div>
-                <div class="stat-card" style="grid-column: 1 / -1;">
-                    <h3>Referral Rewards</h3>
-                    <p style="font-size: 1rem; text-align: left; margin-top: 10px;">
-                        Earn <span class="rr-coin">RR</span> <span id="referral-reward-amount">0.0000</span> for each friend who joins and completes tasks!
-                    </p>
-                </div>
-                <div id="referrals-list" style="margin-top: 20px;"></div>
-            </div>
-            <div id="profile-page" class="page">
-                <div class="stat-card" style="grid-column: 1 / -1;">
-                    <h3>Account Settings</h3>
-                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
-                        <button id="theme-toggle" class="action-btn" style="width: 100%;">🌙 Switch to Light Mode</button>
-                        <button id="logout-btn" class="action-btn" style="width: 100%; background: linear-gradient(45deg, #C0392B, #E74C3C);">🚪 Logout</button>
+
+            <!-- Earning Options -->
+            <div class="earning-options">
+                <div class="earning-card">
+                    <div class="earning-icon">
+                        <i class="fas fa-play-circle"></i>
                     </div>
+                    <h3 class="earning-title">Watch Ads</h3>
+                    <p class="earning-description">Watch short video advertisements and earn RR coins for each view.</p>
+                    <div class="earning-reward">+5,000 RR</div>
+                    <button class="btn btn-primary">Watch Now</button>
                 </div>
-                <div class="stat-card" style="grid-column: 1 / -1;">
-                    <h3>Account Information</h3>
-                    <div style="margin-top: 15px; text-align: left;">
-                        <p><strong>User ID:</strong> <span id="profile-user-id">Loading...</span></p>
-                        <p><strong>Joined:</strong> <span id="profile-join-date">Loading...</span></p>
-                        <p><strong>Level:</strong> <span id="profile-level">Loading...</span></p>
-                        <p><strong>Total Earned:</strong> <span class="rr-coin">RR</span> <span id="profile-total-earned">0.0000</span></p>
+
+                <div class="earning-card">
+                    <div class="earning-icon">
+                        <i class="fas fa-calendar-check"></i>
                     </div>
+                    <h3 class="earning-title">Daily Login</h3>
+                    <p class="earning-description">Claim your daily reward. The amount increases with consecutive logins!</p>
+                    <div class="earning-reward">+5,000 RR</div>
+                    <button class="btn btn-primary">Claim Reward</button>
+                </div>
+
+                <div class="earning-card">
+                    <div class="earning-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3 class="earning-title">Refer Friends</h3>
+                    <p class="earning-description">Invite friends to join the Rat Kingdom and earn bonus RR coins.</p>
+                    <div class="earning-reward">+10,000 RR</div>
+                    <button class="btn btn-primary">Invite Now</button>
                 </div>
             </div>
         </main>
-        <nav class="bottom-nav">
-            <button class="nav-btn active" data-page="home-page"><i class="fas fa-home"></i>Home</button>
-            <button class="nav-btn" data-page="tasks-page"><i class="fas fa-tasks"></i>Tasks</button>
-            <button class="nav-btn" data-page="referrals-page"><i class="fas fa-users"></i>Referrals</button>
-            <button class="nav-btn" data-page="profile-page"><i class="fas fa-user"></i>Profile</button>
-        </nav>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-functions-compat.js"></script>
+    <footer>
+        <div class="container">
+            <p>© 2023 Rich Rats - The Wealthy Rat Kingdom. All rights reserved.</p>
+            <p>Join our community and start collecting RR coins today!</p>
+        </div>
+    </footer>
 
     <script>
-        // تهيئة Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyC4R6AN9phqR0vL2bJlx_YXQwR7oKz6A7E",
-            authDomain: "rich-rats-app.firebaseapp.com",
-            projectId: "rich-rats-app",
-            storageBucket: "rich-rats-app.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abcdef123456"
-        };
-        
-        // تهيئة Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-        
-        // متغيرات التطبيق
-        let userData = {};
-        let appSettings = {};
-        let userTasks = {};
-        let userReferrals = [];
-        let deviceFingerprint = '';
-        let userIP = '';
-        
-        // وظائف التحميل
-        window.addEventListener('load', () => {
-            simulateLoading();
-        });
-        
-        // محاكاة التحميل
-        function simulateLoading() {
-            const progressFill = document.getElementById('progress-fill');
-            const loadingProgress = document.getElementById('loading-progress');
-            let progress = 0;
+        // Loading screen animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const coinRain = document.getElementById('coinRain');
+            const convertBtn = document.getElementById('convertBtn');
+            const rrAmountInput = document.getElementById('rrAmount');
+            const tonAmountInput = document.getElementById('tonAmount');
             
-            const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
+            // Hide loading screen after 3 seconds
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                
+                // Create coin rain effect
+                createCoinRain();
+            }, 3000);
+            
+            // Convert button event
+            convertBtn.addEventListener('click', function() {
+                // Add animation to button
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Converting...';
+                this.disabled = true;
+                
+                // Simulate conversion process
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i> Converted Successfully!';
+                    this.classList.add('btn-secondary');
                     
+                    // Show coin rain effect
+                    createCoinRain();
+                    
+                    // Reset button after 2 seconds
                     setTimeout(() => {
-                        document.getElementById('app-loader').style.display = 'none';
-                        document.getElementById('app').style.display = 'block';
-                        initializeApp();
-                    }, 500);
-                }
-                
-                progressFill.style.width = `${progress}%`;
-                loadingProgress.textContent = `${Math.round(progress)}%`;
-            }, 300);
-        }
-        
-        // تهيئة التطبيق
-        async function initializeApp() {
-            try {
-                // الحصول على بصمة الجهاز وIP
-                await getDeviceFingerprint();
-                await getUserIP();
-                
-                // التحقق من الحظر
-                await checkIfBanned();
-                
-                // تحميل الإعدادات
-                await loadAppSettings();
-                
-                // تهيئة المصادقة
-                await initializeAuth();
-                
-                // تهيئة التنقل
-                initializeNavigation();
-                
-                // تحميل بيانات المستخدم
-                await loadUserData();
-                
-                // تحديث الواجهة
-                updateUI();
-                
-            } catch (error) {
-                console.error('Error initializing app:', error);
-                showPopup('Error', 'Failed to initialize the app. Please try again.');
-            }
-        }
-        
-        // الحصول على بصمة الجهاز
-        async function getDeviceFingerprint() {
-            // محاكاة إنشاء بصمة جهاز فريدة
-            const userAgent = navigator.userAgent;
-            const language = navigator.language;
-            const platform = navigator.platform;
-            const hardwareConcurrency = navigator.hardwareConcurrency || 'unknown';
-            const screenResolution = `${screen.width}x${screen.height}`;
-            
-            // إنشاء بصمة فريدة بناءً على خصائص الجهاز
-            const fingerprintData = `${userAgent}${language}${platform}${hardwareConcurrency}${screenResolution}`;
-            
-            // محاكاة توليد بصمة (في تطبيق حقيقي، استخدم مكتبة متخصصة مثل fingerprintjs)
-            let hash = 0;
-            for (let i = 0; i < fingerprintData.length; i++) {
-                const char = fingerprintData.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            
-            deviceFingerprint = Math.abs(hash).toString(16);
-            console.log('Device Fingerprint:', deviceFingerprint);
-        }
-        
-        // الحصول على عنوان IP
-        async function getUserIP() {
-            try {
-                // محاكاة الحصول على IP (في تطبيق حقيقي، استخدم خدمة مثل ipify)
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                userIP = data.ip;
-                console.log('User IP:', userIP);
-            } catch (error) {
-                console.error('Error getting IP:', error);
-                // استخدام IP افتراضي في حالة الفشل
-                userIP = 'unknown';
-            }
-        }
-        
-        // التحقق من الحظر
-        async function checkIfBanned() {
-            try {
-                // التحقق من البصمة
-                const fingerprintCheck = await db.collection('bannedDevices').doc(deviceFingerprint).get();
-                if (fingerprintCheck.exists) {
-                    showBannedPage(fingerprintCheck.data().reason || 'Device is banned');
-                    return;
-                }
-                
-                // التحقق من IP
-                const ipCheck = await db.collection('bannedIPs').doc(userIP).get();
-                if (ipCheck.exists) {
-                    showBannedPage(ipCheck.data().reason || 'IP is banned');
-                    return;
-                }
-            } catch (error) {
-                console.error('Error checking ban status:', error);
-            }
-        }
-        
-        // عرض صفحة الحظر
-        function showBannedPage(reason) {
-            document.getElementById('banned-reason').textContent = reason;
-            document.getElementById('banned-page').style.display = 'flex';
-            document.getElementById('app').style.display = 'none';
-            document.getElementById('app-loader').style.display = 'none';
-        }
-        
-        // تحميل إعدادات التطبيق
-        async function loadAppSettings() {
-            try {
-                const settingsDoc = await db.collection('appSettings').doc('config').get();
-                
-                if (settingsDoc.exists) {
-                    appSettings = settingsDoc.data();
-                } else {
-                    // إنشاء الإعدادات الافتراضية إذا لم تكن موجودة
-                    appSettings = {
-                        adRewardGold: 1,
-                        adRewardSilver: 5,
-                        adRewardBronze: 10,
-                        taskRewardGold: 5,
-                        taskRewardSilver: 10,
-                        taskRewardBronze: 20,
-                        adWaitTime: 30, // ثانية
-                        exchangeRateGold: 10, // 1 عملة ذهب = 10 RR
-                        exchangeRateSilver: 2, // 1 عملة فضة = 2 RR
-                        exchangeRateBronze: 0.5, // 1 عملة برونز = 0.5 RR
-                        referralReward: 0.5, // RR
-                        dailyAdLimit: 20,
-                        version: '1.0.0'
-                    };
-                    
-                    await db.collection('appSettings').doc('config').set(appSettings);
-                }
-                
-                console.log('App settings loaded:', appSettings);
-            } catch (error) {
-                console.error('Error loading app settings:', error);
-            }
-        }
-        
-        // تهيئة المصادقة
-        async function initializeAuth() {
-            return new Promise((resolve) => {
-                auth.onAuthStateChanged(async (user) => {
-                    if (user) {
-                        // المستخدم مسجل الدخول
-                        await handleUserLogin(user);
-                        resolve();
-                    } else {
-                        // تسجيل الدخول المجهول
-                        await auth.signInAnonymously();
-                        resolve();
-                    }
-                });
-            });
-        }
-        
-        // معالجة تسجيل الدخول
-        async function handleUserLogin(user) {
-            try {
-                // التحقق من وجود المستخدم في قاعدة البيانات
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                
-                if (userDoc.exists) {
-                    userData = userDoc.data();
-                    
-                    // التحقق من البصمة للتعدد
-                    if (userData.deviceFingerprint && userData.deviceFingerprint !== deviceFingerprint) {
-                        // تسجيل الحادث
-                        await db.collection('suspiciousActivities').add({
-                            userId: user.uid,
-                            oldFingerprint: userData.deviceFingerprint,
-                            newFingerprint: deviceFingerprint,
-                            ip: userIP,
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        
-                        // حظر الجهاز الجديد
-                        await db.collection('bannedDevices').doc(deviceFingerprint).set({
-                            reason: 'Multiple account creation detected',
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        
-                        showBannedPage('Multiple account creation detected');
-                        return;
-                    }
-                    
-                    // تحديث بصمة الجهاز إذا لم تكن موجودة
-                    if (!userData.deviceFingerprint) {
-                        await db.collection('users').doc(user.uid).update({
-                            deviceFingerprint: deviceFingerprint,
-                            ip: userIP
-                        });
-                    }
-                    
-                } else {
-                    // إنشاء مستخدم جديد
-                    userData = {
-                        uid: user.uid,
-                        name: `Rat${Math.floor(Math.random() * 10000)}`,
-                        balance: 0,
-                        goldCoins: 0,
-                        silverCoins: 0,
-                        bronzeCoins: 0,
-                        totalEarned: 0,
-                        adsWatched: 0,
-                        dailyAdsWatched: 0,
-                        lastAdWatch: null,
-                        referrals: [],
-                        referralCount: 0,
-                        level: 1,
-                        joinDate: firebase.firestore.FieldValue.serverTimestamp(),
-                        deviceFingerprint: deviceFingerprint,
-                        ip: userIP
-                    };
-                    
-                    await db.collection('users').doc(user.uid).set(userData);
-                }
-                
-                // تحميل المهام والإحالات
-                await loadUserTasks(user.uid);
-                await loadUserReferrals(user.uid);
-                
-            } catch (error) {
-                console.error('Error handling user login:', error);
-            }
-        }
-        
-        // تحميل مهام المستخدم
-        async function loadUserTasks(userId) {
-            try {
-                const tasksSnapshot = await db.collection('userTasks').doc(userId).get();
-                
-                if (tasksSnapshot.exists) {
-                    userTasks = tasksSnapshot.data();
-                } else {
-                    // إنشاء مهام افتراضية
-                    userTasks = {
-                        completedTasks: [],
-                        activeTasks: {}
-                    };
-                    
-                    await db.collection('userTasks').doc(userId).set(userTasks);
-                }
-            } catch (error) {
-                console.error('Error loading user tasks:', error);
-            }
-        }
-        
-        // تحميل إحالات المستخدم
-        async function loadUserReferrals(userId) {
-            try {
-                const referralsSnapshot = await db.collection('referrals')
-                    .where('referrerId', '==', userId)
-                    .get();
-                
-                userReferrals = [];
-                referralsSnapshot.forEach(doc => {
-                    userReferrals.push(doc.data());
-                });
-            } catch (error) {
-                console.error('Error loading user referrals:', error);
-            }
-        }
-        
-        // تحديث واجهة المستخدم
-        function updateUI() {
-            // تحديث معلومات المستخدم
-            document.getElementById('user-name').textContent = userData.name;
-            document.getElementById('user-balance').innerHTML = `<span class="rr-coin">RR</span> ${userData.balance.toFixed(4)}`;
-            document.getElementById('user-level').textContent = `Level ${userData.level}`;
-            
-            // تحديث الإحصائيات
-            document.getElementById('daily-ads-watched').textContent = `${userData.dailyAdsWatched || 0} / ${appSettings.dailyAdLimit || 20}`;
-            document.getElementById('referral-count').textContent = userData.referralCount || 0;
-            document.getElementById('total-ads-watched').textContent = userData.adsWatched || 0;
-            document.getElementById('total-earned').textContent = userData.totalEarned ? userData.totalEarned.toFixed(4) : '0.0000';
-            
-            // تحديث محفظة العملات
-            document.getElementById('rr-balance').textContent = userData.balance ? userData.balance.toFixed(4) : '0.0000';
-            document.getElementById('gold-balance').textContent = userData.goldCoins || 0;
-            document.getElementById('silver-balance').textContent = userData.silverCoins || 0;
-            document.getElementById('bronze-balance').textContent = userData.bronzeCoins || 0;
-            
-            // تحديث محفظة الأرباح
-            document.getElementById('earning-gold-balance').textContent = userData.goldCoins || 0;
-            document.getElementById('earning-silver-balance').textContent = userData.silverCoins || 0;
-            document.getElementById('earning-bronze-balance').textContent = userData.bronzeCoins || 0;
-            
-            // تحديث رابط الإحالة
-            document.getElementById('referral-link').textContent = `${window.location.origin}?ref=${userData.uid}`;
-            document.getElementById('referral-reward-amount').textContent = appSettings.referralReward ? appSettings.referralReward.toFixed(4) : '0.5000';
-            
-            // تحديث معلومات الملف الشخصي
-            document.getElementById('profile-user-id').textContent = userData.uid;
-            document.getElementById('profile-join-date').textContent = userData.joinDate ? new Date(userData.joinDate.toDate()).toLocaleDateString() : 'Unknown';
-            document.getElementById('profile-level').textContent = userData.level || 1;
-            document.getElementById('profile-total-earned').textContent = userData.totalEarned ? userData.totalEarned.toFixed(4) : '0.0000';
-            
-            // تحديث سعر الصرف
-            document.getElementById('exchange-rate-info').textContent = 
-                `سعر الصرف: 1 عملة ذهب = ${appSettings.exchangeRateGold || 10} RR | 1 عملة فضة = ${appSettings.exchangeRateSilver || 2} RR | 1 عملة برونز = ${appSettings.exchangeRateBronze || 0.5} RR`;
-            
-            // تحميل المهام الديناميكية
-            loadDynamicTasks();
-            loadDynamicLinks();
-            loadReferralsList();
-        }
-        
-        // تحميل المهام الديناميكية
-        function loadDynamicTasks() {
-            const tasksContainer = document.getElementById('tasks-container');
-            tasksContainer.innerHTML = '';
-            
-            // مهام الإعلانات
-            const adTask = document.createElement('div');
-            adTask.className = 'task-container';
-            adTask.innerHTML = `
-                <img src="https://via.placeholder.com/50" class="task-icon-img" alt="Watch Ads">
-                <div class="task-info">
-                    <h3>مشاهدة الإعلانات</h3>
-                    <p>شاهد إعلانًا واحصل على عملات</p>
-                </div>
-                <button class="action-btn" id="watch-ad-btn">+ <i class="fas fa-coins" style="color: var(--rat-gold);"></i> ${appSettings.adRewardGold || 1} | <i class="fas fa-coins" style="color: var(--rat-silver);"></i> ${appSettings.adRewardSilver || 5} | <i class="fas fa-coins" style="color: var(--rat-bronze);"></i> ${appSettings.adRewardBronze || 10}</button>
-            `;
-            tasksContainer.appendChild(adTask);
-            
-            // إضافة مستويات المهام
-            const taskLevels = [
-                { level: 1, name: "مهمة المبتدئ", rewardGold: 2, rewardSilver: 8, rewardBronze: 15 },
-                { level: 2, name: "مهمة المتوسط", rewardGold: 5, rewardSilver: 15, rewardBronze: 30 },
-                { level: 3, name: "مهمة المحترف", rewardGold: 10, rewardSilver: 25, rewardBronze: 50 }
-            ];
-            
-            taskLevels.forEach(task => {
-                const taskElement = document.createElement('div');
-                taskElement.className = 'task-container';
-                const isCompleted = userTasks.completedTasks && userTasks.completedTasks.includes(`task-${task.level}`);
-                
-                taskElement.innerHTML = `
-                    <img src="https://via.placeholder.com/50" class="task-icon-img" alt="${task.name}">
-                    <div class="task-info">
-                        <h3>${task.name}</h3>
-                        <p>أكمل هذه المهمة لتحصل على مكافأة</p>
-                    </div>
-                    <button class="action-btn ${isCompleted ? 'completed' : ''}" id="complete-task-${task.level}" ${isCompleted ? 'disabled' : ''}>
-                        ${isCompleted ? 'مكتمل' : `+ <i class="fas fa-coins" style="color: var(--rat-gold);"></i> ${task.rewardGold} | <i class="fas fa-coins" style="color: var(--rat-silver);"></i> ${task.rewardSilver} | <i class="fas fa-coins" style="color: var(--rat-bronze);"></i> ${task.rewardBronze}`}
-                    </button>
-                `;
-                tasksContainer.appendChild(taskElement);
+                        this.innerHTML = 'Convert RR to TON';
+                        this.disabled = false;
+                        this.classList.remove('btn-secondary');
+                    }, 2000);
+                }, 1500);
             });
             
-            // إضافة مستمعي الأحداث
-            document.getElementById('watch-ad-btn').addEventListener('click', watchAd);
-            document.getElementById('complete-task-1').addEventListener('click', () => completeTask(1));
-            document.getElementById('complete-task-2').addEventListener('click', () => completeTask(2));
-            document.getElementById('complete-task-3').addEventListener('click', () => completeTask(3));
-            
-            // إضافة مستمع حدث لزر التحويل
-            document.getElementById('exchange-btn').addEventListener('click', exchangeCoins);
-            document.getElementById('exchange-from-amount').addEventListener('input', updateExchangeAmount);
-        }
-        
-        // تحميل الروابط الديناميكية
-        function loadDynamicLinks() {
-            const linksContainer = document.getElementById('dynamic-links-container');
-            linksContainer.innerHTML = '';
-            
-            const links = [
-                { name: 'التحديات اليومية', icon: 'fas fa-calendar-day', action: showDailyChallenges },
-                { name: 'البطاقات الجماعية', icon: 'fas fa-layer-group', action: showGroupCards },
-                { name: 'سباق الفئران', icon: 'fas fa-flag-checkered', action: showRatRace }
-            ];
-            
-            links.forEach(link => {
-                const linkElement = document.createElement('div');
-                linkElement.className = 'task-container';
-                linkElement.innerHTML = `
-                    <i class="${link.icon}" style="font-size: 1.5rem; color: var(--primary-color);"></i>
-                    <div class="task-info">
-                        <h3>${link.name}</h3>
-                        <p>انقر للدخول إلى ${link.name}</p>
-                    </div>
-                    <button class="action-btn">دخول</button>
-                `;
-                linkElement.querySelector('button').addEventListener('click', link.action);
-                linksContainer.appendChild(linkElement);
-            });
-        }
-        
-        // تحميل قائمة الإحالات
-        function loadReferralsList() {
-            const referralsList = document.getElementById('referrals-list');
-            referralsList.innerHTML = '';
-            
-            if (userReferrals.length === 0) {
-                referralsList.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--text-secondary-dark);">لا توجد إحالات حتى الآن</p>';
-                return;
-            }
-            
-            userReferrals.forEach(ref => {
-                const refElement = document.createElement('div');
-                refElement.className = 'task-container';
-                refElement.innerHTML = `
-                    <i class="fas fa-user" style="font-size: 1.5rem; color: var(--primary-color);"></i>
-                    <div class="task-info">
-                        <h3>مستخدم ${ref.referredName || 'مجهول'}</h3>
-                        <p>تاريخ الإحالة: ${ref.timestamp ? new Date(ref.timestamp.toDate()).toLocaleDateString() : 'غير معروف'}</p>
-                    </div>
-                    <div class="level-badge">+ <span class="rr-coin">RR</span> ${appSettings.referralReward ? appSettings.referralReward.toFixed(4) : '0.5000'}</div>
-                `;
-                referralsList.appendChild(refElement);
-            });
-        }
-        
-        // تهيئة التنقل
-        function initializeNavigation() {
-            const navButtons = document.querySelectorAll('.nav-btn');
-            
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetPage = button.getAttribute('data-page');
-                    
-                    // إزالة النشاط من جميع الأزرار
-                    navButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // إضافة النشاط للزر المحدد
-                    button.classList.add('active');
-                    
-                    // إخفاء جميع الصفحات
-                    document.querySelectorAll('.page').forEach(page => {
-                        page.classList.remove('active');
-                    });
-                    
-                    // إظهار الصفحة المحددة
-                    document.getElementById(targetPage).classList.add('active');
-                });
+            // Update TON amount when RR amount changes
+            rrAmountInput.addEventListener('input', function() {
+                const rrAmount = parseFloat(this.value) || 0;
+                const tonAmount = rrAmount / 100000; // Conversion rate: 100,000 RR = 1 TON
+                tonAmountInput.value = tonAmount.toFixed(6);
             });
             
-            // إضافة مستمعي الأحداث للأزرار الأخرى
-            document.getElementById('copy-referral-link').addEventListener('click', copyReferralLink);
-            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-            document.getElementById('logout-btn').addEventListener('click', logout);
-        }
-        
-        // مشاهدة الإعلان
-        async function watchAd() {
-            const btn = document.getElementById('watch-ad-btn');
-            btn.disabled = true;
-            btn.textContent = 'جاري التحميل...';
-            
-            // التحقق من الحد اليومي
-            if (userData.dailyAdsWatched >= (appSettings.dailyAdLimit || 20)) {
-                showPopup('Limit Reached', 'You have reached your daily ad limit. Come back tomorrow!');
-                btn.disabled = false;
-                btn.textContent = `+ <i class="fas fa-coins" style="color: var(--rat-gold);"></i> ${appSettings.adRewardGold || 1} | <i class="fas fa-coins" style="color: var(--rat-silver);"></i> ${appSettings.adRewardSilver || 5} | <i class="fas fa-coins" style="color: var(--rat-bronze);"></i> ${appSettings.adRewardBronze || 10}`;
-                return;
-            }
-            
-            // محاكاة مشاهدة الإعلان
-            showPopup('Ad', `Please watch the ad for ${appSettings.adWaitTime || 30} seconds to earn your reward.`, true);
-            
-            // بدء المؤقت
-            let timeLeft = appSettings.adWaitTime || 30;
-            const timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('popup-body').innerHTML = `
-                    <div class="popup-loader">
-                        <div class="spinner"></div>
-                        <h2>جاري عرض الإعلان</h2>
-                        <p>يرجى الانتظار ${timeLeft} ثانية...</p>
-                    </div>
-                `;
+            // Create coin rain effect
+            function createCoinRain() {
+                // Clear existing coins
+                coinRain.innerHTML = '';
                 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    completeAdWatch();
-                }
-            }, 1000);
-        }
-        
-        // إكمال مشاهدة الإعلان
-        async function completeAdWatch() {
-            try {
-                // تحديث بيانات المستخدم
-                const userId = auth.currentUser.uid;
-                const newGoldCoins = (userData.goldCoins || 0) + (appSettings.adRewardGold || 1);
-                const newSilverCoins = (userData.silverCoins || 0) + (appSettings.adRewardSilver || 5);
-                const newBronzeCoins = (userData.bronzeCoins || 0) + (appSettings.adRewardBronze || 10);
-                const newAdsWatched = (userData.adsWatched || 0) + 1;
-                const newDailyAdsWatched = (userData.dailyAdsWatched || 0) + 1;
-                
-                await db.collection('users').doc(userId).update({
-                    goldCoins: newGoldCoins,
-                    silverCoins: newSilverCoins,
-                    bronzeCoins: newBronzeCoins,
-                    adsWatched: newAdsWatched,
-                    dailyAdsWatched: newDailyAdsWatched,
-                    lastAdWatch: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                // تحديث البيانات المحلية
-                userData.goldCoins = newGoldCoins;
-                userData.silverCoins = newSilverCoins;
-                userData.bronzeCoins = newBronzeCoins;
-                userData.adsWatched = newAdsWatched;
-                userData.dailyAdsWatched = newDailyAdsWatched;
-                
-                // تحديث الواجهة
-                updateUI();
-                
-                // إغلاق البوب أب وعرض النتيجة
-                document.getElementById('popup').style.display = 'none';
-                showPopup('Success', `You earned <i class="fas fa-coins" style="color: var(--rat-gold);"></i> ${appSettings.adRewardGold || 1} gold, <i class="fas fa-coins" style="color: var(--rat-silver);"></i> ${appSettings.adRewardSilver || 5} silver, and <i class="fas fa-coins" style="color: var(--rat-bronze);"></i> ${appSettings.adRewardBronze || 10} bronze coins!`);
-                
-            } catch (error) {
-                console.error('Error completing ad watch:', error);
-                showPopup('Error', 'Failed to process your reward. Please try again.');
-            } finally {
-                // إعادة تعيين الزر
-                const btn = document.getElementById('watch-ad-btn');
-                btn.disabled = false;
-                btn.textContent = `+ <i class="fas fa-coins" style="color: var(--rat-gold);"></i> ${appSettings.adRewardGold || 1} | <i class="fas fa-coins" style="color: var(--rat-silver);"></i> ${appSettings.adRewardSilver || 5} | <i class="fas fa-coins" style="color: var(--rat-bronze);"></i> ${appSettings.adRewardBronze || 10}`;
-            }
-        }
-        
-        // إكمال المهمة
-        async function completeTask(taskLevel) {
-            const btn = document.getElementById(`complete-task-${taskLevel}`);
-            btn.disabled = true;
-            btn.textContent = 'جاري الإكمال...';
-            
-            try {
-                const userId = auth.currentUser.uid;
-                const taskId = `task-${taskLevel}`;
-                
-                // التحقق مما إذا كانت المهمة مكتملة بالفعل
-                if (userTasks.completedTasks && userTasks.completedTasks.includes(taskId)) {
-                    showPopup('Info', 'You have already completed this task.');
-                    return;
+                // Create 15 coins
+                for (let i = 0; i < 15; i++) {
+                    const coin = document.createElement('div');
+                    coin.className = 'rain-coin';
+                    coin.textContent = 'RR';
+                    
+                    // Random position and animation delay
+                    coin.style.left = Math.random() * 100 + 'vw';
+                    coin.style.animationDelay = Math.random() * 5 + 's';
+                    
+                    coinRain.appendChild(coin);
                 }
                 
-                // تحديد المكافأة بناءً على مستوى المهمة
-                let rewardGold, rewardSilver, rewardBronze;
-                switch(taskLevel) {
-                    case 1:
-                        rewardGold = 2;
-                        rewardSilver = 8;
-                        rewardBronze = 15;
-                        break;
-                    case 2:
-                        rewardGold = 5;
-                        rewardSilver = 15;
-                        rewardBronze = 30;
-                        break;
-                    case 3:
-                        rewardGold = 10;
-                        rewardSilver = 25;
-                        rewardBronze = 50;
-                        break;
-                    default:
-                        rewardGold = 0;
-                        rewardSilver = 0;
-                        rewardBronze = 0;
-                }
-                
-                // تحديث بيانات المستخدم
-                const newGoldCoins = (userData.goldCoins || 0) + rewardGold;
-                const newSilverCoins = (userData.silverCoins || 0) + rewardSilver;
-                const newBronzeCoins = (userData.bronzeCoins || 0) + rewardBronze;
-                
-                await db.collection('users').doc(userId).update({
-                    goldCoins: newGoldCoins,
-                    silverCoins: newSilverCoins,
-                    bronzeCoins: newBronzeCoins
-                });
-                
-                // تحديث المهام
-                const updatedCompletedTasks = userTasks.completedTasks ? [...userTasks.completedTasks, taskId] : [taskId];
-                
-                await db.collection('userTasks').doc(userId).update({
-                    completedTasks: updatedCompletedTasks
-                });
-                
-                // تحديث البيانات المحلية
-                userData.goldCoins = newGoldCoins;
-                userData.silverCoins = newSilverCoins;
-                userData.bronzeCoins = newBronzeCoins;
-                userTasks.completedTasks = updatedCompletedTasks;
-                
-                // تحديث الواجهة
-                updateUI();
-                
-                showPopup('Success', `Task completed! You earned <i class="fas fa-coins" style="color: var(--rat-gold);"></i> ${rewardGold} gold, <i class="fas fa-coins" style="color: var(--rat-silver);"></i> ${rewardSilver} silver, and <i class="fas fa-coins" style="color: var(--rat-bronze);"></i> ${rewardBronze} bronze coins!`);
-                
-            } catch (error) {
-                console.error('Error completing task:', error);
-                showPopup('Error', 'Failed to complete the task. Please try again.');
-                btn.disabled = false;
-                btn.textContent = `+ <i class="fas fa-coins" style="color: var(--rat-gold);"></i> ${taskLevel === 1 ? 2 : taskLevel === 2 ? 5 : 10} | <i class="fas fa-coins" style="color: var(--rat-silver);"></i> ${taskLevel === 1 ? 8 : taskLevel === 2 ? 15 : 25} | <i class="fas fa-coins" style="color: var(--rat-bronze);"></i> ${taskLevel === 1 ? 15 : taskLevel === 2 ? 30 : 50}`;
-            }
-        }
-        
-        // تحويل العملات
-        async function exchangeCoins() {
-            const fromAmount = parseFloat(document.getElementById('exchange-from-amount').value);
-            const fromCurrency = document.getElementById('exchange-from-currency').value;
-            
-            if (!fromAmount || fromAmount <= 0) {
-                showPopup('Error', 'Please enter a valid amount to exchange.');
-                return;
-            }
-            
-            // التحقق من الرصيد الكافي
-            let userBalance;
-            switch(fromCurrency) {
-                case 'gold':
-                    userBalance = userData.goldCoins || 0;
-                    break;
-                case 'silver':
-                    userBalance = userData.silverCoins || 0;
-                    break;
-                case 'bronze':
-                    userBalance = userData.bronzeCoins || 0;
-                    break;
-                default:
-                    userBalance = 0;
-            }
-            
-            if (fromAmount > userBalance) {
-                showPopup('Error', `You don't have enough ${fromCurrency} coins.`);
-                return;
-            }
-            
-            // حساب المبلغ المحول
-            let exchangeRate;
-            switch(fromCurrency) {
-                case 'gold':
-                    exchangeRate = appSettings.exchangeRateGold || 10;
-                    break;
-                case 'silver':
-                    exchangeRate = appSettings.exchangeRateSilver || 2;
-                    break;
-                case 'bronze':
-                    exchangeRate = appSettings.exchangeRateBronze || 0.5;
-                    break;
-                default:
-                    exchangeRate = 0;
-            }
-            
-            const toAmount = fromAmount * exchangeRate;
-            
-            try {
-                const userId = auth.currentUser.uid;
-                
-                // تحديث أرصدة المستخدم
-                let updateData = {};
-                let newBalance = userData.balance || 0;
-                
-                switch(fromCurrency) {
-                    case 'gold':
-                        updateData.goldCoins = (userData.goldCoins || 0) - fromAmount;
-                        break;
-                    case 'silver':
-                        updateData.silverCoins = (userData.silverCoins || 0) - fromAmount;
-                        break;
-                    case 'bronze':
-                        updateData.bronzeCoins = (userData.bronzeCoins || 0) - fromAmount;
-                        break;
-                }
-                
-                updateData.balance = newBalance + toAmount;
-                updateData.totalEarned = (userData.totalEarned || 0) + toAmount;
-                
-                await db.collection('users').doc(userId).update(updateData);
-                
-                // تحديث البيانات المحلية
-                userData.balance = updateData.balance;
-                userData.totalEarned = updateData.totalEarned;
-                
-                switch(fromCurrency) {
-                    case 'gold':
-                        userData.goldCoins = updateData.goldCoins;
-                        break;
-                    case 'silver':
-                        userData.silverCoins = updateData.silverCoins;
-                        break;
-                    case 'bronze':
-                        userData.bronzeCoins = updateData.bronzeCoins;
-                        break;
-                }
-                
-                // تحديث الواجهة
-                updateUI();
-                
-                // إعادة تعيين النموذج
-                document.getElementById('exchange-from-amount').value = '';
-                document.getElementById('exchange-to-amount').value = '';
-                
-                showPopup('Success', `Successfully exchanged ${fromAmount} ${fromCurrency} coins for <span class="rr-coin">RR</span> ${toAmount.toFixed(4)}!`);
-                
-            } catch (error) {
-                console.error('Error exchanging coins:', error);
-                showPopup('Error', 'Failed to exchange coins. Please try again.');
-            }
-        }
-        
-        // تحديث مبلغ التحويل
-        function updateExchangeAmount() {
-            const fromAmount = parseFloat(document.getElementById('exchange-from-amount').value);
-            const fromCurrency = document.getElementById('exchange-from-currency').value;
-            
-            if (!fromAmount || fromAmount <= 0) {
-                document.getElementById('exchange-to-amount').value = '';
-                return;
-            }
-            
-            let exchangeRate;
-            switch(fromCurrency) {
-                case 'gold':
-                    exchangeRate = appSettings.exchangeRateGold || 10;
-                    break;
-                case 'silver':
-                    exchangeRate = appSettings.exchangeRateSilver || 2;
-                    break;
-                case 'bronze':
-                    exchangeRate = appSettings.exchangeRateBronze || 0.5;
-                    break;
-                default:
-                    exchangeRate = 0;
-            }
-            
-            const toAmount = fromAmount * exchangeRate;
-            document.getElementById('exchange-to-amount').value = toAmount.toFixed(4);
-        }
-        
-        // نسخ رابط الإحالة
-        function copyReferralLink() {
-            const referralLink = document.getElementById('referral-link').textContent;
-            navigator.clipboard.writeText(referralLink).then(() => {
-                showPopup('Success', 'Referral link copied to clipboard!');
-            }).catch(err => {
-                console.error('Error copying referral link:', err);
-                showPopup('Error', 'Failed to copy referral link.');
-            });
-        }
-        
-        // تبديل السمة
-        function toggleTheme() {
-            const body = document.body;
-            const themeToggle = document.getElementById('theme-toggle');
-            
-            if (body.classList.contains('dark-theme')) {
-                body.classList.remove('dark-theme');
-                body.classList.add('light-theme');
-                themeToggle.textContent = '🌙 Switch to Dark Mode';
-            } else {
-                body.classList.remove('light-theme');
-                body.classList.add('dark-theme');
-                themeToggle.textContent = '☀️ Switch to Light Mode';
-            }
-        }
-        
-        // تسجيل الخروج
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                auth.signOut().then(() => {
-                    window.location.reload();
-                }).catch(error => {
-                    console.error('Error signing out:', error);
-                });
-            }
-        }
-        
-        // وظائف العرض (للروابط الديناميكية)
-        function showDailyChallenges() {
-            showPopup('Daily Challenges', 'Daily challenges feature is coming soon!');
-        }
-        
-        function showGroupCards() {
-            showPopup('Group Cards', 'Group cards feature is coming soon!');
-        }
-        
-        function showRatRace() {
-            showPopup('Rat Race', 'Rat race competition is coming soon!');
-        }
-        
-        // عرض البوب أب
-        function showPopup(title, message, showLoader = false) {
-            const popup = document.getElementById('popup');
-            const popupBody = document.getElementById('popup-body');
-            
-            if (showLoader) {
-                popupBody.innerHTML = `
-                    <div class="popup-loader">
-                        <div class="spinner"></div>
-                        <h2>${title}</h2>
-                        <p>${message}</p>
-                    </div>
-                `;
-            } else {
-                popupBody.innerHTML = `
-                    <h2>${title}</h2>
-                        <p>${message}</p>
-                        <button class="popup-close-btn">موافق</button>
-                `;
-                
-                popupBody.querySelector('.popup-close-btn').addEventListener('click', () => {
-                    popup.style.display = 'none';
-                });
-            }
-            
-            popup.style.display = 'flex';
-        }
-        
-        // إضافة مستمع حدث لإغلاق البوب أب بالنقر خارج المحتوى
-        document.getElementById('popup').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('popup')) {
-                document.getElementById('popup').style.display = 'none';
+                // Remove coins after animation completes
+                setTimeout(() => {
+                    coinRain.innerHTML = '';
+                }, 5000);
             }
         });
     </script>

@@ -1,203 +1,342 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة التحكم الشاملة</title>
-  <script type="module">
-    // استيراد مكتبات Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, getUsers } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    import { getStorage, ref, listAll } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
-
-    // إعدادات Firebase الخاصة بك
-    const firebaseConfig = {
-      apiKey: "AIzaSyAFBsqYvPsQAPrnWvBfIIn0xKbQD8eFfFY",
-      authDomain: "ton-up-422b5.firebaseapp.com",
-      projectId: "ton-up-422b5",
-      storageBucket: "ton-up-422b5.firebasestorage.app",
-      messagingSenderId: "1097862104173",
-      appId: "1:1097862104173:web:752c30106f7e9fc553ab64",
-      measurementId: "G-R5YGH5QY0W"
-    };
-
-    // تهيئة Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    const storage = getStorage(app);
-
-    // دالة لجلب المستخدمين
-    async function loadUsers() {
-      const userTableBody = document.getElementById("usersTableBody");
-      userTableBody.innerHTML = "<tr><td colspan='3'>جاري التحميل...</td></tr>";
-
-      const users = await getUsers(auth);
-      userTableBody.innerHTML = ""; // مسح الجدول
-
-      users.forEach((user) => {
-        const row = `
-          <tr>
-            <td>${user.displayName || "بدون اسم"}</td>
-            <td>${user.email || "بدون بريد"}</td>
-            <td>${user.uid}</td>
-          </tr>`;
-        userTableBody.insertAdjacentHTML("beforeend", row);
-      });
-
-      if (users.length === 0) {
-        userTableBody.innerHTML = "<tr><td colspan='3'>لا يوجد مستخدمون بعد.</td></tr>";
-      }
-    }
-
-    // دالة لجلب البيانات من Firestore
-    async function loadData() {
-      const dataTableBody = document.getElementById("dataTableBody");
-      dataTableBody.innerHTML = "<tr><td colspan='3'>جاري التحميل...</td></tr>";
-
-      const querySnapshot = await getDocs(collection(db, "data"));
-      dataTableBody.innerHTML = ""; // مسح الجدول
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const row = `
-          <tr>
-            <td>${data.name || "بدون اسم"}</td>
-            <td>${data.description || "بدون وصف"}</td>
-            <td>${doc.id}</td>
-          </tr>`;
-        dataTableBody.insertAdjacentHTML("beforeend", row);
-      });
-
-      if (querySnapshot.empty) {
-        dataTableBody.innerHTML = "<tr><td colspan='3'>لا توجد بيانات بعد.</td></tr>";
-      }
-    }
-
-    // دالة لجلب الملفات من Firebase Storage
-    async function loadFiles() {
-      const filesTableBody = document.getElementById("filesTableBody");
-      filesTableBody.innerHTML = "<tr><td colspan='2'>جاري التحميل...</td></tr>";
-
-      const storageRef = ref(storage, 'files/'); // اختيار مجلد الملفات
-      const fileList = await listAll(storageRef);
-      filesTableBody.innerHTML = ""; // مسح الجدول
-
-      fileList.items.forEach((fileRef) => {
-        const fileName = fileRef.name;
-        const fileRow = `
-          <tr>
-            <td><a href="${await getDownloadURL(fileRef)}" target="_blank">${fileName}</a></td>
-            <td>${fileRef.fullPath}</td>
-          </tr>`;
-        filesTableBody.insertAdjacentHTML("beforeend", fileRow);
-      });
-
-      if (fileList.items.length === 0) {
-        filesTableBody.innerHTML = "<tr><td colspan='2'>لا توجد ملفات بعد.</td></tr>";
-      }
-    }
-
-    window.addEventListener("load", () => {
-      loadUsers();
-      loadData();
-      loadFiles();
-    });
-  </script>
-
-  <style>
-    body {
-      font-family: "Tajawal", sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #3498db;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .container {
-      width: 90%;
-      margin: 20px auto;
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #333;
-      text-align: right;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background: #2980b9;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم Firebase</title>
+    <style>
+        :root {
+            --primary: #4285f4;
+            --secondary: #34a853;
+            --warning: #fbbc05;
+            --danger: #ea4335;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .logo {
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .config-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .config-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .api-key .card-icon {
+            background-color: var(--primary);
+        }
+        
+        .auth-domain .card-icon {
+            background-color: var(--secondary);
+        }
+        
+        .project-id .card-icon {
+            background-color: var(--warning);
+        }
+        
+        .storage-bucket .card-icon {
+            background-color: var(--danger);
+        }
+        
+        .messaging-sender-id .card-icon {
+            background-color: var(--primary);
+        }
+        
+        .app-id .card-icon {
+            background-color: var(--secondary);
+        }
+        
+        .measurement-id .card-icon {
+            background-color: var(--warning);
+        }
+        
+        .card-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .card-value {
+            background-color: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 14px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>لوحة التحكم الشاملة</header>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>لوحة تحكم Firebase</h1>
+                    <p class="subtitle">عرض جميع إعدادات Firebase الخاصة بمشروعك</p>
+                </div>
+                <div class="logo">Firebase</div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="config-grid">
+                <div class="config-card api-key">
+                    <div class="card-header">
+                        <div class="card-icon">🔑</div>
+                        <div class="card-title">مفتاح API</div>
+                    </div>
+                    <div class="card-value" id="apiKey">AIzaSyAFBsqYvPsQAPrnWvBfIIn0xKbQD8eFfFY</div>
+                </div>
+                
+                <div class="config-card auth-domain">
+                    <div class="card-header">
+                        <div class="card-icon">🌐</div>
+                        <div class="card-title">نطاق المصادقة</div>
+                    </div>
+                    <div class="card-value" id="authDomain">ton-up-422b5.firebaseapp.com</div>
+                </div>
+                
+                <div class="config-card project-id">
+                    <div class="card-header">
+                        <div class="card-icon">📁</div>
+                        <div class="card-title">معرف المشروع</div>
+                    </div>
+                    <div class="card-value" id="projectId">ton-up-422b5</div>
+                </div>
+                
+                <div class="config-card storage-bucket">
+                    <div class="card-header">
+                        <div class="card-icon">📦</div>
+                        <div class="card-title">مخزن التخزين</div>
+                    </div>
+                    <div class="card-value" id="storageBucket">ton-up-422b5.firebasestorage.app</div>
+                </div>
+                
+                <div class="config-card messaging-sender-id">
+                    <div class="card-header">
+                        <div class="card-icon">📨</div>
+                        <div class="card-title">معرف مرسل الرسائل</div>
+                    </div>
+                    <div class="card-value" id="messagingSenderId">1097862104173</div>
+                </div>
+                
+                <div class="config-card app-id">
+                    <div class="card-header">
+                        <div class="card-icon">🆔</div>
+                        <div class="card-title">معرف التطبيق</div>
+                    </div>
+                    <div class="card-value" id="appId">1:1097862104173:web:752c30106f7e9fc553ab64</div>
+                </div>
+                
+                <div class="config-card measurement-id">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">معرف القياس</div>
+                    </div>
+                    <div class="card-value" id="measurementId">G-R5YGH5QY0W</div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-primary" onclick="copyConfig()">
+                    <span>نسخ الإعدادات</span>
+                </button>
+                <button class="btn btn-secondary" onclick="exportConfig()">
+                    <span>تصدير كملف</span>
+                </button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>لوحة تحكم Firebase مبسطة - تم التطوير خصيصًا لمشروع Ton-Up</p>
+        </footer>
+    </div>
 
-  <div class="container">
-    <h2>المستخدمين</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>الاسم</th>
-          <th>البريد الإلكتروني</th>
-          <th>ID</th>
-        </tr>
-      </thead>
-      <tbody id="usersTableBody">
-        <tr><td colspan="3">جاري التحميل...</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="container">
-    <h2>البيانات (Firestore)</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>الاسم</th>
-          <th>الوصف</th>
-          <th>ID</th>
-        </tr>
-      </thead>
-      <tbody id="dataTableBody">
-        <tr><td colspan="3">جاري التحميل...</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="container">
-    <h2>الملفات (Storage)</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>الملف</th>
-          <th>المسار</th>
-        </tr>
-      </thead>
-      <tbody id="filesTableBody">
-        <tr><td colspan="2">جاري التحميل...</td></tr>
-      </tbody>
-    </table>
-  </div>
-
+    <script>
+        function copyConfig() {
+            const config = {
+                apiKey: document.getElementById('apiKey').textContent,
+                authDomain: document.getElementById('authDomain').textContent,
+                projectId: document.getElementById('projectId').textContent,
+                storageBucket: document.getElementById('storageBucket').textContent,
+                messagingSenderId: document.getElementById('messagingSenderId').textContent,
+                appId: document.getElementById('appId').textContent,
+                measurementId: document.getElementById('measurementId').textContent
+            };
+            
+            const configText = JSON.stringify(config, null, 2);
+            
+            navigator.clipboard.writeText(configText).then(() => {
+                alert('تم نسخ إعدادات Firebase إلى الحافظة');
+            }).catch(err => {
+                console.error('فشل في نسخ النص: ', err);
+                alert('حدث خطأ أثناء نسخ الإعدادات');
+            });
+        }
+        
+        function exportConfig() {
+            const config = {
+                apiKey: document.getElementById('apiKey').textContent,
+                authDomain: document.getElementById('authDomain').textContent,
+                projectId: document.getElementById('projectId').textContent,
+                storageBucket: document.getElementById('storageBucket').textContent,
+                messagingSenderId: document.getElementById('messagingSenderId').textContent,
+                appId: document.getElementById('appId').textContent,
+                measurementId: document.getElementById('measurementId').textContent
+            };
+            
+            const configText = JSON.stringify(config, null, 2);
+            const blob = new Blob([configText], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'firebase-config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('تم تصدير إعدادات Firebase كملف JSON');
+        }
+    </script>
 </body>
 </html>

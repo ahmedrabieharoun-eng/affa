@@ -12,275 +12,276 @@
     <style>
         :root {
             --font-family: 'Poppins', sans-serif;
-            --primary-color: #0088cc;
-            --secondary-color: #00bcd4;
-            --accent-color: #ff9800;
-            --background-light: #f0f8ff;
-            --surface-light: #ffffff;
-            --text-primary-light: #1a237e;
-            --text-secondary-light: #546e7a;
-            --border-light: #bbdefb;
-            --background-dark: #0a1a2a;
-            --surface-dark: #1a2b3c;
-            --text-primary-dark: #e3f2fd;
-            --text-secondary-dark: #90a4ae;
-            --border-dark: #37474f;
-            --success: #4caf50;
-            --danger: #f44336;
-            --pending: #ff9800;
-            --ship-gold: #ffd700;
-            --ship-silver: #c0c0c0;
-            --ocean-blue: #006994;
-            --deck-wood: #8b4513;
+            --primary-color: #E74C3C; --secondary-color: #F39C12;
+            --background-light: #FDFEFE; --surface-light: #FFFFFF; --text-primary-light: #2C3E50; --text-secondary-light: #808B96; --border-light: #EAEDED;
+            --background-dark: #1B2631; --surface-dark: #283747; --text-primary-dark: #FDFEFE; --text-secondary-dark: #ABB2B9; --border-dark: #566573;
+            --success: #27AE60; --danger: #C0392B; --pending: #F39C12;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: var(--font-family); 
-            transition: background-color 0.3s, color 0.3s; 
-            -webkit-font-smoothing: antialiased;
-            background: linear-gradient(135deg, var(--background-dark) 0%, #0a2a3a 100%);
-            color: var(--text-primary-dark);
-            overflow-x: hidden;
+        body { font-family: var(--font-family); transition: background-color 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; }
+        body.light-theme { background-color: var(--background-light); color: var(--text-primary-light); }
+        body.dark-theme { background-color: var(--background-dark); color: var(--text-primary-dark); }
+        #app { max-width: 500px; margin: 0 auto; padding-bottom: 80px; }
+        .page { display: none; padding: 15px; }
+        .page.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .profile-header {
+            padding: 25px 15px; border-bottom: 1px solid;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
         }
+        .light-theme .profile-header { background-color: var(--surface-light); border-bottom-color: var(--border-light); }
+        .dark-theme .profile-header { background-color: var(--surface-dark); border-bottom-color: var(--border-dark); }
+        #user-photo { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--primary-color); object-fit: cover; margin-bottom: 10px; }
+        #user-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; }
+        #user-balance-container { font-size: 1rem; font-weight: 500; margin-bottom: 5px; }
+        #user-balance { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); }
+        #user-rr-balance-container { font-size: 1rem; font-weight: 500; }
+        #user-rr-balance { font-size: 1.1rem; font-weight: 700; color: #FFD700; }
 
-        /* تصميم السفينة */
-        .ship-container {
-            position: relative;
-            max-width: 500px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background: linear-gradient(to bottom, #0a1a2a 0%, #0a2a3a 50%, #0a3a4a 100%);
-            box-shadow: 0 0 30px rgba(0, 100, 200, 0.3);
-            overflow: hidden;
-        }
-
-        .ship-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--deck-wood) 0%, #6b3300 100%);
-            z-index: 1;
-            border-bottom: 3px solid var(--ship-gold);
-        }
-
-        .ship-container::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: linear-gradient(to top, var(--deck-wood) 0%, #6b3300 100%);
-            z-index: 1;
-            border-top: 3px solid var(--ship-gold);
-        }
-
-        /* تصميم الأمواج */
-        .wave {
-            position: absolute;
-            bottom: 80px;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" fill="%23006994"><path d="M0,64L80,58.7C160,53,320,43,480,48C640,53,800,75,960,74.7C1120,75,1280,53,1360,42.7L1440,32L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path></svg>');
-            background-size: cover;
-            opacity: 0.6;
-            z-index: 0;
-        }
-
-        .wave-2 {
-            bottom: 70px;
-            height: 15px;
-            opacity: 0.4;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" fill="%230088cc"><path d="M0,96L80,90.7C160,85,320,75,480,80C640,85,800,107,960,106.7C1120,107,1280,85,1360,74.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path></svg>');
-            background-size: cover;
-        }
-
-        /* تصميم الرأس */
-        .ship-bridge {
-            position: relative;
-            padding: 25px 15px 15px;
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(10, 26, 42, 0.9) 0%, rgba(10, 42, 58, 0.7) 100%);
-            border-bottom: 2px solid var(--ship-gold);
-            z-index: 2;
-        }
-
-        .ship-compass {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, var(--ship-silver) 0%, #888 100%);
-            border: 2px solid var(--ship-gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary-dark);
-            font-size: 18px;
-        }
-
-        #user-photo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--ship-gold);
-            object-fit: cover;
-            margin-bottom: 10px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        #user-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: var(--ship-gold);
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        }
-
-        .balance-display {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 10px;
-        }
-
-        .balance-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid var(--ship-silver);
-        }
-
-        .balance-item span {
-            font-weight: 700;
-            color: var(--ship-gold);
-        }
-
-        /* تصميم البطاقات */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 20px 15px;
-            z-index: 2;
-            position: relative;
-        }
-
-        .stat-card {
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            background: rgba(26, 43, 60, 0.8);
-            border: 1px solid var(--border-dark);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .stat-card h3 {
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            color: var(--text-secondary-dark);
-        }
-
-        .stat-card p {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--ship-gold);
-        }
-
-        /* تصميم المحول */
-        .converter-container, .earning-wallet-card, .contest-container, .withdraw-container {
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 15px;
-            background: rgba(26, 43, 60, 0.8);
-            border: 1px solid var(--border-dark);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            z-index: 2;
-            position: relative;
-        }
-
-        .converter-header, .withdraw-header {
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .stat-card { padding: 15px; border-radius: 12px; text-align: center; border: 1px solid; }
+        .light-theme .stat-card { background-color: var(--surface-light); border-color: var(--border-light); }
+        .dark-theme .stat-card { background-color: var(--surface-dark); border-color: var(--border-dark); }
+        .stat-card h3 { font-size: 0.85rem; font-weight: 500; margin-bottom: 8px; text-transform: uppercase; }
+        .light-theme .stat-card h3 { color: var(--text-secondary-light); } .dark-theme .stat-card h3 { color: var(--text-secondary-dark); }
+        .stat-card p { font-size: 1.4rem; font-weight: 600; color: var(--primary-color); }
+        
+        .converter-container { padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid; }
+        .light-theme .converter-container { background-color: var(--surface-light); border-color: var(--border-light); }
+        .dark-theme .converter-container { background-color: var(--surface-dark); border-color: var(--border-dark); }
+        
+        .converter-header {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
         }
-
-        .converter-header i, .withdraw-header i {
+        
+        .converter-header i {
             font-size: 1.5rem;
-            color: var(--ship-gold);
+            color: #FFD700;
         }
-
-        .converter-header h3, .withdraw-header h3 {
+        
+        .converter-header h3 {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--ship-gold);
+            color: #FFD700;
             margin: 0;
         }
-
+        
         .converter-form {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-
+        
         .converter-input-group {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
+        
         .converter-input-group input {
             flex: 1;
             padding: 12px 15px;
             border-radius: 8px;
-            border: 1px solid var(--border-dark);
+            border: 1px solid;
             font-size: 1rem;
             font-weight: 600;
             text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary-dark);
         }
-
+        
+        .light-theme .converter-input-group input {
+            border-color: var(--border-light);
+            background-color: var(--surface-light);
+        }
+        
+        .dark-theme .converter-input-group input {
+            border-color: var(--border-dark);
+            background-color: var(--surface-dark);
+        }
+        
         .converter-currency {
             font-weight: 700;
             min-width: 60px;
             text-align: center;
-            color: var(--ship-gold);
         }
-
+        
         .converter-arrow {
             text-align: center;
             font-size: 1.5rem;
-            color: var(--ship-gold);
+            color: var(--primary-color);
         }
-
+        
         .converter-rate {
             text-align: center;
             font-size: 0.9rem;
-            color: var(--text-secondary-dark);
+            color: var(--text-secondary-light);
             margin-top: 10px;
         }
+        
+        .dark-theme .converter-rate {
+            color: var(--text-secondary-dark);
+        }
+        
+        .convert-btn {
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            margin-top: 10px;
+        }
+        
+        .convert-btn:disabled {
+            background: #808B96;
+            color: white;
+            cursor: not-allowed;
+        }
 
-        /* تصميم القائمة السفلية */
-        .ship-controls {
+        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        .light-theme .history-item { background-color: var(--surface-light); border: 1px solid var(--border-light); }
+        .dark-theme .history-item { background-color: var(--surface-dark); border: 1px solid var(--border-dark); }
+        .history-details p { margin: 0; } .history-details p:first-child { font-weight: 600; }
+        .history-status { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; text-transform: capitalize; }
+        .status-completed { background-color: var(--success); } .status-pending { background-color: var(--pending); } .status-rejected { background-color: var(--danger); }
+
+        .progress-container { margin-bottom: 20px; }
+        .progress-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; font-weight: 500; }
+        .progress-bar-bg { width: 100%; height: 10px; border-radius: 5px; }
+        .light-theme .progress-bar-bg { background-color: var(--border-light); }
+        .dark-theme .progress-bar-bg { background-color: var(--border-dark); }
+        .progress-bar-fg { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); transition: width 0.3s ease; }
+        
+        form input, form select, form textarea { transition: all 0.2s ease-in-out; border: 1px solid; }
+        .light-theme form input, .light-theme form select { border-color: var(--border-light); }
+        .dark-theme form input, .dark-theme form select { border-color: var(--border-dark); }
+        form input:focus, form select:focus, form textarea:focus { outline: none; border-color: var(--primary-color) !important; box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2); }
+
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 10000; }
+        .popup-content { padding: 30px; border-radius: 15px; text-align: center; max-width: 80%; }
+        .light-theme .popup-content { background-color: var(--surface-light); } .dark-theme .popup-content { background-color: var(--surface-dark); }
+        .popup-content h2 { margin-bottom: 15px; color: var(--primary-color); } .popup-content p { margin-bottom: 20px; }
+        .popup-close-btn { padding: 10px 25px; border: none; border-radius: 8px; color: #fff; background-color: var(--primary-color); cursor: pointer; }
+        .popup-loader .spinner { width: 40px; height: 40px; border-radius: 50%; border: 4px solid; border-color: var(--primary-color) transparent; animation: spin 1s linear infinite; margin: 0 auto 15px;}
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* شاشة التحميل مع الطابع البحري */
+        #app-loader { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 9999; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            background: linear-gradient(180deg, #1a3a5f 0%, #2c5a8a 100%);
+        }
+        .light-theme #app-loader { background: linear-gradient(180deg, #87CEEB 0%, #1E90FF 100%); }
+        .dark-theme #app-loader { background: linear-gradient(180deg, #1a3a5f 0%, #2c5a8a 100%); }
+        
+        .ship-container {
+            position: relative;
+            width: 200px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
+        
+        .ship {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 60px;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            border-radius: 10px 10px 0 0;
+            z-index: 2;
+        }
+        
+        .ship::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 25px;
+            background: #8B4513;
+        }
+        
+        .ship::after {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(45deg, #DAA520, #FFD700);
+            border-radius: 5px;
+            transform-origin: bottom center;
+            animation: sail 3s ease-in-out infinite alternate;
+        }
+        
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            overflow: hidden;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23007bff"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23007bff"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23007bff"/></svg>');
+            background-size: 50% 20px;
+            animation: wave 10s linear infinite;
+        }
+        
+        .wave:nth-child(2) {
+            opacity: 0.5;
+            animation-duration: 12s;
+            animation-direction: reverse;
+        }
+        
+        .wave:nth-child(3) {
+            opacity: 0.7;
+            animation-duration: 8s;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        @keyframes sail {
+            0% { transform: translateX(-50%) rotate(-5deg); }
+            100% { transform: translateX(-50%) rotate(5deg); }
+        }
+        
+        #loading-progress {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        /* أزرار التنقل السفلية بتصميم سفينة */
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -289,353 +290,744 @@
             margin: 0 auto;
             display: flex;
             justify-content: space-around;
-            padding: 15px 0;
-            background: linear-gradient(to top, var(--deck-wood) 0%, #6b3300 100%);
-            border-top: 3px solid var(--ship-gold);
+            padding: 10px 0;
+            border-top: 1px solid;
             z-index: 1000;
+            background: linear-gradient(180deg, #2c5a8a 0%, #1a3a5f 100%);
         }
-
-        .control-wheel {
-            background: radial-gradient(circle, var(--ship-silver) 0%, #888 100%);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        
+        .light-theme .bottom-nav {
+            background: linear-gradient(180deg, #87CEEB 0%, #1E90FF 100%);
+            border-top-color: var(--border-light);
+        }
+        
+        .dark-theme .bottom-nav {
+            background: linear-gradient(180deg, #2c5a8a 0%, #1a3a5f 100%);
+            border-top-color: var(--border-dark);
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            border: 3px solid var(--ship-gold);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            color: var(--text-primary-dark);
+            font-family: var(--font-family);
             font-size: 0.75rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
+            transition: all 0.3s;
+            flex-grow: 1;
+            position: relative;
+            padding: 8px 5px;
+            border-radius: 10px;
+            color: white;
         }
-
-        .control-wheel i {
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--primary-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-btn.active::before {
+            opacity: 1;
+        }
+        
+        .nav-btn i {
             font-size: 1.5rem;
             margin-bottom: 4px;
+            transition: all 0.3s;
         }
-
-        .control-wheel.active {
-            background: radial-gradient(circle, var(--ship-gold) 0%, #daa520 100%);
-            color: #000;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        
+        .nav-btn.active {
+            color: var(--primary-color);
+            transform: translateY(-5px);
         }
-
-        .control-wheel:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+        
+        .nav-btn.active i {
+            transform: scale(1.2);
         }
-
-        /* تصميم شاشة التحميل */
-        #app-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, var(--background-dark) 0%, #0a2a3a 100%);
+        
+        .task-container { padding: 20px; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; }
+        .light-theme .task-container { background-color: var(--surface-light); border: 1px solid var(--border-light); }
+        .dark-theme .task-container { background-color: var(--surface-dark); border: 1px solid var(--border-dark); }
+        .task-icon-img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+        .task-info h3 { font-size: 1.1rem; font-weight: 600; } .task-info p { font-size: 0.85rem; }
+        .action-btn { padding: 10px 20px; font-size: 0.9rem; font-weight: 600; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); margin-left: auto; white-space: nowrap; }
+        .action-btn:disabled { background: #808B96; cursor: not-allowed; }
+        
+        /* أنماط المسابقة المحسنة */
+        .contest-container {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid;
         }
-
-        .ship-anchor {
-            width: 80px;
-            height: 80px;
-            position: relative;
-            animation: anchorSwing 2s infinite ease-in-out;
+        
+        .light-theme .contest-container {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
         }
-
-        .ship-anchor::before {
-            content: "⚓";
-            font-size: 80px;
-            color: var(--ship-silver);
+        
+        .dark-theme .contest-container {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
         }
-
-        @keyframes anchorSwing {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
+        
+        .contest-header {
+            text-align: center;
+            margin-bottom: 20px;
         }
-
-        #loading-progress {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--ship-gold);
-        }
-
-        /* تصميم الصفحات */
-        .page {
-            display: none;
+        
+        .contest-timer {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
             padding: 15px;
-            padding-bottom: 100px;
-            position: relative;
-            z-index: 2;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
-
-        .page.active {
-            display: block;
-            animation: fadeIn 0.4s ease-in-out;
+        
+        .contest-info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        .contest-info-card {
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid;
         }
-
-        /* تصميم الأزرار */
-        .action-btn, .convert-btn, .withdraw-btn, .claim-daily-btn, .claim-referral-btn, .redeem-code-btn, .subscribe-ad-btn, .check-subscription-btn {
-            padding: 12px 20px;
+        
+        .light-theme .contest-info-card {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+        
+        .dark-theme .contest-info-card {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .contest-info-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 5px 0;
+        }
+        
+        .contest-info-label {
             font-size: 0.9rem;
+            color: var(--text-secondary-light);
+        }
+        
+        .dark-theme .contest-info-label {
+            color: var(--text-secondary-dark);
+        }
+        
+        .contest-guide {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .contest-guide h4 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .contest-guide ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .contest-guide li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .contest-prizes-compact {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .prize-compact-item {
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+        
+        .prize-rank-compact {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .prize-amount-compact {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+        
+        .contest-leaderboard-compact {
+            margin-top: 20px;
+        }
+        
+        .contest-leaderboard-item-compact {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .light-theme .contest-leaderboard-item-compact {
+            background-color: var(--surface-light);
+            border: 1px solid var(--border-light);
+        }
+        
+        .dark-theme .contest-leaderboard-item-compact {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+        }
+        
+        .contest-leaderboard-item-compact.current-user {
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.2), rgba(243, 156, 18, 0.2));
+            border: 2px solid var(--primary-color);
+        }
+        
+        .contest-rank-compact {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 0.85rem;
+        }
+        
+        .contest-rank-compact.top-3 {
+            font-size: 1rem;
+        }
+        
+        .contest-user-info-compact {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .contest-user-details {
+            flex-grow: 1;
+        }
+        
+        .contest-user-name-compact {
             font-weight: 600;
-            color: #000;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: linear-gradient(45deg, var(--ship-gold), #ffa500);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2px;
+            font-size: 0.9rem;
+        }
+        
+        .contest-user-points-compact {
+            font-size: 0.8rem;
+            color: var(--text-secondary-light);
+        }
+        
+        .dark-theme .contest-user-points-compact {
+            color: var(--text-secondary-dark);
+        }
+        
+        .contest-user-score-compact {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        
+        .contest-user-prize {
+            font-size: 0.8rem;
+            color: var(--success);
+            font-weight: 600;
+            background: rgba(39, 174, 96, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
             white-space: nowrap;
         }
+        
+        .view-full-leaderboard {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .view-full-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        
+        .view-full-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
 
-        .action-btn:disabled, .convert-btn:disabled, .withdraw-btn:disabled, .claim-daily-btn:disabled, .claim-referral-btn:disabled, .redeem-code-btn:disabled, .subscribe-ad-btn:disabled {
+        /* أنماط مهمة التسجيل اليومي المحسنة */
+        .daily-login-task {
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.1), rgba(243, 156, 18, 0.1));
+            border: 2px solid var(--primary-color);
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .login-streak {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .light-theme .login-streak {
+            background: rgba(231, 76, 60, 0.05);
+        }
+        
+        .streak-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .streak-count {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .streak-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary-light);
+        }
+        
+        .dark-theme .streak-label {
+            color: var(--text-secondary-dark);
+        }
+        
+        .streak-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .calendar-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 4px;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 65px;
+            justify-content: space-between;
+            font-size: 0.75rem;
+        }
+        
+        .light-theme .calendar-day {
+            background-color: var(--surface-light);
+            border: 1px solid var(--border-light);
+        }
+        
+        .dark-theme .calendar-day {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+        }
+        
+        .calendar-day.completed {
+            background: linear-gradient(45deg, var(--success), #2ecc71);
+            border-color: var(--success);
+        }
+        
+        .calendar-day.current {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-color: var(--primary-color);
+        }
+        
+        .calendar-day.future {
+            opacity: 0.6;
+        }
+        
+        .day-number {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        
+        .calendar-day.completed .day-number,
+        .calendar-day.current .day-number {
+            color: white;
+        }
+        
+        .day-reward {
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .calendar-day.completed .day-reward,
+        .calendar-day.current .day-reward {
+            color: white;
+        }
+        
+        .day-status {
+            font-size: 0.55rem;
+            padding: 2px 4px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .calendar-day.completed .day-status {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
+        .calendar-day.current .day-status {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
+        .calendar-day.future .day-status {
+            background: var(--border-light);
+            color: var(--text-secondary-light);
+        }
+        
+        .dark-theme .calendar-day.future .day-status {
+            background: var(--border-dark);
+            color: var(--text-secondary-dark);
+        }
+        
+        .claim-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(231, 76, 60, 0.1);
+        }
+        
+        .next-reward {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .reward-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .reward-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary-light);
+        }
+        
+        .dark-theme .reward-label {
+            color: var(--text-secondary-dark);
+        }
+        
+        .claim-daily-btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            min-width: 120px;
+        }
+        
+        .claim-daily-btn:disabled {
             background: #808B96;
             cursor: not-allowed;
         }
-
-        .action-btn:hover:not(:disabled), .convert-btn:hover:not(:disabled), .withdraw-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* تصميم المهام */
-        .task-container {
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+        
+        .daily-login-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: rgba(26, 43, 60, 0.8);
-            border: 1px solid var(--border-dark);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .daily-login-header i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
         }
 
-        .task-icon-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            object-fit: cover;
+        /* أنماط نظام الإحالات الجديد */
+        .referral-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
         }
-
-        .task-info h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary-dark);
+        
+        .referral-stat-card {
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid;
         }
-
-        .task-info p {
-            font-size: 0.85rem;
+        
+        .light-theme .referral-stat-card {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+        
+        .dark-theme .referral-stat-card {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .referral-stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .referral-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary-light);
+        }
+        
+        .dark-theme .referral-stat-label {
             color: var(--text-secondary-dark);
         }
-
-        /* تصميم شاشة الحظر */
-        .banned-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #c0392b, #e74c3c);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
+        
+        .referral-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid;
+        }
+        
+        .light-theme .referral-list {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+        
+        .dark-theme .referral-list {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .referral-list-item {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            z-index: 10000;
-            color: white;
-            text-align: center;
-            padding: 20px;
+            padding: 12px 15px;
+            border-bottom: 1px solid;
         }
-
-        .banned-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+        
+        .light-theme .referral-list-item {
+            border-bottom-color: var(--border-light);
         }
-
-        .banned-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
+        
+        .dark-theme .referral-list-item {
+            border-bottom-color: var(--border-dark);
         }
-
-        .banned-message {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            max-width: 400px;
+        
+        .referral-list-item:last-child {
+            border-bottom: none;
         }
-
-        .banned-contact {
-            font-size: 0.9rem;
-            opacity: 0.8;
+        
+        .referral-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
-        /* تصميم النجوم في الخلفية */
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .star {
-            position: absolute;
-            background-color: white;
+        
+        .referral-user-avatar {
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
-            animation: twinkle 5s infinite ease-in-out;
+            object-fit: cover;
         }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+        
+        .referral-user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
         }
-
-        /* الباقي من الأنماط الأصلية مع التعديلات */
-        .progress-container { margin-bottom: 20px; }
-        .progress-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; font-weight: 500; }
-        .progress-bar-bg { width: 100%; height: 10px; border-radius: 5px; background: rgba(255,255,255,0.1); }
-        .progress-bar-fg { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--ship-gold), #ffa500); transition: width 0.3s ease; }
-
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 10000; }
-        .popup-content { padding: 30px; border-radius: 15px; text-align: center; max-width: 80%; background: rgba(26, 43, 60, 0.95); border: 2px solid var(--ship-gold); }
-        .popup-content h2 { margin-bottom: 15px; color: var(--ship-gold); }
-        .popup-content p { margin-bottom: 20px; color: var(--text-primary-dark); }
-        .popup-close-btn { padding: 10px 25px; border: none; border-radius: 8px; color: #fff; background: linear-gradient(45deg, var(--ship-gold), #ffa500); cursor: pointer; }
-        .popup-loader .spinner { width: 40px; height: 40px; border-radius: 50%; border: 4px solid var(--ship-gold); border-top-color: transparent; animation: spin 1s linear infinite; margin: 0 auto 15px;}
-
-        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 10px; margin-bottom: 10px; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .history-details p { margin: 0; } .history-details p:first-child { font-weight: 600; }
-        .history-status { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; text-transform: capitalize; }
-        .status-completed { background-color: var(--success); } .status-pending { background-color: var(--pending); } .status-rejected { background-color: var(--danger); }
-
-        .leaderboard-toggle { display: flex; justify-content: space-around; margin-bottom: 15px; }
-        .toggle-btn { padding: 10px 20px; border: none; background: none; font-size: 1rem; cursor: pointer; color: var(--text-secondary-dark); }
-        .toggle-btn.active { font-weight: 700; color: var(--ship-gold); border-bottom: 2px solid var(--ship-gold); }
-        .leaderboard-list { list-style: none; }
-        .leaderboard-item { display: flex; align-items: center; padding: 10px; margin-bottom: 8px; border-radius: 8px; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .rank { font-size: 1.2rem; font-weight: 700; color: var(--ship-gold); width: 40px; }
-        .leaderboard-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover; }
-        .leaderboard-name { font-weight: 600; flex-grow: 1; } .leaderboard-score { font-weight: 600; color: var(--ship-gold); }
-
-        .subscription-container { padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .channel-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; margin: 10px 0; border-radius: 8px; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .channel-info { display: flex; align-items: center; gap: 10px; }
-        .channel-icon { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
-        .channel-status { padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; }
-        .status-subscribed { background-color: var(--success); color: white; }
-        .status-not-subscribed { background-color: var(--danger); color: white; }
-
-        .countdown-display { font-size: 1.2rem; font-weight: 700; color: var(--ship-gold); margin: 10px 0; padding: 10px; border-radius: 8px; background: rgba(255, 215, 0, 0.1); text-align: center; }
-
-        .form-group { margin-bottom: 15px; position: relative; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--text-primary-dark); }
-        .input-with-icon { position: relative; display: flex; align-items: center; }
-        .input-with-icon i { position: absolute; left: 12px; color: var(--text-secondary-dark); z-index: 1; }
-        .input-with-icon input { width: 100%; padding: 12px 12px 12px 40px; border-radius: 8px; border: 1px solid var(--border-dark); background: rgba(255, 255, 255, 0.1); color: var(--text-primary-dark); font-family: monospace; font-size: 0.9rem; }
-        .input-with-icon input:focus { outline: none; border-color: var(--ship-gold) !important; box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2); }
-
-        .validation-message { font-size: 0.8rem; margin-top: 5px; display: flex; align-items: center; gap: 5px; }
-        .validation-success { color: var(--success); }
-        .validation-error { color: var(--danger); }
-        .validation-info { color: var(--text-secondary-dark); }
-
-        .referral-notice { font-size: 0.85rem; text-align: center; margin-bottom: 15px; padding: 10px; border-radius: 8px; background: rgba(255, 215, 0, 0.1); }
-
-        .daily-login-task { background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1)); border: 2px solid var(--ship-gold); flex-direction: column; align-items: stretch; }
-
-        .contest-timer { background: linear-gradient(45deg, var(--ship-gold), #ffa500); color: #000; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; font-weight: 700; font-size: 1.1rem; }
-
-        .contest-info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .contest-info-card { padding: 15px; border-radius: 10px; text-align: center; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .contest-info-value { font-size: 1.8rem; font-weight: 700; color: var(--ship-gold); margin: 5px 0; }
-        .contest-info-label { font-size: 0.9rem; color: var(--text-secondary-dark); }
-
-        .contest-guide { background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--ship-gold); }
-        .contest-guide h4 { margin-bottom: 10px; color: var(--ship-gold); }
-
-        .contest-prizes-compact { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .prize-compact-item { padding: 12px; border-radius: 8px; text-align: center; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.2); }
-        .prize-rank-compact { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
-        .prize-amount-compact { font-weight: 700; color: var(--ship-gold); font-size: 1rem; }
-
-        .contest-leaderboard-item-compact { display: flex; align-items: center; padding: 10px; margin: 6px 0; border-radius: 8px; transition: all 0.3s; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .contest-leaderboard-item-compact.current-user { background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2)); border: 2px solid var(--ship-gold); }
-        .contest-rank-compact { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(45deg, var(--ship-gold), #ffa500); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; margin-right: 12px; font-size: 0.85rem; }
-        .contest-user-name-compact { font-weight: 600; margin-bottom: 2px; font-size: 0.9rem; }
-        .contest-user-points-compact { font-size: 0.8rem; color: var(--text-secondary-dark); }
-        .contest-user-score-compact { font-weight: 700; color: var(--ship-gold); font-size: 1rem; margin-right: 10px; }
-        .contest-user-prize { font-size: 0.8rem; color: var(--success); font-weight: 600; background: rgba(39, 174, 96, 0.1); padding: 4px 8px; border-radius: 12px; white-space: nowrap; }
-
-        .view-full-btn { background: transparent; border: 1px solid var(--ship-gold); color: var(--ship-gold); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; }
-        .view-full-btn:hover { background: var(--ship-gold); color: #000; }
-
-        .referral-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .referral-stat-card { padding: 15px; border-radius: 10px; text-align: center; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .referral-stat-value { font-size: 1.4rem; font-weight: 700; color: var(--ship-gold); margin-bottom: 5px; }
-        .referral-stat-label { font-size: 0.8rem; color: var(--text-secondary-dark); }
-
-        .referral-list { max-height: 200px; overflow-y: auto; margin: 15px 0; border-radius: 10px; background: rgba(26, 43, 60, 0.8); border: 1px solid var(--border-dark); }
-        .referral-list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid var(--border-dark); }
-        .referral-list-item:last-child { border-bottom: none; }
-        .referral-user-info { display: flex; align-items: center; gap: 10px; }
-        .referral-user-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
-        .referral-user-name { font-weight: 600; font-size: 0.9rem; }
-        .referral-earnings { font-weight: 700; color: var(--success); font-size: 0.9rem; }
-
-        .code-input-container { display: flex; gap: 10px; margin: 15px 0; }
-        .code-input { flex: 1; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--border-dark); background: rgba(255, 255, 255, 0.1); color: var(--text-primary-dark); font-family: monospace; font-weight: 600; text-transform: uppercase; }
-        .code-input:focus { outline: none; border-color: var(--ship-gold); box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2); }
-        .code-info { font-size: 0.8rem; color: var(--text-secondary-dark); margin-top: 10px; text-align: center; }
-
-        .ad-channel-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; margin: 10px 0; border-radius: 8px; background: linear-gradient(45deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)); border: 1px solid var(--border-dark); }
-        .ad-channel-info { display: flex; align-items: center; gap: 10px; flex: 1; }
-        .ad-channel-icon { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
-        .ad-channel-name { font-weight: 600; margin-bottom: 3px; }
-        .ad-channel-description { font-size: 0.8rem; color: var(--text-secondary-dark); margin-bottom: 5px; }
-        .ad-channel-contact { font-size: 0.75rem; color: var(--ship-gold); font-weight: 600; }
-        .ad-channel-reward { text-align: right; margin-right: 15px; }
-        .ad-reward-amount { font-size: 1.1rem; font-weight: 700; color: var(--ship-gold); margin-bottom: 5px; }
-        .ad-reward-label { font-size: 0.75rem; color: var(--text-secondary-dark); }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .referral-earnings {
+            font-weight: 700;
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+        
+        .claim-referral-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .claim-referral-btn:disabled {
+            background: #808B96;
+            cursor: not-allowed;
+        }
+        
+        /* تحسينات الـ Redeem Code */
+        .redeem-container {
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 1px solid;
+        }
+        
+        .light-theme .redeem-container {
+            background-color: var(--surface-light);
+            border-color: var(--border-light);
+        }
+        
+        .dark-theme .redeem-container {
+            background-color: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+        
+        .redeem-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .redeem-header i {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+        
+        .redeem-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .redeem-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .redeem-input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid;
+            font-size: 0.9rem;
+        }
+        
+        .light-theme .redeem-input {
+            border-color: var(--border-light);
+            background-color: var(--surface-light);
+        }
+        
+        .dark-theme .redeem-input {
+            border-color: var(--border-dark);
+            background-color: var(--surface-dark);
+        }
+        
+        .redeem-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            white-space: nowrap;
+        }
+        
+        .redeem-note {
+            font-size: 0.8rem;
+            margin-top: 10px;
+            color: var(--text-secondary-light);
+            text-align: center;
+        }
+        
+        .dark-theme .redeem-note {
+            color: var(--text-secondary-dark);
+        }
+        
+        /* إخفاء عناصر التصنيف والإيرادات */
+        .ranking-section, .earning-wallet-section {
+            display: none !important;
+        }
     </style>
 </head>
-<body>
+<body class="light-theme">
     <!-- شاشة الحظر -->
-    <div id="banned-page" class="banned-container">
+    <div id="banned-page" class="banned-container" style="display: none;">
         <div class="banned-icon">🚫</div>
         <div class="banned-title">Account Banned</div>
         <div class="banned-message" id="banned-reason">Your account has been suspended for violating our terms of service.</div>
         <div class="banned-contact">If you believe this is a mistake, please contact @aborabie777</div>
     </div>
 
-    <!-- النجوم في الخلفية -->
-    <div class="stars" id="stars"></div>
-
     <div id="app-loader">
-        <div class="ship-anchor"></div>
-        <p id="loading-progress">0%</p>
+        <div class="ship-container">
+            <div class="ship"></div>
+            <div class="waves">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+        </div>
+        <div id="loading-progress">Loading...</div>
     </div>
     
-    <!-- البوب أب -->
-    <div id="popup" class="popup-overlay">
+    <div id="popup" class="popup-overlay" style="display: none;">
         <div class="popup-content">
             <div id="popup-body"></div>
         </div>
@@ -644,7 +1036,7 @@
     <!-- شاشة الاشتراك الإجباري -->
     <div id="subscription-page" style="display: none;">
         <div class="subscription-container">
-            <h2 style="color: var(--ship-gold); margin-bottom: 10px;">📢 Required Subscription</h2>
+            <h2 style="color: var(--primary-color); margin-bottom: 10px;">📢 Required Subscription</h2>
             <p style="margin-bottom: 20px;">You must subscribe to our channels to use the bot and earn rewards!</p>
             
             <div id="channels-list">
@@ -653,17 +1045,17 @@
             
             <!-- قسم إعلانات القنوات -->
             <div id="ad-channels-section" style="margin-top: 30px; display: none;">
-                <h3 style="color: var(--ship-gold); margin-bottom: 15px;">🎯 Advertised Channels</h3>
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">🎯 Advertised Channels</h3>
                 <p style="margin-bottom: 15px; font-size: 0.9rem;">Subscribe to these channels for extra rewards!</p>
                 <div id="ad-channels-list">
                     <!-- سيتم إضافة قنوات الإعلانات هنا ديناميكياً -->
                 </div>
-                <p style="margin-top: 15px; font-size: 0.8rem; color: var(--text-secondary-dark); text-align: center;">
+                <p style="margin-top: 15px; font-size: 0.8rem; color: var(--text-secondary-light); text-align: center;">
                     💡 Want to advertise your channel here? Contact @aborabie777
                 </p>
             </div>
             
-            <button id="check-subscription-btn" class="check-subscription-btn" style="margin-top: 20px; width: 100%;">
+            <button id="check-subscription-btn" class="action-btn" style="margin-top: 20px; width: 100%;">
                 🔄 Check Subscription
             </button>
             
@@ -672,32 +1064,19 @@
             </p>
 
             <!-- زر التخطي للتطوير فقط -->
-            <button id="skip-subscription-btn" style="margin-top: 10px; padding: 8px 15px; background: transparent; color: var(--ship-gold); border: 1px solid var(--ship-gold); border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
+            <button id="skip-subscription-btn" style="margin-top: 10px; padding: 8px 15px; background: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); border-radius: 5px; cursor: pointer; font-size: 0.8rem;">
                 🚨 Skip for Testing (Dev Only)
             </button>
         </div>
     </div>
 
-    <!-- تصميم السفينة -->
-    <div class="ship-container" style="display: none;">
-        <!-- الأمواج -->
-        <div class="wave"></div>
-        <div class="wave wave-2"></div>
-
-        <!-- الجسر (الرأس) -->
-        <header class="ship-bridge">
-            <div class="ship-compass">
-                <i class="fas fa-compass"></i>
-            </div>
+    <div id="app" style="display: none;">
+        <header class="profile-header">
             <img id="user-photo" src="https://via.placeholder.com/80" alt="User">
             <h1 id="user-name">Loading...</h1>
-            <div class="balance-display">
-                <div class="balance-item">Main: <span id="user-balance">0.0000</span> TON</div>
-                <div class="balance-item">RR: <span id="user-rr-balance">0</span></div>
-            </div>
+            <div id="user-balance-container">Main Balance: <span id="user-balance">0.0000</span> TON</div>
+            <div id="user-rr-balance-container">RR Balance: <span id="user-rr-balance">0</span> RR</div>
         </header>
-
-        <!-- المحتوى الرئيسي -->
         <main id="main-content">
             <div id="home-page" class="page active">
                 <div class="stats-grid">
@@ -729,43 +1108,36 @@
                 </div>
                 <div id="dynamic-links-container" style="margin-top: 20px;"></div>
             </div>
-
+            
             <div id="tasks-page" class="page">
-                <div class="earning-wallet-card">
-                    <h3>Earning Wallet</h3>
-                    <p style="font-size: 1.8rem; font-weight: 700; color: var(--ship-gold); margin: 10px 0;"><span id="earning-wallet-balance">0.0000</span> TON</p>
-                    <small>Minimum 0.001 TON to move to main balance.</small>
-                    <button id="move-to-balance-btn" class="action-btn" style="width:100%; margin-top: 15px;" disabled>Move to Main Balance</button>
-                </div>
+                <!-- تم إزالة قسم Earning Wallet -->
+                
                 <div id="ad-progress-container" class="progress-container" style="margin-top:20px;"></div>
                 <div id="ad-task-container"></div>
                 
                 <!-- مهمة التسجيل اليومي المحسنة -->
                 <div id="daily-login-task-container"></div>
                 
-                <!-- خانة إدخال الأكواد -->
-                <div id="redeem-code-container" style="margin-top: 20px;">
-                    <div class="task-container" style="flex-direction: column; align-items: stretch;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <i class="fas fa-ticket-alt" style="font-size: 1.5rem; color: var(--ship-gold);"></i>
-                            <h3>Redeem Code</h3>
-                        </div>
-                        <p style="margin-bottom: 15px; font-size: 0.9rem;">Enter a code to earn contest points!</p>
-                        
-                        <div class="code-input-container">
-                            <input type="text" id="redeem-code-input" class="code-input" placeholder="ENTER_CODE_HERE" maxlength="20">
-                            <button id="redeem-code-btn" class="redeem-code-btn">Redeem</button>
-                        </div>
-                        
-                        <div class="code-info">
-                            💡 Codes give contest points only, not TON
-                        </div>
+                <!-- خانة إدخال الأكواد المصغرة -->
+                <div class="redeem-container">
+                    <div class="redeem-header">
+                        <i class="fas fa-ticket-alt"></i>
+                        <h3>Redeem Code</h3>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 10px;">Enter a code to earn contest points!</p>
+                    <div class="redeem-form">
+                        <input type="text" id="redeem-code-input" class="redeem-input" placeholder="ENTER_CODE_HERE" maxlength="20">
+                        <button id="redeem-code-btn" class="redeem-btn">Redeem</button>
+                    </div>
+                    <div class="redeem-note">
+                        <i class="fas fa-lightbulb"></i> Codes give contest points only, not TON
                     </div>
                 </div>
                 
-                <h2>Bonus Tasks</h2><div id="dynamic-tasks-container"></div>
+                <h2>Bonus Tasks</h2>
+                <div id="dynamic-tasks-container"></div>
             </div>
-
+            
             <div id="contest-page" class="page">
                 <div class="contest-container">
                     <div class="contest-header">
@@ -838,48 +1210,28 @@
                     </div>
                 </div>
             </div>
-
-            <div id="leaderboard-page" class="page">
-                <h2>Leaderboard</h2>
-                <div class="leaderboard-toggle">
-                    <button class="toggle-btn active" data-board="referral">Top Referrers</button>
-                    <button class="toggle-btn" data-board="earning">Top Earners</button>
-                </div>
-                <div id="referral-board"><ul class="leaderboard-list" id="referral-leaderboard-list"></ul></div>
-                <div id="earning-board" style="display: none;"><ul class="leaderboard-list" id="earning-leaderboard-list"></ul></div>
-            </div>
-
-            <div id="profile-page" class="page">
+            
+            <!-- صفحة الإحالات بدلاً من صفحة التصنيف -->
+            <div id="referral-page" class="page">
                 <div id="referral-section"></div>
+            </div>
+            
+            <div id="profile-page" class="page">
                 <div id="withdraw-section"></div>
                 <div id="withdrawal-history-section" style="margin-top: 20px;">
-                    <h2>Withdrawal History</h2><div id="withdrawal-history-list"></div>
+                    <h2>Withdrawal History</h2>
+                    <div id="withdrawal-history-list"></div>
                 </div>
             </div>
         </main>
-
-        <!-- عجلة التحكم (القائمة السفلية) -->
-        <nav class="ship-controls">
-            <div class="control-wheel active" data-page="home-page">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </div>
-            <div class="control-wheel" data-page="tasks-page">
-                <i class="fas fa-tasks"></i>
-                <span>Tasks</span>
-            </div>
-            <div class="control-wheel" data-page="contest-page">
-                <i class="fas fa-trophy"></i>
-                <span>Contest</span>
-            </div>
-            <div class="control-wheel" data-page="leaderboard-page">
-                <i class="fas fa-ranking-star"></i>
-                <span>Ranking</span>
-            </div>
-            <div class="control-wheel" data-page="profile-page">
-                <i class="fas fa-user-alt"></i>
-                <span>Profile</span>
-            </div>
+        
+        <!-- أزرار التنقل السفلية بتصميم سفينة -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-page="home-page"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nav-btn" data-page="tasks-page"><i class="fas fa-tasks"></i><span>Tasks</span></button>
+            <button class="nav-btn" data-page="contest-page"><i class="fas fa-trophy"></i><span>Contest</span></button>
+            <button class="nav-btn" data-page="referral-page"><i class="fas fa-users"></i><span>Referrals</span></button>
+            <button class="nav-btn" data-page="profile-page"><i class="fas fa-user-alt"></i><span>Profile</span></button>
         </nav>
     </div>
 
@@ -891,14 +1243,14 @@
     document.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram?.WebApp || {};
         
-        // ✅ إعدادات Firebase
+        // ✅ تهيئة Firebase
         const firebaseConfig = JSON.parse(atob("eyJhcGlLZXkiOiJBSXphU3lBazkwOUNGblc0Wk1lQkVNMXl4UmJRYlc5dzZVTm81OCIsImF1dGhEb21haW4iOiJlYXJuLW1vbmV5LWMzYmFkLmZpcmViYXNlYXBwLmNvbSIsImRhdGFiYXNlVVJMIjoiaHR0cHM6Ly9lYXJuLW1vbmV5LWMzYmFkLWRlZmF1bHQtcnRkYi5maXJlYmFzZWlvLmNvbSIsInByb2plY3RJZCI6ImVhcm4tbW9uZXktYzNiYWQiLCJzdG9yYWdlQnVja2V0IjoiZWFybi1tb25leS1jM2JhZC5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIxMDIyNjg4NTY2MDExIiwiYXBwSWQiOiIxOjEwMjI2ODg1NjYwMTE6d2ViOjY5MGY2ZmFhMTlkZDMzMzdhMmVlNWUiLCJtZWFzdXJlbWVudElkIjoiRy0wQ0gxTEJGTEgyIn0="));
 
         const NOTIFICATION_USERNAME = "aborabie777";
 
         // ✅ متغيرات جديدة من Firebase
-        let dailyLoginRewards = [0.0001, 0.0002, 0.0004, 0.0008, 0.0016, 0.0032, 0.0064];
-        let minAdDuration = 15000;
+        let dailyLoginRewards = [0.0001, 0.0002, 0.0004, 0.0008, 0.0016, 0.0032, 0.0064]; // القيم الافتراضية
+        let minAdDuration = 15000; // 15 ثانية افتراضياً
         let isUserBanned = false;
         let banReason = "";
 
@@ -941,7 +1293,7 @@
 
         // ✅ متغيرات العملة الصفراء
         let userRRBalance = 0;
-        const RR_TO_TON_RATE = 10000000;
+        const RR_TO_TON_RATE = 10000000; // 10,000,000 RR = 1 TON
 
         // ✅ قائمة القنوات المطلوبة للاشتراك
         const requiredChannels = [
@@ -974,32 +1326,6 @@
         const popup = document.getElementById('popup');
         const popupBody = document.getElementById('popup-body');
         const loadingProgress = document.getElementById('loading-progress');
-
-        // ✅ إنشاء النجوم في الخلفية
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 100;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                const left = Math.random() * 100;
-                const top = Math.random() * 100;
-                const size = Math.random() * 3;
-                const duration = 3 + Math.random() * 7;
-                const delay = Math.random() * 5;
-                
-                star.style.left = `${left}%`;
-                star.style.top = `${top}%`;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.animationDuration = `${duration}s`;
-                star.style.animationDelay = `${delay}s`;
-                
-                starsContainer.appendChild(star);
-            }
-        }
 
         const showPopup = (content) => { popupBody.innerHTML = content; popup.style.display = 'flex'; };
         const closePopup = () => { popup.style.display = 'none'; };
@@ -1042,10 +1368,12 @@
                 const settings = settingsSnap.val();
                 
                 if (settings) {
+                    // تحميل مكافآت التسجيل اليومي
                     if (settings.dailyLoginRewards && Array.isArray(settings.dailyLoginRewards)) {
                         dailyLoginRewards = settings.dailyLoginRewards;
                     }
                     
+                    // تحميل وقت مشاهدة الإعلان الأدنى
                     if (settings.minAdDuration) {
                         minAdDuration = settings.minAdDuration;
                     }
@@ -1057,7 +1385,7 @@
             }
         };
 
-        // ✅ دالة محسنة لمشاهدة الإعلان
+        // ✅ دالة محسنة لمشاهدة الإعلان باستخدام الوقت من Firebase
         const handleWatchAd = async () => {
             if (isUserBanned) {
                 try{ 
@@ -1105,7 +1433,7 @@
 
             showPopup(`
                 <div style="margin-bottom:10px;">
-                    <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--ship-gold);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
+                    <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
                 </div>
                 <h2>Loading Ad</h2>
                 <p>Please wait a moment...</p>
@@ -1121,6 +1449,7 @@
                 const adEndTime = Date.now();
                 const adDuration = adEndTime - adStartTime;
                 
+                // ✅ استخدام الوقت من Firebase بدلاً من القيمة الثابتة
                 if (adDuration < minAdDuration) {
                     try{ 
                         if (tg.showAlert) tg.showAlert(`Ad watched too quickly! Please watch the ad for at least ${minAdDuration/1000} seconds to earn rewards.`); 
@@ -1138,6 +1467,7 @@
                 lastAdWatchTime = Date.now();
                 const adValue = parseFloat(appConfig.adValue || 0);
 
+                // ✅ تعديل: إضافة المكافأة بالعملة الصفراء بدلاً من TON
                 const adValueRR = Math.round(adValue * RR_TO_TON_RATE);
                 userRRBalance += adValueRR;
                 localStorage.setItem(`userRRBalance_${tgUser.id || 'guest'}`, userRRBalance.toString());
@@ -1162,6 +1492,7 @@
                 const today = new Date().toISOString().slice(0, 10);
                 await db.ref(`userEarnings/${tgUser.id}/${today}`).set(firebase.database.ServerValue.increment(adValue));
 
+                // ✅ تحديث أرباح الإحالات للمُحيل
                 if (userState.referredBy) {
                     await updateReferralEarnings(tgUser.id, adValue);
                 }
@@ -1190,7 +1521,7 @@
             }
         };
 
-        // ✅ دالة محسنة لمطالبة مكافأة التسجيل اليومي
+        // ✅ دالة محسنة لمطالبة مكافأة التسجيل اليومي باستخدام القيم من Firebase
         const claimDailyLoginBonus = async () => {
             try {
                 const db = firebase.database();
@@ -1203,9 +1534,11 @@
                     return;
                 }
                 
+                // ✅ استخدام مكافآت التسجيل اليومي من Firebase
                 const currentDay = Math.min(dailyLoginData.currentStreak, dailyLoginRewards.length) - 1;
                 const rewardAmount = dailyLoginRewards[currentDay] || dailyLoginRewards[dailyLoginRewards.length - 1] || 0.0001;
                 
+                // ✅ تعديل: إضافة المكافأة بالعملة الصفراء بدلاً من TON
                 const rewardAmountRR = Math.round(rewardAmount * RR_TO_TON_RATE);
                 userRRBalance += rewardAmountRR;
                 localStorage.setItem(`userRRBalance_${tgUser.id || 'guest'}`, userRRBalance.toString());
@@ -1228,12 +1561,13 @@
             } catch (error) {
                 console.error('Error claiming daily login bonus:', error);
                 try{ 
+
                     if (tg.showAlert) tg.showAlert("Failed to claim daily bonus. Please try again."); 
                 }catch{} 
             }
         };
 
-        // ✅ دالة محسنة لعرض مهمة التسجيل اليومي
+        // ✅ دالة محسنة لعرض مهمة التسجيل اليومي باستخدام القيم من Firebase
         const renderDailyLoginTask = () => {
             const container = document.getElementById('daily-login-task-container');
             const today = new Date().toDateString();
@@ -1288,8 +1622,8 @@
                             <div class="streak-label">Current Streak</div>
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-size: 0.8rem; color: var(--text-secondary-dark);">Max: ${dailyLoginRewards.length} days</div>
-                            <div style="font-size: 0.8rem; color: var(--ship-gold); font-weight: 600;">Increasing rewards each day!</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary-light);">Max: ${dailyLoginRewards.length} days</div>
+                            <div style="font-size: 0.8rem; color: var(--primary-color); font-weight: 600;">Increasing rewards each day!</div>
                         </div>
                     </div>
                     
@@ -1371,7 +1705,7 @@
             }
         };
 
-        // ✅ دالة محسنة للتحقق من المهام الإضافية
+        // ✅ دالة محسنة للتحقق من المهام الإضافية باستخدام نفس البوت
         const checkTaskSubscription = async (task) => {
             try {
                 if (!tgUser || !tgUser.id) {
@@ -1386,6 +1720,7 @@
                     return false;
                 }
 
+                // استخراج اسم المستخدم للقناة من رابط المهمة
                 const channelMatch = task.url.match(/t\.me\/([^\/]+)/);
                 if (!channelMatch) {
                     console.error('❌ Invalid channel URL in task:', task.url);
@@ -1435,7 +1770,7 @@
             }
         };
 
-        // ✅ دالة محسنة للمطالبة بالمهام الإضافية
+        // ✅ دالة محسنة للمطالبة بالمهام الإضافية مع التحقق الحقيقي
         const handleClaimTask = async (e) => {
             if (isUserBanned) {
                 try{ 
@@ -1461,9 +1796,10 @@
                     return; 
                 }
 
+                // ✅ التحقق من الاشتراك في قناة المهمة باستخدام البوت
                 showPopup(`
                     <div style="margin-bottom:10px;">
-                        <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--ship-gold);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
+                        <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
                     </div>
                     <h2>Verifying Subscription</h2>
                     <p>Checking channel subscription...</p>
@@ -1477,6 +1813,7 @@
                         if (tg.showAlert) tg.showAlert("Please subscribe to the channel first to claim this bonus!"); 
                     }catch{} 
                     
+                    // فتح رابط القناة
                     try{ 
                         if (tg.openLink) tg.openLink(task.url); 
                     }catch{ 
@@ -1492,6 +1829,7 @@
                     const db = firebase.database(); 
                     const userRef = db.ref(`users/${tgUser.id}`);
                     
+                    // ✅ تعديل: إضافة المكافأة بالعملة الصفراء بدلاً من TON
                     const rewardAmountRR = Math.round(task.reward * RR_TO_TON_RATE);
                     userRRBalance += rewardAmountRR;
                     localStorage.setItem(`userRRBalance_${tgUser.id || 'guest'}`, userRRBalance.toString());
@@ -1514,13 +1852,15 @@
             }
         };
 
-        // ✅ دالة محسنة لتحميل بيانات المستخدم
+        // ✅ دالة محسنة لتحميل بيانات المستخدم مع التحقق من الحظر
         const loadUserData = async (db) => {
+            // التحقق أولاً من حالة الحظر
             const isBanned = await checkUserBanStatus(db);
             if (isBanned) {
                 return;
             }
 
+            // باقي الكود كما هو...
             const referralParam = getReferralParam();
             let referralIdCandidate = null;
 
@@ -1585,10 +1925,14 @@
         // ✅ دالة محسنة لتهيئة التطبيق
         const initApp = async () => {
             try {
-                createStars();
-                
                 if (tg.ready) { tg.ready(); try { tg.expand(); } catch(e){} }
                 
+                if (tg.colorScheme && tg.colorScheme === 'dark') { 
+                    document.body.className = 'dark-theme'; 
+                } else { 
+                    document.body.className = 'light-theme'; 
+                }
+
                 tgUser = (tg.initDataUnsafe && tg.initDataUnsafe.user) || {};
                 if (!tgUser || !tgUser.id) { 
                     console.warn("Telegram user not available in this environment."); 
@@ -1606,6 +1950,7 @@
                 const db = firebase.database();
                 updateProgress(20);
 
+                // تحميل الإعدادات الديناميكية
                 await loadDynamicSettings(db);
                 updateProgress(25);
 
@@ -1640,11 +1985,12 @@
                 await loadAdChannels(db);
                 updateProgress(50);
 
+                // ✅ تحميل رصيد العملة الصفراء
                 userRRBalance = parseInt(localStorage.getItem(`userRRBalance_${tgUser.id || 'guest'}`) || '0');
 
                 showPopup(`
                     <div style="margin-bottom:10px;">
-                        <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--ship-gold);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
+                        <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
                     </div>
                     <h2>Checking Subscription</h2>
                     <p>Verifying channel subscriptions...</p>
@@ -1665,7 +2011,7 @@
                         
                         showPopup(`
                             <div style="margin-bottom:10px;">
-                                <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--ship-gold);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
+                                <div class="spinner" style="width:40px;height:40px;border-radius:50%;border:4px solid var(--primary-color);border-top-color:transparent;animation:spin 1s linear infinite;margin:0 auto;"></div>
                             </div>
                             <h2>Checking Subscription</h2>
                             <p>Verifying channel subscriptions...</p>
@@ -1716,21 +2062,11 @@
                 await loadUserData(db);
                 updateProgress(60);
 
-                const referralBoardPromise = db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
-                const earningBoardPromise = db.ref('users').orderByChild('totalEarned').limitToLast(10).once('value');
                 const historyPromise = loadTransactionHistory(db);
-
-                const [referralBoardSnap, earningBoardSnap] = await Promise.all([referralBoardPromise, earningBoardPromise, historyPromise]);
+                await historyPromise;
                 updateProgress(80);
 
-                referralBoardSnap.forEach(child => { leaderboardData.referral.push(child.val()); });
-                earningBoardSnap.forEach(child => { leaderboardData.earning.push(child.val()); });
-                leaderboardData.referral.reverse(); 
-                leaderboardData.earning.reverse();
-                updateProgress(90);
-
                 loadAdSdk(appConfig.adZoneId);
-                earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id || 'guest'}`) || '0');
 
                 renderUI(); 
                 setupNavigation(); 
@@ -1739,7 +2075,7 @@
 
                 setTimeout(() => {
                     document.getElementById('app-loader').style.display = 'none';
-                    document.querySelector('.ship-container').style.display = 'block';
+                    document.getElementById('app').style.display = 'block';
                 }, 300);
             } catch (error) {
                 console.error("Error in continueAppInitialization:", error);
@@ -1836,13 +2172,14 @@
         const loadReferralData = async (db) => {
             try {
                 const referralRef = db.ref(`referrals/${tgUser.id}`);
-                const referralSnap = await referralRef.once('value');
+                const referralSnap = await referralSnap.once('value');
                 const savedData = referralSnap.val();
                 
                 if (savedData) {
                     referralData = savedData;
                 }
                 
+                // تحميل قائمة المستخدمين الذين تمت دعوتهم
                 const referredUsersRef = db.ref('users').orderByChild('referredBy').equalTo(tgUser.id);
                 const referredUsersSnap = await referredUsersRef.once('value');
                 
@@ -2082,7 +2419,7 @@
             isSubscribedToAllChannels = true;
             document.getElementById('subscription-page').style.display = 'none';
             document.getElementById('app-loader').style.display = 'none';
-            document.querySelector('.ship-container').style.display = 'block';
+            document.getElementById('app').style.display = 'block';
             
             firebase.initializeApp(firebaseConfig);
             const db = firebase.database();
@@ -2226,7 +2563,8 @@
                 const referralSnap = await referralRef.once('value');
                 const currentData = referralSnap.val() || { totalEarnings: 0, pendingEarnings: 0, referredUsers: [] };
                 
-                const referralBonus = earnings * 0.1;
+                // ✅ نظام 10% من أرباح المدعوين
+                const referralBonus = earnings * 0.1; // 10% من الأرباح
                 
                 currentData.pendingEarnings = (currentData.pendingEarnings || 0) + referralBonus;
                 
@@ -2291,8 +2629,6 @@
             document.getElementById('referral-count').textContent = userState.referrals || 0;
             document.getElementById('total-ads-watched').textContent = userState.lifetimeAdCount || 0;
             document.getElementById('total-earned').textContent = (userState.totalEarned || 0).toFixed(4);
-            document.getElementById('earning-wallet-balance').textContent = earningWalletBalance.toFixed(4);
-            document.getElementById('move-to-balance-btn').disabled = earningWalletBalance < 0.001;
             renderAdTask(); 
             renderAdProgress(); 
             renderDailyLoginTask();
@@ -2364,6 +2700,7 @@
                 const db = firebase.database();
                 const userRef = db.ref(`users/${tgUser.id}`);
                 
+                // خصم RR وإضافة TON
                 userRRBalance -= rrAmount;
                 localStorage.setItem(`userRRBalance_${tgUser.id || 'guest'}`, userRRBalance.toString());
                 
@@ -2385,44 +2722,6 @@
             }
         };
 
-        const handleMoveToBalance = async () => {
-            if (!isSubscribedToAllChannels) {
-                try{ 
-                    if (tg.showAlert) tg.showAlert("Please subscribe to all required channels first!"); 
-                }catch{} 
-                return; 
-            }
-
-            if(earningWalletBalance < 0.001) { 
-                try{ 
-                    if (tg.showAlert) tg.showAlert("You need at least 0.001 TON to move."); 
-                }catch{} 
-                return; 
-            }
-            const btn = document.getElementById('move-to-balance-btn'); 
-            btn.disabled = true; 
-            btn.textContent = 'Moving...';
-            try {
-                const db = firebase.database();
-                await db.ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(earningWalletBalance));
-                userState.balance = (userState.balance || 0) + earningWalletBalance;
-                earningWalletBalance = 0;
-                localStorage.setItem(`earningWallet_${tgUser.id}`, '0');
-                try{ 
-                    if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); 
-                    if (tg.showAlert) tg.showAlert("Successfully moved to main balance!"); 
-                }catch{}
-            } catch(error) { 
-                console.error("Failed to move balance:", error); 
-                try{ 
-                    if (tg.showAlert) tg.showAlert("Failed to move balance. Please try again."); 
-                }catch{} 
-            } finally { 
-                btn.textContent = 'Move to Main Balance'; 
-                renderUI(); 
-            }
-        };
-
         const renderWithdrawalHistory = () => {
             const listEl = document.getElementById('withdrawal-history-list');
             if (userTransactions.length === 0) { 
@@ -2440,20 +2739,20 @@
         };
 
         const setupNavigation = () => {
-            const controlWheels = document.querySelectorAll('.control-wheel'); 
+            const navButtons = document.querySelectorAll('.nav-btn'); 
             const pages = document.querySelectorAll('.page');
-            controlWheels.forEach(wheel => {
-                wheel.addEventListener('click', () => {
-                    const pageId = wheel.dataset.page;
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const pageId = button.dataset.page;
                     pages.forEach(page => page.classList.remove('active'));
                     document.getElementById(pageId).classList.add('active');
-                    controlWheels.forEach(w => w.classList.remove('active'));
-                    wheel.classList.add('active');
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
                     if (pageId === 'profile-page') { 
                         renderWithdrawalHistory(); 
                     }
-                    if (pageId === 'leaderboard-page') { 
-                        renderLeaderboard(); 
+                    if (pageId === 'referral-page') { 
+                        renderReferralSection(); 
                     }
                     if (pageId === 'contest-page') { 
                         renderContestPage(); 
@@ -2466,19 +2765,11 @@
             popup.addEventListener('click', (e) => { 
                 if (e.target.classList.contains('popup-close-btn') || e.target.id === 'popup') closePopup(); 
             });
-            document.querySelector('.leaderboard-toggle').addEventListener('click', (e) => {
-                if(e.target.classList.contains('toggle-btn')) {
-                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    renderLeaderboard();
-                }
-            });
             document.getElementById('dynamic-tasks-container').addEventListener('click', (e) => handleClaimTask(e));
             document.getElementById('profile-page').addEventListener('submit', (e) => handleWithdraw(e));
             document.getElementById('referral-section').addEventListener('click', (e) => { 
                 if(e.target.id === 'copy-ref-link-btn') copyReferralLink(); 
             });
-            document.getElementById('move-to-balance-btn').addEventListener('click', handleMoveToBalance);
             document.getElementById('redeem-code-btn').addEventListener('click', redeemCode);
             document.getElementById('redeem-code-input').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -2523,7 +2814,7 @@
                         <div class="task-info">
                             <h3>Watch a Rewarded Ad</h3>
                             <p>Earn ${adValueRR.toLocaleString()} RR for every ad.</p>
-                            <p style="font-size: 0.75rem; color: var(--ship-gold); margin-top: 5px;">
+                            <p style="font-size: 0.75rem; color: var(--primary-color); margin-top: 5px;">
                                 ⏱️ Must watch for 5+ seconds to earn
                             </p>
                         </div>
@@ -2557,30 +2848,6 @@
             }
         };
 
-        const renderLeaderboard = () => {
-            const activeBoard = document.querySelector('.toggle-btn.active').dataset.board;
-            const listEl = document.getElementById(activeBoard === 'referral' ? 'referral-leaderboard-list' : 'earning-leaderboard-list');
-            const data = leaderboardData[activeBoard];
-            document.getElementById('referral-board').style.display = activeBoard === 'referral' ? 'block' : 'none';
-            document.getElementById('earning-board').style.display = activeBoard === 'earning' ? 'block' : 'none';
-            listEl.innerHTML = '';
-            if (!data || data.length === 0) { 
-                listEl.innerHTML = '<li>No data available.</li>'; 
-                return; 
-            }
-            data.forEach((user, index) => {
-                const score = activeBoard === 'referral' ? (user.referrals || 0) : Number(user.totalEarned || 0).toFixed(4);
-                const item = document.createElement('li'); 
-                item.className = 'leaderboard-item';
-                item.innerHTML = `
-                    <span class="rank">#${index + 1}</span>
-                    <img src="${user.photoUrl || 'https://via.placeholder.com/40'}" alt="User">
-                    <span class="leaderboard-name">${user.firstName || 'User'}</span>
-                    <span class="leaderboard-score">${score}</span>`;
-                listEl.appendChild(item);
-            });
-        };
-
         const renderDynamicTasks = () => {
             const container = document.getElementById('dynamic-tasks-container'); 
             container.innerHTML = '';
@@ -2609,14 +2876,15 @@
             }
         };
 
-        // ✅ دالة محسنة لعرض قسم السحب
+        // ✅ دالة محسنة لعرض قسم السحب مع التعديلات المطلوبة
         const renderWithdrawSection = () => {
             const container = document.getElementById('withdraw-section'); 
             let optionsHtml = '';
             
+            // ✅ تعديل أسماء طرق السحب
             const withdrawMethods = [
-                { name: 'FaucetPay', min: 0.0001, icon: 'https://img.icons8.com/ios-filled/100/email.png' },
-                { name: 'TON', min: 0.05, icon: 'https://img.icons8.com/ios-filled/100/wallet.png' }
+                { name: 'FaucetPay', min: 0.0001, icon: 'https://img.icons8.com/ios-filled/100/email.png' }, // ✅ تغيير من 0.00001 إلى 0.0001
+                { name: 'TON', min: 0.05, icon: 'https://img.icons8.com/ios-filled/100/wallet.png' } // ✅ تغيير من TONKeeper إلى TON
             ];
             
             if (appConfig.withdrawMethods) { 
@@ -2653,12 +2921,13 @@
                             <label for="withdraw-method">
                                 <i class="fas fa-credit-card"></i> Withdrawal Method:
                             </label>
-                            <select id="withdraw-method" required style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: var(--text-primary-dark); border: 1px solid var(--border-dark);">
+                            <select id="withdraw-method" required style="width: 100%; padding: 12px; border-radius: 8px;">
                                 <option value="">Select a method</option>
                                 ${optionsHtml}
                             </select>
                         </div>
                         
+                        <!-- تفاصيل طريقة FaucetPay -->
                         <div id="faucetpay-details" class="method-details">
                             <h4><img src="https://img.icons8.com/ios-filled/100/email.png" class="method-icon">FaucetPay Withdrawal</h4>
                             <ul>
@@ -2670,6 +2939,7 @@
                             </ul>
                         </div>
                         
+                        <!-- تفاصيل طريقة TON -->
                         <div id="ton-details" class="method-details">
                             <h4><img src="https://img.icons8.com/ios-filled/100/wallet.png" class="method-icon">TON Withdrawal</h4>
                             <ul>
@@ -2694,6 +2964,7 @@
                             </div>
                         </div>
                         
+                        <!-- حقل MEMO اختياري لـ TON -->
                         <div id="memo-field" class="form-group" style="display: none;">
                             <label for="withdraw-memo">
                                 <i class="fas fa-sticky-note"></i> Memo (Optional):
@@ -2702,7 +2973,7 @@
                                 <i class="fas fa-edit"></i>
                                 <input type="text" id="withdraw-memo" placeholder="Enter memo for exchange deposits (optional)">
                             </div>
-                            <small style="color: var(--text-secondary-dark);">Only needed for some exchanges</small>
+                            <small style="color: var(--text-secondary-light);">Only needed for some exchanges</small>
                         </div>
                         
                         <div class="form-group">
@@ -2917,6 +3188,7 @@
                 const currentDate = new Date();
                 const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
                 
+                // ✅ إضافة معلومات الميمو في الإشعار
                 const memoInfo = withdrawalData.memo ? `\n• Memo: ${withdrawalData.memo}` : '';
                 
                 const adminMessage = `
@@ -3002,7 +3274,7 @@
             }
         };
 
-        // ✅ دالة محسنة للسحب
+        // ✅ دالة محسنة للسحب مع التعديلات المطلوبة
         const handleWithdraw = async (e) => {
             if (!isSubscribedToAllChannels) {
                 try{ 
@@ -3044,9 +3316,10 @@
                 return; 
             }
             
+            // ✅ تعديل الحد الأدنى للسحب
             let minAmount = 0.001;
             if (selectedMethod === 'FaucetPay') {
-                minAmount = 0.0001;
+                minAmount = 0.0001; // ✅ تغيير من 0.00001 إلى 0.0001
             } else if (selectedMethod === 'TON') {
                 minAmount = 0.05;
             }
@@ -3188,14 +3461,17 @@
                     return;
                 }
                 
+                // ✅ منح نقاط المسابقة
                 const points = codeData.points || 10;
                 await awardContestPoints(points);
                 
+                // ✅ تحديث قاعدة البيانات
                 await codesRef.child(code).update({
                     usedCount: firebase.database.ServerValue.increment(1),
                     lastUsed: firebase.database.ServerValue.TIMESTAMP
                 });
                 
+                // ✅ حفظ الكود المستخدم
                 redeemedCodes.push(code);
                 const redeemedCodesRef = db.ref(`redeemedCodes/${tgUser.id}`);
                 await redeemedCodesRef.set(redeemedCodes);
@@ -3209,6 +3485,7 @@
                 redeemBtn.disabled = false;
                 redeemBtn.textContent = 'Redeem';
                 
+                // تحديث واجهة المسابقة
                 if (document.getElementById('contest-page').classList.contains('active')) {
                     renderContestPage();
                 }
@@ -3333,7 +3610,7 @@
             leaderboardList.innerHTML = '';
             
             if (contestData.leaderboard.length === 0) {
-                leaderboardList.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--text-secondary-dark);">No participants yet. Be the first to join!</p>';
+                leaderboardList.innerHTML = '<p style="text-align: center; padding: 20px; color: var(--text-secondary-light);">No participants yet. Be the first to join!</p>';
                 return;
             }
             
@@ -3401,8 +3678,8 @@
         const showFullLeaderboard = () => {
             showPopup(`
                 <div style="text-align: left; max-height: 70vh; overflow-y: auto;">
-                    <h2 style="margin-bottom: 15px; color: var(--ship-gold);">🏆 Full Leaderboard</h2>
-                    <div style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-secondary-dark);">
+                    <h2 style="margin-bottom: 15px; color: var(--primary-color);">🏆 Full Leaderboard</h2>
+                    <div style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-secondary-light);">
                         Showing top 50 participants
                     </div>
                     <div id="full-leaderboard-content">
@@ -3444,18 +3721,18 @@
                 
                 html += `
                     <div style="display: flex; align-items: center; padding: 10px; margin: 5px 0; border-radius: 8px; ${
-                        isCurrentUser ? 'background: rgba(255, 215, 0, 0.1); border: 2px solid var(--ship-gold);' : 'background: rgba(255,255,255,0.05);'
+                        isCurrentUser ? 'background: rgba(231, 76, 60, 0.1); border: 2px solid var(--primary-color);' : 'background: rgba(255,255,255,0.05);'
                     }">
-                        <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(45deg, var(--ship-gold), #ffa500); 
-                             display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; margin-right: 12px; font-size: 0.9rem;">
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); 
+                             display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; margin-right: 12px; font-size: 0.9rem;">
                             ${rankIcon}
                         </div>
                         <div style="flex-grow: 1;">
-                            <div style="font-weight: 600; ${isCurrentUser ? 'color: var(--ship-gold);' : ''}">${displayName}</div>
-                            <div style="font-size: 0.8rem; color: var(--text-secondary-dark);">${participant.points || 0} points • ${participant.adsWatched || 0} ads • ${participant.referrals || 0} referrals</div>
+                            <div style="font-weight: 600; ${isCurrentUser ? 'color: var(--primary-color);' : ''}">${displayName}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary-light);">${participant.points || 0} points • ${participant.adsWatched || 0} ads • ${participant.referrals || 0} referrals</div>
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-weight: 700; color: var(--ship-gold);">${participant.points || 0}</div>
+                            <div style="font-weight: 700; color: var(--primary-color);">${participant.points || 0}</div>
                             ${prizeText ? `<div style="font-size: 0.75rem; color: var(--success); margin-top: 2px;">${prizeText}</div>` : ''}
                         </div>
                     </div>
@@ -3484,7 +3761,7 @@
                                 <img src="${user.photoUrl}" alt="${user.name}" class="referral-user-avatar">
                                 <div>
                                     <div class="referral-user-name">${user.name}</div>
-                                    <small style="color: var(--text-secondary-dark);">Joined: ${new Date(user.joinDate).toLocaleDateString()}</small>
+                                    <small style="color: var(--text-secondary-light);">Joined: ${new Date(user.joinDate).toLocaleDateString()}</small>
                                 </div>
                             </div>
                             <div class="referral-earnings">+${((user.totalEarned || 0) * 0.1).toFixed(4)} TON</div>
@@ -3492,7 +3769,7 @@
                     `;
                 });
             } else {
-                referredUsersHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary-dark);">No referrals yet. Share your link to start earning!</div>';
+                referredUsersHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary-light);">No referrals yet. Share your link to start earning!</div>';
             }
             
             container.innerHTML = `
@@ -3519,7 +3796,7 @@
                         </div>
                     </div>
                     
-                    <input type="text" id="referral-link" value="${refLink}" readonly style="padding: 10px; text-align: center; border-radius: 8px; border: 1px dashed var(--ship-gold); margin: 10px 0; background: transparent; color: inherit;">
+                    <input type="text" id="referral-link" value="${refLink}" readonly style="padding: 10px; text-align: center; border-radius: 8px; border: 1px dashed var(--primary-color); margin: 10px 0; background: transparent; color: inherit;">
                     <button id="copy-ref-link-btn" class="action-btn">📋 Copy Link</button>
                     
                     <div style="margin-top: 20px;">
@@ -3551,4 +3828,3 @@
     </script>
 </body>
 </html>
-

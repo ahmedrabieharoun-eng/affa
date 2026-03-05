@@ -1366,12 +1366,20 @@
         </div>
     </div>
 
-<!-- JavaScript Files - الترتيب مهم جداً -->
-<script src="api.js"></script>
-<script src="ranch.js"></script>
-<script src="app.js"></script>
-
-<script>
-    // تأكد أن الدوال متوفرة قبل الاستخدام
-    console.log('JavaScript files loaded');
-</script>
+    <!-- JavaScript Files - الترتيب مهم جداً -->
+    <script src="api.js"></script>
+    <script src="ranch.js"></script>
+    <script src="app.js"></script>
+    
+    <script>
+        // تأكد أن الدوال متوفرة قبل الاستخدام
+        console.log('JavaScript files loaded');
+        console.log('Available functions:', {
+            buyCow: typeof window.buyCow,
+            buyChicken: typeof window.buyChicken,
+            openRanch: typeof window.openRanch,
+            claimMilk: typeof window.claimMilk
+        });
+    </script>
+</body>
+</html>

@@ -9,12 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Telegram & TON -->
+    <!-- Telegram & TON Libraries -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://unpkg.com/tonweb/dist/tonweb.js"></script>
     
-    <!-- Styles -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="ranch.css">
     <link rel="stylesheet" href="market.css">
@@ -22,11 +22,13 @@
 <body>
     <!-- Notifications Container -->
     <div class="notification-container" id="notificationContainer"></div>
-    
-    <!-- Floating Buttons -->
+
+    <!-- Leaderboard Float Button -->
     <div class="leaderboard-float" id="leaderboardButton">
         <i class="fas fa-trophy"></i>
     </div>
+
+    <!-- Help Float Button -->
     <div class="help-float" id="helpButton">
         <i class="fas fa-question"></i>
     </div>
@@ -57,66 +59,66 @@
 
     <!-- Help Modal -->
     <div class="help-modal" id="helpModal">
-        <div class="help-header">
-            <h2><i class="fas fa-info-circle" style="color:var(--primary-pink)"></i> <span data-i18n="help.title">How to Play</span></h2>
-            <i class="fas fa-times" id="closeHelp"></i>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px">
+            <h2 style="font-size:18px; font-weight:700; display:flex; gap:6px" data-i18n="help.title">
+                <i class="fas fa-info-circle" style="color:var(--primary-pink)"></i> How to Play
+            </h2>
+            <i class="fas fa-times" id="closeHelp" style="font-size:18px; color:var(--text-secondary); cursor:pointer"></i>
         </div>
-        <div class="help-content">
-            <div class="help-item">
-                <div class="help-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
-                <div class="help-text">
-                    <h4 data-i18n="help.cow.title">Cow Machine</h4>
-                    <p data-i18n="help.cow.desc">1 TON · 41 Milk/hour<br>Global cap: 1000 machines<br>Hatch: 50,000 Milk = 1 Cow</p>
-                </div>
+        <div class="help-item">
+            <div class="help-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:30px;height:30px;border-radius:8px"></div>
+            <div class="help-text">
+                <h4 data-i18n="help.cow.title">Cow Machine</h4>
+                <p data-i18n="help.cow.desc">1 TON · 41 Milk/hour<br>Global cap: 1000 machines<br>Hatch: 50,000 Milk = 1 Cow</p>
             </div>
-            <div class="help-item">
-                <div class="help-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken"></div>
-                <div class="help-text">
-                    <h4 data-i18n="help.chicken.title">Chicken Machine</h4>
-                    <p data-i18n="help.chicken.desc">1 TON · 41 Eggs/hour<br>Unlocks after all Cows sold</p>
-                </div>
+        </div>
+        <div class="help-item">
+            <div class="help-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" style="width:30px;height:30px;border-radius:8px"></div>
+            <div class="help-text">
+                <h4 data-i18n="help.chicken.title">Chicken Machine</h4>
+                <p data-i18n="help.chicken.desc">1 TON · 41 Eggs/hour<br>Unlocks after all Cows sold</p>
             </div>
-            <div class="help-item">
-                <div class="help-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal"></div>
-                <div class="help-text">
-                    <h4 data-i18n="help.crystal.title">Crystal Engine</h4>
-                    <p data-i18n="help.crystal.desc">20 TON · 20k Milk + 20k Eggs = 1 Crystal<br>Convert Crystals → TON</p>
-                </div>
+        </div>
+        <div class="help-item">
+            <div class="help-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" style="width:30px;height:30px;border-radius:8px"></div>
+            <div class="help-text">
+                <h4 data-i18n="help.crystal.title">Crystal Engine</h4>
+                <p data-i18n="help.crystal.desc">20 TON · 20k Milk + 20k Eggs = 1 Crystal<br>Convert Crystals → TON</p>
             </div>
-            <div class="help-item">
-                <div class="help-emoji">🥛→🐮</div>
-                <div class="help-text">
-                    <h4 data-i18n="help.hatch.title">Hatch System</h4>
-                    <p data-i18n="help.hatch.desc">50,000 Milk = 1 Cow<br>5,000 Eggs = 1 Chicken<br>No global cap limit</p>
-                </div>
+        </div>
+        <div class="help-item">
+            <div class="help-emoji">🥛→🐮</div>
+            <div class="help-text">
+                <h4 data-i18n="help.hatch.title">Hatch System</h4>
+                <p data-i18n="help.hatch.desc">50,000 Milk = 1 Cow<br>5,000 Eggs = 1 Chicken<br>No global cap limit</p>
             </div>
-            <div class="help-item">
-                <div class="help-emoji">📊</div>
-                <div class="help-text">
-                    <h4 data-i18n="help.market.title">P2P Market</h4>
-                    <p data-i18n="help.market.desc">Trade Milk & Eggs with other players<br>Card system · Best price 🔥</p>
-                </div>
+        </div>
+        <div class="help-item">
+            <div class="help-emoji">📊</div>
+            <div class="help-text">
+                <h4 data-i18n="help.market.title">P2P Market</h4>
+                <p data-i18n="help.market.desc">Trade Milk & Eggs with other players<br>Card system · Best price 🔥</p>
             </div>
-            <div class="help-item">
-                <div class="help-emoji">👥</div>
-                <div class="help-text">
-                    <h4 data-i18n="help.referral.title">Referral</h4>
-                    <p data-i18n="help.referral.desc">Earn 10% of every TON purchase made by your friends<br>Auto-added to balance</p>
-                </div>
+        </div>
+        <div class="help-item">
+            <div class="help-emoji">👥</div>
+            <div class="help-text">
+                <h4 data-i18n="help.referral.title">Referral</h4>
+                <p data-i18n="help.referral.desc">Earn 10% of every TON purchase made by your friends<br>Auto-added to balance</p>
             </div>
-            <div class="help-item">
-                <div class="help-emoji">✅</div>
-                <div class="help-text">
-                    <h4 data-i18n="help.tasks.title">Tasks & Rewards</h4>
-                    <p data-i18n="help.tasks.desc">Complete tasks to earn TON<br>Create your own community tasks (min 100 users)</p>
-                </div>
+        </div>
+        <div class="help-item">
+            <div class="help-emoji">✅</div>
+            <div class="help-text">
+                <h4 data-i18n="help.tasks.title">Tasks & Rewards</h4>
+                <p data-i18n="help.tasks.desc">Complete tasks to earn TON<br>Create your own community tasks (min 100 users)</p>
             </div>
-            <div class="help-item">
-                <div class="help-emoji">🏆</div>
-                <div class="help-text">
-                    <h4 data-i18n="help.leaderboard.title">Leaderboard Competition</h4>
-                    <p data-i18n="help.leaderboard.desc">1 new cow = 10 points · Top 20 win 150 TON total<br>Ends when 1000 cows sold<br>⚠️ You must buy a cow to appear on leaderboard!</p>
-                </div>
+        </div>
+        <div class="help-item">
+            <div class="help-emoji">🏆</div>
+            <div class="help-text">
+                <h4 data-i18n="help.leaderboard.title">Leaderboard Competition</h4>
+                <p data-i18n="help.leaderboard.desc">1 new cow = 10 points · Top 20 win 150 TON total<br>Ends when 1000 cows sold<br>⚠️ You must buy a cow to appear on leaderboard!</p>
             </div>
         </div>
     </div>
@@ -159,7 +161,7 @@
             <div class="ton-status">
                 <img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" class="ton-icon" alt="TON">
                 <span class="ton-amount" id="statusTon">0.0000</span>
-                <span style="font-size:10px;color:var(--text-secondary)">TON</span>
+                <span style="font-size:10px; color:var(--text-secondary)">TON</span>
             </div>
             <div class="mining-timer" id="miningTimer">
                 <i class="fas fa-clock"></i>
@@ -177,7 +179,7 @@
 
     <!-- Main Container -->
     <div class="container" id="appContainer">
-        <!-- Section: Leaderboard -->
+        <!-- Leaderboard Section -->
         <div id="sectionLeaderboard" class="section">
             <div class="leaderboard-header">
                 <div class="leaderboard-title">
@@ -207,7 +209,6 @@
                     <i class="fas fa-info-circle"></i> Competition will end once the limited cow purchase count (1000) is completed.
                 </div>
             </div>
-            
             <div class="your-position-card" id="yourPositionCard">
                 <div class="position-row">
                     <span class="position-label">Your Position</span>
@@ -226,30 +227,30 @@
                     </div>
                 </div>
             </div>
-            
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-ranking-star" style="color:#FFD700"></i> Top Farmers
                 </div>
                 <div class="leaderboard-grid" id="leaderboardList">
-                    <div style="text-align:center;padding:40px;color:var(--text-secondary)">
-                        <i class="fas fa-trophy" style="font-size:48px;margin-bottom:15px;opacity:.5"></i>
+                    <div style="text-align:center; padding:40px; color:var(--text-secondary)">
+                        <i class="fas fa-trophy" style="font-size:48px; margin-bottom:15px; opacity:.5"></i>
                         <p>Loading leaderboard...</p>
                     </div>
                 </div>
             </div>
-            
             <div class="winners-section" id="winnersSection" style="display:none">
-                <div class="winners-title"><i class="fas fa-crown"></i> Competition Winners</div>
+                <div class="winners-title">
+                    <i class="fas fa-crown"></i> Competition Winners
+                </div>
                 <div class="winners-grid" id="winnersList"></div>
             </div>
         </div>
 
-        <!-- Section: Farm (Main) -->
+        <!-- Farm Section -->
         <div id="sectionFarm" class="section active">
             <div class="farm-grid">
-                <!-- Cow Machine Card -->
-                <div class="machine-card cow" id="cowCard" onclick="openRanchPage()">
+                <!-- Cow Machine Card - Modified with new image and only Open Ranch button -->
+                <div class="machine-card cow" id="cowCard">
                     <div class="card-background">
                         <img src="https://i.ibb.co/zHGDRtrh/8389f90f-eb9b-4f86-8717-b6a0bba5654f.png" alt="Cow Ranch">
                     </div>
@@ -258,19 +259,41 @@
                         <div class="unlock-timer" id="cowUnlockTimer"></div>
                     </div>
                     <div class="card-content">
-                        <div class="machine-info">
+                        <div class="machine-header">
                             <div class="machine-emoji">
-                                <img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow Machine">
+                                <img src="https://i.ibb.co/zHGDRtrh/8389f90f-eb9b-4f86-8717-b6a0bba5654f.png" alt="Cow Machine">
                             </div>
-                            <div>
-                                <div class="machine-name">Cow</div>
+                            <div class="machine-info">
+                                <div class="machine-name-row">
+                                    <span class="machine-name" data-i18n="farm.cow.name">Cow</span>
+                                    <span class="machine-badge" id="cowBadge">Available</span>
+                                </div>
                                 <div class="machine-price">
                                     <i class="fas fa-bolt"></i> 1 TON
                                 </div>
-                                <div class="machine-badge" id="cowBadge">Available</div>
                             </div>
                         </div>
-                        <button class="open-ranch-btn" onclick="event.stopPropagation(); openRanchPage()">
+                        <div class="machine-stats">
+                            <div class="stat-item">
+                                <div class="stat-label" data-i18n="farm.prod">Prod</div>
+                                <div class="stat-number">41 <span class="stat-unit">/h</span></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label" data-i18n="farm.owned">Owned</div>
+                                <div class="stat-number" id="cowsOwned">0</div>
+                            </div>
+                        </div>
+                        <div class="progress-section">
+                            <div class="progress-header">
+                                <span data-i18n="farm.supply">Supply</span>
+                                <span id="cowProgressText">0/1000</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="cowProgressFill" style="width:0%"></div>
+                            </div>
+                        </div>
+                        <!-- Only Open Ranch Button - positioned absolute -->
+                        <button class="open-ranch-btn" id="openRanchBtn" onclick="openRanch()">
                             <i class="fas fa-arrow-right"></i> Open Ranch
                         </button>
                     </div>
@@ -278,53 +301,99 @@
 
                 <!-- Chicken Machine Card -->
                 <div class="machine-card chicken" id="chickenCard">
-                    <div class="card-background">
-                        <img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken Machine">
+                    <div class="machine-header">
+                        <div class="machine-emoji">
+                            <img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken Machine">
+                        </div>
+                        <div class="machine-info">
+                            <div class="machine-name-row">
+                                <span class="machine-name" data-i18n="farm.chicken.name">Chicken</span>
+                                <span class="machine-badge" id="chickenBadge">Locked</span>
+                            </div>
+                            <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
+                        </div>
+                    </div>
+                    <div class="machine-stats">
+                        <div class="stat-item">
+                            <div class="stat-label" data-i18n="farm.prod">Prod</div>
+                            <div class="stat-number">41 <span class="stat-unit">/h</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label" data-i18n="farm.owned">Owned</div>
+                            <div class="stat-number" id="chickensOwned">0</div>
+                        </div>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span data-i18n="farm.supply">Supply</span>
+                            <span id="chickenProgressText">0/1000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="chickenProgressFill" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="buyChickenBtn" disabled>
+                            <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
+                        </button>
+                        <button class="btn btn-hatch" id="hatchChickenBtn">
+                            <i class="fas fa-egg"></i> <span data-i18n="farm.hatch">Hatch</span>
+                        </button>
                     </div>
                     <div class="locked-overlay" id="chickenLockedOverlay" style="display:flex">
                         <div class="big-lock">🔒</div>
                         <div class="unlock-timer" id="chickenUnlockTimer"></div>
                     </div>
-                    <div class="card-content">
-                        <div class="machine-info">
-                            <div class="machine-emoji">
-                                <img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken Machine">
-                            </div>
-                            <div>
-                                <div class="machine-name" data-i18n="farm.chicken.name">Chicken</div>
-                                <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
-                                <div class="machine-badge" id="chickenBadge">Locked</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Crystal Engine Card -->
                 <div class="machine-card diamond" id="diamondCard">
-                    <div class="card-background">
-                        <img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal Engine">
+                    <div class="machine-header">
+                        <div class="machine-emoji">
+                            <img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal Engine">
+                        </div>
+                        <div class="machine-info">
+                            <div class="machine-name-row">
+                                <span class="machine-name" data-i18n="farm.crystal.name">Crystal Engine</span>
+                                <span class="machine-badge" id="diamondBadge">Locked</span>
+                            </div>
+                            <div class="machine-price"><i class="fas fa-bolt"></i> 20 TON</div>
+                        </div>
+                    </div>
+                    <div class="crystal-recipe">
+                        <div class="crystal-recipe-item"><span class="crystal-recipe-emoji">🥛</span><span>20k</span></div>
+                        <span class="crystal-recipe-plus">+</span>
+                        <div class="crystal-recipe-item"><span class="crystal-recipe-emoji">🥚</span><span>20k</span></div>
+                        <span class="crystal-recipe-equal">=</span>
+                        <div class="crystal-recipe-item"><span class="crystal-recipe-emoji">💎</span><span>1</span></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:14px; background:rgba(0,0,0,.2); border-radius:14px; padding:8px">
+                        <div style="text-align:center; flex:1">
+                            <div style="font-size:10px; color:var(--text-muted)" data-i18n="farm.owned">Owned</div>
+                            <div style="font-size:16px; font-weight:700" id="diamondEnginesOwned">0</div>
+                        </div>
+                        <div style="text-align:center; flex:1">
+                            <div style="font-size:10px; color:var(--text-muted)" data-i18n="farm.yield">Yield</div>
+                            <div style="font-size:16px; font-weight:700">1 💎</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="buyDiamondBtn" disabled>
+                            <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
+                        </button>
+                        <button class="btn btn-hatch" id="startDiamondBtn" disabled>
+                            <i class="fas fa-play"></i> <span data-i18n="farm.start">Start</span>
+                        </button>
                     </div>
                     <div class="locked-overlay" id="diamondLockedOverlay" style="display:flex">
                         <div class="big-lock">🔒</div>
                         <div class="unlock-timer" id="diamondUnlockTimer"></div>
                     </div>
-                    <div class="card-content">
-                        <div class="machine-info">
-                            <div class="machine-emoji">
-                                <img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal Engine">
-                            </div>
-                            <div>
-                                <div class="machine-name" data-i18n="farm.crystal.name">Crystal Engine</div>
-                                <div class="machine-price"><i class="fas fa-bolt"></i> 20 TON</div>
-                                <div class="machine-badge" id="diamondBadge">Locked</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Section: Ranch Management -->
+        <!-- Ranch Section - Complete Redesign -->
         <div id="sectionRanch" class="section">
             <div class="ranch-header">
                 <div class="ranch-header-icon">🐮</div>
@@ -332,30 +401,240 @@
                     <h2>Ranch Management</h2>
                     <p>Manage your cows and milk production</p>
                 </div>
-                <button class="back-button" id="backFromRanchBtn">
+                <button class="back-button" id="backFromRanchBtn" onclick="closeRanch()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
             </div>
 
-            <!-- Ranch Overview Card -->
-            <div class="ranch-overview-card" id="ranchOverviewCard"></div>
+            <!-- Ranch Overview - Dark Card with Glass Panels -->
+            <div class="ranch-overview-dark-card">
+                <div class="overview-glass-grid">
+                    <!-- Total Cows -->
+                    <div class="overview-glass-item">
+                        <div class="glass-label">Total Cows</div>
+                        <div class="glass-value" id="totalCowsOverview">0</div>
+                        <div class="glass-icon">🐮</div>
+                    </div>
+                    
+                    <!-- Active Cows -->
+                    <div class="overview-glass-item">
+                        <div class="glass-label">Active Cows</div>
+                        <div class="glass-value neon-green" id="activeCowsOverview">0</div>
+                        <div class="glass-icon">✅</div>
+                    </div>
+                    
+                    <!-- Inactive Cows -->
+                    <div class="overview-glass-item">
+                        <div class="glass-label">Inactive Cows</div>
+                        <div class="glass-value warning-yellow" id="inactiveCowsOverview">0</div>
+                        <div class="glass-icon">⏳</div>
+                    </div>
+                    
+                    <!-- Daily Production -->
+                    <div class="overview-glass-item">
+                        <div class="glass-label">Daily Prod</div>
+                        <div class="glass-value crystal-blue" id="dailyProductionOverview">0</div>
+                        <div class="glass-icon">🥛</div>
+                    </div>
+                    
+                    <!-- Storage -->
+                    <div class="overview-glass-item">
+                        <div class="glass-label">Storage</div>
+                        <div class="glass-value" id="storageOverviewGlass">0/0</div>
+                        <div class="glass-icon">📦</div>
+                    </div>
+                </div>
 
-            <!-- Cow Levels Container -->
-            <div class="cow-levels-container" id="cowLevelsContainer"></div>
+                <!-- Storage Progress Bar -->
+                <div class="storage-progress-container">
+                    <div class="storage-progress-header">
+                        <span>Milk Storage</span>
+                        <span id="milkStoredGlass">0</span> / <span id="milkCapacityGlass">40K</span>
+                    </div>
+                    <div class="storage-progress-bar">
+                        <div class="storage-progress-fill" id="storageProgressFillGlass" style="width:0%"></div>
+                    </div>
+                </div>
 
-            <!-- Cow Supply Progress -->
-            <div class="cow-supply-card" id="cowSupplyCard"></div>
+                <!-- Cow Supply Progress -->
+                <div class="supply-progress-container">
+                    <div class="supply-progress-header">
+                        <span>Cow Supply Progress</span>
+                        <span id="cowProgressTextGlass">0/1000</span>
+                    </div>
+                    <div class="supply-progress-bar">
+                        <div class="supply-progress-fill" id="cowProgressFillGlass" style="width:0%"></div>
+                    </div>
+                    <div class="cows-remaining" id="cowsRemainingGlass">1000 cows remaining</div>
+                </div>
 
-            <!-- Buy Cows Button -->
-            <button class="buy-cows-btn" id="buyCowsBtn" onclick="openBuyCowsPopup()">
-                <i class="fas fa-shopping-cart"></i> Buy Cows (1 TON)
-            </button>
+                <!-- Buy Cows Button -->
+                <button class="buy-cows-btn" id="buyCowRanchBtn" onclick="buyCow()">
+                    <i class="fas fa-shopping-cart"></i> Buy Cows (1 TON)
+                </button>
+            </div>
 
-            <!-- Milk Storage Card -->
-            <div class="storage-card" id="storageCard"></div>
+            <!-- Cow Levels Container - One Dark Card with 3 Glass Panels -->
+            <div class="cow-levels-dark-card">
+                <!-- Level 1 Glass Panel -->
+                <div class="level-glass-panel level-1">
+                    <div class="level-glass-header">
+                        <div class="level-glass-title">
+                            <span class="level-emoji">🐮</span>
+                            <span class="level-name">Level 1 Cow</span>
+                        </div>
+                        <span class="level-badge" id="level1Badge">Available</span>
+                    </div>
+                    
+                    <div class="level-glass-stats">
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Available</span>
+                            <span class="stat-value" id="level1Available">0</span>
+                        </div>
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Active</span>
+                            <span class="stat-value neon-green" id="level1Active">0</span>
+                        </div>
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Prod/day</span>
+                            <span class="stat-value crystal-blue">500</span>
+                        </div>
+                    </div>
+                    
+                    <div class="level-glass-actions">
+                        <button class="level-glass-btn upgrade" id="upgradeLevel1Btn" onclick="openUpgradePopup(1, 500, 6000)">
+                            <i class="fas fa-arrow-up"></i> Upgrade
+                        </button>
+                        <button class="level-glass-btn activate" id="activateLevel1Btn" onclick="openActivatePopup(1, 200)">
+                            <i class="fas fa-play"></i> Activate
+                        </button>
+                    </div>
+                    
+                    <div class="active-timer" id="level1Timer" style="display:none">
+                        <i class="fas fa-clock"></i> Active for: <span id="level1TimeRemaining">0h 0m</span>
+                    </div>
+                </div>
+
+                <!-- Level 2 Glass Panel -->
+                <div class="level-glass-panel level-2">
+                    <div class="level-glass-header">
+                        <div class="level-glass-title">
+                            <span class="level-emoji">🦬</span>
+                            <span class="level-name">Level 2 Cow</span>
+                        </div>
+                        <span class="level-badge" id="level2Badge">Locked</span>
+                    </div>
+                    
+                    <div class="level-glass-stats">
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Available</span>
+                            <span class="stat-value" id="level2Available">0</span>
+                        </div>
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Active</span>
+                            <span class="stat-value neon-green" id="level2Active">0</span>
+                        </div>
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Prod/day</span>
+                            <span class="stat-value crystal-blue">1000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="level-glass-actions">
+                        <button class="level-glass-btn upgrade" id="upgradeLevel2Btn" onclick="openUpgradePopup(2, 1000, 20000)" disabled>
+                            <i class="fas fa-arrow-up"></i> Upgrade
+                        </button>
+                        <button class="level-glass-btn activate" id="activateLevel2Btn" onclick="openActivatePopup(2, 350)" disabled>
+                            <i class="fas fa-play"></i> Activate
+                        </button>
+                    </div>
+                    
+                    <div class="active-timer" id="level2Timer" style="display:none">
+                        <i class="fas fa-clock"></i> Active for: <span id="level2TimeRemaining">0h 0m</span>
+                    </div>
+                </div>
+
+                <!-- Level 3 Glass Panel -->
+                <div class="level-glass-panel level-3">
+                    <div class="level-glass-header">
+                        <div class="level-glass-title">
+                            <span class="level-emoji">🐃</span>
+                            <span class="level-name">Level 3 Cow</span>
+                        </div>
+                        <span class="level-badge" id="level3Badge">Locked</span>
+                    </div>
+                    
+                    <div class="level-glass-stats">
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Available</span>
+                            <span class="stat-value" id="level3Available">0</span>
+                        </div>
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Active</span>
+                            <span class="stat-value neon-green" id="level3Active">0</span>
+                        </div>
+                        <div class="level-glass-stat">
+                            <span class="stat-label">Prod/day</span>
+                            <span class="stat-value crystal-blue">2500</span>
+                        </div>
+                    </div>
+                    
+                    <div class="level-glass-actions">
+                        <button class="level-glass-btn activate" id="activateLevel3Btn" onclick="openActivatePopup(3, 1200)" disabled>
+                            <i class="fas fa-play"></i> Activate
+                        </button>
+                    </div>
+                    
+                    <div class="active-timer" id="level3Timer" style="display:none">
+                        <i class="fas fa-clock"></i> Active for: <span id="level3TimeRemaining">0h 0m</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Card -->
+            <div class="storage-card" id="storageCard">
+                <div class="storage-background">
+                    <img src="https://i.ibb.co/BKHhxhh3/Chat-GPT-Image-4-2026-05-41-33.png" alt="Milk Storage">
+                </div>
+                <div class="storage-content">
+                    <div class="storage-header">
+                        <div class="storage-title">
+                            <i class="fas fa-database"></i> Milk Storage
+                        </div>
+                        <div class="storage-full-badge" id="storageFullBadge" style="display:none">FULL</div>
+                    </div>
+                    <div class="storage-stats">
+                        <div class="storage-stat">
+                            <span class="storage-stat-label">Level:</span>
+                            <span class="storage-stat-value" id="storageLevel">1</span>
+                        </div>
+                        <div class="storage-stat">
+                            <span class="storage-stat-label">Capacity:</span>
+                            <span class="storage-stat-value" id="storageCapacity">40,000</span>
+                        </div>
+                    </div>
+                    <div class="storage-progress">
+                        <div class="storage-progress-header">
+                            <span>Stored:</span>
+                            <span><span id="milkStored">0</span> / <span id="milkCapacity">40,000</span></span>
+                        </div>
+                        <div class="storage-progress-bar">
+                            <div class="storage-progress-fill" id="storageProgressFill" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="storage-actions">
+                        <button class="storage-action-btn claim" id="claimMilkBtn" onclick="claimMilk()">
+                            <i class="fas fa-hand-holding-heart"></i> Claim
+                        </button>
+                        <button class="storage-action-btn upgrade" id="upgradeStorageBtn" onclick="upgradeStorage()">
+                            <i class="fas fa-arrow-up"></i> Upgrade
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Section: Market -->
+        <!-- Market Section -->
         <div id="sectionMarket" class="section">
             <div class="card">
                 <div class="card-title">
@@ -396,110 +675,129 @@
                     </button>
                 </div>
                 <div id="marketBuyView">
-                    <div id="sellOrdersGrid" class="market-grid"></div>
+                    <div id="sellOrdersGrid" class="market-grid">
+                        <div style="grid-column:span 2; text-align:center; padding:25px; color:var(--text-secondary)">
+                            <i class="fas fa-inbox" style="font-size:32px; margin-bottom:10px; opacity:.5"></i>
+                            <p data-i18n="market.noOrders">No active sell orders</p>
+                        </div>
+                    </div>
                     <button class="load-more-btn" id="loadMoreSellBtn" style="display:none">
                         <i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span>
                     </button>
                 </div>
                 <div id="marketMyOrdersView" style="display:none">
                     <div style="margin-bottom:14px">
-                        <h3 style="font-size:13px;margin-bottom:8px" data-i18n="market.activeOrders">Active Orders</h3>
+                        <h3 style="font-size:13px; margin-bottom:8px" data-i18n="market.activeOrders">Active Orders</h3>
                         <div id="myActiveOrders" class="market-grid"></div>
                     </div>
                     <div>
-                        <h3 style="font-size:13px;margin-bottom:8px" data-i18n="market.history">History</h3>
-                        <div id="myFilledOrders" style="max-height:180px;overflow-y:auto"></div>
+                        <h3 style="font-size:13px; margin-bottom:8px" data-i18n="market.history">History</h3>
+                        <div id="myFilledOrders" style="max-height:180px; overflow-y:auto"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Section: Crystal -->
+        <!-- Crystal Section -->
         <div id="sectionDiamond" class="section">
-            <div class="crystal-card">
+            <div class="card" style="background:transparent; border:none; backdrop-filter:none">
                 <div class="card-title">
                     <i class="fas fa-gem" style="color:var(--crystal-blue)"></i> <span data-i18n="crystal.title">Crystal Conversion</span>
                 </div>
-                <div class="crystal-display">
+                <div style="text-align:center">
                     <div class="diamond-glow">💎</div>
-                    <div class="crystal-price" id="crystalPriceMain">25</div>
-                    <div class="crystal-subtitle" data-i18n="crystal.perTon">TON per Crystal</div>
+                    <div class="counter-number" id="crystalPriceMain">25</div>
+                    <div style="font-size:13px; color:var(--text-secondary); margin-bottom:14px" data-i18n="crystal.perTon">TON per Crystal</div>
                 </div>
-                <div class="conversion-panel">
-                    <div class="balance-box">
-                        <div class="balance-label" data-i18n="crystal.yourCrystals">Your Crystals</div>
-                        <div class="balance-value" id="diamondBalanceMain">0</div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px">
+                    <div style="flex:1; background:rgba(0,0,0,.2); border-radius:14px; padding:12px">
+                        <div style="font-size:10px; color:var(--text-muted); margin-bottom:3px" data-i18n="crystal.yourCrystals">Your Crystals</div>
+                        <div style="font-size:24px; font-weight:800; color:var(--crystal-blue)" id="diamondBalanceMain">0</div>
                     </div>
-                    <div class="arrow-icon"><i class="fas fa-arrow-right"></i></div>
-                    <div class="balance-box">
-                        <div class="balance-label" data-i18n="crystal.youReceive">You Receive</div>
-                        <div class="balance-value neon" id="tonReceiveMain">0</div>
+                    <div style="font-size:18px; color:var(--text-secondary)"><i class="fas fa-arrow-right"></i></div>
+                    <div style="flex:1; background:rgba(0,0,0,.2); border-radius:14px; padding:12px">
+                        <div style="font-size:10px; color:var(--text-muted); margin-bottom:3px" data-i18n="crystal.youReceive">You Receive</div>
+                        <div style="font-size:24px; font-weight:800; color:var(--neon-green)" id="tonReceiveMain">0</div>
                     </div>
                 </div>
-                <div class="convert-controls">
-                    <input type="number" id="convertAmount" class="form-input" placeholder="Amount" min="1">
-                    <button class="btn btn-primary" id="convertDiamondBtn">
+                <div style="display:flex; gap:8px">
+                    <input type="number" id="convertAmount" class="form-input" placeholder="Amount" min="1" style="flex:1">
+                    <button class="btn btn-primary" id="convertDiamondBtn" style="width:auto; padding:0 16px">
                         <span data-i18n="crystal.convert">Convert</span>
                     </button>
                 </div>
-                <div class="resources-panel">
-                    <div class="resource-item">
-                        <span class="resource-label">🥛 <span data-i18n="crystal.milkAvailable">Milk available</span></span>
-                        <span class="resource-value" id="milkForDiamond">0</span>
+                <div style="margin-top:12px; padding:12px; background:rgba(0,0,0,.2); border-radius:14px">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px">
+                        <span style="font-size:11px; color:var(--text-secondary)" data-i18n="crystal.milkAvailable">Milk available</span>
+                        <span style="font-weight:700" id="milkForDiamond">0</span>
                     </div>
-                    <div class="resource-item">
-                        <span class="resource-label">🥚 <span data-i18n="crystal.eggsAvailable">Eggs available</span></span>
-                        <span class="resource-value" id="eggsForDiamond">0</span>
+                    <div style="display:flex; justify-content:space-between">
+                        <span style="font-size:11px; color:var(--text-secondary)" data-i18n="crystal.eggsAvailable">Eggs available</span>
+                        <span style="font-weight:700" id="eggsForDiamond">0</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Section: Friends -->
+        <!-- Friends Section -->
         <div id="sectionFriends" class="section">
-            <div class="referral-card">
+            <div class="card" style="background:linear-gradient(145deg, rgba(255,92,168,.15), var(--glass-strong))">
                 <div class="card-title">
                     <i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span>
                 </div>
-                <div class="referral-info">
-                    <p data-i18n="referral.description">Earn <strong>10%</strong> commission when your friends buy machines with TON!</p>
-                    <div class="referral-link-box">
-                        <input type="text" id="referralLink" class="form-input" readonly>
-                        <button class="btn btn-primary" id="copyReferralBtn"><i class="fas fa-copy"></i></button>
+                <div style="background:rgba(255,255,255,.03); border-radius:14px; padding:14px; margin-bottom:14px">
+                    <div style="font-size:12px; color:var(--text-secondary); margin-bottom:8px" data-i18n="referral.description">
+                        Earn <strong style="color:var(--primary-pink); font-size:20px">10%</strong> commission when your friends buy machines with TON!
                     </div>
-                    <div class="referral-note" data-i18n="referral.share">Share this link with friends</div>
+                    <div style="display:flex; gap:5px; margin-bottom:5px">
+                        <input type="text" id="referralLink" class="form-input" readonly style="flex:1; background:rgba(0,0,0,.3); font-size:11px">
+                        <button class="btn btn-primary" id="copyReferralBtn" style="width:auto; padding:0 14px">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div style="font-size:9px; color:var(--text-muted)" data-i18n="referral.share">Share this link with friends</div>
                 </div>
                 <button class="btn btn-primary" id="claimReferralBtn">
                     <i class="fas fa-hand-holding-usd"></i> <span data-i18n="referral.claim">Claim Earnings</span>
                 </button>
             </div>
-
             <div class="card">
-                <div class="card-title">
-                    <div><i class="fas fa-history"></i> <span data-i18n="referral.recent">Recent Referrals</span></div>
-                    <div class="referral-count">
-                        <span id="totalReferrals">0</span>
-                        <span data-i18n="referral.friends">Friends</span>
+                <div class="card-title" style="display:flex; align-items:center; justify-content:space-between">
+                    <div style="display:flex; align-items:center; gap:6px">
+                        <i class="fas fa-history"></i> <span data-i18n="referral.recent">Recent Referrals</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:4px; background:rgba(0,242,122,.15); padding:4px 10px; border-radius:30px; border:1px solid rgba(0,242,122,.3)">
+                        <span style="font-size:12px; font-weight:700" id="totalReferrals">0</span>
+                        <span style="font-size:10px; color:var(--text-secondary)" data-i18n="referral.friends">Friends</span>
                     </div>
                 </div>
-                <div id="recentReferralsList" class="referrals-list"></div>
-                <button class="load-more-btn" id="loadMoreReferralsBtn" style="display:none">
+                <div id="recentReferralsList" style="min-height:70px; max-height:300px; overflow-y:auto">
+                    <div style="text-align:center; padding:18px; color:var(--text-secondary)">
+                        <i class="fas fa-users" style="font-size:24px; margin-bottom:8px; opacity:.5"></i>
+                        <p data-i18n="referral.noReferrals">No referrals yet</p>
+                    </div>
+                </div>
+                <button class="load-more-btn" id="loadMoreReferralsBtn" style="margin-top:10px; display:none">
                     <i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span>
                 </button>
             </div>
-
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-chart-line"></i> <span data-i18n="referral.earningsHistory">Earnings History</span>
                 </div>
-                <div id="earningsHistoryList" class="earnings-list"></div>
-                <button class="load-more-btn" id="loadMoreEarningsBtn" style="display:none">
+                <div id="earningsHistoryList" style="min-height:70px; max-height:200px; overflow-y:auto">
+                    <div style="text-align:center; padding:18px; color:var(--text-secondary)">
+                        <i class="fas fa-coins" style="font-size:24px; margin-bottom:8px; opacity:.5"></i>
+                        <p data-i18n="referral.noEarnings">No earnings yet</p>
+                    </div>
+                </div>
+                <button class="load-more-btn" id="loadMoreEarningsBtn" style="margin-top:10px; display:none">
                     <i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span>
                 </button>
             </div>
         </div>
 
-        <!-- Section: Tasks -->
+        <!-- Tasks Section -->
         <div id="sectionTasks" class="section">
             <div class="card">
                 <div class="card-title">
@@ -517,75 +815,84 @@
                         <i class="fas fa-sync-alt"></i> <span data-i18n="tasks.refresh">Refresh</span>
                     </button>
                 </div>
-                <div id="tasksGrid" class="task-grid"></div>
+                <div id="tasksGrid" class="task-grid">
+                    <div style="text-align:center; padding:40px; color:var(--text-secondary)">
+                        <i class="fas fa-clipboard-list" style="font-size:48px; margin-bottom:15px; opacity:.5"></i>
+                        <p data-i18n="tasks.noTasks">No tasks available</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Section: Profile -->
+        <!-- Profile Section -->
         <div id="sectionProfile" class="section">
-            <div class="profile-card">
-                <div class="profile-header">
-                    <div class="profile-avatar" id="profileAvatar">👨‍🌾</div>
-                    <div class="profile-info">
-                        <div class="profile-name" id="profileName">Farmer</div>
-                        <div class="profile-username" id="profileUsername">@crystal_ranch</div>
-                        <div class="profile-id" id="profileUserId">ID: </div>
+            <div class="card">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px">
+                    <div style="width:50px; height:50px; background:linear-gradient(145deg, var(--primary-pink), var(--crystal-blue)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; overflow:hidden" id="profileAvatar">👨‍🌾</div>
+                    <div>
+                        <div style="font-size:16px; font-weight:700" id="profileName">Farmer</div>
+                        <div style="font-size:11px; color:var(--text-secondary)" id="profileUsername">@crystal_ranch</div>
+                        <div style="font-size:10px; color:var(--text-muted); margin-top:2px" id="profileUserId">ID: </div>
                     </div>
                 </div>
-                <div class="profile-stats">
-                    <div class="stat-item">
-                        <div class="stat-label" data-i18n="profile.totalMachines">Total Machines</div>
-                        <div class="stat-number" id="totalMachines">0</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px">
+                    <div style="background:rgba(255,255,255,.03); border-radius:14px; padding:10px">
+                        <div style="font-size:10px; color:var(--text-muted)" data-i18n="profile.totalMachines">Total Machines</div>
+                        <div style="font-size:20px; font-weight:700" id="totalMachines">0</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-label" data-i18n="profile.production">Production</div>
-                        <div class="stat-number" id="totalProduction">0/h</div>
+                    <div style="background:rgba(255,255,255,.03); border-radius:14px; padding:10px">
+                        <div style="font-size:10px; color:var(--text-muted)" data-i18n="profile.production">Production</div>
+                        <div style="font-size:20px; font-weight:700" id="totalProduction">0/h</div>
                     </div>
                 </div>
             </div>
-
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-wallet"></i> <span data-i18n="profile.assets">Assets</span>
                 </div>
-                <div class="assets-list">
-                    <div class="asset-item">
-                        <div class="asset-icon">🥛</div>
-                        <div>
-                            <div class="asset-label" data-i18n="status.milk">Milk</div>
-                            <div class="asset-rate"><span id="profileMilkRate">0</span>/h</div>
+                <div style="display:flex; flex-direction:column; gap:8px">
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px; background:rgba(255,255,255,.02); border-radius:12px">
+                        <div style="display:flex; align-items:center; gap:8px">
+                            <span style="font-size:20px">🥛</span>
+                            <div>
+                                <div style="font-weight:600; font-size:12px" data-i18n="status.milk">Milk</div>
+                                <div style="font-size:9px; color:var(--text-muted)"><span id="profileMilkRate">0</span>/h</div>
+                            </div>
                         </div>
-                        <div class="asset-value" id="profileMilk">0</div>
+                        <div style="font-size:18px; font-weight:700" id="profileMilk">0</div>
                     </div>
-                    <div class="asset-item">
-                        <div class="asset-icon">🥚</div>
-                        <div>
-                            <div class="asset-label" data-i18n="status.eggs">Eggs</div>
-                            <div class="asset-rate"><span id="profileEggsRate">0</span>/h</div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px; background:rgba(255,255,255,.02); border-radius:12px">
+                        <div style="display:flex; align-items:center; gap:8px">
+                            <span style="font-size:20px">🥚</span>
+                            <div>
+                                <div style="font-weight:600; font-size:12px" data-i18n="status.eggs">Eggs</div>
+                                <div style="font-size:9px; color:var(--text-muted)"><span id="profileEggsRate">0</span>/h</div>
+                            </div>
                         </div>
-                        <div class="asset-value" id="profileEggs">0</div>
+                        <div style="font-size:18px; font-weight:700" id="profileEggs">0</div>
                     </div>
-                    <div class="asset-item">
-                        <div class="asset-icon">💎</div>
-                        <div>
-                            <div class="asset-label" data-i18n="status.crystal">Crystal</div>
-                            <div class="asset-rate">1 = <span id="profileDiamondPrice">25</span> TON</div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px; background:rgba(255,255,255,.02); border-radius:12px">
+                        <div style="display:flex; align-items:center; gap:8px">
+                            <span style="font-size:20px">💎</span>
+                            <div>
+                                <div style="font-weight:600; font-size:12px" data-i18n="status.crystal">Crystal</div>
+                                <div style="font-size:9px; color:var(--text-muted)">1 = <span id="profileDiamondPrice">25</span> TON</div>
+                            </div>
                         </div>
-                        <div class="asset-value" id="profileDiamond">0</div>
+                        <div style="font-size:18px; font-weight:700" id="profileDiamond">0</div>
                     </div>
-                    <div class="asset-item">
-                        <div class="asset-icon">
-                            <img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:20px;height:20px">
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:8px; background:rgba(255,255,255,.02); border-radius:12px">
+                        <div style="display:flex; align-items:center; gap:8px">
+                            <img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:20px; height:20px; object-fit:contain">
+                            <div>
+                                <div style="font-weight:600; font-size:12px">TON</div>
+                                <div style="font-size:9px; color:var(--text-muted)" data-i18n="profile.balance">Balance</div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="asset-label">TON</div>
-                            <div class="asset-rate" data-i18n="profile.balance">Balance</div>
-                        </div>
-                        <div class="asset-value" id="profileTon">0.0000</div>
+                        <div style="font-size:18px; font-weight:700" id="profileTon">0.0000</div>
                     </div>
                 </div>
             </div>
-
             <div class="card">
                 <div class="card-title">
                     <i class="fas fa-arrow-up"></i> <span data-i18n="profile.withdraw">Withdraw TON</span>
@@ -598,14 +905,14 @@
                     <label class="form-label" data-i18n="profile.withdrawAddress">TON Wallet Address</label>
                     <input type="text" id="withdrawAddress" class="form-input" placeholder="EQD...">
                 </div>
-                <div class="fee-panel">
-                    <div class="fee-row">
-                        <span data-i18n="profile.fee">Fee (5%)</span>
-                        <span id="withdrawFee">0 TON</span>
+                <div style="background:rgba(255,255,255,.03); border-radius:12px; padding:12px; margin-bottom:14px">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px">
+                        <span style="font-size:11px; color:var(--text-secondary)" data-i18n="profile.fee">Fee (5%)</span>
+                        <span style="font-weight:600" id="withdrawFee">0 TON</span>
                     </div>
-                    <div class="fee-row total">
-                        <span data-i18n="profile.youReceive">You receive</span>
-                        <span id="withdrawNet">0 TON</span>
+                    <div style="display:flex; justify-content:space-between">
+                        <span style="font-size:11px; color:var(--text-secondary)" data-i18n="profile.youReceive">You receive</span>
+                        <span style="font-size:14px; font-weight:700; color:var(--neon-green)" id="withdrawNet">0 TON</span>
                     </div>
                 </div>
                 <button class="btn btn-primary" id="withdrawBtn">
@@ -643,100 +950,87 @@
         </div>
     </nav>
 
-    <!-- Modals -->
     <!-- Activate Popup -->
-    <div class="modal-overlay" id="activatePopup">
-        <div class="modal-content" style="max-width:360px">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fas fa-play" style="color:var(--neon-green)"></i> Activate Cows
+    <div class="activate-popup" id="activatePopup">
+        <div class="activate-popup-content">
+            <div class="activate-popup-header">
+                <div class="activate-popup-title">
+                    <i class="fas fa-play"></i> Activate Cows
                 </div>
-                <i class="fas fa-times modal-close" onclick="closeActivatePopup()"></i>
+                <i class="fas fa-times activate-popup-close" onclick="closeActivatePopup()"></i>
             </div>
-            <div class="activate-info" id="activatePopupInfo">
-                <div class="activate-level" id="activatePopupLevel">Level 1 Cow</div>
-                <div class="activate-available" id="activatePopupAvailable">Available: 0 cows</div>
+            <div class="activate-popup-info" id="activatePopupInfo">
+                <div class="activate-popup-level" id="activatePopupLevel">Level 1 Cow</div>
+                <div class="activate-popup-available" id="activatePopupAvailable">Available: 0 cows</div>
             </div>
             <div class="activate-presets">
-                <button class="preset-btn" onclick="setActivateAmount(1)">1</button>
-                <button class="preset-btn" onclick="setActivateAmount(5)">5</button>
-                <button class="preset-btn" onclick="setActivateAmount(10)">10</button>
-                <button class="preset-btn" onclick="setActivateAmount('all')">All</button>
+                <button class="activate-preset-btn" onclick="setActivateAmount(1)">1</button>
+                <button class="activate-preset-btn" onclick="setActivateAmount(5)">5</button>
+                <button class="activate-preset-btn" onclick="setActivateAmount(10)">10</button>
+                <button class="activate-preset-btn" onclick="setActivateAmount('all')">All</button>
             </div>
-            <input type="number" id="activateAmount" class="form-input" placeholder="Custom amount" min="1" value="1">
-            <div class="activate-cost">
-                <span class="cost-label">Total Milk Cost:</span>
-                <span class="cost-value" id="activateTotalCost">
-                    <span id="activateCostAmount">0</span> 🥛
-                </span>
+            <input type="number" id="activateAmount" class="activate-custom-input" placeholder="Custom amount" min="1" value="1">
+            <div class="activate-total-cost">
+                <span class="activate-cost-label">Total Milk Cost:</span>
+                <span class="activate-cost-value" id="activateTotalCost"><span id="activateCostAmount">0</span> 🥛</span>
             </div>
-            <button class="btn btn-primary" id="activateConfirmBtn" onclick="confirmActivation()">
-                Confirm Activation
-            </button>
+            <button class="activate-confirm-btn" id="activateConfirmBtn" onclick="confirmActivation()">Confirm Activation</button>
         </div>
     </div>
 
     <!-- Upgrade Popup -->
-    <div class="modal-overlay" id="upgradePopup">
-        <div class="modal-content" style="max-width:360px">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fas fa-arrow-up" style="color:var(--crystal-blue)"></i> Upgrade Cows
+    <div class="activate-popup" id="upgradePopup">
+        <div class="activate-popup-content">
+            <div class="activate-popup-header">
+                <div class="activate-popup-title">
+                    <i class="fas fa-arrow-up"></i> Upgrade Cows
                 </div>
-                <i class="fas fa-times modal-close" onclick="closeUpgradePopup()"></i>
+                <i class="fas fa-times activate-popup-close" onclick="closeUpgradePopup()"></i>
             </div>
-            <div class="upgrade-info" id="upgradePopupInfo">
-                <div class="upgrade-level" id="upgradePopupLevel">Level 1 → Level 2</div>
-                <div class="upgrade-available" id="upgradePopupAvailable">Available: 0 cows</div>
+            <div class="activate-popup-info" id="upgradePopupInfo">
+                <div class="activate-popup-level" id="upgradePopupLevel">Level 1 → Level 2</div>
+                <div class="activate-popup-available" id="upgradePopupAvailable">Available: 0 cows</div>
             </div>
-            <div class="upgrade-presets">
-                <button class="preset-btn" onclick="setUpgradeAmount(1)">1</button>
-                <button class="preset-btn" onclick="setUpgradeAmount(5)">5</button>
-                <button class="preset-btn" onclick="setUpgradeAmount(10)">10</button>
-                <button class="preset-btn" onclick="setUpgradeAmount('all')">All</button>
+            <div class="activate-presets">
+                <button class="activate-preset-btn" onclick="setUpgradeAmount(1)">1</button>
+                <button class="activate-preset-btn" onclick="setUpgradeAmount(5)">5</button>
+                <button class="activate-preset-btn" onclick="setUpgradeAmount(10)">10</button>
+                <button class="activate-preset-btn" onclick="setUpgradeAmount('all')">All</button>
             </div>
-            <input type="number" id="upgradeAmount" class="form-input" placeholder="Custom amount" min="1" value="1">
-            <div class="upgrade-cost">
-                <span class="cost-label">Upgrade Cost:</span>
-                <span class="cost-value" id="upgradeTotalCost">
-                    <span id="upgradeCostAmount">0</span> 🥛
-                </span>
+            <input type="number" id="upgradeAmount" class="activate-custom-input" placeholder="Custom amount" min="1" value="1">
+            <div class="activate-total-cost">
+                <span class="activate-cost-label">Upgrade Cost:</span>
+                <span class="activate-cost-value" id="upgradeTotalCost"><span id="upgradeCostAmount">0</span> 🥛</span>
             </div>
-            <button class="btn btn-primary" id="upgradeConfirmBtn" onclick="confirmUpgrade()">
-                Confirm Upgrade
-            </button>
+            <button class="activate-confirm-btn" id="upgradeConfirmBtn" onclick="confirmUpgrade()">Confirm Upgrade</button>
         </div>
     </div>
 
     <!-- Buy Cows Popup -->
-    <div class="modal-overlay" id="buyCowsPopup">
-        <div class="modal-content" style="max-width:360px">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fas fa-cow" style="color:var(--neon-green)"></i> Buy Cows
+    <div class="activate-popup" id="buyCowsPopup">
+        <div class="activate-popup-content">
+            <div class="activate-popup-header">
+                <div class="activate-popup-title">
+                    <i class="fas fa-shopping-cart"></i> Buy Cows
                 </div>
-                <i class="fas fa-times modal-close" onclick="closeBuyCowsPopup()"></i>
+                <i class="fas fa-times activate-popup-close" onclick="closeBuyCowsPopup()"></i>
             </div>
-            <div class="buy-info">
-                <div class="buy-price">1 TON per cow</div>
-                <div class="buy-available" id="buyCowsAvailable">Available: 1000 cows</div>
+            <div class="activate-popup-info">
+                <div class="activate-popup-level">How many cows to buy?</div>
+                <div class="activate-popup-available" id="buyCowsAvailable">Available: 1000 cows</div>
             </div>
-            <div class="buy-presets">
-                <button class="preset-btn" onclick="setBuyAmount(1)">1</button>
-                <button class="preset-btn" onclick="setBuyAmount(5)">5</button>
-                <button class="preset-btn" onclick="setBuyAmount(10)">10</button>
-                <button class="preset-btn" onclick="setBuyAmount('max')">MAX</button>
+            <div class="activate-presets">
+                <button class="activate-preset-btn" onclick="setBuyAmount(1)">1</button>
+                <button class="activate-preset-btn" onclick="setBuyAmount(5)">5</button>
+                <button class="activate-preset-btn" onclick="setBuyAmount(10)">10</button>
+                <button class="activate-preset-btn" onclick="setBuyAmount('max')">MAX</button>
             </div>
-            <input type="number" id="buyAmount" class="form-input" placeholder="How many cows" min="1" value="1">
-            <div class="buy-cost">
-                <span class="cost-label">Total TON Cost:</span>
-                <span class="cost-value" id="buyTotalCost">
-                    <img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:16px;height:16px"> <span id="buyCostAmount">1</span>
-                </span>
+            <input type="number" id="buyCowsAmount" class="activate-custom-input" placeholder="Custom amount" min="1" value="1">
+            <div class="activate-total-cost">
+                <span class="activate-cost-label">Total TON Cost:</span>
+                <span class="activate-cost-value" id="buyCowsTotalCost"><span id="buyCowsCostAmount">1</span> TON</span>
             </div>
-            <button class="btn btn-primary" id="buyCowsConfirmBtn" onclick="confirmBuyCows()">
-                Confirm Purchase
-            </button>
+            <button class="activate-confirm-btn" id="buyCowsConfirmBtn" onclick="confirmBuyCows()">Confirm Purchase</button>
         </div>
     </div>
 
@@ -744,25 +1038,23 @@
     <div class="modal-overlay" id="sellOrderModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-tag" style="color:var(--neon-green)"></i> <span data-i18n="modal.sell.title">Sell Order</span>
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+                <h3 class="modal-title"><i class="fas fa-tag" style="color:var(--neon-green)"></i> <span data-i18n="modal.sell.title">Sell Order</span></h3>
+                <i class="fas fa-times modal-close" onclick="window.closeAllModals()"></i>
             </div>
             <div class="form-group">
                 <label class="form-label" data-i18n="modal.sell.resource">Resource</label>
-                <div class="resource-selector">
-                    <label class="resource-option">
-                        <input type="radio" name="sellResource" value="milk" checked> 🥛 <span data-i18n="market.milk">Milk</span>
+                <div style="display:flex; gap:8px">
+                    <label style="flex:1; display:flex; align-items:center; gap:4px; background:rgba(255,255,255,.03); border-radius:12px; padding:10px; cursor:pointer">
+                        <input type="radio" name="sellResource" value="milk" checked style="accent-color:var(--neon-green)"> 🥛 <span data-i18n="market.milk">Milk</span>
                     </label>
-                    <label class="resource-option">
-                        <input type="radio" name="sellResource" value="eggs"> 🥚 <span data-i18n="market.eggs">Eggs</span>
+                    <label style="flex:1; display:flex; align-items:center; gap:4px; background:rgba(255,255,255,.03); border-radius:12px; padding:10px; cursor:pointer">
+                        <input type="radio" name="sellResource" value="eggs" style="accent-color:var(--primary-pink)"> 🥚 <span data-i18n="market.eggs">Eggs</span>
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label" data-i18n="modal.sell.quantity">Quantity (min 100)</label>
-                <input type="number" id="sellQuantity" class="form-input" placeholder="1000" min="100">
+                <input type="number" id="sellQuantity" class="form-input" placeholder="1000" min="100" oninput="updateSellDetails()">
                 <div class="preset-buttons">
                     <span class="preset-btn" data-sell-percent="25">25%</span>
                     <span class="preset-btn" data-sell-percent="50">50%</span>
@@ -772,14 +1064,12 @@
             </div>
             <div class="form-group">
                 <label class="form-label">Total Price (TON)</label>
-                <input type="number" id="sellTotalPrice" class="form-input" placeholder="0.01" step="any" min="0.0001">
-                <div class="price-hint" id="sellPerUnitHint">≈ 0.0000 TON per unit</div>
-                <div class="balance-hint" id="sellBalanceHint">Available: 0 Milk</div>
-                <div class="total-result" id="sellTotalTon">Total: 0.0000 TON (You get: 0.0000 TON after 10% fee)</div>
-                <div class="fee-warning" id="sellFeeDisplay">⚠️ 10% market fee will be deducted when sold</div>
-                <div class="penalty-warning" id="sellPenaltyWarning" style="display:none">
-                    ⚠️ Price below 0.0002 TON will incur 0.2 TON penalty fee (non-refundable)
-                </div>
+                <input type="number" id="sellTotalPrice" class="form-input" placeholder="0.01" step="any" min="0.0001" oninput="updateSellDetails()">
+                <div style="font-size:10px; color:var(--text-secondary); margin-top:5px" id="sellPerUnitHint">≈ 0.0000 TON per unit</div>
+                <div style="font-size:10px; color:var(--text-muted); margin-top:5px" id="sellBalanceHint">Available: 0 Milk</div>
+                <div class="total-ton-result" id="sellTotalTon">Total: 0.0000 TON (You get: 0.0000 TON after 10% fee)</div>
+                <div style="font-size:9px; color:var(--warning); margin-top:4px" id="sellFeeDisplay">⚠️ 10% market fee will be deducted when sold</div>
+                <div style="font-size:9px; color:var(--danger-red); margin-top:4px" id="sellPenaltyWarning" style="display:none">⚠️ Price below 0.0002 TON will incur 0.2 TON penalty fee (non-refundable)</div>
             </div>
             <button class="btn btn-primary" id="submitSellOrderBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e)">
                 <i class="fas fa-check-circle"></i> <span data-i18n="modal.sell.place">Place Sell Order</span>
@@ -791,23 +1081,17 @@
     <div class="modal-overlay" id="confirmPurchaseModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-shopping-cart" style="color:var(--neon-green)"></i> <span data-i18n="modal.confirm.title">Confirm Purchase</span>
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+                <h3 class="modal-title"><i class="fas fa-shopping-cart" style="color:var(--neon-green)"></i> <span data-i18n="modal.confirm.title">Confirm Purchase</span></h3>
+                <i class="fas fa-times modal-close" onclick="window.closeAllModals()"></i>
             </div>
             <div class="confirm-card" id="confirmCard">
                 <div class="confirm-emoji" id="confirmEmoji">🥛</div>
-                <div class="confirm-title" id="confirmResource" data-i18n="modal.confirm.package">Milk Package</div>
+                <div style="font-size:16px; font-weight:700" id="confirmResource" data-i18n="modal.confirm.package">Milk Package</div>
             </div>
             <div class="confirm-details" id="confirmDetails"></div>
             <div class="confirm-buttons">
-                <button class="btn btn-secondary" onclick="closeAllModals()">
-                    <span data-i18n="modal.confirm.cancel">Cancel</span>
-                </button>
-                <button class="btn btn-primary" id="confirmExecuteBtn">
-                    <span data-i18n="modal.confirm.confirm">Confirm & Pay</span>
-                </button>
+                <button class="btn btn-secondary" onclick="window.closeAllModals()"><span data-i18n="modal.confirm.cancel">Cancel</span></button>
+                <button class="btn btn-primary" id="confirmExecuteBtn"><span data-i18n="modal.confirm.confirm">Confirm & Pay</span></button>
             </div>
         </div>
     </div>
@@ -816,10 +1100,8 @@
     <div class="modal-overlay" id="hatchModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-egg" style="color:var(--neon-green)"></i> <span data-i18n="modal.hatch.title">Hatch Machine</span>
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+                <h3 class="modal-title"><i class="fas fa-egg" style="color:var(--neon-green)"></i> <span data-i18n="modal.hatch.title">Hatch Machine</span></h3>
+                <i class="fas fa-times modal-close" onclick="window.closeAllModals()"></i>
             </div>
             <div class="hatch-option" id="hatchCowOption">
                 <div class="hatch-info">
@@ -827,9 +1109,9 @@
                     <span class="hatch-cost" data-i18n="modal.hatch.cowCost">50,000 Milk</span>
                     <span class="hatch-balance" id="hatchCowBalance">Your milk: 0</span>
                 </div>
-                <div class="hatch-controls">
+                <div style="display:flex; align-items:center; gap:5px">
                     <input type="number" id="hatchCowAmount" class="hatch-input" placeholder="1" min="1" value="1">
-                    <button class="btn btn-hatch" id="hatchCowConfirm" data-i18n="modal.hatch.hatchBtn">Hatch</button>
+                    <button class="btn btn-hatch" id="hatchCowConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button>
                 </div>
             </div>
             <div class="hatch-option" id="hatchChickenOption">
@@ -838,9 +1120,9 @@
                     <span class="hatch-cost" data-i18n="modal.hatch.chickenCost">5,000 Eggs</span>
                     <span class="hatch-balance" id="hatchChickenBalance">Your eggs: 0</span>
                 </div>
-                <div class="hatch-controls">
+                <div style="display:flex; align-items:center; gap:5px">
                     <input type="number" id="hatchChickenAmount" class="hatch-input" placeholder="1" min="1" value="1">
-                    <button class="btn btn-hatch" id="hatchChickenConfirm" data-i18n="modal.hatch.hatchBtn">Hatch</button>
+                    <button class="btn btn-hatch" id="hatchChickenConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button>
                 </div>
             </div>
         </div>
@@ -850,26 +1132,23 @@
     <div class="modal-overlay" id="depositModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-arrow-down" style="color:var(--neon-green)"></i> <span data-i18n="modal.deposit.title">Deposit TON</span>
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+                <h3 class="modal-title"><i class="fas fa-arrow-down" style="color:var(--neon-green)"></i> <span data-i18n="modal.deposit.title">Deposit TON</span></h3>
+                <i class="fas fa-times modal-close" onclick="window.closeAllModals()"></i>
             </div>
-            <div class="wallet-status" id="walletStatus">
+            <div id="walletStatus" style="display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,.03); border-radius:12px; padding:12px; margin-bottom:14px">
                 <div>
-                    <div class="wallet-label" data-i18n="modal.deposit.wallet">Wallet</div>
-                    <div class="wallet-address" id="walletAddressDisplay" data-i18n="modal.deposit.notConnected">Not connected</div>
+                    <div style="font-size:12px; font-weight:600" data-i18n="modal.deposit.wallet">Wallet</div>
+                    <div style="font-size:10px; color:var(--text-secondary)" id="walletAddressDisplay" data-i18n="modal.deposit.notConnected">Not connected</div>
                 </div>
-                <button class="btn btn-primary" id="connectWalletBtn">
+                <button class="btn btn-primary" id="connectWalletBtn" style="width:auto; padding:6px 14px">
                     <i class="fas fa-plug"></i> <span data-i18n="modal.deposit.connect">Connect</span>
                 </button>
             </div>
             <div class="deposit-warning">
                 <i class="fas fa-exclamation-triangle"></i>
-                <div>
-                    <strong data-i18n="modal.deposit.important">IMPORTANT:</strong>
-                    <span data-i18n="modal.deposit.warning">Your User ID</span>
-                    <span class="user-id-badge" id="depositUserIdDisplay"></span>
+                <div class="deposit-warning-text">
+                    <strong data-i18n="modal.deposit.important">IMPORTANT:</strong> <span data-i18n="modal.deposit.warning">Your User ID</span> 
+                    <span id="depositUserIdDisplay" style="background:rgba(255,255,255,.1); padding:2px 5px; border-radius:20px"></span> 
                     <span data-i18n="modal.deposit.mustBeComment">must be the ONLY comment</span>.
                 </div>
             </div>
@@ -899,45 +1178,45 @@
     <div class="modal-overlay" id="addTaskModal">
         <div class="modal-content" style="max-width:400px">
             <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-plus-circle" style="color:var(--neon-green)"></i> <span data-i18n="tasks.addTask">Add Community Task</span>
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+                <h3 class="modal-title"><i class="fas fa-plus-circle" style="color:var(--neon-green)"></i> <span data-i18n="tasks.addTask">Add Community Task</span></h3>
+                <i class="fas fa-times modal-close" onclick="window.closeAllModals()"></i>
             </div>
             <div class="form-group">
                 <label class="form-label" data-i18n="tasks.taskType">Task Type</label>
-                <div class="task-type-selector">
-                    <label class="task-type-option">
-                        <input type="radio" name="taskType" value="channel" checked> 📢 <span data-i18n="tasks.channel">Channel</span>
+                <div style="display:flex; gap:8px; margin-bottom:10px">
+                    <label style="flex:1; display:flex; align-items:center; gap:4px; background:rgba(255,255,255,.03); border-radius:12px; padding:10px; cursor:pointer">
+                        <input type="radio" name="taskType" value="channel" checked style="accent-color:var(--crystal-blue)"> 📢 <span data-i18n="tasks.channel">Channel</span>
                     </label>
-                    <label class="task-type-option">
-                        <input type="radio" name="taskType" value="bot"> 🤖 <span data-i18n="tasks.bot">Bot</span>
+                    <label style="flex:1; display:flex; align-items:center; gap:4px; background:rgba(255,255,255,.03); border-radius:12px; padding:10px; cursor:pointer">
+                        <input type="radio" name="taskType" value="bot" style="accent-color:var(--primary-pink)"> 🤖 <span data-i18n="tasks.bot">Bot</span>
                     </label>
                 </div>
             </div>
-            <div class="channel-note" id="channelNote" style="display:none">
-                <i class="fas fa-info-circle"></i>
+            <div class="form-group" id="channelNote" style="background:rgba(255,92,168,.1); border-radius:10px; padding:10px; margin-bottom:14px; display:none">
+                <i class="fas fa-info-circle" style="color:var(--primary-pink); margin-right:5px"></i>
                 <span data-i18n="tasks.channelNote">⚠️ Bot must be admin in the channel for verification to work!</span>
             </div>
             <div class="form-group">
                 <label class="form-label" data-i18n="tasks.link">Link</label>
-                <input type="text" id="taskLink" class="form-input" placeholder="https://t.me/...">
+                <input type="text" id="taskLink" class="form-input" placeholder="https://t.me/..." value="">
             </div>
             <div class="form-group">
                 <label class="form-label" data-i18n="tasks.targetUsers">Target Users (min 100)</label>
-                <input type="number" id="taskTarget" class="form-input" placeholder="100" min="100" value="100">
+                <input type="number" id="taskTarget" class="form-input" placeholder="100" min="100" value="100" oninput="calculateTaskPrice()">
             </div>
             <div class="form-group">
                 <label class="form-label" data-i18n="tasks.rewardPerUser">Reward Per User (TON)</label>
-                <input type="number" id="taskReward" class="form-input" value="0.001" step="0.0001" min="0.0001" readonly>
-                <div class="reward-note" data-i18n="tasks.rewardFixed">Fixed at 0.001 TON per completion</div>
+                <input type="number" id="taskReward" class="form-input" value="0.001" step="0.0001" min="0.0001" readonly style="background:rgba(255,255,255,.05); color:var(--neon-green); font-weight:600">
+                <div style="font-size:9px; color:var(--text-muted); margin-top:3px" data-i18n="tasks.rewardFixed">Fixed at 0.001 TON per completion</div>
             </div>
-            <div class="total-cost" id="taskTotalCost">Total Cost: 0.0000 TON</div>
-            <div class="balance-display">
-                <span data-i18n="tasks.yourBalance">Your Balance</span>
-                <span class="balance-amount" id="taskUserBalance">0.0000</span> TON
+            <div class="total-ton-result" id="taskTotalCost" style="margin-bottom:16px">Total Cost: 0.0000 TON</div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="tasks.yourBalance">Your Balance</label>
+                <div style="background:rgba(0,212,255,.1); border-radius:10px; padding:10px; text-align:center">
+                    <span style="font-size:16px; font-weight:700; color:var(--crystal-blue)" id="taskUserBalance">0.0000</span> TON
+                </div>
             </div>
-            <button class="btn btn-primary" id="submitTaskBtn">
+            <button class="btn btn-primary" id="submitTaskBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e); margin-top:10px">
                 <i class="fas fa-check-circle"></i> <span data-i18n="tasks.confirm">Confirm & Pay</span>
             </button>
         </div>
@@ -947,28 +1226,28 @@
     <div class="modal-overlay" id="taskVerifyModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-clipboard-check" style="color:var(--neon-green)"></i> <span data-i18n="tasks.verify">Task Verification</span>
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+                <h3 class="modal-title"><i class="fas fa-clipboard-check" style="color:var(--neon-green)"></i> <span data-i18n="tasks.verify">Task Verification</span></h3>
+                <i class="fas fa-times modal-close" onclick="window.closeAllModals()"></i>
             </div>
-            <div class="verify-content">
-                <div class="verify-emoji" id="verifyEmoji">🤖</div>
-                <div class="verify-title" id="verifyTitle">Join Channel</div>
-                <div class="verify-link" id="verifyLink">https://t.me/...</div>
-                <div class="verify-reward">
-                    <span class="reward-label" data-i18n="tasks.reward">Reward:</span>
-                    <span class="reward-amount" id="verifyReward">0.0010 TON</span>
+            <div style="text-align:center; padding:20px">
+                <div style="font-size:48px; margin-bottom:15px" id="verifyEmoji">🤖</div>
+                <div style="font-size:16px; font-weight:700; margin-bottom:5px" id="verifyTitle">Join Channel</div>
+                <div style="font-size:12px; color:var(--text-secondary); margin-bottom:20px" id="verifyLink">https://t.me/...</div>
+                <div class="confirm-details" style="margin:20px 0">
+                    <div class="confirm-row">
+                        <span class="confirm-label" data-i18n="tasks.reward">Reward:</span>
+                        <span class="confirm-value" style="color:var(--neon-green)" id="verifyReward">0.0010 TON</span>
+                    </div>
                 </div>
-                <div class="verify-actions">
-                    <a href="#" target="_blank" id="verifyJoinLink" class="verify-join-btn">
+                <div class="task-actions" style="flex-direction:column; gap:10px">
+                    <a href="#" target="_blank" id="verifyJoinLink" class="task-btn join" style="width:100%; text-decoration:none; display:inline-block; padding:8px; border-radius:20px; background:linear-gradient(145deg,var(--crystal-blue),#0099cc); color:#fff">
                         <i class="fas fa-external-link-alt"></i> <span data-i18n="tasks.join">Join</span>
                     </a>
-                    <button class="verify-check-btn" id="verifyCheckBtn">
+                    <button class="task-btn check" id="verifyCheckBtn" style="width:100%; padding:8px; border-radius:20px; background:linear-gradient(145deg,var(--neon-green),#00b35e); color:#fff; border:none; margin-top:10px">
                         <i class="fas fa-check-circle"></i> <span data-i18n="tasks.check">Verify & Claim</span>
                     </button>
                 </div>
-                <div class="verify-status" id="verifyStatus" style="display:none"></div>
+                <div id="verifyStatus" style="margin-top:15px; padding:10px; border-radius:10px; display:none"></div>
             </div>
         </div>
     </div>

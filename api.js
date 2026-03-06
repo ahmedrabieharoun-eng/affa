@@ -1,4 +1,6 @@
-// ===== CONFIGURATION =====
+// ============================================
+// CONFIGURATION
+// ============================================
 const CONFIG = {
     API_URL: 'https://noisy-dust-b9e8.mmrr2872008.workers.dev',
     BOT_USERNAME: '@Crystal_Ranch_bot',
@@ -13,46 +15,24 @@ const CONFIG = {
     MIN_ORDER_PRICE: 0.0002,
     ORDER_PENALTY_FEE: 0.2,
     COW_HATCH_COST: 50000,
-    COW_ACTIVATION_COST: {
-        1: 200,
-        2: 350,
-        3: 1200
-    },
-    COW_UPGRADE_COST: {
-        1: 6000,
-        2: 20000
-    },
-    COW_PRODUCTION_DAILY: {
-        1: 500,
-        2: 1000,
-        3: 2500
-    },
+    COW_ACTIVATION_COST: { 1: 200, 2: 350, 3: 1200 },
+    COW_UPGRADE_COST: { 1: 6000, 2: 20000 },
+    COW_PRODUCTION_DAILY: { 1: 500, 2: 1000, 3: 2500 },
     STORAGE_CAPACITY: {
-        1: 40000,
-        2: 80000,
-        3: 150000,
-        4: 300000,
-        5: 600000,
-        6: 1000000,
-        7: 2000000,
-        8: 4000000,
-        9: 8000000,
-        10: 16000000
+        1: 40000, 2: 80000, 3: 150000, 4: 300000,
+        5: 600000, 6: 1000000, 7: 2000000, 8: 4000000,
+        9: 8000000, 10: 16000000
     },
     STORAGE_UPGRADE_COST: {
-        1: 10000,
-        2: 20000,
-        3: 40000,
-        4: 80000,
-        5: 160000,
-        6: 320000,
-        7: 640000,
-        8: 1280000,
+        1: 10000, 2: 20000, 3: 40000, 4: 80000,
+        5: 160000, 6: 320000, 7: 640000, 8: 1280000,
         9: 2560000
     }
 };
 
-// ===== TRANSLATIONS =====
+// ============================================
+// TRANSLATIONS
+// ============================================
 const TRANSLATIONS = {
     en: {
         'nav.farm': 'Farm',
@@ -98,7 +78,7 @@ const TRANSLATIONS = {
         'crystal.milkAvailable': 'Milk available',
         'crystal.eggsAvailable': 'Eggs available',
         'referral.title': 'Referral Program',
-        'referral.description': 'Earn 10% commission when your friends buy machines with TON!',
+        'referral.description': 'Earn <strong style="color:var(--primary-pink); font-size:20px">10%</strong> commission when your friends buy machines with TON!',
         'referral.share': 'Share this link with friends',
         'referral.friends': 'Friends',
         'referral.claim': 'Claim Earnings',
@@ -300,7 +280,9 @@ const TRANSLATIONS = {
     }
 };
 
-// ===== LEADERBOARD INFO TRANSLATIONS =====
+// ============================================
+// LEADERBOARD INFO TRANSLATIONS
+// ============================================
 const LEADERBOARD_INFO_TRANSLATIONS = {
     en: {
         title: '🏆 How does the competition work?',
@@ -350,14 +332,52 @@ const LEADERBOARD_INFO_TRANSLATIONS = {
     }
 };
 
-// ===== API FUNCTIONS =====
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+const lastClickTimers = {};
+const CLICK_COOLDOWN = 10000;
 
-/**
- * Show notification
- * @param {string} message - Notification message
- * @param {string} type - success, error, warning, info
- * @param {number} duration - Duration in ms
- */
+function checkClickCooldown(buttonId) {
+    const now = Date.now();
+    const lastClick = lastClickTimers[buttonId] || 0;
+    const timeLeft = CLICK_COOLDOWN - (now - lastClick);
+    
+    if (timeLeft > 0) {
+        const secondsLeft = Math.ceil(timeLeft / 1000);
+        showNotification(
+            App.currentLanguage === 'ru' 
+                ? `⏳ Пожалуйста, подождите ${secondsLeft} секунд перед повторным нажатием` 
+                : `⏳ Please wait ${secondsLeft} seconds before clicking again`,
+            'warning'
+        );
+        return false;
+    }
+    
+    lastClickTimers[buttonId] = now;
+    return true;
+}
+
+async function disableButtonTemporarily(buttonElement, buttonId) {
+    if (!buttonElement) return;
+    buttonElement.disabled = true;
+    const originalText = buttonElement.innerHTML;
+    buttonElement.innerHTML = `<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CLICK_COOLDOWN / 1000)}s`;
+    
+    setTimeout(() => {
+        buttonElement.disabled = false;
+        buttonElement.innerHTML = originalText;
+    }, CLICK_COOLDOWN);
+}
+
+function validateAndCooldown(buttonId, buttonElement) {
+    if (!checkClickCooldown(buttonId)) {
+        return false;
+    }
+    disableButtonTemporarily(buttonElement, buttonId);
+    return true;
+}
+
 function showNotification(message, type = 'success', duration = 5000) {
     const container = document.getElementById('notificationContainer');
     const notification = document.createElement('div');
@@ -375,11 +395,6 @@ function showNotification(message, type = 'success', duration = 5000) {
     }, duration);
 }
 
-/**
- * Format number with full precision
- * @param {number} num - Number to format
- * @returns {string} Formatted number
- */
 function formatFullPrecision(num) {
     if (num === null || num === undefined) return '0';
     if (Math.abs(num) < 0.0001 && num !== 0) {
@@ -388,11 +403,6 @@ function formatFullPrecision(num) {
     return num.toFixed(8).replace(/\.?0+$/, '');
 }
 
-/**
- * Format TON amount
- * @param {number} amount - Amount to format
- * @returns {string} Formatted TON
- */
 function formatTON(amount) {
     if (amount === null || amount === undefined || isNaN(amount)) return '0';
     if (Math.abs(amount) < 0.0001 && amount !== 0) {
@@ -401,11 +411,6 @@ function formatTON(amount) {
     return parseFloat(amount).toFixed(4);
 }
 
-/**
- * Format number with K/M suffix
- * @param {number} num - Number to format
- * @returns {string} Formatted number
- */
 function formatNumber(num) {
     if (num === null || num === undefined) return '0';
     if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
@@ -413,14 +418,13 @@ function formatNumber(num) {
     return num.toLocaleString();
 }
 
-/**
- * Set application language
- * @param {string} lang - Language code (en/ru)
- */
+// ============================================
+// LANGUAGE FUNCTIONS
+// ============================================
 function setLanguage(lang) {
     if (!TRANSLATIONS[lang]) return;
     
-    window.App.currentLanguage = lang;
+    App.currentLanguage = lang;
     localStorage.setItem('crystal_ranch_lang', lang);
     
     document.querySelectorAll('[data-i18n]').forEach(element => {
@@ -441,18 +445,15 @@ function setLanguage(lang) {
         btn.classList.toggle('active', btn.dataset.lang === lang);
     });
     
-    if (window.App.tonConnectUI) {
-        window.App.tonConnectUI.language = lang === 'ru' ? 'ru' : 'en';
+    if (App.tonConnectUI) {
+        App.tonConnectUI.language = lang === 'ru' ? 'ru' : 'en';
     }
     
     updateLeaderboardInfoLanguage();
 }
 
-/**
- * Update leaderboard info modal language
- */
 function updateLeaderboardInfoLanguage() {
-    const lang = window.App.currentLanguage || 'en';
+    const lang = App.currentLanguage || 'en';
     const translations = LEADERBOARD_INFO_TRANSLATIONS[lang];
     
     document.getElementById('infoTitle').innerHTML = translations.title;
@@ -471,12 +472,9 @@ function updateLeaderboardInfoLanguage() {
     document.getElementById('infoPrizeList').innerHTML = prizeHtml;
 }
 
-/**
- * Call API with action
- * @param {string} action - Action name
- * @param {object} data - Data to send
- * @returns {Promise<object>} API response
- */
+// ============================================
+// API CALL FUNCTION
+// ============================================
 async function callAPI(action, data = {}) {
     try {
         const headers = {
@@ -485,8 +483,8 @@ async function callAPI(action, data = {}) {
             'X-CSRF-Token': CONFIG.CSRF_TOKEN
         };
         
-        if (window.App.telegram && window.App.telegram.initData) {
-            headers['Authorization'] = `Telegram ${window.App.telegram.initData}`;
+        if (App.telegram && App.telegram.initData) {
+            headers['Authorization'] = `Telegram ${App.telegram.initData}`;
         }
         
         const response = await fetch(`${CONFIG.API_URL}/api`, {
@@ -510,77 +508,154 @@ async function callAPI(action, data = {}) {
     }
 }
 
-// ===== CLICK COOLDOWN SYSTEM =====
-const lastClickTimers = {};
-const CLICK_COOLDOWN = 10000; // 10 seconds
+// ============================================
+// TELEGRAM SETUP
+// ============================================
+async function setupTelegram() {
+    return new Promise((resolve) => {
+        if (window.Telegram && window.Telegram.WebApp) {
+            App.telegram = window.Telegram.WebApp;
+            App.telegram.ready();
+            App.telegram.expand();
+            
+            if (App.telegram.initDataUnsafe && App.telegram.initDataUnsafe.user) {
+                const tgUser = App.telegram.initDataUnsafe.user;
+                App.userId = String(tgUser.id);
+                
+                const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim() || 'Farmer';
+                document.getElementById('profileName').innerHTML = fullName;
+                document.getElementById('profileUsername').innerHTML = tgUser.username ? `@${tgUser.username}` : '@crystal_ranch';
+                document.getElementById('profileUserId').innerHTML = `ID: ${App.userId}`;
+                document.getElementById('depositUserIdDisplay').innerHTML = App.userId;
+                
+                if (tgUser.photo_url) {
+                    const avatar = document.getElementById('profileAvatar');
+                    avatar.innerHTML = `<img src="${tgUser.photo_url}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                }
+            }
+            
+            if (App.telegram.initDataUnsafe && App.telegram.initDataUnsafe.start_param) {
+                const startParam = App.telegram.initDataUnsafe.start_param;
+                console.log('Start param:', startParam);
+                if (startParam.startsWith('ref_')) {
+                    sessionStorage.setItem('referrer', startParam);
+                }
+            }
+            resolve();
+        } else {
+            App.userId = 'demo_' + Math.floor(Math.random() * 1000000);
+            document.getElementById('profileName').innerHTML = 'Demo Farmer';
+            document.getElementById('profileUsername').innerHTML = '@demo';
+            document.getElementById('profileUserId').innerHTML = `ID: ${App.userId}`;
+            document.getElementById('depositUserIdDisplay').innerHTML = App.userId;
+            resolve();
+        }
+    });
+}
 
-/**
- * Check if button is on cooldown
- * @param {string} buttonId - Button identifier
- * @returns {boolean} - True if can click
- */
-function checkClickCooldown(buttonId) {
-    const now = Date.now();
-    const lastClick = lastClickTimers[buttonId] || 0;
-    const timeLeft = CLICK_COOLDOWN - (now - lastClick);
-    
-    if (timeLeft > 0) {
-        const secondsLeft = Math.ceil(timeLeft / 1000);
-        showNotification(
-            window.App.currentLanguage === 'ru' 
-                ? `⏳ Пожалуйста, подождите ${secondsLeft} секунд перед повторным нажатием`
-                : `⏳ Please wait ${secondsLeft} seconds before clicking again`,
-            'warning'
-        );
-        return false;
+// ============================================
+// TON CONNECT SETUP
+// ============================================
+async function initTONConnect() {
+    try {
+        if (window.TON_CONNECT_UI) {
+            const manifestUrl = `${CONFIG.API_URL}/tonconnect-manifest.json`;
+            App.tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+                manifestUrl: manifestUrl,
+                language: App.currentLanguage === 'ru' ? 'ru' : 'en',
+                uiPreferences: { theme: 'DARK' }
+            });
+            
+            App.tonConnectUI.onStatusChange((wallet) => {
+                if (wallet) {
+                    handleWalletConnected(wallet);
+                } else {
+                    handleWalletDisconnected();
+                }
+            });
+            
+            setTimeout(() => {
+                if (App.tonConnectUI.connected) {
+                    App.tonConnectUI.getWallets();
+                }
+            }, 500);
+        }
+    } catch (error) {
+        console.error('TON Connect init error:', error);
     }
-    
-    lastClickTimers[buttonId] = now;
-    return true;
 }
 
-/**
- * Disable button temporarily
- * @param {HTMLElement} buttonElement - Button element
- * @param {string} buttonId - Button identifier
- */
-async function disableButtonTemporarily(buttonElement, buttonId) {
-    if (!buttonElement) return;
+function handleWalletConnected(wallet) {
+    App.wallet = {
+        address: wallet.account.address,
+        chain: wallet.account.chain,
+        appName: wallet.device.appName
+    };
     
-    buttonElement.disabled = true;
-    const originalText = buttonElement.innerHTML;
-    buttonElement.innerHTML = `<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CLICK_COOLDOWN / 1000)}s`;
+    const display = document.getElementById('walletAddressDisplay');
+    const btn = document.getElementById('connectWalletBtn');
+    const shortAddress = `${App.wallet.address.substring(0, 6)}...${App.wallet.address.substring(App.wallet.address.length - 4)}`;
     
-    setTimeout(() => {
-        buttonElement.disabled = false;
-        buttonElement.innerHTML = originalText;
-    }, CLICK_COOLDOWN);
+    display.innerHTML = `${shortAddress} · ${App.wallet.appName}`;
+    btn.innerHTML = '<i class="fas fa-unplug"></i> ' + (App.currentLanguage === 'ru' ? 'Отключить' : 'Disconnect');
+    btn.onclick = disconnectWallet;
+    document.getElementById('submitDepositBtn').disabled = false;
 }
 
-/**
- * Validate and apply cooldown
- * @param {string} buttonId - Button identifier
- * @param {HTMLElement} buttonElement - Button element
- * @returns {boolean} - True if can proceed
- */
-function validateAndCooldown(buttonId, buttonElement) {
-    if (!checkClickCooldown(buttonId)) {
-        return false;
+function handleWalletDisconnected() {
+    App.wallet = null;
+    const display = document.getElementById('walletAddressDisplay');
+    const btn = document.getElementById('connectWalletBtn');
+    
+    display.innerHTML = App.currentLanguage === 'ru' ? 'Не подключен' : 'Not connected';
+    btn.innerHTML = '<i class="fas fa-plug"></i> ' + (App.currentLanguage === 'ru' ? 'Подключить' : 'Connect');
+    btn.onclick = connectWallet;
+    document.getElementById('submitDepositBtn').disabled = true;
+}
+
+async function connectWallet() {
+    if (App.tonConnectUI) {
+        await App.tonConnectUI.openModal();
     }
-    disableButtonTemporarily(buttonElement, buttonId);
-    return true;
 }
 
-// ===== EXPORT FUNCTIONS TO WINDOW =====
-window.CONFIG = CONFIG;
-window.TRANSLATIONS = TRANSLATIONS;
-window.LEADERBOARD_INFO_TRANSLATIONS = LEADERBOARD_INFO_TRANSLATIONS;
-window.showNotification = showNotification;
-window.formatFullPrecision = formatFullPrecision;
-window.formatTON = formatTON;
-window.formatNumber = formatNumber;
-window.setLanguage = setLanguage;
-window.updateLeaderboardInfoLanguage = updateLeaderboardInfoLanguage;
-window.callAPI = callAPI;
-window.checkClickCooldown = checkClickCooldown;
-window.validateAndCooldown = validateAndCooldown;
+async function disconnectWallet() {
+    if (App.tonConnectUI) {
+        await App.tonConnectUI.disconnect();
+    }
+}
+
+// ============================================
+// INITIALIZE USER
+// ============================================
+async function initializeUser() {
+    try {
+        const referrer = sessionStorage.getItem('referrer');
+        const startParam = referrer || null;
+        const tgUser = App.telegram?.initDataUnsafe?.user;
+        
+        const userInfo = tgUser ? {
+            first_name: tgUser.first_name,
+            last_name: tgUser.last_name,
+            username: tgUser.username,
+            photo_url: tgUser.photo_url
+        } : null;
+        
+        const response = await fetch(`${CONFIG.API_URL}/api`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Telegram ${App.telegram?.initData || ''}`,
+                'X-Action': 'initializeUser',
+                'X-CSRF-Token': CONFIG.CSRF_TOKEN
+            },
+            body: JSON.stringify({ action: 'initializeUser', data: { startParam, userInfo } })
+        });
+        
+        const result = await response.json();
+        console.log('Initialize user result:', result);
+        return result;
+    } catch (error) {
+        console.error('Init user error:', error);
+    }
+}

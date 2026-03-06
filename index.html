@@ -436,128 +436,35 @@
             color: var(--primary-pink);
         }
         
-        /* ===== RANCH STYLES ===== */
-        .ranch-card {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            transition: transform 0.2s;
-            animation: fade-in 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .ranch-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,92,168,0.1) 0%, transparent 70%);
-            animation: spin-slow 20s infinite linear;
-            z-index: -1;
-        }
-        
-        .ranch-card:hover {
-            transform: translateY(-2px);
-        }
-        
-        .level-card {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .level-card:hover {
-            transform: translateX(4px);
-            box-shadow: 0 0 20px rgba(255,215,0,0.2);
-        }
-        
-        .storage-card {
-            background: linear-gradient(145deg, #1a2a3a, #0f1a24);
-            border-radius: 24px;
-            padding: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .storage-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            animation: shine 3s infinite;
-        }
-        
-        .storage-full-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: var(--danger-red);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 600;
-            animation: pulse-glow 1.5s infinite;
-        }
-        
-        .glass-effect {
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .counter-number {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(145deg, var(--crystal-blue), var(--primary-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* ===== MACHINE STYLES - All machines same size ===== */
-        .farm-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        
+        /* ===== MACHINE CARDS - كلها بنفس حجم Crystal ===== */
         .machine-card {
+            width: 100%;
+            max-width: 100%;
             background: var(--glass-strong);
             backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 16px;
+            margin-bottom: 16px;
             position: relative;
             overflow: hidden;
             transition: transform 0.2s;
             animation: fade-in 0.5s ease;
-            width: 100%;
-            cursor: pointer;
-        }
-        
-        .machine-card:hover {
-            transform: scale(1.01);
         }
         
         .machine-card.cow {
             border-left: 4px solid var(--primary-pink);
-            cursor: pointer;
+            background: linear-gradient(145deg, rgba(20,30,40,0.95), rgba(10,15,25,0.98));
         }
         
         .machine-card.chicken {
             border-left: 4px solid var(--neon-green);
+            background: linear-gradient(145deg, rgba(20,30,40,0.95), rgba(10,15,25,0.98));
         }
         
         .machine-card.diamond {
             border-left: 4px solid var(--crystal-blue);
-            background: linear-gradient(145deg, rgba(0, 212, 255, 0.1), var(--glass-strong));
+            background: linear-gradient(145deg, rgba(0,212,255,0.1), rgba(10,15,25,0.98));
         }
         
         .machine-card.locked {
@@ -630,17 +537,16 @@
         }
         
         .machine-name {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
         }
         
         .machine-badge {
             font-size: 10px;
             font-weight: 600;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.2px;
         }
         
         .badge-available {
@@ -670,21 +576,21 @@
         .machine-price {
             display: flex;
             align-items: center;
-            gap: 3px;
-            font-size: 12px;
+            gap: 5px;
+            font-size: 13px;
             color: var(--text-secondary);
         }
         
         .machine-price i {
             color: var(--crystal-blue);
-            font-size: 11px;
+            font-size: 12px;
         }
         
         .machine-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.2);
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 18px;
             padding: 12px;
             margin-bottom: 12px;
@@ -702,7 +608,7 @@
         }
         
         .stat-number {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
         }
         
@@ -737,35 +643,561 @@
             transition: width 0.3s ease;
         }
         
-        /* Cow card specific - Open Ranch button */
-        .cow-footer {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 10px;
-        }
-        
-        .open-ranch-btn {
+        /* زر Open Ranch فقط - في كارت البقرة */
+        .ranch-button {
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             border: none;
             border-radius: 30px;
-            padding: 8px 16px;
+            padding: 10px 16px;
             color: white;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 13px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 4px 12px var(--pink-glow);
+            width: fit-content;
+            float: right;
+            margin-top: 8px;
         }
         
-        .open-ranch-btn i {
+        .ranch-button i {
+            font-size: 14px;
+        }
+        
+        .ranch-button:active {
+            transform: scale(0.96);
+        }
+        
+        /* تعديل: الخانات الزجاجية الشفافة */
+        .glass-stat-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 14px;
+        }
+        
+        .stat-value-green {
+            color: var(--neon-green);
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .stat-value-red {
+            color: var(--danger-red);
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .stat-value-blue {
+            color: var(--crystal-blue);
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .level-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .level-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 0 20px rgba(255,215,0,0.2);
+        }
+        
+        .storage-card {
+            background: linear-gradient(145deg, #1a2a3a, #0f1a24);
+            border-radius: 24px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .storage-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        .storage-full-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--danger-red);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            animation: pulse-glow 1.5s infinite;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .counter-number {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(145deg, var(--crystal-blue), var(--primary-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* ===== LEADERBOARD STYLES ===== */
+        .leaderboard-header {
+            background: linear-gradient(145deg, rgba(106, 13, 173, 0.8), rgba(193, 67, 255, 0.8));
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .leaderboard-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            justify-content: center;
+            position: relative;
+        }
+        
+        .leaderboard-title i {
+            color: #FFD700;
+            font-size: 28px;
+            animation: trophy-glow 2s infinite;
+        }
+        
+        .leaderboard-help-icon {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .leaderboard-help-icon:hover {
+            background: #FFD700;
+            color: black;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prize-pool {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 40px;
+            padding: 8px 16px;
+            margin-bottom: 12px;
+            border: 1px solid #FFD700;
+        }
+        
+        .prize-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .prize-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .prize-amount span {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .leaderboard-note {
+            background: rgba(255, 215, 0, 0.15);
+            border-radius: 20px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            text-align: center;
+            border: 1px dashed #FFD700;
+        }
+        
+        .leaderboard-note i {
+            color: #FFD700;
+            margin-right: 4px;
+        }
+        
+        .progress-counter {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 24px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        
+        .counter-main {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--crystal-blue);
+            margin-bottom: 4px;
+        }
+        
+        .counter-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        
+        .counter-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .counter-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--crystal-blue), var(--primary-pink));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .end-message {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 8px;
+            font-size: 11px;
+            color: var(--warning);
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .end-message i {
+            margin-right: 4px;
+            color: #FFD700;
+        }
+        
+        .your-position-card {
+            background: linear-gradient(145deg, rgba(255, 92, 168, 0.2), rgba(0, 212, 255, 0.2));
+            border-radius: 30px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .position-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+        
+        .position-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            min-width: 70px;
+        }
+        
+        .position-value {
+            font-size: 20px;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: #FFD700;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .stats-row {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+        
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 30px;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .stat-box-label {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        
+        .stat-box-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--crystal-blue);
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        
+        .prize-badge {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid #FFD700;
+            border-radius: 30px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .prize-badge i {
+            color: #FFD700;
+        }
+        
+        .prize-badge img {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+        }
+        
+        .leaderboard-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .leaderboard-card {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .leaderboard-card:hover {
+            transform: translateX(4px);
+            border-color: rgba(255, 92, 168, 0.3);
+        }
+        
+        .leaderboard-card.top-1 {
+            background: linear-gradient(145deg, #2a1b3d, #4a1f4a);
+            border: 2px solid #FFD700;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .leaderboard-card.top-2 {
+            background: linear-gradient(145deg, #1a2a3a, #2a3a4a);
+            border: 2px solid #C0C0C0;
+        }
+        
+        .leaderboard-card.top-3 {
+            background: linear-gradient(145deg, #2a1a1a, #3a2a1a);
+            border: 2px solid #CD7F32;
+        }
+        
+        .card-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .rank-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .rank-badge.gold {
+            background: var(--leaderboard-gold-gradient);
+            color: #000;
+            border: 2px solid #FFD700;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        .rank-badge.silver {
+            background: var(--leaderboard-silver-gradient);
+            color: #000;
+            border: 2px solid #C0C0C0;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        .rank-badge.bronze {
+            background: var(--leaderboard-bronze-gradient);
+            color: #000;
+            border: 2px solid #CD7F32;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 2px;
+        }
+        
+        .user-name {
+            font-size: 15px;
+            font-weight: 700;
+        }
+        
+        .user-crown {
+            color: #FFD700;
+            font-size: 14px;
+        }
+        
+        .points-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .points-box {
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 30px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--crystal-blue);
+        }
+        
+        .points-box i {
+            color: var(--crystal-blue);
+            font-size: 14px;
+        }
+        
+        .prize-pill {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid #FFD700;
+            border-radius: 30px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFD700;
+        }
+        
+        .prize-pill i {
+            color: #FFD700;
+            font-size: 14px;
+        }
+        
+        .prize-pill img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+        
+        .winners-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        
+        .winners-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .winners-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .winner-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 8px 12px;
             font-size: 12px;
         }
         
-        .open-ranch-btn:active {
-            transform: scale(0.96);
+        .winner-rank {
+            font-weight: 700;
+            color: #FFD700;
+            margin-right: 10px;
+        }
+        
+        .winner-name {
+            flex: 1;
+            color: var(--text-secondary);
+        }
+        
+        .winner-prize {
+            color: #FFD700;
+            font-weight: 600;
+        }
+        
+        .farm-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
         
         .crystal-recipe {
@@ -1715,50 +2147,11 @@
             transform: scale(0.98);
         }
         
-        /* Ranch Overview styles */
-        .glass-stat {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
-            padding: 14px;
-        }
-        
-        .active-stat {
-            background: rgba(0, 242, 122, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 242, 122, 0.3);
-        }
-        
-        .inactive-stat {
-            background: rgba(255, 75, 92, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 75, 92, 0.3);
-        }
-        
-        .activation-timer {
-            font-size: 10px;
-            color: var(--warning);
-            background: rgba(255, 180, 0, 0.1);
-            padding: 4px 8px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 5px;
-        }
-        
-        .activation-timer i {
-            font-size: 8px;
-            margin-right: 4px;
-        }
-        
         @media (max-width: 400px) {
             .status-value { font-size: 14px; }
             .machine-emoji { width: 50px; height: 50px; }
-            .machine-name { font-size: 14px; }
-            .stat-number { font-size: 18px; }
+            .machine-name { font-size: 16px; }
+            .stat-number { font-size: 16px; }
             .market-stats { grid-template-columns: 1fr 1fr; gap: 6px; }
             .ton-amount { font-size: 13px; }
             .mining-timer { font-size: 11px; padding: 4px 8px; }
@@ -2062,173 +2455,170 @@
             </div>
         </div>
         
+        <!-- ===== صفحة Farm الرئيسية ===== -->
         <div id="sectionFarm" class="section active">
-            <div class="farm-grid">
-                <!-- Cow Machine Card - Click to open Ranch -->
-                <div class="machine-card cow" id="cowCard" onclick="openRanchFromCow()">
-                    <div class="machine-header">
-                        <div class="machine-emoji float-slow">
-                            <img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow Machine">
-                        </div>
-                        <div class="machine-info">
-                            <div class="machine-name-row">
-                                <span class="machine-name" data-i18n="farm.cow.name">Cow</span>
-                                <span class="machine-badge" id="cowBadge">Available</span>
-                            </div>
-                            <div class="machine-price">
-                                <i class="fas fa-bolt"></i> 1 TON
-                            </div>
-                        </div>
+            <!-- ماكينة البقرة (Cow Machine) - ثلاثي Vertical -->
+            <div class="machine-card cow" id="cowCard" onclick="window.location.href='#sectionRanch'; document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById('sectionRanch').classList.add('active'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));">
+                <div class="machine-header">
+                    <div class="machine-emoji float-slow">
+                        <img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow Machine">
                     </div>
-                    
-                    <div class="machine-stats">
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.prod">Prod</div>
-                            <div class="stat-number">41 <span class="stat-unit">/h</span></div>
+                    <div class="machine-info">
+                        <div class="machine-name-row">
+                            <span class="machine-name" data-i18n="farm.cow.name">Cow</span>
+                            <span class="machine-badge" id="cowBadge">Available</span>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.owned">Owned</div>
-                            <div class="stat-number" id="cowsOwned">0</div>
+                        <div class="machine-price">
+                            <i class="fas fa-bolt"></i> 1 TON
                         </div>
-                    </div>
-                    
-                    <div class="progress-section">
-                        <div class="progress-header">
-                            <span data-i18n="farm.supply">Supply</span>
-                            <span id="cowProgressText">0/1000</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="cowProgressFill" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Only Open Ranch button -->
-                    <div class="cow-footer">
-                        <button class="open-ranch-btn" onclick="event.stopPropagation(); openRanchFromCow()">
-                            <i class="fas fa-arrow-right"></i> OPEN RANCH
-                        </button>
                     </div>
                 </div>
                 
-                <!-- Chicken Machine Card -->
-                <div class="machine-card chicken" id="chickenCard">
-                    <div class="machine-header">
-                        <div class="machine-emoji float-slow">
-                            <img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken Machine">
-                        </div>
-                        <div class="machine-info">
-                            <div class="machine-name-row">
-                                <span class="machine-name" data-i18n="farm.chicken.name">Chicken</span>
-                                <span class="machine-badge" id="chickenBadge">Locked</span>
-                            </div>
-                            <div class="machine-price">
-                                <i class="fas fa-bolt"></i> 1 TON
-                            </div>
-                        </div>
+                <div class="machine-stats">
+                    <div class="stat-item">
+                        <div class="stat-label" data-i18n="farm.prod">Prod</div>
+                        <div class="stat-number">41 <span class="stat-unit">/h</span></div>
                     </div>
-                    
-                    <div class="machine-stats">
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.prod">Prod</div>
-                            <div class="stat-number">41 <span class="stat-unit">/h</span></div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.owned">Owned</div>
-                            <div class="stat-number" id="chickensOwned">0</div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-section">
-                        <div class="progress-header">
-                            <span data-i18n="farm.supply">Supply</span>
-                            <span id="chickenProgressText">0/1000</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="chickenProgressFill" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" id="buyChickenBtn" disabled>
-                            <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
-                        </button>
-                        <button class="btn btn-hatch" id="hatchChickenBtn">
-                            <i class="fas fa-egg"></i> <span data-i18n="farm.hatch">Hatch</span>
-                        </button>
-                    </div>
-                    
-                    <div class="locked-overlay" id="chickenLockedOverlay" style="display: flex;">
-                        <div class="big-lock">🔒</div>
-                        <div class="unlock-timer" id="chickenUnlockTimer"></div>
+                    <div class="stat-item">
+                        <div class="stat-label" data-i18n="farm.owned">Owned</div>
+                        <div class="stat-number" id="cowsOwned">0</div>
                     </div>
                 </div>
                 
-                <!-- Crystal Engine Card -->
-                <div class="machine-card diamond" id="diamondCard">
-                    <div class="machine-header">
-                        <div class="machine-emoji spin-slow">
-                            <img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal Engine">
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span data-i18n="farm.supply">Supply</span>
+                        <span id="cowProgressText">0/1000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="cowProgressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <!-- زر Open Ranch فقط -->
+                <button class="ranch-button" id="ranchCowBtn" onclick="event.stopPropagation(); document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById('sectionRanch').classList.add('active'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));">
+                    <i class="fas fa-door-open"></i> Open Ranch
+                </button>
+            </div>
+            
+            <!-- ماكينة الدجاج (Chicken Machine) -->
+            <div class="machine-card chicken" id="chickenCard">
+                <div class="machine-header">
+                    <div class="machine-emoji float-slow">
+                        <img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken Machine">
+                    </div>
+                    <div class="machine-info">
+                        <div class="machine-name-row">
+                            <span class="machine-name" data-i18n="farm.chicken.name">Chicken</span>
+                            <span class="machine-badge" id="chickenBadge">Locked</span>
                         </div>
-                        <div class="machine-info">
-                            <div class="machine-name-row">
-                                <span class="machine-name" data-i18n="farm.crystal.name">Crystal Engine</span>
-                                <span class="machine-badge" id="diamondBadge">Locked</span>
-                            </div>
-                            <div class="machine-price">
-                                <i class="fas fa-bolt"></i> 20 TON
-                            </div>
+                        <div class="machine-price">
+                            <i class="fas fa-bolt"></i> 1 TON
                         </div>
                     </div>
-                    
-                    <div class="crystal-recipe">
-                        <div class="crystal-recipe-item">
-                            <span class="crystal-recipe-emoji">🥛</span>
-                            <span>20k</span>
+                </div>
+                
+                <div class="machine-stats">
+                    <div class="stat-item">
+                        <div class="stat-label" data-i18n="farm.prod">Prod</div>
+                        <div class="stat-number">41 <span class="stat-unit">/h</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label" data-i18n="farm.owned">Owned</div>
+                        <div class="stat-number" id="chickensOwned">0</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span data-i18n="farm.supply">Supply</span>
+                        <span id="chickenProgressText">0/1000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="chickenProgressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="buyChickenBtn" disabled>
+                        <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
+                    </button>
+                    <button class="btn btn-hatch" id="hatchChickenBtn">
+                        <i class="fas fa-egg"></i> <span data-i18n="farm.hatch">Hatch</span>
+                    </button>
+                </div>
+                
+                <div class="locked-overlay" id="chickenLockedOverlay" style="display: flex;">
+                    <div class="big-lock">🔒</div>
+                    <div class="unlock-timer" id="chickenUnlockTimer"></div>
+                </div>
+            </div>
+            
+            <!-- ماكينة الكريستال (Crystal Engine) -->
+            <div class="machine-card diamond" id="diamondCard">
+                <div class="machine-header">
+                    <div class="machine-emoji spin-slow">
+                        <img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal Engine">
+                    </div>
+                    <div class="machine-info">
+                        <div class="machine-name-row">
+                            <span class="machine-name" data-i18n="farm.crystal.name">Crystal Engine</span>
+                            <span class="machine-badge" id="diamondBadge">Locked</span>
                         </div>
-                        <span class="crystal-recipe-plus">+</span>
-                        <div class="crystal-recipe-item">
-                            <span class="crystal-recipe-emoji">🥚</span>
-                            <span>20k</span>
-                        </div>
-                        <span class="crystal-recipe-equal">=</span>
-                        <div class="crystal-recipe-item">
-                            <span class="crystal-recipe-emoji">💎</span>
-                            <span>1</span>
+                        <div class="machine-price">
+                            <i class="fas fa-bolt"></i> 20 TON
                         </div>
                     </div>
-                    
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 14px; background: rgba(0,0,0,0.2); border-radius: 14px; padding: 8px;">
-                        <div style="text-align: center; flex: 1;">
-                            <div style="font-size: 10px; color: var(--text-muted);" data-i18n="farm.owned">Owned</div>
-                            <div style="font-size: 16px; font-weight: 700;" id="diamondEnginesOwned">0</div>
-                        </div>
-                        <div style="text-align: center; flex: 1;">
-                            <div style="font-size: 10px; color: var(--text-muted);" data-i18n="farm.yield">Yield</div>
-                            <div style="font-size: 16px; font-weight: 700;">1 💎</div>
-                        </div>
+                </div>
+                
+                <div class="crystal-recipe">
+                    <div class="crystal-recipe-item">
+                        <span class="crystal-recipe-emoji">🥛</span>
+                        <span>20k</span>
                     </div>
-                    
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" id="buyDiamondBtn" disabled>
-                            <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
-                        </button>
-                        <button class="btn btn-hatch" id="startDiamondBtn" disabled>
-                            <i class="fas fa-play"></i> <span data-i18n="farm.start">Start</span>
-                        </button>
+                    <span class="crystal-recipe-plus">+</span>
+                    <div class="crystal-recipe-item">
+                        <span class="crystal-recipe-emoji">🥚</span>
+                        <span>20k</span>
                     </div>
-                    
-                    <div class="locked-overlay" id="diamondLockedOverlay" style="display: flex;">
-                        <div class="big-lock">🔒</div>
-                        <div class="unlock-timer" id="diamondUnlockTimer"></div>
+                    <span class="crystal-recipe-equal">=</span>
+                    <div class="crystal-recipe-item">
+                        <span class="crystal-recipe-emoji">💎</span>
+                        <span>1</span>
                     </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-bottom: 14px; background: rgba(0,0,0,0.2); border-radius: 14px; padding: 8px;">
+                    <div style="text-align: center; flex: 1;">
+                        <div style="font-size: 10px; color: var(--text-muted);" data-i18n="farm.owned">Owned</div>
+                        <div style="font-size: 16px; font-weight: 700;" id="diamondEnginesOwned">0</div>
+                    </div>
+                    <div style="text-align: center; flex: 1;">
+                        <div style="font-size: 10px; color: var(--text-muted);" data-i18n="farm.yield">Yield</div>
+                        <div style="font-size: 16px; font-weight: 700;">1 💎</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="buyDiamondBtn" disabled>
+                        <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
+                    </button>
+                    <button class="btn btn-hatch" id="startDiamondBtn" disabled>
+                        <i class="fas fa-play"></i> <span data-i18n="farm.start">Start</span>
+                    </button>
+                </div>
+                
+                <div class="locked-overlay" id="diamondLockedOverlay" style="display: flex;">
+                    <div class="big-lock">🔒</div>
+                    <div class="unlock-timer" id="diamondUnlockTimer"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Ranch Section -->
+        <!-- ===== صفحة Ranch ===== -->
         <div id="sectionRanch" class="section">
-            <!-- Ranch Overview Card -->
-            <div class="ranch-card" style="background: linear-gradient(145deg, rgba(20,30,40,0.95), rgba(10,15,25,0.98)); border: 2px solid var(--primary-pink); border-radius: 24px; padding: 16px; margin-bottom: 16px; position: relative; overflow: hidden;">
+            <!-- بطاقة RANCH OVERVIEW - مع التعديلات المطلوبة -->
+            <div class="ranch-card">
                 <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary-pink), var(--crystal-blue), var(--neon-green));"></div>
                 
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
@@ -2242,8 +2632,8 @@
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-                    <!-- Total Cows - Glass effect -->
-                    <div class="glass-stat">
+                    <!-- خانة Total Cows - Glass effect -->
+                    <div class="glass-stat-box">
                         <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
                             <i class="fas fa-cow"></i> Total Cows
                         </div>
@@ -2251,22 +2641,21 @@
                             <span class="counter-number" id="ranchTotalCows" style="font-size: 32px; font-weight: 800;">0</span>
                         </div>
                         <div style="display: flex; gap: 16px; margin-top: 8px;">
-                            <div class="active-stat" style="padding: 4px 8px; border-radius: 12px;"><span style="color: var(--neon-green);">🟢 Active:</span> <span id="ranchActiveCows" style="font-weight: 600;">0</span></div>
-                            <div class="inactive-stat" style="padding: 4px 8px; border-radius: 12px;"><span style="color: var(--danger-red);">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight: 600;">0</span></div>
+                            <div><span style="color: var(--neon-green);">🟢 Active:</span> <span id="ranchActiveCows" style="font-weight: 600; color: var(--neon-green);">0</span></div>
+                            <div><span style="color: var(--danger-red);">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight: 600; color: var(--danger-red);">0</span></div>
                         </div>
                     </div>
                     
-                    <!-- Production - Only milk per hour -->
-                    <div class="glass-stat">
+                    <!-- خانة Production - Milk per hour فقط -->
+                    <div class="glass-stat-box">
                         <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
-                            <i class="fas fa-chart-line"></i> Milk Production
+                            <i class="fas fa-chart-line"></i> Milk per hour
                         </div>
                         <div style="font-size: 32px; font-weight: 800; color: var(--crystal-blue);" id="ranchHourlyProduction">0</div>
-                        <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">per hour</div>
                     </div>
                 </div>
                 
-                <!-- Global Cow Sales Progress -->
+                <!-- تقدم مبيعات البقر -->
                 <div style="background: rgba(0,0,0,0.3); border-radius: 20px; padding: 14px; margin-bottom: 16px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <span style="font-size: 12px; color: var(--text-secondary);"><i class="fas fa-chart-simple" style="margin-right: 4px;"></i>Global Cow Sales</span>
@@ -2279,13 +2668,13 @@
                     </div>
                 </div>
                 
-                <!-- Buy Cow Button -->
+                <!-- زر شراء بقرة -->
                 <button class="btn btn-primary pulse-pink" id="ranchBuyCowBtn" style="width: 100%; padding: 16px; font-size: 16px; border-radius: 40px;">
                     <i class="fas fa-cart-plus"></i> BUY COW (1 TON)
                 </button>
             </div>
 
-            <!-- COW LEVELS Card -->
+            <!-- بطاقة COW LEVELS مع إظهار وقت انتهاء التفعيل -->
             <div class="ranch-card" style="background: linear-gradient(145deg, rgba(30,20,40,0.95), rgba(20,10,30,0.98)); border: 2px solid var(--crystal-blue); border-radius: 24px; padding: 16px; margin-bottom: 16px;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                     <div style="width: 40px; height: 40px; background: linear-gradient(145deg, var(--crystal-blue), var(--neon-green)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -2294,7 +2683,7 @@
                     <h2 style="font-size: 20px; font-weight: 700;">📊 COW LEVELS</h2>
                 </div>
                 
-                <!-- Level 1 -->
+                <!-- المستوى 1 -->
                 <div class="level-card" style="background: rgba(255,255,255,0.03); border-radius: 20px; padding: 14px; margin-bottom: 12px; border-left: 4px solid #FFD700; transition: all 0.3s;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -2311,18 +2700,19 @@
                         </div>
                     </div>
                     
-                    <!-- Active cows and timer -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-clock" style="color: var(--neon-green); font-size: 12px;"></i>
-                            <span style="font-size: 11px;">Active cows:</span>
+                    <!-- البقر النشط ووقت انتهاء التفعيل -->
+                    <div style="display: flex; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-clock" style="color: var(--neon-green); font-size: 12px;"></i>
+                                <span style="font-size: 11px;">Active cows:</span>
+                            </div>
+                            <span style="font-weight: 700; color: var(--neon-green);" id="level1Active">0</span>
                         </div>
-                        <span style="font-weight: 700; color: var(--neon-green);" id="level1Active">0</span>
-                    </div>
-                    
-                    <!-- Activation timer display -->
-                    <div id="level1Timer" class="activation-timer" style="margin-bottom: 10px; display: none;">
-                        <i class="fas fa-hourglass-half"></i> Activation ends in: <span id="level1TimeLeft">00:00</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center;" id="level1ExpiryContainer">
+                            <span style="font-size: 10px; color: var(--text-muted);">Expires in:</span>
+                            <span style="font-weight: 600; color: var(--warning);" id="level1Expiry">--:--:--</span>
+                        </div>
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -2335,7 +2725,7 @@
                     </div>
                 </div>
                 
-                <!-- Level 2 -->
+                <!-- المستوى 2 -->
                 <div class="level-card" style="background: rgba(255,255,255,0.03); border-radius: 20px; padding: 14px; margin-bottom: 12px; border-left: 4px solid #C0C0C0;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -2352,17 +2742,19 @@
                         </div>
                     </div>
                     
-                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-clock" style="color: var(--neon-green); font-size: 12px;"></i>
-                            <span style="font-size: 11px;">Active cows:</span>
+                    <!-- البقر النشط ووقت انتهاء التفعيل -->
+                    <div style="display: flex; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-clock" style="color: var(--neon-green); font-size: 12px;"></i>
+                                <span style="font-size: 11px;">Active cows:</span>
+                            </div>
+                            <span style="font-weight: 700; color: var(--neon-green);" id="level2Active">0</span>
                         </div>
-                        <span style="font-weight: 700; color: var(--neon-green);" id="level2Active">0</span>
-                    </div>
-                    
-                    <!-- Activation timer display -->
-                    <div id="level2Timer" class="activation-timer" style="margin-bottom: 10px; display: none;">
-                        <i class="fas fa-hourglass-half"></i> Activation ends in: <span id="level2TimeLeft">00:00</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center;" id="level2ExpiryContainer">
+                            <span style="font-size: 10px; color: var(--text-muted);">Expires in:</span>
+                            <span style="font-weight: 600; color: var(--warning);" id="level2Expiry">--:--:--</span>
+                        </div>
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -2375,7 +2767,7 @@
                     </div>
                 </div>
                 
-                <!-- Level 3 -->
+                <!-- المستوى 3 -->
                 <div class="level-card" style="background: rgba(255,255,255,0.03); border-radius: 20px; padding: 14px; border-left: 4px solid #CD7F32;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -2392,17 +2784,19 @@
                         </div>
                     </div>
                     
-                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-clock" style="color: var(--neon-green); font-size: 12px;"></i>
-                            <span style="font-size: 11px;">Active cows:</span>
+                    <!-- البقر النشط ووقت انتهاء التفعيل -->
+                    <div style="display: flex; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.3); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-clock" style="color: var(--neon-green); font-size: 12px;"></i>
+                                <span style="font-size: 11px;">Active cows:</span>
+                            </div>
+                            <span style="font-weight: 700; color: var(--neon-green);" id="level3Active">0</span>
                         </div>
-                        <span style="font-weight: 700; color: var(--neon-green);" id="level3Active">0</span>
-                    </div>
-                    
-                    <!-- Activation timer display -->
-                    <div id="level3Timer" class="activation-timer" style="margin-bottom: 10px; display: none;">
-                        <i class="fas fa-hourglass-half"></i> Activation ends in: <span id="level3TimeLeft">00:00</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center;" id="level3ExpiryContainer">
+                            <span style="font-size: 10px; color: var(--text-muted);">Expires in:</span>
+                            <span style="font-weight: 600; color: var(--warning);" id="level3Expiry">--:--:--</span>
+                        </div>
                     </div>
                     
                     <button class="btn btn-hatch" style="background: rgba(0,242,122,0.2); width: 100%;" onclick="openActivateModal(3)">
@@ -2411,7 +2805,7 @@
                 </div>
             </div>
 
-            <!-- MILK STORAGE Card -->
+            <!-- بطاقة MILK STORAGE -->
             <div class="storage-card" style="background: linear-gradient(145deg, #1a2a3a, #0f1a24); border-radius: 24px; padding: 16px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
                 <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
                 
@@ -2452,17 +2846,19 @@
                     <button class="btn btn-primary" id="claimMilkBtn" style="background: linear-gradient(145deg, var(--neon-green), #00b35e);">
                         <i class="fas fa-hand-holding-heart"></i> CLAIM
                     </button>
-                    <button class="btn btn-primary" id="upgradeStorageBtn" style="background: linear-gradient(145deg, var(--crystal-blue), #0099cc);" onclick="openStorageUpgradeModal()">
+                    <button class="btn btn-primary" id="upgradeStorageBtn" style="background: linear-gradient(145deg, var(--crystal-blue), #0099cc);">
                         <i class="fas fa-arrow-up"></i> UPGRADE
                     </button>
                 </div>
                 
+                <!-- علامة Inactive إذا كان المخزن ممتلئ -->
                 <div id="storageFullBadge" style="display: none; position: absolute; top: 16px; right: 16px; background: var(--danger-red); color: white; padding: 6px 12px; border-radius: 30px; font-size: 11px; font-weight: 600; animation: pulse-glow 1.5s infinite;">
                     ⚠️ INACTIVE
                 </div>
             </div>
         </div>
         
+        <!-- باقي الصفحات (Market, Crystal, Friends, Tasks, Profile) كما هي -->
         <div id="sectionMarket" class="section">
             <div class="card">
                 <div class="card-title">
@@ -2792,6 +3188,7 @@
         </div>
     </div>
 
+    <!-- شريط التنقل السفلي (تم حذف Ranch) -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-section="sectionFarm">
             <div class="nav-icon">🚜</div>
@@ -2819,7 +3216,7 @@
         </div>
     </nav>
 
-    <!-- Modals -->
+    <!-- باقي المودالات كما هي -->
     <div class="modal-overlay" id="sellOrderModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3076,50 +3473,54 @@
         </div>
     </div>
 
-    <!-- Storage Upgrade Modal -->
-    <div class="modal-overlay" id="storageUpgradeModal">
+    <!-- مودال ترقية مخزن الحليب -->
+    <div class="modal-overlay" id="upgradeStorageModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">
-                    <i class="fas fa-arrow-up" style="color: var(--crystal-blue);"></i> Upgrade Storage
+                    <i class="fas fa-arrow-up" style="color: var(--crystal-blue);"></i> Upgrade Milk Storage
                 </h3>
                 <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
             </div>
             
-            <div style="text-align: center; margin-bottom: 16px;">
+            <div style="text-align: center; margin-bottom: 16px;" id="upgradeStorageDetails">
                 <div style="font-size: 48px; margin-bottom: 8px;">📦 → 📦</div>
-                <div style="font-size: 16px; font-weight: 700;" id="storageUpgradeTitle">Level 1 → Level 2</div>
+                <div style="font-size: 16px; font-weight: 700;" id="upgradeStorageTitle">Level 1 → Level 2</div>
             </div>
             
             <div style="background: rgba(0,0,0,0.3); border-radius: 14px; padding: 12px; margin-bottom: 16px;">
                 <div class="confirm-row">
                     <span class="confirm-label">Current Capacity:</span>
-                    <span class="confirm-value" id="storageCurrentCapacity">2,000 🥛</span>
+                    <span class="confirm-value" id="currentCapacity">2,000 🥛</span>
                 </div>
                 <div class="confirm-row">
-                    <span class="confirm-label">Next Capacity:</span>
-                    <span class="confirm-value" style="color: var(--neon-green);" id="storageNextCapacity">5,000 🥛</span>
+                    <span class="confirm-label">New Capacity:</span>
+                    <span class="confirm-value" style="color: var(--neon-green);" id="newCapacity">5,000 🥛</span>
+                </div>
+                <div class="confirm-row">
+                    <span class="confirm-label">Increase:</span>
+                    <span class="confirm-value" style="color: var(--crystal-blue);" id="capacityIncrease">+3,000 🥛</span>
                 </div>
                 <div class="confirm-row">
                     <span class="confirm-label">Upgrade Cost:</span>
                     <span class="confirm-value" style="color: var(--neon-green);" id="storageUpgradeCost">2,000 🥛</span>
                 </div>
                 <div class="confirm-row">
-                    <span class="confirm-label">Your Milk:</span>
-                    <span class="confirm-value" id="storageUserMilk">0 🥛</span>
+                    <span class="confirm-label">Your Milk Balance:</span>
+                    <span class="confirm-value" id="storageUserBalance">0 🥛</span>
                 </div>
             </div>
             
             <div class="confirm-buttons">
                 <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
-                <button class="btn btn-primary" id="confirmStorageUpgradeBtn" onclick="executeStorageUpgrade()">
+                <button class="btn btn-primary" id="confirmUpgradeStorageBtn">
                     <i class="fas fa-check-circle"></i> Upgrade
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Activate Cow Modal -->
+    <!-- مودال تنشيط البقر -->
     <div class="modal-overlay" id="activateCowModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3173,7 +3574,7 @@
         </div>
     </div>
 
-    <!-- Upgrade Cow Modal -->
+    <!-- مودال ترقية البقر -->
     <div class="modal-overlay" id="upgradeCowModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3242,12 +3643,14 @@
             MIN_ORDER_PRICE: 0.0002,
             ORDER_PENALTY_FEE: 0.2,
             
+            // نظام البقر الجديد
             COW_LEVELS: {
-                1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000, activationDuration: 86400 },
-                2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000, activationDuration: 86400 },
-                3: { productionPerDay: 2500, activationCost: 1200, upgradeCost: 0, activationDuration: 86400 }
+                1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000 },
+                2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000 },
+                3: { productionPerDay: 2500, activationCost: 1200, upgradeCost: 0 }
             },
             
+            // مستويات مخزن الحليب
             STORAGE_LEVELS: {
                 1: { capacity: 2000, cost: 0 },
                 2: { capacity: 5000, cost: 2000 },
@@ -3582,7 +3985,7 @@
             }
         };
 
-        // Application variables
+        // متغيرات التطبيق
         let App = {
             userId: null,
             user: null,
@@ -3593,6 +3996,7 @@
             tasks: null,
             leaderboard: null,
             
+            // بيانات المزرعة الجديدة
             ranch: {
                 cowLevels: {1:0, 2:0, 3:0},
                 cowActive: {1:0, 2:0, 3:0},
@@ -3628,6 +4032,7 @@
             
             currentTaskTab: 'partner',
             
+            // متغيرات التنشيط والترقية
             currentActivateLevel: 1,
             currentUpgradeFromLevel: 1,
             
@@ -3637,13 +4042,7 @@
         const lastClickTimers = {};
         const CLICK_COOLDOWN = 10000;
 
-        function openRanchFromCow() {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('sectionRanch').classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            loadGameState();
-        }
-
+        // دوال مساعدة
         function checkClickCooldown(buttonId) {
             const now = Date.now();
             const lastClick = lastClickTimers[buttonId] || 0;
@@ -3759,6 +4158,7 @@
             updateLeaderboardInfoLanguage();
         }
 
+        // تحديث معلومات لوحة الصدارة
         function updateLeaderboardInfoLanguage() {
             const lang = App.currentLanguage || 'en';
             const translations = LEADERBOARD_INFO_TRANSLATIONS[lang];
@@ -3779,6 +4179,7 @@
             document.getElementById('infoPrizeList').innerHTML = prizeHtml;
         }
 
+        // تهيئة التطبيق
         async function initApp() {
             console.log('Crystal Ranch · Initializing...');
             
@@ -3798,6 +4199,7 @@
             console.log('Crystal Ranch · Ready');
         }
 
+        // إعداد Telegram
         async function setupTelegram() {
             return new Promise((resolve) => {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -3842,6 +4244,7 @@
             });
         }
 
+        // تهيئة المستخدم
         async function initializeUser() {
             try {
                 const referrer = sessionStorage.getItem('referrer');
@@ -3880,6 +4283,7 @@
             }
         }
 
+        // تهيئة TON Connect
         async function initTONConnect() {
             try {
                 if (window.TON_CONNECT_UI) {
@@ -3954,6 +4358,7 @@
             }
         }
 
+        // استدعاء API
         async function callAPI(action, data = {}) {
             try {
                 const headers = {
@@ -3987,6 +4392,7 @@
             }
         }
 
+        // تحميل حالة اللعبة
         async function loadGameState() {
             try {
                 const state = await callAPI('getState');
@@ -4019,6 +4425,7 @@
                     winners: {}
                 };
                 
+                // تحديث بيانات المزرعة إذا وجدت
                 if (state.ranch) {
                     App.ranch = state.ranch;
                 }
@@ -4031,8 +4438,7 @@
                 updateReferralUI();
                 updateTasksUI();
                 updateLeaderboardUI();
-                updateRanchUI();
-                updateActivationTimers();
+                updateRanchUI(); // تحديث واجهة المزرعة
                 
                 animateTonBalance();
                 
@@ -4050,11 +4456,13 @@
             }
         }
 
+        // تحديث واجهة المزرعة
         function updateRanchUI() {
             if (!App.ranch) return;
             
             const ranch = App.ranch;
             
+            // إحصائيات عامة - تصحيح مشكلة Total Cows
             const totalCows = (ranch.cowLevels[1] || 0) + (ranch.cowLevels[2] || 0) + (ranch.cowLevels[3] || 0);
             const activeCows = (ranch.cowActive[1] || 0) + (ranch.cowActive[2] || 0) + (ranch.cowActive[3] || 0);
             const inactiveCows = totalCows - activeCows;
@@ -4063,14 +4471,17 @@
             document.getElementById('ranchActiveCows').innerHTML = activeCows;
             document.getElementById('ranchInactiveCows').innerHTML = inactiveCows;
             
+            // الإنتاج - فقط Milk per hour
             const hourlyProduction = ranch.hourlyProduction || 0;
             document.getElementById('ranchHourlyProduction').innerHTML = Math.round(hourlyProduction);
             
+            // تقدم مبيعات البقر
             const cowsSold = App.global?.cows_sold || 0;
             document.getElementById('ranchCowsSold').innerHTML = cowsSold;
             const progressPercent = (cowsSold / 1000) * 100;
             document.getElementById('ranchCowsProgress').style.width = `${progressPercent}%`;
             
+            // مستويات البقر
             document.getElementById('level1Count').innerHTML = (ranch.cowLevels[1] || 0) + ' cows';
             document.getElementById('level2Count').innerHTML = (ranch.cowLevels[2] || 0) + ' cows';
             document.getElementById('level3Count').innerHTML = (ranch.cowLevels[3] || 0) + ' cows';
@@ -4079,6 +4490,51 @@
             document.getElementById('level2Active').innerHTML = ranch.cowActive[2] || 0;
             document.getElementById('level3Active').innerHTML = ranch.cowActive[3] || 0;
             
+            // إظهار وقت انتهاء التفعيل
+            if (ranch.cowActiveUntil) {
+                const now = Date.now();
+                
+                // المستوى 1
+                if (ranch.cowActiveUntil[1]) {
+                    const expiryTime = new Date(ranch.cowActiveUntil[1]).getTime();
+                    const timeLeft = Math.max(0, expiryTime - now);
+                    const hours = Math.floor(timeLeft / 3600000);
+                    const minutes = Math.floor((timeLeft % 3600000) / 60000);
+                    const seconds = Math.floor((timeLeft % 60000) / 1000);
+                    document.getElementById('level1Expiry').innerHTML = 
+                        timeLeft > 0 ? `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}` : 'Expired';
+                } else {
+                    document.getElementById('level1Expiry').innerHTML = '--:--:--';
+                }
+                
+                // المستوى 2
+                if (ranch.cowActiveUntil[2]) {
+                    const expiryTime = new Date(ranch.cowActiveUntil[2]).getTime();
+                    const timeLeft = Math.max(0, expiryTime - now);
+                    const hours = Math.floor(timeLeft / 3600000);
+                    const minutes = Math.floor((timeLeft % 3600000) / 60000);
+                    const seconds = Math.floor((timeLeft % 60000) / 1000);
+                    document.getElementById('level2Expiry').innerHTML = 
+                        timeLeft > 0 ? `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}` : 'Expired';
+                } else {
+                    document.getElementById('level2Expiry').innerHTML = '--:--:--';
+                }
+                
+                // المستوى 3
+                if (ranch.cowActiveUntil[3]) {
+                    const expiryTime = new Date(ranch.cowActiveUntil[3]).getTime();
+                    const timeLeft = Math.max(0, expiryTime - now);
+                    const hours = Math.floor(timeLeft / 3600000);
+                    const minutes = Math.floor((timeLeft % 3600000) / 60000);
+                    const seconds = Math.floor((timeLeft % 60000) / 1000);
+                    document.getElementById('level3Expiry').innerHTML = 
+                        timeLeft > 0 ? `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}` : 'Expired';
+                } else {
+                    document.getElementById('level3Expiry').innerHTML = '--:--:--';
+                }
+            }
+            
+            // مخزن الحليب
             const milkStored = ranch.milkStored || 0;
             const storageCapacity = ranch.storageCapacity || 2000;
             const storageLevel = ranch.storageLevel || 1;
@@ -4090,6 +4546,7 @@
             const storagePercent = (milkStored / storageCapacity) * 100;
             document.getElementById('storageProgressFill').style.width = `${storagePercent}%`;
             
+            // علامة المخزن ممتلئ
             const storageFullBadge = document.getElementById('storageFullBadge');
             if (milkStored >= storageCapacity) {
                 storageFullBadge.style.display = 'block';
@@ -4098,34 +4555,7 @@
             }
         }
 
-        function updateActivationTimers() {
-            if (!App.ranch || !App.ranch.cowActiveUntil) return;
-            
-            const now = Math.floor(Date.now() / 1000);
-            
-            for (let level = 1; level <= 3; level++) {
-                const timerDiv = document.getElementById(`level${level}Timer`);
-                const timeLeftSpan = document.getElementById(`level${level}TimeLeft`);
-                
-                if (App.ranch.cowActive[level] > 0 && App.ranch.cowActiveUntil[level]) {
-                    const timeLeft = App.ranch.cowActiveUntil[level] - now;
-                    
-                    if (timeLeft > 0) {
-                        const hours = Math.floor(timeLeft / 3600);
-                        const minutes = Math.floor((timeLeft % 3600) / 60);
-                        const seconds = timeLeft % 60;
-                        
-                        timeLeftSpan.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                        timerDiv.style.display = 'block';
-                    } else {
-                        timerDiv.style.display = 'none';
-                    }
-                } else {
-                    timerDiv.style.display = 'none';
-                }
-            }
-        }
-
+        // تحديث لوحة الصدارة
         function updateLeaderboardUI() {
             if (!App.leaderboard) return;
             
@@ -4278,6 +4708,7 @@
             }
         }
 
+        // تحديث واجهة السوق
         async function updateMarketUI(page = 1, reset = true) {
             if (!App.currentMarketResource) return;
             
@@ -4392,6 +4823,7 @@
             document.getElementById('sellBalanceHint').innerHTML = `Available: ${formatNumber(balance || 0)} ${resource === 'milk' ? 'Milk' : 'Eggs'}`;
         }
 
+        // إنشاء أمر بيع
         window.createSellOrder = async function() {
             const buttonId = 'submitSellOrderBtn';
             const button = document.getElementById('submitSellOrderBtn');
@@ -4460,6 +4892,7 @@
             }
         };
 
+        // عرض تأكيد الشراء
         window.showPurchaseConfirm = function(orderId, resource, maxQuantity, pricePerUnit) {
             App.pendingOrder = {
                 id: orderId,
@@ -4503,6 +4936,7 @@
             modal.classList.add('active');
         };
 
+        // تنفيذ الطلب
         window.executeOrder = async function(orderId, quantity) {
             const buttonId = 'confirmExecuteBtn';
             const button = document.getElementById('confirmExecuteBtn');
@@ -4532,6 +4966,7 @@
             }
         };
 
+        // إلغاء الطلب
         window.cancelOrder = async function(orderId) {
             const buttonId = 'cancelOrder_' + orderId;
             const button = event?.target;
@@ -4554,6 +4989,7 @@
             }
         };
 
+        // التحقق من عدد الطلبات النشطة
         async function checkActiveOrdersCount() {
             try {
                 const orders = await callAPI('getMyOrders');
@@ -4565,6 +5001,7 @@
             }
         }
 
+        // تحميل طلباتي
         async function loadMyOrders() {
             try {
                 const orders = await callAPI('getMyOrders');
@@ -4635,6 +5072,7 @@
             }
         }
 
+        // تحديث واجهة الإحالات
         function updateReferralUI() {
             if (!App.referral) return;
             
@@ -4764,6 +5202,7 @@
             displayEarnings(App.earningsPage, true);
         }
 
+        // تحديث كل واجهات المستخدم
         function updateAllUI() {
             if (!App.user || !App.global) return;
             
@@ -4921,6 +5360,7 @@
             document.getElementById('taskUserBalance').innerHTML = formatTON(App.user.tonBalance || 0);
         }
 
+        // إنشاء مهمة
         window.createTask = async function() {
             const buttonId = 'submitTaskBtn';
             const button = document.getElementById('submitTaskBtn');
@@ -4995,6 +5435,7 @@
             }
         }
 
+        // تحديث واجهة المهام
         function updateTasksUI() {
             if (!App.tasks) return;
             
@@ -5159,6 +5600,7 @@
             }
         }
 
+        // شراء بقرة (النظام القديم)
         window.buyCow = async function() {
             const buttonId = 'buyCowBtn';
             const button = document.getElementById('buyCowBtn');
@@ -5286,6 +5728,7 @@
             }
         };
 
+        // شراء بقرة من صفحة Ranch
         window.buyRanchCow = async function() {
             const buttonId = 'ranchBuyCowBtn';
             const button = document.getElementById('ranchBuyCowBtn');
@@ -5317,6 +5760,7 @@
             }
         };
 
+        // شراء دجاجة
         window.buyChicken = async function() {
             const buttonId = 'buyChickenBtn';
             const button = document.getElementById('buyChickenBtn');
@@ -5338,6 +5782,7 @@
             }
         };
 
+        // شراء محرك كريستال
         window.buyDiamondEngine = async function() {
             const buttonId = 'buyDiamondBtn';
             const button = document.getElementById('buyDiamondBtn');
@@ -5359,6 +5804,7 @@
             }
         };
 
+        // بدء إنتاج الكريستال
         window.startDiamondProduction = async function() {
             const buttonId = 'startDiamondBtn';
             const button = document.getElementById('startDiamondBtn');
@@ -5379,6 +5825,7 @@
             }
         };
 
+        // تفقيس بقرة (النظام القديم)
         window.hatchCow = async function() {
             const buttonId = 'hatchCowConfirm';
             const button = document.getElementById('hatchCowConfirm');
@@ -5402,6 +5849,7 @@
             }
         };
 
+        // تفقيس دجاجة
         window.hatchChicken = async function() {
             const buttonId = 'hatchChickenConfirm';
             const button = document.getElementById('hatchChickenConfirm');
@@ -5425,6 +5873,7 @@
             }
         };
 
+        // تحويل الكريستال
         window.convertDiamond = async function() {
             const buttonId = 'convertDiamondBtn';
             const button = document.getElementById('convertDiamondBtn');
@@ -5459,6 +5908,7 @@
             }
         };
 
+        // سحب الأموال
         window.withdraw = async function() {
             const buttonId = 'withdrawBtn';
             const button = document.getElementById('withdrawBtn');
@@ -5502,6 +5952,7 @@
             }
         };
 
+        // استلام أرباح الإحالة
         window.claimReferral = async function() {
             const buttonId = 'claimReferralBtn';
             const button = document.getElementById('claimReferralBtn');
@@ -5525,6 +5976,7 @@
             }
         };
 
+        // نسخ رابط الإحالة
         window.copyReferralLink = function() {
             const input = document.getElementById('referralLink');
             input.select();
@@ -5536,24 +5988,29 @@
             );
         };
 
+        // فتح مودال البيع
         window.openSellOrderModal = function() {
             document.getElementById('sellOrderModal').classList.add('active');
             updateSellDetails();
         };
 
+        // فتح مودال التفقيص
         window.openHatchModal = function() {
             document.getElementById('hatchModal').classList.add('active');
         };
 
+        // فتح مودال إضافة مهمة
         window.openAddTaskModal = function() {
             document.getElementById('addTaskModal').classList.add('active');
             calculateTaskPrice();
         };
 
+        // فتح مودال الإيداع
         window.openDepositModal = function() {
             document.getElementById('depositModal').classList.add('active');
         };
 
+        // إغلاق جميع المودالات
         window.closeAllModals = function() {
             document.querySelectorAll('.modal-overlay').forEach(modal => {
                 modal.classList.remove('active');
@@ -5562,6 +6019,7 @@
             App.pendingTask = null;
         };
 
+        // فتح مودال تنشيط البقر
         window.openActivateModal = function(level) {
             App.currentActivateLevel = level;
             
@@ -5587,6 +6045,7 @@
             modal.classList.add('active');
         };
 
+        // تحديث تكلفة التنشيط
         function updateActivateCost() {
             const level = App.currentActivateLevel;
             const amount = parseInt(document.getElementById('activateAmount').value) || 0;
@@ -5604,11 +6063,13 @@
                 confirmBtn.disabled = false;
             }
             
+            // تحديث الأزرار المختصرة
             document.querySelectorAll('[data-activate]').forEach(btn => {
                 btn.classList.remove('active');
             });
         }
 
+        // تنفيذ تنشيط البقر
         window.executeActivateCows = async function() {
             const buttonId = 'confirmActivateBtn';
             const button = document.getElementById('confirmActivateBtn');
@@ -5640,6 +6101,7 @@
             }
         };
 
+        // فتح مودال ترقية البقر
         window.openUpgradeModal = function(fromLevel) {
             if (fromLevel >= 3) {
                 showNotification('Maximum level reached', 'info');
@@ -5671,6 +6133,7 @@
             modal.classList.add('active');
         };
 
+        // تحديث تكلفة الترقية
         function updateUpgradeCost() {
             const fromLevel = App.currentUpgradeFromLevel;
             const amount = parseInt(document.getElementById('upgradeAmount').value) || 0;
@@ -5688,11 +6151,13 @@
                 confirmBtn.disabled = false;
             }
             
+            // تحديث الأزرار المختصرة
             document.querySelectorAll('[data-upgrade]').forEach(btn => {
                 btn.classList.remove('active');
             });
         }
 
+        // تنفيذ ترقية البقر
         window.executeUpgradeCows = async function() {
             const buttonId = 'confirmUpgradeBtn';
             const button = document.getElementById('confirmUpgradeBtn');
@@ -5724,6 +6189,7 @@
             }
         };
 
+        // استلام الحليب من المخزن
         window.claimMilk = async function() {
             const buttonId = 'claimMilkBtn';
             const button = document.getElementById('claimMilkBtn');
@@ -5754,7 +6220,8 @@
             }
         };
 
-        window.openStorageUpgradeModal = function() {
+        // فتح مودال ترقية المخزن
+        window.openUpgradeStorageModal = function() {
             const currentLevel = App.ranch.storageLevel || 1;
             
             if (currentLevel >= 10) {
@@ -5763,31 +6230,46 @@
             }
             
             const nextLevel = currentLevel + 1;
-            const currentCapacity = CONFIG.STORAGE_LEVELS[currentLevel].capacity;
-            const nextCapacity = CONFIG.STORAGE_LEVELS[nextLevel].capacity;
-            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel].cost;
+            const currentConfig = CONFIG.STORAGE_LEVELS[currentLevel];
+            const nextConfig = CONFIG.STORAGE_LEVELS[nextLevel];
             
-            document.getElementById('storageUpgradeTitle').innerHTML = `Level ${currentLevel} → Level ${nextLevel}`;
-            document.getElementById('storageCurrentCapacity').innerHTML = formatNumber(currentCapacity) + ' 🥛';
-            document.getElementById('storageNextCapacity').innerHTML = formatNumber(nextCapacity) + ' 🥛';
-            document.getElementById('storageUpgradeCost').innerHTML = formatNumber(upgradeCost) + ' 🥛';
-            document.getElementById('storageUserMilk').innerHTML = formatNumber(App.user?.milk || 0) + ' 🥛';
+            document.getElementById('upgradeStorageTitle').innerHTML = `Level ${currentLevel} → Level ${nextLevel}`;
+            document.getElementById('currentCapacity').innerHTML = formatNumber(currentConfig.capacity) + ' 🥛';
+            document.getElementById('newCapacity').innerHTML = formatNumber(nextConfig.capacity) + ' 🥛';
+            document.getElementById('capacityIncrease').innerHTML = '+' + formatNumber(nextConfig.capacity - currentConfig.capacity) + ' 🥛';
+            document.getElementById('storageUpgradeCost').innerHTML = formatNumber(nextConfig.cost) + ' 🥛';
+            document.getElementById('storageUserBalance').innerHTML = formatNumber(App.user?.milk || 0) + ' 🥛';
             
-            const confirmBtn = document.getElementById('confirmStorageUpgradeBtn');
-            if ((App.user?.milk || 0) < upgradeCost) {
-                confirmBtn.disabled = true;
-            } else {
-                confirmBtn.disabled = false;
-            }
-            
-            document.getElementById('storageUpgradeModal').classList.add('active');
+            const modal = document.getElementById('upgradeStorageModal');
+            modal.classList.add('active');
         };
 
-        window.executeStorageUpgrade = async function() {
-            const buttonId = 'confirmStorageUpgradeBtn';
-            const button = document.getElementById('confirmStorageUpgradeBtn');
+        // ترقية مخزن الحليب
+        window.upgradeStorage = async function() {
+            const buttonId = 'upgradeStorageBtn';
+            const button = document.getElementById('upgradeStorageBtn');
             
             if (!validateAndCooldown(buttonId, button)) {
+                return;
+            }
+            
+            const currentLevel = App.ranch.storageLevel || 1;
+            
+            if (currentLevel >= 10) {
+                showNotification('Maximum storage level reached', 'info');
+                return;
+            }
+            
+            const nextLevel = currentLevel + 1;
+            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel]?.cost || 0;
+            
+            if ((App.user?.milk || 0) < upgradeCost) {
+                showNotification(
+                    App.currentLanguage === 'ru' ? 
+                    `Недостаточно молока. Нужно ${formatNumber(upgradeCost)} 🥛` : 
+                    `Insufficient milk. Need ${formatNumber(upgradeCost)} 🥛`,
+                    'error'
+                );
                 return;
             }
             
@@ -5809,6 +6291,7 @@
             }
         };
 
+        // بدء الإيداع
         window.initiateDeposit = async function() {
             if (!App.wallet) {
                 alert(App.currentLanguage === 'ru' ? 'Сначала подключите кошелек' : 'Connect wallet first');
@@ -5978,12 +6461,18 @@
             }, 10000);
         }
 
+        // إعداد المؤقتات
         function setupIntervals() {
             if (App.timerInterval) clearInterval(App.timerInterval);
             App.timerInterval = setInterval(() => {
                 if (App.user && App.user.secondsUntilNext > 0) {
                     App.user.secondsUntilNext--;
                     updateProductionTimer();
+                    
+                    // تحديث مؤقتات انتهاء التفعيل في صفحة Ranch
+                    if (App.ranch && App.ranch.cowActiveUntil) {
+                        updateRanchUI();
+                    }
                 } else {
                     loadGameState();
                 }
@@ -5999,12 +6488,9 @@
             setInterval(() => {
                 loadGameState();
             }, 30000);
-            
-            setInterval(() => {
-                updateActivationTimers();
-            }, 1000);
         }
 
+        // إعداد مستمعي الأحداث
         function setupEventListeners() {
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.addEventListener('click', () => {
@@ -6027,8 +6513,6 @@
                     }
                 });
             });
-            
-            document.getElementById('cowCard').addEventListener('click', openRanchFromCow);
             
             document.getElementById('leaderboardButton').addEventListener('click', function() {
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -6148,6 +6632,7 @@
             document.getElementById('submitTaskBtn').addEventListener('click', window.createTask);
             document.getElementById('taskTarget').addEventListener('input', calculateTaskPrice);
             
+            // أزرار التنشيط والترقية
             document.querySelectorAll('[data-activate]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const value = this.dataset.activate;
@@ -6184,7 +6669,9 @@
             document.getElementById('upgradeAmount').addEventListener('input', updateUpgradeCost);
             
             document.getElementById('claimMilkBtn').addEventListener('click', window.claimMilk);
-            document.getElementById('upgradeStorageBtn').addEventListener('click', window.openStorageUpgradeModal);
+            document.getElementById('upgradeStorageBtn').addEventListener('click', window.openUpgradeStorageModal);
+            
+            document.getElementById('confirmUpgradeStorageBtn').addEventListener('click', window.upgradeStorage);
             
             document.querySelectorAll('[data-sell-percent]').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -6230,6 +6717,7 @@
             document.getElementById('sellTotalPrice').addEventListener('input', updateSellDetails);
         }
 
+        // بدء التطبيق
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>

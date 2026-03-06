@@ -1,4 +1,4 @@
-// ==================== API CONFIGURATION ====================
+// ===== CONFIGURATION =====
 const CONFIG = {
     API_URL: 'https://noisy-dust-b9e8.mmrr2872008.workers.dev',
     BOT_USERNAME: '@Crystal_Ranch_bot',
@@ -13,16 +13,46 @@ const CONFIG = {
     MIN_ORDER_PRICE: 0.0002,
     ORDER_PENALTY_FEE: 0.2,
     COW_HATCH_COST: 50000,
-    
-    // Ranch config
-    COW_ACTIVATION_COST: { 1: 200, 2: 350, 3: 1200 },
-    COW_UPGRADE_COST: { 1: 6000, 2: 20000 },
-    COW_PRODUCTION_DAILY: { 1: 500, 2: 1000, 3: 2500 },
-    STORAGE_CAPACITY: { 1: 40000, 2: 80000, 3: 150000, 4: 300000, 5: 600000, 6: 1000000, 7: 2000000, 8: 4000000, 9: 8000000, 10: 16000000 },
-    STORAGE_UPGRADE_COST: { 1: 10000, 2: 20000, 3: 40000, 4: 80000, 5: 160000, 6: 320000, 7: 640000, 8: 1280000, 9: 2560000 }
+    COW_ACTIVATION_COST: {
+        1: 200,
+        2: 350,
+        3: 1200
+    },
+    COW_UPGRADE_COST: {
+        1: 6000,
+        2: 20000
+    },
+    COW_PRODUCTION_DAILY: {
+        1: 500,
+        2: 1000,
+        3: 2500
+    },
+    STORAGE_CAPACITY: {
+        1: 40000,
+        2: 80000,
+        3: 150000,
+        4: 300000,
+        5: 600000,
+        6: 1000000,
+        7: 2000000,
+        8: 4000000,
+        9: 8000000,
+        10: 16000000
+    },
+    STORAGE_UPGRADE_COST: {
+        1: 10000,
+        2: 20000,
+        3: 40000,
+        4: 80000,
+        5: 160000,
+        6: 320000,
+        7: 640000,
+        8: 1280000,
+        9: 2560000
+    }
 };
 
-// ==================== TRANSLATIONS ====================
+// ===== TRANSLATIONS =====
 const TRANSLATIONS = {
     en: {
         'nav.farm': 'Farm',
@@ -31,12 +61,10 @@ const TRANSLATIONS = {
         'nav.friends': 'Friends',
         'nav.tasks': 'Tasks',
         'nav.profile': 'Profile',
-        
         'status.milk': 'MILK',
         'status.eggs': 'EGGS',
         'status.crystal': 'CRYSTAL',
         'status.deposit': 'Deposit',
-        
         'farm.cow.name': 'Cow',
         'farm.chicken.name': 'Chicken',
         'farm.crystal.name': 'Crystal Engine',
@@ -47,7 +75,6 @@ const TRANSLATIONS = {
         'farm.hatch': 'Hatch',
         'farm.start': 'Start',
         'farm.yield': 'Yield',
-        
         'market.title': 'P2P Market',
         'market.buy': 'Buy',
         'market.myOrders': 'My Orders',
@@ -63,7 +90,6 @@ const TRANSLATIONS = {
         'market.noOrders': 'No active sell orders',
         'market.activeOrders': 'Active Orders',
         'market.history': 'History',
-        
         'crystal.title': 'Crystal Conversion',
         'crystal.perTon': 'TON per Crystal',
         'crystal.yourCrystals': 'Your Crystals',
@@ -71,7 +97,6 @@ const TRANSLATIONS = {
         'crystal.convert': 'Convert',
         'crystal.milkAvailable': 'Milk available',
         'crystal.eggsAvailable': 'Eggs available',
-        
         'referral.title': 'Referral Program',
         'referral.description': 'Earn 10% commission when your friends buy machines with TON!',
         'referral.share': 'Share this link with friends',
@@ -81,7 +106,6 @@ const TRANSLATIONS = {
         'referral.noReferrals': 'No referrals yet',
         'referral.earningsHistory': 'Earnings History',
         'referral.noEarnings': 'No earnings yet',
-        
         'tasks.title': 'Tasks & Rewards',
         'tasks.partner': 'Partner Tasks',
         'tasks.community': 'Community Tasks',
@@ -102,7 +126,6 @@ const TRANSLATIONS = {
         'tasks.join': 'Join',
         'tasks.check': 'Verify & Claim',
         'tasks.reward': 'Reward',
-        
         'profile.totalMachines': 'Total Machines',
         'profile.production': 'Production',
         'profile.assets': 'Assets',
@@ -113,22 +136,18 @@ const TRANSLATIONS = {
         'profile.fee': 'Fee (5%)',
         'profile.youReceive': 'You receive',
         'profile.withdrawBtn': 'Withdraw',
-        
         'modal.sell.title': 'Sell Order',
         'modal.sell.resource': 'Resource',
         'modal.sell.quantity': 'Quantity (min 100)',
         'modal.sell.place': 'Place Sell Order',
-        
         'modal.confirm.title': 'Confirm Purchase',
         'modal.confirm.package': 'Milk Package',
         'modal.confirm.cancel': 'Cancel',
         'modal.confirm.confirm': 'Confirm & Pay',
-        
         'modal.hatch.title': 'Hatch Machine',
         'modal.hatch.cowCost': '50,000 Milk',
         'modal.hatch.chickenCost': '5,000 Eggs',
         'modal.hatch.hatchBtn': 'Hatch',
-        
         'modal.deposit.title': 'Deposit TON',
         'modal.deposit.wallet': 'Wallet',
         'modal.deposit.notConnected': 'Not connected',
@@ -139,7 +158,6 @@ const TRANSLATIONS = {
         'modal.deposit.amount': 'Amount (TON)',
         'modal.deposit.submit': 'Deposit TON',
         'modal.deposit.processing': 'Processing deposit...',
-        
         'help.title': 'How to Play',
         'help.cow.title': 'Cow Machine',
         'help.cow.desc': '1 TON · 41 Milk/hour<br>Global cap: 1000 machines<br>Hatch: 50,000 Milk = 1 Cow',
@@ -165,12 +183,10 @@ const TRANSLATIONS = {
         'nav.friends': 'Друзья',
         'nav.tasks': 'Задания',
         'nav.profile': 'Профиль',
-        
         'status.milk': 'МОЛОКО',
         'status.eggs': 'ЯЙЦА',
         'status.crystal': 'КРИСТАЛЛ',
         'status.deposit': 'Депозит',
-        
         'farm.cow.name': 'Корова',
         'farm.chicken.name': 'Курица',
         'farm.crystal.name': 'Кристальный двигатель',
@@ -181,7 +197,6 @@ const TRANSLATIONS = {
         'farm.hatch': 'Вывести',
         'farm.start': 'Запустить',
         'farm.yield': 'Выход',
-        
         'market.title': 'P2P Рынок',
         'market.buy': 'Купить',
         'market.myOrders': 'Мои заказы',
@@ -197,7 +212,6 @@ const TRANSLATIONS = {
         'market.noOrders': 'Нет активных ордеров',
         'market.activeOrders': 'Активные',
         'market.history': 'История',
-        
         'crystal.title': 'Конвертация кристаллов',
         'crystal.perTon': 'TON за кристалл',
         'crystal.yourCrystals': 'Ваши кристаллы',
@@ -205,7 +219,6 @@ const TRANSLATIONS = {
         'crystal.convert': 'Конвертировать',
         'crystal.milkAvailable': 'Молоко доступно',
         'crystal.eggsAvailable': 'Яйца доступны',
-        
         'referral.title': 'Реферальная программа',
         'referral.description': 'Зарабатывайте 10% комиссии, когда ваши друзья покупают машины!',
         'referral.share': 'Поделитесь этой ссылкой с друзьями',
@@ -215,7 +228,6 @@ const TRANSLATIONS = {
         'referral.noReferrals': 'Пока нет рефералов',
         'referral.earningsHistory': 'История доходов',
         'referral.noEarnings': 'Пока нет доходов',
-        
         'tasks.title': 'Задания и награды',
         'tasks.partner': 'Партнерские',
         'tasks.community': 'Сообщества',
@@ -236,7 +248,6 @@ const TRANSLATIONS = {
         'tasks.join': 'Присоединиться',
         'tasks.check': 'Проверить и получить',
         'tasks.reward': 'Награда',
-        
         'profile.totalMachines': 'Всего машин',
         'profile.production': 'Производство',
         'profile.assets': 'Активы',
@@ -247,22 +258,18 @@ const TRANSLATIONS = {
         'profile.fee': 'Комиссия (5%)',
         'profile.youReceive': 'Вы получите',
         'profile.withdrawBtn': 'Вывести',
-        
         'modal.sell.title': 'Ордер на продажу',
         'modal.sell.resource': 'Ресурс',
         'modal.sell.quantity': 'Количество (мин 100)',
         'modal.sell.place': 'Разместить ордер',
-        
         'modal.confirm.title': 'Подтверждение покупки',
         'modal.confirm.package': 'Пакет молока',
         'modal.confirm.cancel': 'Отмена',
         'modal.confirm.confirm': 'Подтвердить и оплатить',
-        
         'modal.hatch.title': 'Вывести машину',
         'modal.hatch.cowCost': '50,000 Молока',
         'modal.hatch.chickenCost': '5,000 Яиц',
         'modal.hatch.hatchBtn': 'Вывести',
-        
         'modal.deposit.title': 'Депозит TON',
         'modal.deposit.wallet': 'Кошелек',
         'modal.deposit.notConnected': 'Не подключен',
@@ -273,7 +280,6 @@ const TRANSLATIONS = {
         'modal.deposit.amount': 'Сумма (TON)',
         'modal.deposit.submit': 'Депозит TON',
         'modal.deposit.processing': 'Обработка депозита...',
-        
         'help.title': 'Как играть',
         'help.cow.title': 'Корова',
         'help.cow.desc': '1 TON · 41 Молоко/час<br>Всего: 1000 машин<br>Вывод: 50,000 Молока = 1 Корова',
@@ -294,6 +300,7 @@ const TRANSLATIONS = {
     }
 };
 
+// ===== LEADERBOARD INFO TRANSLATIONS =====
 const LEADERBOARD_INFO_TRANSLATIONS = {
     en: {
         title: '🏆 How does the competition work?',
@@ -343,7 +350,133 @@ const LEADERBOARD_INFO_TRANSLATIONS = {
     }
 };
 
-// ==================== API FUNCTIONS ====================
+// ===== API FUNCTIONS =====
+
+/**
+ * Show notification
+ * @param {string} message - Notification message
+ * @param {string} type - success, error, warning, info
+ * @param {number} duration - Duration in ms
+ */
+function showNotification(message, type = 'success', duration = 5000) {
+    const container = document.getElementById('notificationContainer');
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = message.replace(/\n/g, '<br>');
+    container.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('fade-out');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, duration);
+}
+
+/**
+ * Format number with full precision
+ * @param {number} num - Number to format
+ * @returns {string} Formatted number
+ */
+function formatFullPrecision(num) {
+    if (num === null || num === undefined) return '0';
+    if (Math.abs(num) < 0.0001 && num !== 0) {
+        return num.toFixed(8).replace(/\.?0+$/, '');
+    }
+    return num.toFixed(8).replace(/\.?0+$/, '');
+}
+
+/**
+ * Format TON amount
+ * @param {number} amount - Amount to format
+ * @returns {string} Formatted TON
+ */
+function formatTON(amount) {
+    if (amount === null || amount === undefined || isNaN(amount)) return '0';
+    if (Math.abs(amount) < 0.0001 && amount !== 0) {
+        return amount.toFixed(8).replace(/\.?0+$/, '');
+    }
+    return parseFloat(amount).toFixed(4);
+}
+
+/**
+ * Format number with K/M suffix
+ * @param {number} num - Number to format
+ * @returns {string} Formatted number
+ */
+function formatNumber(num) {
+    if (num === null || num === undefined) return '0';
+    if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+    return num.toLocaleString();
+}
+
+/**
+ * Set application language
+ * @param {string} lang - Language code (en/ru)
+ */
+function setLanguage(lang) {
+    if (!TRANSLATIONS[lang]) return;
+    
+    window.App.currentLanguage = lang;
+    localStorage.setItem('crystal_ranch_lang', lang);
+    
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (TRANSLATIONS[lang][key]) {
+            let text = TRANSLATIONS[lang][key];
+            if (element.tagName === 'P' || element.tagName === 'DIV') {
+                text = text.replace(/<br>/g, '<br>');
+                element.innerHTML = text;
+            } else {
+                text = text.replace(/<br>/g, ' ');
+                element.textContent = text;
+            }
+        }
+    });
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    
+    if (window.App.tonConnectUI) {
+        window.App.tonConnectUI.language = lang === 'ru' ? 'ru' : 'en';
+    }
+    
+    updateLeaderboardInfoLanguage();
+}
+
+/**
+ * Update leaderboard info modal language
+ */
+function updateLeaderboardInfoLanguage() {
+    const lang = window.App.currentLanguage || 'en';
+    const translations = LEADERBOARD_INFO_TRANSLATIONS[lang];
+    
+    document.getElementById('infoTitle').innerHTML = translations.title;
+    document.getElementById('infoGrandPrize').innerHTML = translations.grandPrize;
+    document.getElementById('infoTotalPrize').innerHTML = translations.totalPrize;
+    document.getElementById('infoHowToParticipate').innerHTML = translations.howToParticipate;
+    document.getElementById('infoHowToDesc').innerHTML = translations.howToDesc;
+    document.getElementById('infoWhenEnds').innerHTML = translations.whenEnds;
+    document.getElementById('infoWhenDesc').innerHTML = translations.whenDesc;
+    document.getElementById('infoGotIt').innerHTML = translations.gotIt;
+    
+    let prizeHtml = '';
+    translations.prizeList.forEach(item => {
+        prizeHtml += `<div class="info-prize-row"><span>${item.rank}</span> <span style="color: #FFD700;">${item.prize}</span></div>`;
+    });
+    document.getElementById('infoPrizeList').innerHTML = prizeHtml;
+}
+
+/**
+ * Call API with action
+ * @param {string} action - Action name
+ * @param {object} data - Data to send
+ * @returns {Promise<object>} API response
+ */
 async function callAPI(action, data = {}) {
     try {
         const headers = {
@@ -352,8 +485,8 @@ async function callAPI(action, data = {}) {
             'X-CSRF-Token': CONFIG.CSRF_TOKEN
         };
         
-        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
-            headers['Authorization'] = `Telegram ${window.Telegram.WebApp.initData}`;
+        if (window.App.telegram && window.App.telegram.initData) {
+            headers['Authorization'] = `Telegram ${window.App.telegram.initData}`;
         }
         
         const response = await fetch(`${CONFIG.API_URL}/api`, {
@@ -366,9 +499,7 @@ async function callAPI(action, data = {}) {
         
         if (!result.success) {
             console.error(`API Error [${action}]:`, result.error);
-            if (window.showNotification) {
-                window.showNotification(result.error || 'Transaction failed', 'error');
-            }
+            showNotification(result.error || 'Transaction failed', 'error');
             throw new Error(result.error);
         }
         
@@ -379,68 +510,77 @@ async function callAPI(action, data = {}) {
     }
 }
 
-// ==================== UTILITY FUNCTIONS ====================
-function formatFullPrecision(num) {
-    if (num === null || num === undefined) return '0';
-    if (Math.abs(num) < 0.0001 && num !== 0) {
-        return num.toFixed(8).replace(/\.?0+$/, '');
-    }
-    return num.toFixed(8).replace(/\.?0+$/, '');
-}
+// ===== CLICK COOLDOWN SYSTEM =====
+const lastClickTimers = {};
+const CLICK_COOLDOWN = 10000; // 10 seconds
 
-function formatTON(amount) {
-    if (amount === null || amount === undefined || isNaN(amount)) return '0';
-    if (Math.abs(amount) < 0.0001 && amount !== 0) {
-        return amount.toFixed(8).replace(/\.?0+$/, '');
-    }
-    return parseFloat(amount).toFixed(4);
-}
-
-function formatNumber(num) {
-    if (num === null || num === undefined) return '0';
-    if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-    return num.toLocaleString();
-}
-
-function updateLeaderboardInfoLanguage() {
-    const lang = window.App?.currentLanguage || 'en';
-    const translations = LEADERBOARD_INFO_TRANSLATIONS[lang];
+/**
+ * Check if button is on cooldown
+ * @param {string} buttonId - Button identifier
+ * @returns {boolean} - True if can click
+ */
+function checkClickCooldown(buttonId) {
+    const now = Date.now();
+    const lastClick = lastClickTimers[buttonId] || 0;
+    const timeLeft = CLICK_COOLDOWN - (now - lastClick);
     
-    const infoTitle = document.getElementById('infoTitle');
-    const infoGrandPrize = document.getElementById('infoGrandPrize');
-    const infoTotalPrize = document.getElementById('infoTotalPrize');
-    const infoHowToParticipate = document.getElementById('infoHowToParticipate');
-    const infoHowToDesc = document.getElementById('infoHowToDesc');
-    const infoWhenEnds = document.getElementById('infoWhenEnds');
-    const infoWhenDesc = document.getElementById('infoWhenDesc');
-    const infoGotIt = document.getElementById('infoGotIt');
-    const infoPrizeList = document.getElementById('infoPrizeList');
-    
-    if (infoTitle) infoTitle.innerHTML = translations.title;
-    if (infoGrandPrize) infoGrandPrize.innerHTML = translations.grandPrize;
-    if (infoTotalPrize) infoTotalPrize.innerHTML = translations.totalPrize;
-    if (infoHowToParticipate) infoHowToParticipate.innerHTML = translations.howToParticipate;
-    if (infoHowToDesc) infoHowToDesc.innerHTML = translations.howToDesc;
-    if (infoWhenEnds) infoWhenEnds.innerHTML = translations.whenEnds;
-    if (infoWhenDesc) infoWhenDesc.innerHTML = translations.whenDesc;
-    if (infoGotIt) infoGotIt.innerHTML = translations.gotIt;
-    
-    if (infoPrizeList) {
-        let prizeHtml = '';
-        translations.prizeList.forEach(item => {
-            prizeHtml += `<div class="info-prize-row"><span>${item.rank}</span> <span style="color: #FFD700;">${item.prize}</span></div>`;
-        });
-        infoPrizeList.innerHTML = prizeHtml;
+    if (timeLeft > 0) {
+        const secondsLeft = Math.ceil(timeLeft / 1000);
+        showNotification(
+            window.App.currentLanguage === 'ru' 
+                ? `⏳ Пожалуйста, подождите ${secondsLeft} секунд перед повторным нажатием`
+                : `⏳ Please wait ${secondsLeft} seconds before clicking again`,
+            'warning'
+        );
+        return false;
     }
+    
+    lastClickTimers[buttonId] = now;
+    return true;
 }
 
-// Make functions globally available
+/**
+ * Disable button temporarily
+ * @param {HTMLElement} buttonElement - Button element
+ * @param {string} buttonId - Button identifier
+ */
+async function disableButtonTemporarily(buttonElement, buttonId) {
+    if (!buttonElement) return;
+    
+    buttonElement.disabled = true;
+    const originalText = buttonElement.innerHTML;
+    buttonElement.innerHTML = `<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CLICK_COOLDOWN / 1000)}s`;
+    
+    setTimeout(() => {
+        buttonElement.disabled = false;
+        buttonElement.innerHTML = originalText;
+    }, CLICK_COOLDOWN);
+}
+
+/**
+ * Validate and apply cooldown
+ * @param {string} buttonId - Button identifier
+ * @param {HTMLElement} buttonElement - Button element
+ * @returns {boolean} - True if can proceed
+ */
+function validateAndCooldown(buttonId, buttonElement) {
+    if (!checkClickCooldown(buttonId)) {
+        return false;
+    }
+    disableButtonTemporarily(buttonElement, buttonId);
+    return true;
+}
+
+// ===== EXPORT FUNCTIONS TO WINDOW =====
 window.CONFIG = CONFIG;
 window.TRANSLATIONS = TRANSLATIONS;
 window.LEADERBOARD_INFO_TRANSLATIONS = LEADERBOARD_INFO_TRANSLATIONS;
-window.callAPI = callAPI;
+window.showNotification = showNotification;
 window.formatFullPrecision = formatFullPrecision;
 window.formatTON = formatTON;
 window.formatNumber = formatNumber;
+window.setLanguage = setLanguage;
 window.updateLeaderboardInfoLanguage = updateLeaderboardInfoLanguage;
+window.callAPI = callAPI;
+window.checkClickCooldown = checkClickCooldown;
+window.validateAndCooldown = validateAndCooldown;

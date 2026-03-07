@@ -4661,6 +4661,8 @@
                 return;
             }
             
+            const pricePerUnit = totalPrice / quantity;
+            
             const activeOrdersCount = await checkActiveOrdersCount();
             if (activeOrdersCount >= CONFIG.MAX_ACTIVE_ORDERS) {
                 const message = App.currentLanguage === 'ru' ? 
@@ -4674,14 +4676,11 @@
                 const result = await callAPI('createSellOrder', {
                     resource: resource,
                     quantity: quantity,
-                    pricePerUnit: totalPrice / quantity
+                    pricePerUnit: pricePerUnit
                 });
                 
-                showNotification(
-                    App.currentLanguage === 'ru' ? '✅ Ордер на продажу создан' : '✅ Sell order created',
-                    'success'
-                );
-                
+                let message = App.currentLanguage === 'ru' ? '✅ Ордер на продажу создан' : '✅ Sell order created';
+                showNotification(message, 'success');
                 closeAllModals();
                 loadGameState();
                 
@@ -5546,52 +5545,6 @@
             }
         };
 
-        window.hatchCow = async function() {
-            const buttonId = 'hatchCowConfirm';
-            const button = document.getElementById('hatchCowConfirm');
-            
-            if (!validateAndCooldown(buttonId, button)) {
-                return;
-            }
-            
-            const amount = parseInt(document.getElementById('hatchCowAmount').value) || 1;
-            
-            try {
-                await callAPI('hatchCow', { amount });
-                await loadGameState();
-                showNotification(
-                    App.currentLanguage === 'ru' ? `🐮 Выведено ${amount} коров(а)!` : `🐮 Hatched ${amount} Cow(s)!`,
-                    'success'
-                );
-                closeAllModals();
-            } catch (error) {
-                console.error('Hatch cow error:', error);
-            }
-        };
-
-        window.hatchChicken = async function() {
-            const buttonId = 'hatchChickenConfirm';
-            const button = document.getElementById('hatchChickenConfirm');
-            
-            if (!validateAndCooldown(buttonId, button)) {
-                return;
-            }
-            
-            const amount = parseInt(document.getElementById('hatchChickenAmount').value) || 1;
-            
-            try {
-                await callAPI('hatchChicken', { amount });
-                await loadGameState();
-                showNotification(
-                    App.currentLanguage === 'ru' ? `🐔 Выведено ${amount} куриц(а)!` : `🐔 Hatched ${amount} Chicken(s)!`,
-                    'success'
-                );
-                closeAllModals();
-            } catch (error) {
-                console.error('Hatch chicken error:', error);
-            }
-        };
-
         window.convertDiamond = async function() {
             const buttonId = 'convertDiamondBtn';
             const button = document.getElementById('convertDiamondBtn');
@@ -6278,7 +6231,6 @@
             document.getElementById('hatchCowBtn').addEventListener('click', window.openHatchModal);
             document.getElementById('hatchChickenBtn').addEventListener('click', window.openHatchModal);
             document.getElementById('hatchCowConfirm').addEventListener('click', window.hatchCow);
-            document.getElementById('hatchChickenConfirm').addEventListener('click', window.hatchChicken);
             
             document.getElementById('convertDiamondBtn').addEventListener('click', window.convertDiamond);
             document.getElementById('convertAmount').addEventListener('input', updateAllUI);

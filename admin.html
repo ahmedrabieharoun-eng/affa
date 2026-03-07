@@ -1,17 +1,13 @@
 // ============================================
-// FARM ECONOMY WORKER v5.5 - COMPLETE RACE CONDITION FIX WITH ETAG & ORDER LOCKING
-// FIXED: ALL operations now use atomicUpdateUserResource with ETag
-// FIXED: ExecuteOrder now properly locks the order to prevent multiple executions
-// ADDED: Max active orders limit (2 orders per user)
-// ADDED: Total price input for sell orders
-// ADDED: Leaderboard competition system (150 TON prizes based on cow ownership)
-// MODIFIED: Cow hatch cost increased to 10,000 Milk
-// MODIFIED: Leaderboard points system - new cows give 10 points, old cows give 1 point
-// ADDED: Cow leveling system with 3 levels
-// ADDED: Milk storage system with 10 levels
-// ADDED: Cow activation system (24h cycles)
-// ADDED: Ranch state management
-// FIXED: Removed duplicate milk production (now only ranch system produces milk)
+// FARM ECONOMY WORKER v5.6 - UI FIXES AND RANCH IMPROVEMENTS
+// FIXED: Ranch overview calculations
+// FIXED: Cow activation expiration handling
+// ADDED: Remaining time display for active cows
+// ADDED: Upgrade confirmation modal for storage
+// REMOVED: Minimum price floor for sell orders
+// MODIFIED: Home page layout - all machines same size, 3 machines stacked
+// MODIFIED: Cow card now has single "Open Ranch" button and is clickable
+// REMOVED: Ranch tab from bottom navigation
 // ============================================
 
 export default {
@@ -322,6 +318,11 @@ export default {
                         break;
                     case 'upgradeMilkStorage':
                         result = await handleUpgradeMilkStorage(env, userId);
+                        break;
+                    
+                    // ===== NEW ACTION FOR STORAGE UPGRADE INFO =====
+                    case 'getStorageUpgradeInfo':
+                        result = await handleGetStorageUpgradeInfo(env, userId);
                         break;
                     
                     default:
@@ -880,7 +881,7 @@ async function handleDistributeLeaderboardPrizes(env, userId) {
 }
 
 // ============================================
-// RANCH SYSTEM FUNCTIONS
+// RANCH SYSTEM FUNCTIONS - FIXED WITH EXPIRATION HANDLING
 // ============================================
 
 async function initializeRanch(env, userId) {
@@ -920,6 +921,64 @@ async function initializeRanch(env, userId) {
     }
 }
 
+// ===== FIXED: Check for expired activations and move cows back to inactive =====
+async function checkAndUpdateExpiredActivations(env, userId, ranch = null) {
+    try {
+        if (!ranch) {
+            const ranchResult = await dbGet(env, `users/${userId}/ranch`);
+            if (!ranchResult.success || !ranchResult.data) {
+                return null;
+            }
+            ranch = ranchResult.data;
+        }
+        
+        const now = Date.now();
+        let hasExpired = false;
+        
+        const cowLevels = ranch.cowLevels || { 1: 0, 2: 0, 3: 0 };
+        const cowActive = ranch.cowActive || { 1: 0, 2: 0, 3: 0 };
+        const cowActiveUntil = ranch.cowActiveUntil || {};
+        
+        // Check each level for expired activations
+        for (let level = 1; level <= 3; level++) {
+            const activeCount = cowActive[level] || 0;
+            const activeUntil = cowActiveUntil[level] || 0;
+            
+            if (activeCount > 0 && activeUntil <= now) {
+                // Expired - move active cows back to inactive
+                cowLevels[level] = (cowLevels[level] || 0) + activeCount;
+                cowActive[level] = 0;
+                delete cowActiveUntil[level];
+                hasExpired = true;
+                
+                console.log(`User ${userId}: Expired ${activeCount} level ${level} cows`);
+            }
+        }
+        
+        if (hasExpired) {
+            const updates = {
+                cowLevels: cowLevels,
+                cowActive: cowActive,
+                cowActiveUntil: cowActiveUntil,
+                updatedAt: now
+            };
+            
+            await dbUpdate(env, `users/${userId}/ranch`, updates);
+            
+            return {
+                ...ranch,
+                ...updates
+            };
+        }
+        
+        return ranch;
+        
+    } catch (error) {
+        console.error('Check expired activations error:', error);
+        return ranch;
+    }
+}
+
 async function calculateRanchProduction(env, userId, ranch = null) {
     try {
         if (!ranch) {
@@ -930,6 +989,9 @@ async function calculateRanchProduction(env, userId, ranch = null) {
                 ranch = ranchResult.data;
             }
         }
+        
+        // First check for expired activations
+        ranch = await checkAndUpdateExpiredActivations(env, userId, ranch);
         
         const now = Date.now();
         const lastProduction = ranch.lastProduction || now;
@@ -1011,6 +1073,9 @@ async function handleGetRanchState(env, userId) {
             ranch = ranchResult.data;
         }
         
+        // Check for expired activations before returning state
+        ranch = await checkAndUpdateExpiredActivations(env, userId, ranch);
+        
         const productionResult = await calculateRanchProduction(env, userId, ranch);
         
         if (productionResult) {
@@ -1021,26 +1086,84 @@ async function handleGetRanchState(env, userId) {
         const storageCapacity = GAME_CONSTANTS.STORAGE_LEVELS[storageLevel].capacity;
         const milkStored = ranch.milkStored || 0;
         
+        // ===== FIXED: Calculate total cows and active/inactive counts correctly =====
+        const cowLevels = ranch.cowLevels || { 1: 0, 2: 0, 3: 0 };
+        const cowActive = ranch.cowActive || { 1: 0, 2: 0, 3: 0 };
+        const cowActiveUntil = ranch.cowActiveUntil || {};
+        
+        // Total cows = inactive cows + active cows (never subtract)
+        let totalCows = 0;
+        let activeCows = 0;
+        let inactiveCows = 0;
+        
+        const now = Date.now();
+        
+        // Calculate active cows (only those with valid activation time)
+        for (let level = 1; level <= 3; level++) {
+            const levelActive = cowActive[level] || 0;
+            const activeUntil = cowActiveUntil[level] || 0;
+            
+            if (levelActive > 0 && activeUntil > now) {
+                activeCows += levelActive;
+            } else if (levelActive > 0 && activeUntil <= now) {
+                // This shouldn't happen after checkAndUpdateExpiredActivations, but just in case
+                // Add these to inactive count instead
+                cowLevels[level] = (cowLevels[level] || 0) + levelActive;
+                inactiveCows += levelActive;
+            }
+        }
+        
+        // Calculate total cows from all levels (both inactive and active)
+        for (let level = 1; level <= 3; level++) {
+            totalCows += cowLevels[level] || 0;
+        }
+        
+        // Add active cows to total (they are separate from cowLevels)
+        totalCows += activeCows;
+        
+        // Inactive cows = total - active
+        inactiveCows = totalCows - activeCows;
+        
+        // Ensure no negative values
+        inactiveCows = Math.max(0, inactiveCows);
+        
         let hourlyProduction = 0;
-        if (ranch.cowActive && ranch.cowActiveUntil) {
-            const now = Date.now();
-            for (let level = 1; level <= 3; level++) {
-                const activeCount = ranch.cowActive[level] || 0;
-                const activeUntil = ranch.cowActiveUntil[level] || 0;
-                
-                if (activeCount > 0 && activeUntil > now) {
-                    const productionPerHour = GAME_CONSTANTS.COW_LEVELS[level].productionPerDay / 24;
-                    hourlyProduction += activeCount * productionPerHour;
-                }
+        // Calculate hourly production from currently active cows only
+        for (let level = 1; level <= 3; level++) {
+            const levelActive = cowActive[level] || 0;
+            const activeUntil = cowActiveUntil[level] || 0;
+            
+            if (levelActive > 0 && activeUntil > now) {
+                const productionPerHour = GAME_CONSTANTS.COW_LEVELS[level].productionPerDay / 24;
+                hourlyProduction += levelActive * productionPerHour;
+            }
+        }
+        
+        // ===== NEW: Calculate remaining time for each level =====
+        const remainingTime = {};
+        for (let level = 1; level <= 3; level++) {
+            const activeUntil = cowActiveUntil[level] || 0;
+            if (activeUntil > now) {
+                const hoursRemaining = Math.max(0, (activeUntil - now) / GAME_CONSTANTS.HOUR_IN_MS);
+                remainingTime[level] = Math.round(hoursRemaining * 10) / 10; // Round to 1 decimal
+            } else {
+                remainingTime[level] = 0;
             }
         }
         
         return {
             success: true,
             data: {
-                cowLevels: ranch.cowLevels || { 1: 0, 2: 0, 3: 0 },
-                cowActive: ranch.cowActive || { 1: 0, 2: 0, 3: 0 },
-                cowActiveUntil: ranch.cowActiveUntil || {},
+                // ===== FIXED: Use corrected calculations =====
+                cowLevels: cowLevels,
+                cowActive: cowActive,
+                cowActiveUntil: cowActiveUntil,
+                totalCows: totalCows,
+                activeCows: activeCows,
+                inactiveCows: inactiveCows,
+                // ===== NEW: Add remaining time =====
+                remainingTime: remainingTime,
+                // ===== MODIFIED: Only show hourly production =====
                 hourlyProduction: Math.round(hourlyProduction * 100) / 100,
                 milkStored: milkStored,
                 storageCapacity: storageCapacity,
@@ -1057,6 +1180,62 @@ async function handleGetRanchState(env, userId) {
             success: false,
             error: error.message,
             errorCode: 'GET_RANCH_STATE_ERROR'
+        };
+    }
+}
+
+// ===== NEW: Get storage upgrade info for modal =====
+async function handleGetStorageUpgradeInfo(env, userId) {
+    try {
+        const ranchResult = await dbGet(env, `users/${userId}/ranch`);
+        let ranch;
+        
+        if (!ranchResult.success || !ranchResult.data) {
+            ranch = await initializeRanch(env, userId);
+        } else {
+            ranch = ranchResult.data;
+        }
+        
+        const currentLevel = ranch.storageLevel || 1;
+        
+        if (currentLevel >= 10) {
+            return {
+                success: false,
+                error: 'Storage already at maximum level',
+                errorCode: 'MAX_STORAGE_LEVEL'
+            };
+        }
+        
+        const nextLevel = currentLevel + 1;
+        const upgradeCost = GAME_CONSTANTS.STORAGE_LEVELS[nextLevel].cost;
+        const newCapacity = GAME_CONSTANTS.STORAGE_LEVELS[nextLevel].capacity;
+        const currentCapacity = GAME_CONSTANTS.STORAGE_LEVELS[currentLevel].capacity;
+        const capacityIncrease = newCapacity - currentCapacity;
+        
+        const userResult = await dbGet(env, `users/${userId}`);
+        const user = userResult.data || { milk: 0 };
+        const currentMilk = user.milk || 0;
+        
+        return {
+            success: true,
+            data: {
+                currentLevel: currentLevel,
+                nextLevel: nextLevel,
+                currentCapacity: currentCapacity,
+                newCapacity: newCapacity,
+                capacityIncrease: capacityIncrease,
+                upgradeCost: upgradeCost,
+                currentMilk: currentMilk,
+                canAfford: currentMilk >= upgradeCost
+            }
+        };
+        
+    } catch (error) {
+        console.error('Get storage upgrade info error:', error);
+        return {
+            success: false,
+            error: error.message,
+            errorCode: 'GET_STORAGE_UPGRADE_ERROR'
         };
     }
 }
@@ -1095,6 +1274,9 @@ async function handleActivateCows(env, userId, data) {
             } else {
                 ranch = ranchResult.data;
             }
+            
+            // Check for expired activations first
+            ranch = await checkAndUpdateExpiredActivations(env, userId, ranch);
             
             const productionResult = await calculateRanchProduction(env, userId, ranch);
             
@@ -1155,14 +1337,20 @@ async function handleActivateCows(env, userId, data) {
             const cowActive = ranch.cowActive || { 1: 0, 2: 0, 3: 0 };
             const cowActiveUntil = ranch.cowActiveUntil || {};
             
+            // Remove from inactive
             cowLevels[activateLevel] -= activateAmount;
             
             const now = Date.now();
             const activeUntil = now + (GAME_CONSTANTS.ACTIVATION_DURATION_HOURS * GAME_CONSTANTS.HOUR_IN_MS);
             
+            // Add to active (either new or extending existing)
             if (cowActiveUntil[activateLevel] && cowActiveUntil[activateLevel] > now) {
+                // Extend existing activation
                 cowActive[activateLevel] += activateAmount;
+                // Keep the existing end time - we don't extend because they're already active
+                // If they activate more cows, they all share the same end time
             } else {
+                // New activation
                 cowActive[activateLevel] = activateAmount;
                 cowActiveUntil[activateLevel] = activeUntil;
             }
@@ -1252,6 +1440,9 @@ async function handleUpgradeCowLevel(env, userId, data) {
             } else {
                 ranch = ranchResult.data;
             }
+            
+            // Check for expired activations
+            ranch = await checkAndUpdateExpiredActivations(env, userId, ranch);
             
             const productionResult = await calculateRanchProduction(env, userId, ranch);
             
@@ -1378,6 +1569,9 @@ async function handleClaimMilk(env, userId) {
                 ranch = ranchResult.data;
             }
             
+            // Check for expired activations
+            ranch = await checkAndUpdateExpiredActivations(env, userId, ranch);
+            
             const productionResult = await calculateRanchProduction(env, userId, ranch);
             
             if (productionResult) {
@@ -1479,6 +1673,9 @@ async function handleUpgradeMilkStorage(env, userId) {
             } else {
                 ranch = ranchResult.data;
             }
+            
+            // Check for expired activations
+            ranch = await checkAndUpdateExpiredActivations(env, userId, ranch);
             
             const productionResult = await calculateRanchProduction(env, userId, ranch);
             
@@ -3553,7 +3750,7 @@ async function handleConvertDiamond(env, userId, data) {
 }
 
 // ============================================
-// MARKET - P2P ORDER BOOK - ALL FIXED WITH ETAG
+// MARKET - P2P ORDER BOOK - REMOVED PRICE FLOOR
 // ============================================
 
 async function handleCreateSellOrder(env, userId, data) {
@@ -3589,6 +3786,9 @@ async function handleCreateSellOrder(env, userId, data) {
                     errorCode: 'INVALID_PRICE'
                 };
             }
+            
+            // ===== REMOVED: Price floor requirement =====
+            // No minimum price anymore
             
             // ===== CHECK MAX ACTIVE ORDERS (LIMIT 2) =====
             const activeOrdersCheck = await checkUserActiveOrders(env, userId);
@@ -3764,6 +3964,9 @@ async function handleCreateBuyOrder(env, userId, data) {
                     errorCode: 'INVALID_PRICE'
                 };
             }
+            
+            // ===== REMOVED: Price floor requirement =====
+            // No minimum price anymore
             
             // ===== CHECK MAX ACTIVE ORDERS (LIMIT 2) =====
             const activeOrdersCheck = await checkUserActiveOrders(env, userId);
@@ -5532,7 +5735,7 @@ async function handleSetLanguage(env, userId, data) {
 }
 
 // ============================================
-// GET STATE - MAIN STATE FUNCTION
+// GET STATE - MAIN STATE FUNCTION - UPDATED WITH RANCH FIXES
 // ============================================
 
 async function handleGetState(env, userId) {
@@ -5582,9 +5785,11 @@ async function handleGetState(env, userId) {
             };
         }
         
-        // Calculate ranch production
+        // Calculate ranch production with expiration check
         let ranch = ranchResult.data;
         if (ranch) {
+            // Check for expired activations first
+            ranch = await checkAndUpdateExpiredActivations(env, userId, ranch);
             const ranchProduction = await calculateRanchProduction(env, userId, ranch);
             if (ranchProduction) {
                 ranch = ranchProduction.ranch;
@@ -5592,6 +5797,69 @@ async function handleGetState(env, userId) {
         } else {
             ranch = await initializeRanch(env, userId);
         }
+        
+        // ===== FIXED: Calculate total cows, active and inactive correctly =====
+        const cowLevels = ranch.cowLevels || { 1: 0, 2: 0, 3: 0 };
+        const cowActive = ranch.cowActive || { 1: 0, 2: 0, 3: 0 };
+        const cowActiveUntil = ranch.cowActiveUntil || {};
+        
+        let totalCows = 0;
+        let activeCows = 0;
+        let inactiveCows = 0;
+        
+        const now = Date.now();
+        
+        // Calculate active cows (only those with valid activation time)
+        for (let level = 1; level <= 3; level++) {
+            const levelActive = cowActive[level] || 0;
+            const activeUntil = cowActiveUntil[level] || 0;
+            
+            if (levelActive > 0 && activeUntil > now) {
+                activeCows += levelActive;
+            }
+        }
+        
+        // Calculate total cows from all levels (inactive cows)
+        for (let level = 1; level <= 3; level++) {
+            totalCows += cowLevels[level] || 0;
+        }
+        
+        // Add active cows to total
+        totalCows += activeCows;
+        
+        // Inactive cows = total - active
+        inactiveCows = totalCows - activeCows;
+        
+        // Ensure no negative values
+        inactiveCows = Math.max(0, inactiveCows);
+        
+        // Calculate hourly production from active cows
+        let ranchHourlyProduction = 0;
+        for (let level = 1; level <= 3; level++) {
+            const levelActive = cowActive[level] || 0;
+            const activeUntil = cowActiveUntil[level] || 0;
+            
+            if (levelActive > 0 && activeUntil > now) {
+                const productionPerHour = GAME_CONSTANTS.COW_LEVELS[level].productionPerDay / 24;
+                ranchHourlyProduction += levelActive * productionPerHour;
+            }
+        }
+        
+        // Calculate remaining time for each level
+        const remainingTime = {};
+        for (let level = 1; level <= 3; level++) {
+            const activeUntil = cowActiveUntil[level] || 0;
+            if (activeUntil > now) {
+                const hoursRemaining = Math.max(0, (activeUntil - now) / GAME_CONSTANTS.HOUR_IN_MS);
+                remainingTime[level] = Math.round(hoursRemaining * 10) / 10; // Round to 1 decimal
+            } else {
+                remainingTime[level] = 0;
+            }
+        }
+        
+        const storageLevel = ranch?.storageLevel || 1;
+        const storageCapacity = GAME_CONSTANTS.STORAGE_LEVELS[storageLevel].capacity;
+        const milkStored = ranch?.milkStored || 0;
         
         let referralStats = {
             totalReferrals: 0,
@@ -5739,25 +6007,6 @@ async function handleGetState(env, userId) {
         const minutesUntilNext = Math.floor(secondsUntilNext / 60);
         const secondsRemaining = secondsUntilNext % 60;
         
-        // Calculate ranch hourly production
-        let ranchHourlyProduction = 0;
-        if (ranch && ranch.cowActive && ranch.cowActiveUntil) {
-            const now = Date.now();
-            for (let level = 1; level <= 3; level++) {
-                const activeCount = ranch.cowActive[level] || 0;
-                const activeUntil = ranch.cowActiveUntil[level] || 0;
-                
-                if (activeCount > 0 && activeUntil > now) {
-                    const productionPerHour = GAME_CONSTANTS.COW_LEVELS[level].productionPerDay / 24;
-                    ranchHourlyProduction += activeCount * productionPerHour;
-                }
-            }
-        }
-        
-        const storageLevel = ranch?.storageLevel || 1;
-        const storageCapacity = GAME_CONSTANTS.STORAGE_LEVELS[storageLevel].capacity;
-        const milkStored = ranch?.milkStored || 0;
-        
         return {
             success: true,
             data: {
@@ -5815,10 +6064,16 @@ async function handleGetState(env, userId) {
                     chickens_until_diamond: Math.max(0, GAME_CONSTANTS.CHICKEN_GLOBAL_CAP - (global.chickens_sold || 0))
                 },
                 
+                // ===== FIXED: Ranch data with corrected calculations =====
                 ranch: {
-                    cowLevels: ranch?.cowLevels || { 1: 0, 2: 0, 3: 0 },
-                    cowActive: ranch?.cowActive || { 1: 0, 2: 0, 3: 0 },
-                    cowActiveUntil: ranch?.cowActiveUntil || {},
+                    cowLevels: cowLevels,
+                    cowActive: cowActive,
+                    cowActiveUntil: cowActiveUntil,
+                    totalCows: totalCows,
+                    activeCows: activeCows,
+                    inactiveCows: inactiveCows,
+                    remainingTime: remainingTime,
+                    // ===== MODIFIED: Only show hourly production =====
                     hourlyProduction: Math.round(ranchHourlyProduction * 100) / 100,
                     milkStored: milkStored,
                     storageCapacity: storageCapacity,

@@ -950,24 +950,25 @@
             font-weight: 600;
         }
         
-        .farm-grid {
+        /* تعديلات تخطيط الماكينات */
+        .machines-vertical {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 12px;
         }
         
         .machine-card {
+            width: 100%;
+            min-height: 280px;
             background: var(--glass-strong);
             backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 16px;
+            padding: 12px;
             position: relative;
             overflow: hidden;
             transition: transform 0.2s;
             animation: fade-in 0.5s ease;
-            width: 100%;
         }
         
         .machine-card:hover {
@@ -976,7 +977,6 @@
         
         .machine-card.cow {
             border-left: 3px solid var(--primary-pink);
-            cursor: pointer;
         }
         
         .machine-card.chicken {
@@ -1024,13 +1024,13 @@
         .machine-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
         
         .machine-emoji {
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             display: flex;
@@ -1054,18 +1054,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         
         .machine-name {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
         }
         
         .machine-badge {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
-            padding: 4px 8px;
+            padding: 2px 6px;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.2px;
@@ -1098,24 +1098,24 @@
         .machine-price {
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 12px;
+            gap: 3px;
+            font-size: 11px;
             color: var(--text-secondary);
         }
         
         .machine-price i {
             color: var(--crystal-blue);
-            font-size: 11px;
+            font-size: 10px;
         }
         
         .machine-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 6px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 14px;
-            padding: 10px;
-            margin-bottom: 12px;
+            padding: 8px;
+            margin-bottom: 10px;
         }
         
         .stat-item {
@@ -1123,19 +1123,19 @@
         }
         
         .stat-label {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
             margin-bottom: 2px;
             text-transform: uppercase;
         }
         
         .stat-number {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
         }
         
         .stat-unit {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-secondary);
             margin-left: 2px;
         }
@@ -1147,12 +1147,12 @@
         .progress-header {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
-            margin-bottom: 4px;
+            font-size: 10px;
+            margin-bottom: 3px;
         }
         
         .progress-bar {
-            height: 6px;
+            height: 5px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 3px;
             overflow: hidden;
@@ -1165,44 +1165,74 @@
             transition: width 0.3s ease;
         }
         
+        .cow-card-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        
+        .ranch-nav-btn {
+            background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px var(--pink-glow);
+        }
+        
+        .ranch-nav-btn i {
+            font-size: 14px;
+        }
+        
+        .ranch-nav-btn:active {
+            transform: scale(0.96);
+        }
+        
         .crystal-recipe {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 12px;
-            margin: 12px 0;
+            font-size: 11px;
+            margin: 10px 0;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 14px;
-            padding: 10px;
+            padding: 8px;
         }
         
         .crystal-recipe-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            gap: 1px;
         }
         
         .crystal-recipe-emoji {
-            font-size: 20px;
+            font-size: 18px;
         }
         
         .crystal-recipe-plus {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text-muted);
         }
         
         .crystal-recipe-equal {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--crystal-blue);
         }
         
         .btn {
             border: none;
             border-radius: 14px;
-            padding: 12px;
+            padding: 10px;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1240,7 +1270,7 @@
             background: rgba(0, 242, 122, 0.15);
             border: 1px solid rgba(0, 242, 122, 0.3);
             color: var(--neon-green);
-            font-size: 12px;
+            font-size: 11px;
         }
         
         .btn-buy {
@@ -1253,31 +1283,6 @@
             background: rgba(255, 75, 92, 0.15);
             border: 1px solid rgba(255, 75, 92, 0.3);
             color: var(--danger-red);
-        }
-        
-        .btn-open-ranch {
-            background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 10px 16px;
-            font-weight: 600;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px var(--pink-glow);
-            margin-top: 8px;
-        }
-        
-        .btn-open-ranch i {
-            font-size: 14px;
-        }
-        
-        .btn-open-ranch:active {
-            transform: scale(0.96);
         }
         
         .action-buttons {
@@ -2137,11 +2142,90 @@
             transform: scale(0.98);
         }
         
+        /* أنماط جديدة لصفحة Ranch */
+        .stats-glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 14px;
+        }
+        
+        .stats-glass.active {
+            border-left: 4px solid var(--neon-green);
+        }
+        
+        .stats-glass.inactive {
+            border-left: 4px solid var(--danger-red);
+        }
+        
+        .activation-timer {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 6px 12px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--warning);
+            border: 1px solid rgba(255, 180, 0, 0.3);
+        }
+        
+        .activation-timer i {
+            font-size: 12px;
+            color: var(--warning);
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .timer-expired {
+            color: var(--danger-red);
+        }
+        
+        /* نافذة ترقية التخزين */
+        .storage-upgrade-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 340px;
+            background: var(--glass-strong);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--crystal-blue);
+            border-radius: 24px;
+            padding: 20px;
+            z-index: 1002;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+        
+        .storage-upgrade-modal.active {
+            display: block;
+            animation: fade-in 0.3s ease;
+        }
+        
+        .storage-preview {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .storage-preview-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
         @media (max-width: 400px) {
             .status-value { font-size: 14px; }
-            .machine-emoji { width: 45px; height: 45px; }
-            .machine-name { font-size: 14px; }
-            .stat-number { font-size: 16px; }
+            .machine-emoji { width: 40px; height: 40px; }
+            .machine-name { font-size: 13px; }
+            .stat-number { font-size: 14px; }
             .market-stats { grid-template-columns: 1fr 1fr; gap: 6px; }
             .ton-amount { font-size: 13px; }
             .mining-timer { font-size: 11px; padding: 4px 8px; }
@@ -2445,9 +2529,11 @@
             </div>
         </div>
         
+        <!-- قسم Farm المعدل - ماكينات عمودية -->
         <div id="sectionFarm" class="section active">
-            <div class="farm-grid">
-                <div class="machine-card cow" id="cowCard" onclick="window.openRanch()">
+            <div class="machines-vertical">
+                <!-- ماكينة البقرة المعدلة -->
+                <div class="machine-card cow" id="cowCard" onclick="openRanchFromCow()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow">
                             <img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow Machine">
@@ -2484,11 +2570,15 @@
                         </div>
                     </div>
                     
-                    <button class="btn-open-ranch" onclick="event.stopPropagation(); window.openRanch()">
-                        <i class="fas fa-door-open"></i> <span data-i18n="farm.openRanch">Open Ranch</span>
-                    </button>
+                    <!-- زر واحد فقط: Open Ranch -->
+                    <div class="cow-card-footer" onclick="event.stopPropagation();">
+                        <button class="ranch-nav-btn" id="openRanchFromCowBtn" onclick="openRanchFromCow()">
+                            <i class="fas fa-door-open"></i> <span data-i18n="farm.openRanch">Open Ranch</span>
+                        </button>
+                    </div>
                 </div>
                 
+                <!-- ماكينة الدجاج -->
                 <div class="machine-card chicken" id="chickenCard">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow">
@@ -2541,6 +2631,7 @@
                     </div>
                 </div>
                 
+                <!-- ماكينة الكريستال -->
                 <div class="machine-card diamond" id="diamondCard">
                     <div class="machine-header">
                         <div class="machine-emoji spin-slow">
@@ -2602,6 +2693,7 @@
             </div>
         </div>
 
+        <!-- قسم Ranch المعدل -->
         <div id="sectionRanch" class="section">
             <div class="ranch-card" style="background: linear-gradient(145deg, rgba(20,30,40,0.95), rgba(10,15,25,0.98)); border: 2px solid var(--primary-pink); border-radius: 24px; padding: 16px; margin-bottom: 16px; position: relative; overflow: hidden;">
                 <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary-pink), var(--crystal-blue), var(--neon-green));"></div>
@@ -2617,7 +2709,7 @@
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-                    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border-radius: 18px; padding: 14px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="stats-glass">
                         <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
                             <i class="fas fa-cow"></i> Total Cows
                         </div>
@@ -2625,17 +2717,21 @@
                             <span class="counter-number" id="ranchTotalCows" style="font-size: 32px; font-weight: 800;">0</span>
                         </div>
                         <div style="display: flex; gap: 16px; margin-top: 8px;">
-                            <div><span style="color: var(--neon-green);">🟢 Active:</span> <span id="ranchActiveCows" style="font-weight: 600; color: var(--neon-green);">0</span></div>
-                            <div><span style="color: var(--danger-red);">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight: 600; color: var(--danger-red);">0</span></div>
+                            <div class="stats-glass active" style="padding: 8px;"><span style="color: var(--neon-green);">🟢 Active:</span> <span id="ranchActiveCows" style="font-weight: 600;">0</span></div>
+                            <div class="stats-glass inactive" style="padding: 8px;"><span style="color: var(--danger-red);">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight: 600;">0</span></div>
                         </div>
                     </div>
                     
-                    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); border-radius: 18px; padding: 14px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="stats-glass">
                         <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
                             <i class="fas fa-chart-line"></i> Production
                         </div>
                         <div style="font-size: 32px; font-weight: 800; color: var(--crystal-blue);" id="ranchHourlyProduction">0</div>
-                        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Milk per hour</div>
+                        <div style="margin-top: 8px; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 30px;">
+                            <i class="fas fa-hourglass-half" style="color: var(--warning); font-size: 12px;"></i>
+                            <span style="font-size: 11px;">Milk per hour:</span>
+                            <span style="font-weight: 700; color: var(--warning);" id="ranchHourlyMilk">0</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -2688,12 +2784,10 @@
                         <span style="font-weight: 700; color: var(--neon-green);" id="level1Active">0</span>
                     </div>
                     
-                    <div id="level1Timer" style="background: rgba(255, 92, 168, 0.1); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px; display: none;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-hourglass-half" style="color: var(--warning); font-size: 12px;"></i>
-                            <span style="font-size: 11px;">Time remaining:</span>
-                            <span style="font-weight: 700; color: var(--warning);" id="level1TimerText">00:00:00</span>
-                        </div>
+                    <!-- مؤقت التفعيل للمستوى 1 -->
+                    <div class="activation-timer" id="level1Timer" style="display: none;">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level1TimerText">Activation ends in: 00:00</span>
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -2730,12 +2824,10 @@
                         <span style="font-weight: 700; color: var(--neon-green);" id="level2Active">0</span>
                     </div>
                     
-                    <div id="level2Timer" style="background: rgba(255, 92, 168, 0.1); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px; display: none;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-hourglass-half" style="color: var(--warning); font-size: 12px;"></i>
-                            <span style="font-size: 11px;">Time remaining:</span>
-                            <span style="font-weight: 700; color: var(--warning);" id="level2TimerText">00:00:00</span>
-                        </div>
+                    <!-- مؤقت التفعيل للمستوى 2 -->
+                    <div class="activation-timer" id="level2Timer" style="display: none;">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level2TimerText">Activation ends in: 00:00</span>
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -2772,12 +2864,10 @@
                         <span style="font-weight: 700; color: var(--neon-green);" id="level3Active">0</span>
                     </div>
                     
-                    <div id="level3Timer" style="background: rgba(255, 92, 168, 0.1); border-radius: 30px; padding: 8px 12px; margin-bottom: 12px; display: none;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-hourglass-half" style="color: var(--warning); font-size: 12px;"></i>
-                            <span style="font-size: 11px;">Time remaining:</span>
-                            <span style="font-weight: 700; color: var(--warning);" id="level3TimerText">00:00:00</span>
-                        </div>
+                    <!-- مؤقت التفعيل للمستوى 3 -->
+                    <div class="activation-timer" id="level3Timer" style="display: none;">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level3TimerText">Activation ends in: 00:00</span>
                     </div>
                     
                     <button class="btn btn-hatch" style="background: rgba(0,242,122,0.2); width: 100%;" onclick="openActivateModal(3)">
@@ -2826,7 +2916,7 @@
                     <button class="btn btn-primary" id="claimMilkBtn" style="background: linear-gradient(145deg, var(--neon-green), #00b35e);">
                         <i class="fas fa-hand-holding-heart"></i> CLAIM
                     </button>
-                    <button class="btn btn-primary" id="upgradeStorageBtn" style="background: linear-gradient(145deg, var(--crystal-blue), #0099cc);" onclick="openUpgradeStorageModal()">
+                    <button class="btn btn-primary" id="upgradeStorageBtn" style="background: linear-gradient(145deg, var(--crystal-blue), #0099cc);" onclick="openStorageUpgradeModal()">
                         <i class="fas fa-arrow-up"></i> UPGRADE
                     </button>
                 </div>
@@ -2837,6 +2927,7 @@
             </div>
         </div>
         
+        <!-- باقي الأقسام كما هي (Market, Diamond, Friends, Tasks, Profile) -->
         <div id="sectionMarket" class="section">
             <div class="card">
                 <div class="card-title">
@@ -3166,6 +3257,7 @@
         </div>
     </div>
 
+    <!-- شريط التنقل السفلي المعدل - إزالة Ranch -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-section="sectionFarm">
             <div class="nav-icon">🚜</div>
@@ -3193,6 +3285,54 @@
         </div>
     </nav>
 
+    <!-- نافذة ترقية التخزين الجديدة -->
+    <div class="storage-upgrade-modal" id="storageUpgradeModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fas fa-arrow-up" style="color: var(--crystal-blue);"></i> Upgrade Storage
+            </h3>
+            <i class="fas fa-times modal-close" onclick="closeStorageUpgradeModal()"></i>
+        </div>
+        
+        <div class="storage-preview">
+            <div class="storage-preview-row">
+                <span>Current Level:</span>
+                <span id="currentStorageLevel">1</span>
+            </div>
+            <div class="storage-preview-row">
+                <span>Current Capacity:</span>
+                <span id="currentStorageCapacity">2,000 🥛</span>
+            </div>
+            <div class="storage-preview-row" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px; padding-top: 8px;">
+                <span>Next Level:</span>
+                <span id="nextStorageLevel">2</span>
+            </div>
+            <div class="storage-preview-row">
+                <span>New Capacity:</span>
+                <span id="nextStorageCapacity" style="color: var(--neon-green);">5,000 🥛</span>
+            </div>
+            <div class="storage-preview-row">
+                <span>Upgrade Cost:</span>
+                <span id="upgradeStorageCost" style="color: var(--warning);">2,000 🥛</span>
+            </div>
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.3); border-radius: 14px; padding: 12px; margin-bottom: 16px;">
+            <div class="confirm-row">
+                <span class="confirm-label">Your Milk Balance:</span>
+                <span class="confirm-value" id="upgradeStorageBalance">0 🥛</span>
+            </div>
+        </div>
+        
+        <div class="confirm-buttons">
+            <button class="btn btn-secondary" onclick="closeStorageUpgradeModal()">Cancel</button>
+            <button class="btn btn-primary" id="confirmStorageUpgradeBtn" onclick="executeStorageUpgrade()">
+                <i class="fas fa-check-circle"></i> Upgrade
+            </button>
+        </div>
+    </div>
+
+    <!-- باقي المودالات كما هي -->
     <div class="modal-overlay" id="sellOrderModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3554,49 +3694,8 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="upgradeStorageModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-arrow-up" style="color: var(--crystal-blue);"></i> Upgrade Milk Storage
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
-            </div>
-            
-            <div style="text-align: center; margin-bottom: 16px;">
-                <div style="font-size: 48px; margin-bottom: 8px;">🥛 → 📦</div>
-                <div style="font-size: 16px; font-weight: 700;" id="upgradeStorageTitle">Level 1 → Level 2</div>
-            </div>
-            
-            <div style="background: rgba(0,0,0,0.3); border-radius: 14px; padding: 12px; margin-bottom: 16px;">
-                <div class="confirm-row">
-                    <span class="confirm-label">Current capacity:</span>
-                    <span class="confirm-value" id="currentCapacity">2,000 🥛</span>
-                </div>
-                <div class="confirm-row">
-                    <span class="confirm-label">Next capacity:</span>
-                    <span class="confirm-value" style="color: var(--crystal-blue);" id="nextCapacity">5,000 🥛</span>
-                </div>
-                <div class="confirm-row">
-                    <span class="confirm-label">Upgrade cost:</span>
-                    <span class="confirm-value" style="color: var(--neon-green);" id="storageUpgradeCost">2,000 🥛</span>
-                </div>
-                <div class="confirm-row">
-                    <span class="confirm-label">Your milk balance:</span>
-                    <span class="confirm-value" id="storageBalance">0 🥛</span>
-                </div>
-            </div>
-            
-            <div class="confirm-buttons">
-                <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
-                <button class="btn btn-primary" id="confirmStorageUpgradeBtn" onclick="executeUpgradeStorage()">
-                    <i class="fas fa-check-circle"></i> Upgrade
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
+        // [جميع كود JavaScript الموجود يبقى كما هو، مع إضافة الدوال الجديدة]
         const CONFIG = {
             API_URL: 'https://noisy-dust-b9e8.mmrr2872008.workers.dev',
             BOT_USERNAME: '@Crystal_Ranch_bot',
@@ -3964,7 +4063,7 @@
             ranch: {
                 cowLevels: {1:0, 2:0, 3:0},
                 cowActive: {1:0, 2:0, 3:0},
-                cowActiveUntil: {1: null, 2: null, 3: null},
+                cowActiveUntil: {},
                 milkStored: 0,
                 storageLevel: 1,
                 storageCapacity: 2000,
@@ -4004,6 +4103,82 @@
 
         const lastClickTimers = {};
         const CLICK_COOLDOWN = 10000;
+
+        // دوال جديدة لصفحة Ranch
+        function openRanchFromCow() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('sectionRanch').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            updateRanchUI();
+        }
+
+        function openStorageUpgradeModal() {
+            const currentLevel = App.ranch.storageLevel || 1;
+            const nextLevel = currentLevel + 1;
+            
+            if (currentLevel >= 10) {
+                showNotification('Maximum storage level reached', 'info');
+                return;
+            }
+            
+            const currentCapacity = CONFIG.STORAGE_LEVELS[currentLevel].capacity;
+            const nextCapacity = CONFIG.STORAGE_LEVELS[nextLevel].capacity;
+            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel].cost;
+            
+            document.getElementById('currentStorageLevel').innerHTML = currentLevel;
+            document.getElementById('currentStorageCapacity').innerHTML = formatNumber(currentCapacity) + ' 🥛';
+            document.getElementById('nextStorageLevel').innerHTML = nextLevel;
+            document.getElementById('nextStorageCapacity').innerHTML = formatNumber(nextCapacity) + ' 🥛';
+            document.getElementById('upgradeStorageCost').innerHTML = formatNumber(upgradeCost) + ' 🥛';
+            document.getElementById('upgradeStorageBalance').innerHTML = formatNumber(App.user?.milk || 0) + ' 🥛';
+            
+            const confirmBtn = document.getElementById('confirmStorageUpgradeBtn');
+            if ((App.user?.milk || 0) < upgradeCost) {
+                confirmBtn.disabled = true;
+                confirmBtn.style.opacity = '0.5';
+            } else {
+                confirmBtn.disabled = false;
+                confirmBtn.style.opacity = '1';
+            }
+            
+            document.getElementById('storageUpgradeModal').classList.add('active');
+        }
+
+        function closeStorageUpgradeModal() {
+            document.getElementById('storageUpgradeModal').classList.remove('active');
+        }
+
+        function executeStorageUpgrade() {
+            const buttonId = 'confirmStorageUpgradeBtn';
+            const button = document.getElementById('confirmStorageUpgradeBtn');
+            
+            if (!validateAndCooldown(buttonId, button)) {
+                return;
+            }
+            
+            const currentLevel = App.ranch.storageLevel || 1;
+            
+            if (currentLevel >= 10) {
+                showNotification('Maximum storage level reached', 'info');
+                closeStorageUpgradeModal();
+                return;
+            }
+            
+            const nextLevel = currentLevel + 1;
+            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel]?.cost || 0;
+            
+            if ((App.user?.milk || 0) < upgradeCost) {
+                showNotification(
+                    App.currentLanguage === 'ru' ? 
+                    `Недостаточно молока. Нужно ${formatNumber(upgradeCost)} 🥛` : 
+                    `Insufficient milk. Need ${formatNumber(upgradeCost)} 🥛`,
+                    'error'
+                );
+                return;
+            }
+            
+            upgradeStorage();
+        }
 
         function checkClickCooldown(buttonId) {
             const now = Date.now();
@@ -4138,191 +4313,6 @@
                 prizeHtml += `<div class="info-prize-row"><span>${item.rank}</span> <span style="color: #FFD700;">${item.prize}</span></div>`;
             });
             document.getElementById('infoPrizeList').innerHTML = prizeHtml;
-        }
-
-        window.openRanch = function() {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('sectionRanch').classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            updateRanchUI();
-            loadGameState();
-        };
-
-        window.openUpgradeStorageModal = function() {
-            const modal = document.getElementById('upgradeStorageModal');
-            const currentLevel = App.ranch.storageLevel || 1;
-            const nextLevel = currentLevel + 1;
-            
-            if (nextLevel > 10) {
-                showNotification(
-                    App.currentLanguage === 'ru' ? 'Максимальный уровень хранилища' : 'Maximum storage level',
-                    'info'
-                );
-                return;
-            }
-            
-            const currentCapacity = CONFIG.STORAGE_LEVELS[currentLevel].capacity;
-            const nextCapacity = CONFIG.STORAGE_LEVELS[nextLevel].capacity;
-            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel].cost;
-            
-            document.getElementById('currentCapacity').innerHTML = formatNumber(currentCapacity) + ' 🥛';
-            document.getElementById('nextCapacity').innerHTML = formatNumber(nextCapacity) + ' 🥛';
-            document.getElementById('storageUpgradeCost').innerHTML = formatNumber(upgradeCost) + ' 🥛';
-            document.getElementById('storageBalance').innerHTML = formatNumber(App.user?.milk || 0) + ' 🥛';
-            document.getElementById('upgradeStorageTitle').innerHTML = `Level ${currentLevel} → Level ${nextLevel}`;
-            
-            const confirmBtn = document.getElementById('confirmStorageUpgradeBtn');
-            if ((App.user?.milk || 0) < upgradeCost) {
-                confirmBtn.disabled = true;
-                confirmBtn.style.opacity = '0.5';
-            } else {
-                confirmBtn.disabled = false;
-                confirmBtn.style.opacity = '1';
-            }
-            
-            modal.classList.add('active');
-        };
-
-        window.executeUpgradeStorage = async function() {
-            const buttonId = 'confirmStorageUpgradeBtn';
-            const button = document.getElementById('confirmStorageUpgradeBtn');
-            
-            if (!validateAndCooldown(buttonId, button)) {
-                return;
-            }
-            
-            const currentLevel = App.ranch.storageLevel || 1;
-            const nextLevel = currentLevel + 1;
-            
-            if (nextLevel > 10) {
-                showNotification(
-                    App.currentLanguage === 'ru' ? 'Максимальный уровень хранилища' : 'Maximum storage level',
-                    'info'
-                );
-                closeAllModals();
-                return;
-            }
-            
-            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel]?.cost || 0;
-            
-            if ((App.user?.milk || 0) < upgradeCost) {
-                showNotification(
-                    App.currentLanguage === 'ru' ? 
-                    `Недостаточно молока. Нужно ${formatNumber(upgradeCost)} 🥛` : 
-                    `Insufficient milk. Need ${formatNumber(upgradeCost)} 🥛`,
-                    'error'
-                );
-                closeAllModals();
-                return;
-            }
-            
-            try {
-                const result = await callAPI('upgradeMilkStorage');
-                
-                await loadGameState();
-                closeAllModals();
-                
-                showNotification(
-                    App.currentLanguage === 'ru' ? 
-                    `✅ Хранилище улучшено до уровня ${result.newLevel}!` : 
-                    `✅ Storage upgraded to level ${result.newLevel}!`,
-                    'success'
-                );
-                
-            } catch (error) {
-                console.error('Upgrade storage error:', error);
-            }
-        };
-
-        function updateRanchUI() {
-            if (!App.ranch) return;
-            
-            const ranch = App.ranch;
-            
-            const totalCows = (ranch.cowLevels[1] || 0) + (ranch.cowLevels[2] || 0) + (ranch.cowLevels[3] || 0);
-            const activeCows = (ranch.cowActive[1] || 0) + (ranch.cowActive[2] || 0) + (ranch.cowActive[3] || 0);
-            const inactiveCows = totalCows - activeCows;
-            
-            document.getElementById('ranchTotalCows').innerHTML = totalCows;
-            document.getElementById('ranchActiveCows').innerHTML = activeCows;
-            document.getElementById('ranchInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
-            
-            const hourlyProduction = ranch.hourlyProduction || 0;
-            document.getElementById('ranchHourlyProduction').innerHTML = Math.round(hourlyProduction);
-            
-            const cowsSold = App.global?.cows_sold || 0;
-            document.getElementById('ranchCowsSold').innerHTML = cowsSold;
-            const progressPercent = (cowsSold / 1000) * 100;
-            document.getElementById('ranchCowsProgress').style.width = `${progressPercent}%`;
-            
-            document.getElementById('level1Count').innerHTML = (ranch.cowLevels[1] || 0) + ' cows';
-            document.getElementById('level2Count').innerHTML = (ranch.cowLevels[2] || 0) + ' cows';
-            document.getElementById('level3Count').innerHTML = (ranch.cowLevels[3] || 0) + ' cows';
-            
-            document.getElementById('level1Active').innerHTML = ranch.cowActive[1] || 0;
-            document.getElementById('level2Active').innerHTML = ranch.cowActive[2] || 0;
-            document.getElementById('level3Active').innerHTML = ranch.cowActive[3] || 0;
-            
-            // Update activation timers if they exist in the backend data
-            if (ranch.cowActiveUntil) {
-                if (ranch.cowActiveUntil[1]) {
-                    document.getElementById('level1Timer').style.display = 'flex';
-                    updateTimerDisplay(1, ranch.cowActiveUntil[1]);
-                } else {
-                    document.getElementById('level1Timer').style.display = 'none';
-                }
-                
-                if (ranch.cowActiveUntil[2]) {
-                    document.getElementById('level2Timer').style.display = 'flex';
-                    updateTimerDisplay(2, ranch.cowActiveUntil[2]);
-                } else {
-                    document.getElementById('level2Timer').style.display = 'none';
-                }
-                
-                if (ranch.cowActiveUntil[3]) {
-                    document.getElementById('level3Timer').style.display = 'flex';
-                    updateTimerDisplay(3, ranch.cowActiveUntil[3]);
-                } else {
-                    document.getElementById('level3Timer').style.display = 'none';
-                }
-            }
-            
-            const milkStored = ranch.milkStored || 0;
-            const storageCapacity = ranch.storageCapacity || 2000;
-            const storageLevel = ranch.storageLevel || 1;
-            
-            document.getElementById('milkStored').innerHTML = formatNumber(milkStored);
-            document.getElementById('storageLevel').innerHTML = storageLevel + '/10';
-            document.getElementById('storageCapacity').innerHTML = formatNumber(storageCapacity);
-            
-            const storagePercent = (milkStored / storageCapacity) * 100;
-            document.getElementById('storageProgressFill').style.width = `${storagePercent}%`;
-            
-            const storageFullBadge = document.getElementById('storageFullBadge');
-            if (milkStored >= storageCapacity) {
-                storageFullBadge.style.display = 'block';
-            } else {
-                storageFullBadge.style.display = 'none';
-            }
-        }
-
-        function updateTimerDisplay(level, endTime) {
-            const timerElement = document.getElementById(`level${level}TimerText`);
-            if (!timerElement) return;
-            
-            const now = Date.now();
-            const remainingMs = endTime - now;
-            
-            if (remainingMs <= 0) {
-                document.getElementById(`level${level}Timer`).style.display = 'none';
-                return;
-            }
-            
-            const hours = Math.floor(remainingMs / (1000 * 60 * 60));
-            const minutes = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((remainingMs % (1000 * 60)) / 1000);
-            
-            timerElement.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
         async function initApp() {
@@ -4592,6 +4582,89 @@
                 
             } catch (error) {
                 console.error('Load game state error:', error);
+            }
+        }
+
+        function updateRanchUI() {
+            if (!App.ranch) return;
+            
+            const ranch = App.ranch;
+            
+            const totalCows = (ranch.cowLevels[1] || 0) + (ranch.cowLevels[2] || 0) + (ranch.cowLevels[3] || 0);
+            const activeCows = (ranch.cowActive[1] || 0) + (ranch.cowActive[2] || 0) + (ranch.cowActive[3] || 0);
+            const inactiveCows = totalCows - activeCows;
+            
+            document.getElementById('ranchTotalCows').innerHTML = totalCows;
+            document.getElementById('ranchActiveCows').innerHTML = activeCows;
+            document.getElementById('ranchInactiveCows').innerHTML = Math.max(0, inactiveCows);
+            
+            const hourlyProduction = ranch.hourlyProduction || 0;
+            document.getElementById('ranchHourlyProduction').innerHTML = Math.round(hourlyProduction);
+            document.getElementById('ranchHourlyMilk').innerHTML = Math.round(hourlyProduction);
+            
+            const cowsSold = App.global?.cows_sold || 0;
+            document.getElementById('ranchCowsSold').innerHTML = cowsSold;
+            const progressPercent = (cowsSold / 1000) * 100;
+            document.getElementById('ranchCowsProgress').style.width = `${progressPercent}%`;
+            
+            document.getElementById('level1Count').innerHTML = (ranch.cowLevels[1] || 0) + ' cows';
+            document.getElementById('level2Count').innerHTML = (ranch.cowLevels[2] || 0) + ' cows';
+            document.getElementById('level3Count').innerHTML = (ranch.cowLevels[3] || 0) + ' cows';
+            
+            document.getElementById('level1Active').innerHTML = ranch.cowActive[1] || 0;
+            document.getElementById('level2Active').innerHTML = ranch.cowActive[2] || 0;
+            document.getElementById('level3Active').innerHTML = ranch.cowActive[3] || 0;
+            
+            // تحديث مؤقتات التفعيل
+            updateActivationTimers();
+            
+            const milkStored = ranch.milkStored || 0;
+            const storageCapacity = ranch.storageCapacity || 2000;
+            const storageLevel = ranch.storageLevel || 1;
+            
+            document.getElementById('milkStored').innerHTML = formatNumber(milkStored);
+            document.getElementById('storageLevel').innerHTML = storageLevel + '/10';
+            document.getElementById('storageCapacity').innerHTML = formatNumber(storageCapacity);
+            
+            const storagePercent = (milkStored / storageCapacity) * 100;
+            document.getElementById('storageProgressFill').style.width = `${storagePercent}%`;
+            
+            const storageFullBadge = document.getElementById('storageFullBadge');
+            if (milkStored >= storageCapacity) {
+                storageFullBadge.style.display = 'block';
+            } else {
+                storageFullBadge.style.display = 'none';
+            }
+        }
+
+        function updateActivationTimers() {
+            if (!App.ranch.cowActiveUntil) return;
+            
+            const now = Date.now();
+            
+            for (let level = 1; level <= 3; level++) {
+                const timerDiv = document.getElementById(`level${level}Timer`);
+                const timerText = document.getElementById(`level${level}TimerText`);
+                const activeCount = App.ranch.cowActive[level] || 0;
+                
+                if (activeCount > 0 && App.ranch.cowActiveUntil[level]) {
+                    const endTime = new Date(App.ranch.cowActiveUntil[level]).getTime();
+                    const timeLeft = Math.max(0, endTime - now);
+                    
+                    if (timeLeft > 0) {
+                        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                        timerText.innerHTML = `Activation ends in: ${hours}h ${minutes}m`;
+                        timerDiv.style.display = 'flex';
+                        timerDiv.classList.remove('timer-expired');
+                    } else {
+                        timerText.innerHTML = `Activation expired - Reactivate now!`;
+                        timerDiv.classList.add('timer-expired');
+                        timerDiv.style.display = 'flex';
+                    }
+                } else {
+                    timerDiv.style.display = 'none';
+                }
             }
         }
 
@@ -6092,6 +6165,53 @@
             }
         };
 
+        async function upgradeStorage() {
+            const buttonId = 'upgradeStorageBtn';
+            const button = document.getElementById('upgradeStorageBtn');
+            
+            if (!validateAndCooldown(buttonId, button)) {
+                return;
+            }
+            
+            const currentLevel = App.ranch.storageLevel || 1;
+            
+            if (currentLevel >= 10) {
+                showNotification('Maximum storage level reached', 'info');
+                return;
+            }
+            
+            const nextLevel = currentLevel + 1;
+            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel]?.cost || 0;
+            
+            if ((App.user?.milk || 0) < upgradeCost) {
+                showNotification(
+                    App.currentLanguage === 'ru' ? 
+                    `Недостаточно молока. Нужно ${formatNumber(upgradeCost)} 🥛` : 
+                    `Insufficient milk. Need ${formatNumber(upgradeCost)} 🥛`,
+                    'error'
+                );
+                closeStorageUpgradeModal();
+                return;
+            }
+            
+            try {
+                const result = await callAPI('upgradeMilkStorage');
+                
+                await loadGameState();
+                closeStorageUpgradeModal();
+                
+                showNotification(
+                    App.currentLanguage === 'ru' ? 
+                    `✅ Хранилище улучшено до уровня ${result.newLevel}!` : 
+                    `✅ Storage upgraded to level ${result.newLevel}!`,
+                    'success'
+                );
+                
+            } catch (error) {
+                console.error('Upgrade storage error:', error);
+            }
+        }
+
         window.initiateDeposit = async function() {
             if (!App.wallet) {
                 alert(App.currentLanguage === 'ru' ? 'Сначала подключите кошелек' : 'Connect wallet first');
@@ -6267,15 +6387,6 @@
                 if (App.user && App.user.secondsUntilNext > 0) {
                     App.user.secondsUntilNext--;
                     updateProductionTimer();
-                    
-                    // Update activation timers
-                    if (App.ranch && App.ranch.cowActiveUntil) {
-                        for (let level = 1; level <= 3; level++) {
-                            if (App.ranch.cowActiveUntil[level]) {
-                                updateTimerDisplay(level, App.ranch.cowActiveUntil[level]);
-                            }
-                        }
-                    }
                 } else {
                     loadGameState();
                 }
@@ -6322,6 +6433,13 @@
                 document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
                 loadGameState();
             });
+            
+            document.getElementById('openRanchFromCowBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                openRanchFromCow();
+            });
+            
+            document.getElementById('cowCard').addEventListener('click', openRanchFromCow);
             
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -6466,7 +6584,7 @@
             document.getElementById('upgradeAmount').addEventListener('input', updateUpgradeCost);
             
             document.getElementById('claimMilkBtn').addEventListener('click', window.claimMilk);
-            document.getElementById('upgradeStorageBtn').addEventListener('click', window.openUpgradeStorageModal);
+            document.getElementById('upgradeStorageBtn').addEventListener('click', openStorageUpgradeModal);
             
             document.querySelectorAll('[data-sell-percent]').forEach(btn => {
                 btn.addEventListener('click', function() {

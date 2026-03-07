@@ -206,7 +206,7 @@
     </div>
 
     <div class="container" id="appContainer">
-        <!-- صفحة Leaderboard (بدون تغيير) -->
+        <!-- قسم المتصدرين (Leaderboard) - محفوظ كما هو -->
         <div id="sectionLeaderboard" class="section">
             <div class="leaderboard-header">
                 <div class="leaderboard-title"><i class="fas fa-trophy"></i> LEADERBOARD <span class="leaderboard-help-icon" onclick="document.getElementById('leaderboardInfoModal').classList.add('active');updateLeaderboardInfoLanguage()"><i class="fas fa-question"></i></span></div>
@@ -220,7 +220,7 @@
             <div class="winners-section" id="winnersSection" style="display:none"><div class="winners-title"><i class="fas fa-crown"></i> Competition Winners</div><div class="winners-grid" id="winnersList"></div></div>
         </div>
 
-        <!-- صفحة Farm (معدلة) -->
+        <!-- قسم المزرعة (Farm) - معدل حسب الطلب -->
         <div id="sectionFarm" class="section active">
             <!-- ماكينة البقرة - مع زر Open Ranch واحد والكارت قابل للنقر -->
             <div class="machine-card cow" id="cowCard" onclick="goToRanch()" style="cursor:pointer">
@@ -242,13 +242,13 @@
                     <div class="progress-header"><span data-i18n="farm.supply">Supply</span><span id="cowProgressText">0/1000</span></div>
                     <div class="progress-bar"><div class="progress-fill" id="cowProgressFill" style="width:0%"></div></div>
                 </div>
-                <!-- زر واحد فقط في أسفل يسار الكارت -->
+                <!-- زر واحد فقط في أسفل يمين الكارت -->
                 <div style="display:flex;justify-content:flex-end;margin-top:10px">
                     <button class="btn btn-primary pulse-pink" onclick="event.stopPropagation(); goToRanch()" style="width:auto;padding:8px 16px;border-radius:30px"><i class="fas fa-tree"></i> Open Ranch</button>
                 </div>
             </div>
-
-            <!-- ماكينة الدجاج (بدون تغيير) -->
+            
+            <!-- ماكينة الدجاج -->
             <div class="machine-card chicken" id="chickenCard">
                 <div class="machine-header">
                     <div class="machine-emoji float-slow"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken"></div>
@@ -277,8 +277,8 @@
                     <div class="unlock-timer" id="chickenUnlockTimer"></div>
                 </div>
             </div>
-
-            <!-- ماكينة الكريستال (بدون تغيير) -->
+            
+            <!-- ماكينة الكريستال -->
             <div class="machine-card diamond" id="diamondCard">
                 <div class="machine-header">
                     <div class="machine-emoji spin-slow"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal"></div>
@@ -312,16 +312,16 @@
             </div>
         </div>
 
-        <!-- صفحة Ranch (معدلة مع الوقت المتبقي) -->
+        <!-- قسم الرانش (Ranch) - معدل حسب الطلب -->
         <div id="sectionRanch" class="section">
-            <!-- RANCH OVERVIEW - مع زجاج شفاف -->
+            <!-- RANCH OVERVIEW -->
             <div class="ranch-card" style="background:linear-gradient(145deg,rgba(20,30,40,.95),rgba(10,15,25,.98));border:2px solid var(--primary-pink);border-radius:24px;padding:16px;margin-bottom:16px;">
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
                     <div style="width:50px;height:50px;background:linear-gradient(145deg,var(--primary-pink),var(--crystal-blue));border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px var(--pink-glow)"><i class="fas fa-cow" style="color:#fff;font-size:28px"></i></div>
                     <div><h2 style="font-size:24px;font-weight:800;background:linear-gradient(145deg,#fff,var(--primary-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent">RANCH OVERVIEW</h2><p style="font-size:11px;color:var(--text-muted)">Manage your cows & production</p></div>
                 </div>
-
-                <!-- Total Cows و Production في زجاج شفاف -->
+                
+                <!-- Total Cows و Production -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
                     <!-- Total Cows Card -->
                     <div style="background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border-radius:18px;padding:14px;border:1px solid rgba(255,255,255,.1)">
@@ -332,14 +332,14 @@
                             <div><span style="color:var(--danger-red)">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight:600">0</span></div>
                         </div>
                     </div>
-                    <!-- Production Card - بدون Next Production -->
+                    <!-- Production Card -->
                     <div style="background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border-radius:18px;padding:14px;border:1px solid rgba(255,255,255,.1)">
                         <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px"><i class="fas fa-chart-line"></i> Production</div>
                         <div style="font-size:32px;font-weight:800;color:var(--crystal-blue)" id="ranchHourlyProduction">0</div>
                         <div style="margin-top:8px;font-size:11px;color:var(--text-muted)">Milk per hour</div>
                     </div>
                 </div>
-
+                
                 <!-- Global Cow Sales -->
                 <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:14px;margin-bottom:16px">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -348,18 +348,18 @@
                     </div>
                     <div class="progress-bar" style="height:10px;background:rgba(0,0,0,.5)"><div class="progress-fill" id="ranchCowsProgress" style="width:0%;background:linear-gradient(90deg,var(--primary-pink),var(--crystal-blue),var(--neon-green))"></div></div>
                 </div>
-
+                
                 <button class="btn btn-primary pulse-pink" id="ranchBuyCowBtn" style="width:100%;padding:16px;font-size:16px;border-radius:40px"><i class="fas fa-cart-plus"></i> BUY COW (1 TON)</button>
             </div>
 
-            <!-- COW LEVELS مع الوقت المتبقي -->
+            <!-- COW LEVELS -->
             <div class="ranch-card" style="background:linear-gradient(145deg,rgba(30,20,40,.95),rgba(20,10,30,.98));border:2px solid var(--crystal-blue);border-radius:24px;padding:16px;margin-bottom:16px">
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
                     <div style="width:40px;height:40px;background:linear-gradient(145deg,var(--crystal-blue),var(--neon-green));border-radius:12px;display:flex;align-items:center;justify-content:center"><i class="fas fa-layer-group" style="color:#fff;font-size:20px"></i></div>
                     <h2 style="font-size:20px;font-weight:700">📊 COW LEVELS</h2>
                 </div>
-
-                <!-- Level 1 مع الوقت المتبقي -->
+                
+                <!-- Level 1 -->
                 <div class="level-card" style="background:rgba(255,255,255,.03);border-radius:20px;padding:14px;margin-bottom:12px;border-left:4px solid #FFD700">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                         <div style="display:flex;align-items:center;gap:10px">
@@ -384,8 +384,8 @@
                         <button class="btn btn-primary" style="background:linear-gradient(145deg,#9b59b6,#8e44ad)" onclick="openUpgradeModal(1)"><i class="fas fa-arrow-up"></i> Upgrade (6000🥛)</button>
                     </div>
                 </div>
-
-                <!-- Level 2 مع الوقت المتبقي -->
+                
+                <!-- Level 2 -->
                 <div class="level-card" style="background:rgba(255,255,255,.03);border-radius:20px;padding:14px;margin-bottom:12px;border-left:4px solid #C0C0C0">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                         <div style="display:flex;align-items:center;gap:10px">
@@ -410,8 +410,8 @@
                         <button class="btn btn-primary" style="background:linear-gradient(145deg,#9b59b6,#8e44ad)" onclick="openUpgradeModal(2)"><i class="fas fa-arrow-up"></i> Upgrade (20000🥛)</button>
                     </div>
                 </div>
-
-                <!-- Level 3 مع الوقت المتبقي -->
+                
+                <!-- Level 3 -->
                 <div class="level-card" style="background:rgba(255,255,255,.03);border-radius:20px;padding:14px;border-left:4px solid #CD7F32">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                         <div style="display:flex;align-items:center;gap:10px">
@@ -435,7 +435,7 @@
                 </div>
             </div>
 
-            <!-- MILK STORAGE (بدون تغيير) -->
+            <!-- MILK STORAGE -->
             <div class="storage-card">
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
                     <div style="width:50px;height:50px;background:linear-gradient(145deg,var(--crystal-blue),var(--primary-pink));border-radius:16px;display:flex;align-items:center;justify-content:center"><i class="fas fa-archive" style="color:#fff;font-size:24px"></i></div>
@@ -468,7 +468,7 @@
             </div>
         </div>
 
-        <!-- صفحة Market (بدون تغيير) -->
+        <!-- قسم السوق (Market) - محفوظ كما هو -->
         <div id="sectionMarket" class="section">
             <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="market.title">P2P Market</span></div>
                 <div class="market-tabs"><div class="market-tab active" data-market-tab="buy" data-i18n="market.buy">Buy</div><div class="market-tab" data-market-tab="orders" data-i18n="market.myOrders">My Orders</div></div>
@@ -480,24 +480,24 @@
             </div>
         </div>
 
-        <!-- صفحة Diamond (بدون تغيير) -->
+        <!-- قسم الكريستال (Crystal) - محفوظ كما هو -->
         <div id="sectionDiamond" class="section">
             <div class="card" style="background:transparent;border:none;backdrop-filter:none"><div class="card-title"><i class="fas fa-gem" style="color:var(--crystal-blue)"></i> <span data-i18n="crystal.title">Crystal Conversion</span></div><div style="text-align:center"><div class="diamond-glow">💎</div><div class="counter-number" id="crystalPriceMain">25</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:14px" data-i18n="crystal.perTon">TON per Crystal</div></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:18px"><div style="flex:1;background:rgba(0,0,0,.2);border-radius:14px;padding:12px"><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px" data-i18n="crystal.yourCrystals">Your Crystals</div><div style="font-size:24px;font-weight:800;color:var(--crystal-blue)" id="diamondBalanceMain">0</div></div><div style="font-size:18px;color:var(--text-secondary)"><i class="fas fa-arrow-right"></i></div><div style="flex:1;background:rgba(0,0,0,.2);border-radius:14px;padding:12px"><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px" data-i18n="crystal.youReceive">You Receive</div><div style="font-size:24px;font-weight:800;color:var(--neon-green)" id="tonReceiveMain">0</div></div></div><div style="display:flex;gap:8px"><input type="number" id="convertAmount" class="form-input" placeholder="Amount" min="1" style="flex:1"><button class="btn btn-primary" id="convertDiamondBtn" style="width:auto;padding:0 16px"><span data-i18n="crystal.convert">Convert</span></button></div><div style="margin-top:12px;padding:12px;background:rgba(0,0,0,.2);border-radius:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;color:var(--text-secondary)" data-i18n="crystal.milkAvailable">Milk available</span><span style="font-weight:700;animation:soft-shine 3s infinite" id="milkForDiamond">0</span></div><div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--text-secondary)" data-i18n="crystal.eggsAvailable">Eggs available</span><span style="font-weight:700;animation:soft-shine 3s infinite" id="eggsForDiamond">0</span></div></div></div>
         </div>
 
-        <!-- صفحة Friends (بدون تغيير) -->
+        <!-- قسم الأصدقاء (Friends/Referral) - محفوظ كما هو -->
         <div id="sectionFriends" class="section">
             <div class="card" style="background:linear-gradient(145deg,rgba(255,92,168,.15),var(--glass-strong))"><div class="card-title"><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></div><div style="background:rgba(255,255,255,.03);border-radius:14px;padding:14px;margin-bottom:14px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px" data-i18n="referral.description">Earn <strong style="color:var(--primary-pink);font-size:20px">10%</strong> commission when friends buy!</div><div style="display:flex;gap:5px;margin-bottom:5px"><input type="text" id="referralLink" class="form-input" readonly style="flex:1;background:rgba(0,0,0,.3);font-size:11px"><button class="btn btn-primary" id="copyReferralBtn" style="width:auto;padding:0 14px"><i class="fas fa-copy"></i></button></div><div style="font-size:9px;color:var(--text-muted)" data-i18n="referral.share">Share this link with friends</div></div><button class="btn btn-primary" id="claimReferralBtn"><i class="fas fa-hand-holding-usd"></i> <span data-i18n="referral.claim">Claim Earnings</span></button></div>
             <div class="card"><div class="card-title" style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:6px"><i class="fas fa-history"></i> <span data-i18n="referral.recent">Recent Referrals</span></div><div style="display:flex;align-items:center;gap:4px;background:rgba(0,242,122,.15);padding:4px 10px;border-radius:30px;border:1px solid rgba(0,242,122,.3)"><span style="font-size:12px;font-weight:700" id="totalReferrals">0</span><span style="font-size:10px;color:var(--text-secondary)" data-i18n="referral.friends">Friends</span></div></div><div id="recentReferralsList" style="min-height:70px;max-height:300px;overflow-y:auto"><div style="text-align:center;padding:18px;color:var(--text-secondary)"><i class="fas fa-users" style="font-size:24px;margin-bottom:8px;opacity:.5"></i><p data-i18n="referral.noReferrals">No referrals yet</p></div></div><button class="load-more-btn" id="loadMoreReferralsBtn" style="margin-top:10px;display:none"><i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span></button></div>
             <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="referral.earningsHistory">Earnings History</span></div><div id="earningsHistoryList" style="min-height:70px;max-height:200px;overflow-y:auto"><div style="text-align:center;padding:18px;color:var(--text-secondary)"><i class="fas fa-coins" style="font-size:24px;margin-bottom:8px;opacity:.5"></i><p data-i18n="referral.noEarnings">No earnings yet</p></div></div><button class="load-more-btn" id="loadMoreEarningsBtn" style="margin-top:10px;display:none"><i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span></button></div>
         </div>
 
-        <!-- صفحة Tasks (بدون تغيير) -->
+        <!-- قسم المهام (Tasks) - محفوظ كما هو -->
         <div id="sectionTasks" class="section">
             <div class="card"><div class="card-title"><i class="fas fa-tasks"></i> <span data-i18n="tasks.title">Tasks & Rewards</span></div><div class="market-tabs" style="margin-bottom:16px"><div class="market-tab active" data-task-tab="partner" data-i18n="tasks.partner">Partner Tasks</div><div class="market-tab" data-task-tab="community" data-i18n="tasks.community">Community Tasks</div></div><div class="market-actions" style="margin-bottom:16px" id="addTaskContainer"><button class="create-order-top" id="addTaskBtn" style="background:linear-gradient(145deg,#FF5CA8,#D94A8F)"><i class="fas fa-plus-circle"></i> <span data-i18n="tasks.addTask">Add Task</span></button><button class="refresh-market-btn" id="refreshTasksBtn"><i class="fas fa-sync-alt"></i> <span data-i18n="tasks.refresh">Refresh</span></button></div><div id="tasksGrid" class="task-grid"><div style="text-align:center;padding:40px;color:var(--text-secondary)"><i class="fas fa-clipboard-list" style="font-size:48px;margin-bottom:15px;opacity:.5"></i><p data-i18n="tasks.noTasks">No tasks available</p></div></div></div>
         </div>
 
-        <!-- صفحة Profile (بدون تغيير) -->
+        <!-- قسم الملف الشخصي (Profile) - محفوظ كما هو -->
         <div id="sectionProfile" class="section">
             <div class="card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="width:50px;height:50px;background:linear-gradient(145deg,var(--primary-pink),var(--crystal-blue));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden" id="profileAvatar">👨‍🌾</div><div><div style="font-size:16px;font-weight:700" id="profileName">Farmer</div><div style="font-size:11px;color:var(--text-secondary)" id="profileUsername">@crystal_ranch</div><div style="font-size:10px;color:var(--text-muted);margin-top:2px" id="profileUserId">ID: </div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px"><div style="background:rgba(255,255,255,.03);border-radius:14px;padding:10px"><div style="font-size:10px;color:var(--text-muted)" data-i18n="profile.totalMachines">Total Machines</div><div style="font-size:20px;font-weight:700" id="totalMachines">0</div></div><div style="background:rgba(255,255,255,.03);border-radius:14px;padding:10px"><div style="font-size:10px;color:var(--text-muted)" data-i18n="profile.production">Production</div><div style="font-size:20px;font-weight:700" id="totalProduction">0/h</div></div></div></div>
             <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> <span data-i18n="profile.assets">Assets</span></div><div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">🥛</span><div><div style="font-weight:600;font-size:12px" data-i18n="status.milk">Milk</div><div style="font-size:9px;color:var(--text-muted)"><span id="profileMilkRate">0</span>/h</div></div></div><div style="font-size:18px;font-weight:700" id="profileMilk">0</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">🥚</span><div><div style="font-weight:600;font-size:12px" data-i18n="status.eggs">Eggs</div><div style="font-size:9px;color:var(--text-muted)"><span id="profileEggsRate">0</span>/h</div></div></div><div style="font-size:18px;font-weight:700" id="profileEggs">0</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">💎</span><div><div style="font-weight:600;font-size:12px" data-i18n="status.crystal">Crystal</div><div style="font-size:9px;color:var(--text-muted)">1 = <span id="profileDiamondPrice">25</span> TON</div></div></div><div style="font-size:18px;font-weight:700" id="profileDiamond">0</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:20px;height:20px;object-fit:contain;animation:soft-shine 3s infinite"><div><div style="font-weight:600;font-size:12px">TON</div><div style="font-size:9px;color:var(--text-muted)" data-i18n="profile.balance">Balance</div></div></div><div style="font-size:18px;font-weight:700" id="profileTon">0.0000</div></div></div></div>
@@ -505,7 +505,7 @@
         </div>
     </div>
 
-    <!-- شريط التنقل (معدل - بدون Ranch) -->
+    <!-- شريط التنقل السفلي - بدون Ranch -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-section="sectionFarm"><div class="nav-icon">🚜</div><div class="nav-text" data-i18n="nav.farm">Farm</div></div>
         <div class="nav-item" data-section="sectionMarket"><div class="nav-icon">📊</div><div class="nav-text" data-i18n="nav.market">Market</div></div>
@@ -515,6 +515,14 @@
         <div class="nav-item" data-section="sectionProfile"><div class="nav-icon">👤</div><div class="nav-text" data-i18n="nav.profile">Profile</div></div>
     </nav>
 
+    <!-- باقي الـ Modals - محفوظة كما هي -->
+    <div class="modal-overlay" id="sellOrderModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-tag" style="color:var(--neon-green)"></i> <span data-i18n="modal.sell.title">Sell Order</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="form-group"><label class="form-label" data-i18n="modal.sell.resource">Resource</label><div style="display:flex;gap:8px"><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="sellResource" value="milk" checked style="accent-color:var(--neon-green)"> 🥛 <span data-i18n="market.milk">Milk</span></label><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="sellResource" value="eggs" style="accent-color:var(--primary-pink)"> 🥚 <span data-i18n="market.eggs">Eggs</span></label></div></div><div class="form-group"><label class="form-label" data-i18n="modal.sell.quantity">Quantity (min 100)</label><input type="number" id="sellQuantity" class="form-input" placeholder="1000" min="100" oninput="updateSellDetails()"><div class="preset-buttons"><span class="preset-btn" data-sell-percent="25">25%</span><span class="preset-btn" data-sell-percent="50">50%</span><span class="preset-btn" data-sell-percent="75">75%</span><span class="preset-btn" data-sell-percent="100">MAX</span></div></div><div class="form-group"><label class="form-label">Total Price (TON)</label><input type="number" id="sellTotalPrice" class="form-input" placeholder="0.01" step="any" min="0.0001" oninput="updateSellDetails()"><div style="font-size:10px;color:var(--text-secondary);margin-top:5px" id="sellPerUnitHint">≈ 0.0000 TON per unit</div><div style="font-size:10px;color:var(--text-muted);margin-top:5px" id="sellBalanceHint">Available: 0 Milk</div><div class="total-ton-result" id="sellTotalTon">Total: 0.0000 TON (You get: 0.0000 TON after 10% fee)</div><div style="font-size:9px;color:var(--warning);margin-top:4px" id="sellFeeDisplay">⚠️ 10% market fee will be deducted when sold</div></div><button class="btn btn-primary" id="submitSellOrderBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e)"><i class="fas fa-check-circle"></i> <span data-i18n="modal.sell.place">Place Sell Order</span></button></div></div>
+    <div class="modal-overlay" id="confirmPurchaseModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-shopping-cart" style="color:var(--neon-green)"></i> <span data-i18n="modal.confirm.title">Confirm Purchase</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="confirm-card" id="confirmCard"><div class="confirm-emoji" id="confirmEmoji">🥛</div><div style="font-size:16px;font-weight:700" id="confirmResource" data-i18n="modal.confirm.package">Milk Package</div></div><div class="confirm-details" id="confirmDetails"></div><div class="confirm-buttons"><button class="btn btn-secondary" onclick="closeAllModals()"><span data-i18n="modal.confirm.cancel">Cancel</span></button><button class="btn btn-primary" id="confirmExecuteBtn"><span data-i18n="modal.confirm.confirm">Confirm & Pay</span></button></div></div></div>
+    <div class="modal-overlay" id="hatchModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-egg" style="color:var(--neon-green)"></i> <span data-i18n="modal.hatch.title">Hatch Machine</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="hatch-option" id="hatchCowOption"><div class="hatch-info"><span class="hatch-title">🐮 <span data-i18n="farm.cow.name">Cow</span></span><span class="hatch-cost" data-i18n="modal.hatch.cowCost">50,000 Milk</span><span class="hatch-balance" id="hatchCowBalance">Your milk: 0</span></div><div style="display:flex;align-items:center;gap:5px"><input type="number" id="hatchCowAmount" class="hatch-input" placeholder="1" min="1" value="1"><button class="btn btn-hatch" id="hatchCowConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button></div></div><div class="hatch-option" id="hatchChickenOption"><div class="hatch-info"><span class="hatch-title">🐔 <span data-i18n="farm.chicken.name">Chicken</span></span><span class="hatch-cost" data-i18n="modal.hatch.chickenCost">5,000 Eggs</span><span class="hatch-balance" id="hatchChickenBalance">Your eggs: 0</span></div><div style="display:flex;align-items:center;gap:5px"><input type="number" id="hatchChickenAmount" class="hatch-input" placeholder="1" min="1" value="1"><button class="btn btn-hatch" id="hatchChickenConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button></div></div></div></div>
+    <div class="modal-overlay" id="depositModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-arrow-down" style="color:var(--neon-green)"></i> <span data-i18n="modal.deposit.title">Deposit TON</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div id="walletStatus" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border-radius:12px;padding:12px;margin-bottom:14px"><div><div style="font-size:12px;font-weight:600" data-i18n="modal.deposit.wallet">Wallet</div><div style="font-size:10px;color:var(--text-secondary)" id="walletAddressDisplay" data-i18n="modal.deposit.notConnected">Not connected</div></div><button class="btn btn-primary" id="connectWalletBtn" style="width:auto;padding:6px 14px"><i class="fas fa-plug"></i> <span data-i18n="modal.deposit.connect">Connect</span></button></div><div class="deposit-warning"><i class="fas fa-exclamation-triangle"></i><div class="deposit-warning-text"><strong data-i18n="modal.deposit.important">IMPORTANT:</strong> <span data-i18n="modal.deposit.warning">Your User ID</span> <span id="depositUserIdDisplay" style="background:rgba(255,255,255,.1);padding:2px 5px;border-radius:20px"></span> <span data-i18n="modal.deposit.mustBeComment">must be the ONLY comment</span>.</div></div><div class="form-group"><label class="form-label" data-i18n="modal.deposit.amount">Amount (TON)</label><input type="number" id="depositAmountInput" class="form-input" placeholder="0.1" step="0.1" min="0.1"><div class="preset-buttons"><span class="preset-btn" data-deposit="0.5">0.5</span><span class="preset-btn" data-deposit="1">1</span><span class="preset-btn" data-deposit="2">2</span><span class="preset-btn" data-deposit="5">5</span><span class="preset-btn" data-deposit="10">10</span></div></div><button class="btn btn-primary" id="submitDepositBtn" disabled><i class="fas fa-arrow-down"></i> <span data-i18n="modal.deposit.submit">Deposit TON</span></button><div class="transaction-status" id="depositStatus"><div class="status-icon">⏳</div><div class="status-message" data-i18n="modal.deposit.processing">Processing deposit...</div><div class="status-detail" id="depositStatusDetail"></div></div></div></div>
+    <div class="modal-overlay" id="addTaskModal"><div class="modal-content" style="max-width:400px"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-plus-circle" style="color:var(--neon-green)"></i> <span data-i18n="tasks.addTask">Add Community Task</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="form-group"><label class="form-label" data-i18n="tasks.taskType">Task Type</label><div style="display:flex;gap:8px;margin-bottom:10px"><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="taskType" value="channel" checked style="accent-color:var(--crystal-blue)"> 📢 <span data-i18n="tasks.channel">Channel</span></label><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="taskType" value="bot" style="accent-color:var(--primary-pink)"> 🤖 <span data-i18n="tasks.bot">Bot</span></label></div></div><div class="form-group" id="channelNote" style="background:rgba(255,92,168,.1);border-radius:10px;padding:10px;margin-bottom:14px;display:none"><i class="fas fa-info-circle" style="color:var(--primary-pink);margin-right:5px"></i><span data-i18n="tasks.channelNote">⚠️ Bot must be admin in the channel for verification to work!</span></div><div class="form-group"><label class="form-label" data-i18n="tasks.link">Link</label><input type="text" id="taskLink" class="form-input" placeholder="https://t.me/..." value=""></div><div class="form-group"><label class="form-label" data-i18n="tasks.targetUsers">Target Users (min 100)</label><input type="number" id="taskTarget" class="form-input" placeholder="100" min="100" value="100" oninput="calculateTaskPrice()"></div><div class="form-group"><label class="form-label" data-i18n="tasks.rewardPerUser">Reward Per User (TON)</label><input type="number" id="taskReward" class="form-input" value="0.001" step="0.0001" min="0.0001" readonly style="background:rgba(255,255,255,.05);color:var(--neon-green);font-weight:600"><div style="font-size:9px;color:var(--text-muted);margin-top:3px" data-i18n="tasks.rewardFixed">Fixed at 0.001 TON per completion</div></div><div class="total-ton-result" id="taskTotalCost" style="margin-bottom:16px">Total Cost: 0.0000 TON</div><div class="form-group"><label class="form-label" data-i18n="tasks.yourBalance">Your Balance</label><div style="background:rgba(0,212,255,.1);border-radius:10px;padding:10px;text-align:center"><span style="font-size:16px;font-weight:700;color:var(--crystal-blue)" id="taskUserBalance">0.0000</span> TON</div></div><button class="btn btn-primary" id="submitTaskBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e);margin-top:10px"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.confirm">Confirm & Pay</span></button></div></div>
+    <div class="modal-overlay" id="taskVerifyModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-clipboard-check" style="color:var(--neon-green)"></i> <span data-i18n="tasks.verify">Task Verification</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div style="text-align:center;padding:20px"><div style="font-size:48px;margin-bottom:15px" id="verifyEmoji">🤖</div><div style="font-size:16px;font-weight:700;margin-bottom:5px" id="verifyTitle">Join Channel</div><div style="font-size:12px;color:var(--text-secondary);margin-bottom:20px" id="verifyLink">https://t.me/...</div><div class="confirm-details" style="margin:20px 0"><div class="confirm-row"><span class="confirm-label" data-i18n="tasks.reward">Reward:</span><span class="confirm-value" style="color:var(--neon-green)" id="verifyReward">0.0010 TON</span></div></div><div class="task-actions" style="flex-direction:column;gap:10px"><a href="#" target="_blank" id="verifyJoinLink" class="task-btn join" style="width:100%;text-decoration:none;display:inline-block;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--crystal-blue),#0099cc);color:#fff"><i class="fas fa-external-link-alt"></i> <span data-i18n="tasks.join">Join</span></a><button class="task-btn check" id="verifyCheckBtn" style="width:100%;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--neon-green),#00b35e);color:#fff;border:none;margin-top:10px"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.check">Verify & Claim</span></button></div><div id="verifyStatus" style="margin-top:15px;padding:10px;border-radius:10px;display:none"></div></div></div></div>
+    
     <!-- Modal تأكيد ترقية المخزن (جديد) -->
     <div class="modal-overlay" id="storageUpgradeModal">
         <div class="modal-content">
@@ -555,41 +563,110 @@
         </div>
     </div>
 
-    <!-- باقي الـ Modals (بدون تغيير) -->
-    <div class="modal-overlay" id="sellOrderModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-tag" style="color:var(--neon-green)"></i> <span data-i18n="modal.sell.title">Sell Order</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="form-group"><label class="form-label" data-i18n="modal.sell.resource">Resource</label><div style="display:flex;gap:8px"><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="sellResource" value="milk" checked style="accent-color:var(--neon-green)"> 🥛 <span data-i18n="market.milk">Milk</span></label><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="sellResource" value="eggs" style="accent-color:var(--primary-pink)"> 🥚 <span data-i18n="market.eggs">Eggs</span></label></div></div><div class="form-group"><label class="form-label" data-i18n="modal.sell.quantity">Quantity (min 100)</label><input type="number" id="sellQuantity" class="form-input" placeholder="1000" min="100" oninput="updateSellDetails()"><div class="preset-buttons"><span class="preset-btn" data-sell-percent="25">25%</span><span class="preset-btn" data-sell-percent="50">50%</span><span class="preset-btn" data-sell-percent="75">75%</span><span class="preset-btn" data-sell-percent="100">MAX</span></div></div><div class="form-group"><label class="form-label">Total Price (TON)</label><input type="number" id="sellTotalPrice" class="form-input" placeholder="0.01" step="any" min="0.0001" oninput="updateSellDetails()"><div style="font-size:10px;color:var(--text-secondary);margin-top:5px" id="sellPerUnitHint">≈ 0.0000 TON per unit</div><div style="font-size:10px;color:var(--text-muted);margin-top:5px" id="sellBalanceHint">Available: 0 Milk</div><div class="total-ton-result" id="sellTotalTon">Total: 0.0000 TON (You get: 0.0000 TON after 10% fee)</div><div style="font-size:9px;color:var(--warning);margin-top:4px" id="sellFeeDisplay">⚠️ 10% market fee will be deducted when sold</div></div><button class="btn btn-primary" id="submitSellOrderBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e)"><i class="fas fa-check-circle"></i> <span data-i18n="modal.sell.place">Place Sell Order</span></button></div></div>
-    <div class="modal-overlay" id="confirmPurchaseModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-shopping-cart" style="color:var(--neon-green)"></i> <span data-i18n="modal.confirm.title">Confirm Purchase</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="confirm-card" id="confirmCard"><div class="confirm-emoji" id="confirmEmoji">🥛</div><div style="font-size:16px;font-weight:700" id="confirmResource" data-i18n="modal.confirm.package">Milk Package</div></div><div class="confirm-details" id="confirmDetails"></div><div class="confirm-buttons"><button class="btn btn-secondary" onclick="closeAllModals()"><span data-i18n="modal.confirm.cancel">Cancel</span></button><button class="btn btn-primary" id="confirmExecuteBtn"><span data-i18n="modal.confirm.confirm">Confirm & Pay</span></button></div></div></div>
-    <div class="modal-overlay" id="hatchModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-egg" style="color:var(--neon-green)"></i> <span data-i18n="modal.hatch.title">Hatch Machine</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="hatch-option" id="hatchCowOption"><div class="hatch-info"><span class="hatch-title">🐮 <span data-i18n="farm.cow.name">Cow</span></span><span class="hatch-cost" data-i18n="modal.hatch.cowCost">50,000 Milk</span><span class="hatch-balance" id="hatchCowBalance">Your milk: 0</span></div><div style="display:flex;align-items:center;gap:5px"><input type="number" id="hatchCowAmount" class="hatch-input" placeholder="1" min="1" value="1"><button class="btn btn-hatch" id="hatchCowConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button></div></div><div class="hatch-option" id="hatchChickenOption"><div class="hatch-info"><span class="hatch-title">🐔 <span data-i18n="farm.chicken.name">Chicken</span></span><span class="hatch-cost" data-i18n="modal.hatch.chickenCost">5,000 Eggs</span><span class="hatch-balance" id="hatchChickenBalance">Your eggs: 0</span></div><div style="display:flex;align-items:center;gap:5px"><input type="number" id="hatchChickenAmount" class="hatch-input" placeholder="1" min="1" value="1"><button class="btn btn-hatch" id="hatchChickenConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button></div></div></div></div>
-    <div class="modal-overlay" id="depositModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-arrow-down" style="color:var(--neon-green)"></i> <span data-i18n="modal.deposit.title">Deposit TON</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div id="walletStatus" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border-radius:12px;padding:12px;margin-bottom:14px"><div><div style="font-size:12px;font-weight:600" data-i18n="modal.deposit.wallet">Wallet</div><div style="font-size:10px;color:var(--text-secondary)" id="walletAddressDisplay" data-i18n="modal.deposit.notConnected">Not connected</div></div><button class="btn btn-primary" id="connectWalletBtn" style="width:auto;padding:6px 14px"><i class="fas fa-plug"></i> <span data-i18n="modal.deposit.connect">Connect</span></button></div><div class="deposit-warning"><i class="fas fa-exclamation-triangle"></i><div class="deposit-warning-text"><strong data-i18n="modal.deposit.important">IMPORTANT:</strong> <span data-i18n="modal.deposit.warning">Your User ID</span> <span id="depositUserIdDisplay" style="background:rgba(255,255,255,.1);padding:2px 5px;border-radius:20px"></span> <span data-i18n="modal.deposit.mustBeComment">must be the ONLY comment</span>.</div></div><div class="form-group"><label class="form-label" data-i18n="modal.deposit.amount">Amount (TON)</label><input type="number" id="depositAmountInput" class="form-input" placeholder="0.1" step="0.1" min="0.1"><div class="preset-buttons"><span class="preset-btn" data-deposit="0.5">0.5</span><span class="preset-btn" data-deposit="1">1</span><span class="preset-btn" data-deposit="2">2</span><span class="preset-btn" data-deposit="5">5</span><span class="preset-btn" data-deposit="10">10</span></div></div><button class="btn btn-primary" id="submitDepositBtn" disabled><i class="fas fa-arrow-down"></i> <span data-i18n="modal.deposit.submit">Deposit TON</span></button><div class="transaction-status" id="depositStatus"><div class="status-icon">⏳</div><div class="status-message" data-i18n="modal.deposit.processing">Processing deposit...</div><div class="status-detail" id="depositStatusDetail"></div></div></div></div>
-    <div class="modal-overlay" id="addTaskModal"><div class="modal-content" style="max-width:400px"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-plus-circle" style="color:var(--neon-green)"></i> <span data-i18n="tasks.addTask">Add Community Task</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="form-group"><label class="form-label" data-i18n="tasks.taskType">Task Type</label><div style="display:flex;gap:8px;margin-bottom:10px"><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="taskType" value="channel" checked style="accent-color:var(--crystal-blue)"> 📢 <span data-i18n="tasks.channel">Channel</span></label><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="taskType" value="bot" style="accent-color:var(--primary-pink)"> 🤖 <span data-i18n="tasks.bot">Bot</span></label></div></div><div class="form-group" id="channelNote" style="background:rgba(255,92,168,.1);border-radius:10px;padding:10px;margin-bottom:14px;display:none"><i class="fas fa-info-circle" style="color:var(--primary-pink);margin-right:5px"></i><span data-i18n="tasks.channelNote">⚠️ Bot must be admin in the channel for verification to work!</span></div><div class="form-group"><label class="form-label" data-i18n="tasks.link">Link</label><input type="text" id="taskLink" class="form-input" placeholder="https://t.me/..." value=""></div><div class="form-group"><label class="form-label" data-i18n="tasks.targetUsers">Target Users (min 100)</label><input type="number" id="taskTarget" class="form-input" placeholder="100" min="100" value="100" oninput="calculateTaskPrice()"></div><div class="form-group"><label class="form-label" data-i18n="tasks.rewardPerUser">Reward Per User (TON)</label><input type="number" id="taskReward" class="form-input" value="0.001" step="0.0001" min="0.0001" readonly style="background:rgba(255,255,255,.05);color:var(--neon-green);font-weight:600"><div style="font-size:9px;color:var(--text-muted);margin-top:3px" data-i18n="tasks.rewardFixed">Fixed at 0.001 TON per completion</div></div><div class="total-ton-result" id="taskTotalCost" style="margin-bottom:16px">Total Cost: 0.0000 TON</div><div class="form-group"><label class="form-label" data-i18n="tasks.yourBalance">Your Balance</label><div style="background:rgba(0,212,255,.1);border-radius:10px;padding:10px;text-align:center"><span style="font-size:16px;font-weight:700;color:var(--crystal-blue)" id="taskUserBalance">0.0000</span> TON</div></div><button class="btn btn-primary" id="submitTaskBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e);margin-top:10px"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.confirm">Confirm & Pay</span></button></div></div>
-    <div class="modal-overlay" id="taskVerifyModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-clipboard-check" style="color:var(--neon-green)"></i> <span data-i18n="tasks.verify">Task Verification</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div style="text-align:center;padding:20px"><div style="font-size:48px;margin-bottom:15px" id="verifyEmoji">🤖</div><div style="font-size:16px;font-weight:700;margin-bottom:5px" id="verifyTitle">Join Channel</div><div style="font-size:12px;color:var(--text-secondary);margin-bottom:20px" id="verifyLink">https://t.me/...</div><div class="confirm-details" style="margin:20px 0"><div class="confirm-row"><span class="confirm-label" data-i18n="tasks.reward">Reward:</span><span class="confirm-value" style="color:var(--neon-green)" id="verifyReward">0.0010 TON</span></div></div><div class="task-actions" style="flex-direction:column;gap:10px"><a href="#" target="_blank" id="verifyJoinLink" class="task-btn join" style="width:100%;text-decoration:none;display:inline-block;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--crystal-blue),#0099cc);color:#fff"><i class="fas fa-external-link-alt"></i> <span data-i18n="tasks.join">Join</span></a><button class="task-btn check" id="verifyCheckBtn" style="width:100%;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--neon-green),#00b35e);color:#fff;border:none;margin-top:10px"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.check">Verify & Claim</span></button></div><div id="verifyStatus" style="margin-top:15px;padding:10px;border-radius:10px;display:none"></div></div></div></div>
+    <!-- Modal تفعيل البقر (محفوظ) -->
     <div class="modal-overlay" id="activateCowModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-power-off" style="color:var(--neon-green)"></i> Activate Cows</h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div style="text-align:center;margin-bottom:16px"><div style="font-size:48px;margin-bottom:8px" id="activateLevelEmoji">🐮</div><div style="font-size:16px;font-weight:700" id="activateLevelTitle">Level 1 Cows</div><div style="font-size:12px;color:var(--text-secondary);margin-top:4px" id="activateLevelInfo">500 Milk/day · 200🥛 activation</div></div><div class="form-group"><label class="form-label">How many cows?</label><input type="number" id="activateAmount" class="form-input" value="1" min="1" max="100" oninput="updateActivateCost()"><div class="preset-buttons" style="margin-top:10px"><span class="preset-btn" data-activate="1">1</span><span class="preset-btn" data-activate="5">5</span><span class="preset-btn" data-activate="10">10</span><span class="preset-btn" data-activate="25">25</span><span class="preset-btn" data-activate="50">50</span><span class="preset-btn" data-activate="all">ALL</span></div></div><div style="background:rgba(0,0,0,.3);border-radius:14px;padding:12px;margin-bottom:16px"><div class="confirm-row"><span class="confirm-label">Available cows:</span><span class="confirm-value" id="activateAvailable">0</span></div><div class="confirm-row"><span class="confirm-label">Activation cost:</span><span class="confirm-value" style="color:var(--neon-green)" id="activateCost">0 🥛</span></div><div class="confirm-row"><span class="confirm-label">Your milk balance:</span><span class="confirm-value" id="activateBalance">0 🥛</span></div></div><div class="confirm-buttons"><button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button><button class="btn btn-primary" id="confirmActivateBtn" onclick="executeActivateCows()"><i class="fas fa-check-circle"></i> Activate</button></div></div></div>
+    
+    <!-- Modal ترقية البقر (محفوظ) -->
     <div class="modal-overlay" id="upgradeCowModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-arrow-up" style="color:var(--crystal-blue)"></i> Upgrade Cows</h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div style="text-align:center;margin-bottom:16px"><div style="font-size:48px;margin-bottom:8px" id="upgradeFromEmoji">🐮 → 🦬</div><div style="font-size:16px;font-weight:700" id="upgradeLevelTitle">Level 1 → Level 2</div><div style="font-size:12px;color:var(--text-secondary);margin-top:4px" id="upgradeLevelInfo">500 → 1000 Milk/day · 6000🥛 upgrade</div></div><div class="form-group"><label class="form-label">How many cows?</label><input type="number" id="upgradeAmount" class="form-input" value="1" min="1" max="100" oninput="updateUpgradeCost()"><div class="preset-buttons" style="margin-top:10px"><span class="preset-btn" data-upgrade="1">1</span><span class="preset-btn" data-upgrade="5">5</span><span class="preset-btn" data-upgrade="10">10</span><span class="preset-btn" data-upgrade="25">25</span><span class="preset-btn" data-upgrade="50">50</span><span class="preset-btn" data-upgrade="all">ALL</span></div></div><div style="background:rgba(0,0,0,.3);border-radius:14px;padding:12px;margin-bottom:16px"><div class="confirm-row"><span class="confirm-label">Available cows:</span><span class="confirm-value" id="upgradeAvailable">0</span></div><div class="confirm-row"><span class="confirm-label">Upgrade cost:</span><span class="confirm-value" style="color:var(--neon-green)" id="upgradeCost">0 🥛</span></div><div class="confirm-row"><span class="confirm-label">Your milk balance:</span><span class="confirm-value" id="upgradeBalance">0 🥛</span></div></div><div class="confirm-buttons"><button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button><button class="btn btn-primary" id="confirmUpgradeBtn" onclick="executeUpgradeCows()"><i class="fas fa-check-circle"></i> Upgrade</button></div></div></div>
 
     <script>
+        // إعدادات التطبيق - محفوظة كما هي
         const CONFIG={API_URL:'https://noisy-dust-b9e8.mmrr2872008.workers.dev',BOT_USERNAME:'@Crystal_Ranch_bot',DEPOSIT_WALLET:'UQAzGsppYQfQwVnVVQDt2Jq9r4cm7fO3iVuLCxv30FixJq1-',PRODUCTION_INTERVAL:60000,MARKET_REFRESH:15000,DEPOSIT_VERIFY_INTERVAL:10000,CSRF_TOKEN:'crystal-ranch-secure-token-2026',CRYSTAL_PRICE:25,TASK_REWARD:.001,MAX_ACTIVE_ORDERS:2,COW_LEVELS:{1:{productionPerDay:500,activationCost:200,upgradeCost:6000},2:{productionPerDay:1000,activationCost:350,upgradeCost:20000},3:{productionPerDay:2500,activationCost:1200,upgradeCost:0}},STORAGE_LEVELS:{1:{capacity:2000,cost:0},2:{capacity:5000,cost:2000},3:{capacity:10000,cost:5000},4:{capacity:20000,cost:10000},5:{capacity:40000,cost:20000},6:{capacity:80000,cost:40000},7:{capacity:160000,cost:80000},8:{capacity:320000,cost:160000},9:{capacity:640000,cost:320000},10:{capacity:1000000,cost:600000}}};
+        
+        // الترجمات - محفوظة كما هي
         const TRANSLATIONS={en:{'nav.farm':'Farm','nav.market':'Market','nav.crystal':'Crystal','nav.friends':'Friends','nav.tasks':'Tasks','nav.profile':'Profile','status.milk':'MILK','status.eggs':'EGGS','status.crystal':'CRYSTAL','status.deposit':'Deposit','farm.cow.name':'Cow','farm.chicken.name':'Chicken','farm.crystal.name':'Crystal Engine','farm.prod':'Prod','farm.owned':'Owned','farm.supply':'Supply','farm.buy':'Buy Multiple','farm.hatch':'Hatch','farm.start':'Start','farm.yield':'Yield','market.title':'P2P Market','market.buy':'Buy','market.myOrders':'My Orders','market.milk':'Milk','market.eggs':'Eggs','market.totalOrders':'Total Orders','market.milkQty':'Milk','market.eggsQty':'Eggs','market.bestPrice':'Best Price','market.createSell':'Create Sell Order','market.refresh':'Refresh','market.loadMore':'Show More','market.noOrders':'No active sell orders','market.activeOrders':'Active Orders','market.history':'History','crystal.title':'Crystal Conversion','crystal.perTon':'TON per Crystal','crystal.yourCrystals':'Your Crystals','crystal.youReceive':'You Receive','crystal.convert':'Convert','crystal.milkAvailable':'Milk available','crystal.eggsAvailable':'Eggs available','referral.title':'Referral Program','referral.description':'Earn 10% commission when your friends buy machines with TON!','referral.share':'Share this link with friends','referral.friends':'Friends','referral.claim':'Claim Earnings','referral.recent':'Recent Referrals','referral.noReferrals':'No referrals yet','referral.earningsHistory':'Earnings History','referral.noEarnings':'No earnings yet','tasks.title':'Tasks & Rewards','tasks.partner':'Partner Tasks','tasks.community':'Community Tasks','tasks.addTask':'Add Task','tasks.refresh':'Refresh','tasks.noTasks':'No tasks available','tasks.taskType':'Task Type','tasks.channel':'Channel','tasks.bot':'Bot','tasks.channelNote':'⚠️ Bot must be admin in the channel for verification to work!','tasks.link':'Link','tasks.targetUsers':'Target Users (min 100)','tasks.rewardPerUser':'Reward Per User (TON)','tasks.rewardFixed':'Fixed at 0.001 TON per completion','tasks.yourBalance':'Your Balance','tasks.confirm':'Confirm & Pay','tasks.verify':'Task Verification','tasks.join':'Join','tasks.check':'Verify & Claim','tasks.reward':'Reward','profile.totalMachines':'Total Machines','profile.production':'Production','profile.assets':'Assets','profile.balance':'Balance','profile.withdraw':'Withdraw TON','profile.withdrawAmount':'Amount (min 0.1 TON)','profile.withdrawAddress':'TON Wallet Address','profile.fee':'Fee (5%)','profile.youReceive':'You receive','profile.withdrawBtn':'Withdraw','modal.sell.title':'Sell Order','modal.sell.resource':'Resource','modal.sell.quantity':'Quantity (min 100)','modal.sell.place':'Place Sell Order','modal.confirm.title':'Confirm Purchase','modal.confirm.package':'Milk Package','modal.confirm.cancel':'Cancel','modal.confirm.confirm':'Confirm & Pay','modal.hatch.title':'Hatch Machine','modal.hatch.cowCost':'50,000 Milk','modal.hatch.chickenCost':'5,000 Eggs','modal.hatch.hatchBtn':'Hatch','modal.deposit.title':'Deposit TON','modal.deposit.wallet':'Wallet','modal.deposit.notConnected':'Not connected','modal.deposit.connect':'Connect','modal.deposit.important':'IMPORTANT:','modal.deposit.warning':'Your User ID','modal.deposit.mustBeComment':'must be the ONLY comment','modal.deposit.amount':'Amount (TON)','modal.deposit.submit':'Deposit TON','modal.deposit.processing':'Processing deposit...','help.title':'How to Play','help.cow.title':'Cow Machine','help.cow.desc':'1 TON · 41 Milk/h<br>Global cap: 1000<br>Hatch: 50,000 Milk = 1 Cow','help.chicken.title':'Chicken Machine','help.chicken.desc':'1 TON · 41 Eggs/h<br>Unlocks after all Cows sold','help.crystal.title':'Crystal Engine','help.crystal.desc':'20 TON · 20k Milk + 20k Eggs = 1 Crystal<br>Convert Crystals → TON','help.hatch.title':'Hatch System','help.hatch.desc':'50,000 Milk = 1 Cow<br>5,000 Eggs = 1 Chicken<br>No global cap limit','help.market.title':'P2P Market','help.market.desc':'Trade Milk & Eggs with other players','help.referral.title':'Referral','help.referral.desc':'Earn 10% of every TON purchase made by your friends','help.tasks.title':'Tasks & Rewards','help.tasks.desc':'Complete tasks to earn 0.001 TON<br>Create your own community tasks (min 100 users)','help.leaderboard.title':'Leaderboard Competition','help.leaderboard.desc':'1 new cow = 10 points · Top 20 win 150 TON total<br>Ends when 1000 cows sold<br>⚠️ You must buy a cow to appear on leaderboard!'},ru:{'nav.farm':'Ферма','nav.market':'Рынок','nav.crystal':'Кристалл','nav.friends':'Друзья','nav.tasks':'Задания','nav.profile':'Профиль','status.milk':'МОЛОКО','status.eggs':'ЯЙЦА','status.crystal':'КРИСТАЛЛ','status.deposit':'Депозит','farm.cow.name':'Корова','farm.chicken.name':'Курица','farm.crystal.name':'Кристальный двигатель','farm.prod':'Произ','farm.owned':'Влад','farm.supply':'Предл','farm.buy':'Купить несколько','farm.hatch':'Вывести','farm.start':'Запустить','farm.yield':'Выход','market.title':'P2P Рынок','market.buy':'Купить','market.myOrders':'Мои заказы','market.milk':'Молоко','market.eggs':'Яйца','market.totalOrders':'Всего','market.milkQty':'Молоко','market.eggsQty':'Яйца','market.bestPrice':'Лучшая цена','market.createSell':'Создать ордер','market.refresh':'Обновить','market.loadMore':'Показать еще','market.noOrders':'Нет активных ордеров','market.activeOrders':'Активные','market.history':'История','crystal.title':'Конвертация кристаллов','crystal.perTon':'TON за кристалл','crystal.yourCrystals':'Ваши кристаллы','crystal.youReceive':'Вы получите','crystal.convert':'Конвертировать','crystal.milkAvailable':'Молоко доступно','crystal.eggsAvailable':'Яйца доступны','referral.title':'Реферальная программа','referral.description':'Зарабатывайте 10% комиссии, когда ваши друзья покупают машины!','referral.share':'Поделитесь этой ссылкой с друзьями','referral.friends':'Друзей','referral.claim':'Забрать доход','referral.recent':'Недавние рефералы','referral.noReferrals':'Пока нет рефералов','referral.earningsHistory':'История доходов','referral.noEarnings':'Пока нет доходов','tasks.title':'Задания и награды','tasks.partner':'Партнерские','tasks.community':'Сообщества','tasks.addTask':'Добавить задание','tasks.refresh':'Обновить','tasks.noTasks':'Нет доступных заданий','tasks.taskType':'Тип задания','tasks.channel':'Канал','tasks.bot':'Бот','tasks.channelNote':'⚠️ Бот должен быть администратором канала!','tasks.link':'Ссылка','tasks.targetUsers':'Цель (мин 100)','tasks.rewardPerUser':'Награда за пользователя','tasks.rewardFixed':'Фиксировано 0.001 TON','tasks.yourBalance':'Ваш баланс','tasks.confirm':'Подтвердить и оплатить','tasks.verify':'Проверка задания','tasks.join':'Присоединиться','tasks.check':'Проверить и получить','tasks.reward':'Награда','profile.totalMachines':'Всего машин','profile.production':'Производство','profile.assets':'Активы','profile.balance':'Баланс','profile.withdraw':'Вывести TON','profile.withdrawAmount':'Сумма (мин 0.1 TON)','profile.withdrawAddress':'TON адрес кошелька','profile.fee':'Комиссия (5%)','profile.youReceive':'Вы получите','profile.withdrawBtn':'Вывести','modal.sell.title':'Ордер на продажу','modal.sell.resource':'Ресурс','modal.sell.quantity':'Количество (мин 100)','modal.sell.place':'Разместить ордер','modal.confirm.title':'Подтверждение покупки','modal.confirm.package':'Пакет молока','modal.confirm.cancel':'Отмена','modal.confirm.confirm':'Подтвердить и оплатить','modal.hatch.title':'Вывести машину','modal.hatch.cowCost':'50,000 Молока','modal.hatch.chickenCost':'5,000 Яиц','modal.hatch.hatchBtn':'Вывести','modal.deposit.title':'Депозит TON','modal.deposit.wallet':'Кошелек','modal.deposit.notConnected':'Не подключен','modal.deposit.connect':'Подключить','modal.deposit.important':'ВАЖНО:','modal.deposit.warning':'Ваш User ID','modal.deposit.mustBeComment':'должен быть ЕДИНСТВЕННЫМ комментарием','modal.deposit.amount':'Сумма (TON)','modal.deposit.submit':'Депозит TON','modal.deposit.processing':'Обработка депозита...','help.title':'Как играть','help.cow.title':'Корова','help.cow.desc':'1 TON · 41 Молоко/час<br>Всего: 1000 машин<br>Вывод: 50,000 Молока = 1 Корова','help.chicken.title':'Курица','help.chicken.desc':'1 TON · 41 Яйца/час<br>Открывается после всех коров','help.crystal.title':'Кристальный двигатель','help.crystal.desc':'20 TON · 20k Молока + 20k Яиц = 1 Кристалл<br>Конвертация в TON','help.hatch.title':'Система вывода','help.hatch.desc':'50,000 Молока = 1 Корова<br>5,000 Яиц = 1 Курица<br>Без лимита','help.market.title':'P2P Рынок','help.market.desc':'Торгуйте молоком и яйцами','help.referral.title':'Рефералы','help.referral.desc':'10% от покупок друзей','help.tasks.title':'Задания','help.tasks.desc':'Выполняйте задания за 0.001 TON','help.leaderboard.title':'Соревнование','help.leaderboard.desc':'1 новая корова = 10 очков · Топ-20 выигрывают 150 TON<br>Заканчивается когда продано 1000 коров'}};
+        
         const LEADERBOARD_INFO_TRANSLATIONS={en:{title:'🏆 How does the competition work?',grandPrize:'🏆 Grand Prize',totalPrize:'Total prize pool 150 TON distributed to top 20 players',howToParticipate:'🐮 How to participate?',howToDesc:'Each new cow you buy = 10 points<br>You must buy at least one cow to appear',whenEnds:'⏰ When does it end?',whenDesc:'The competition ends when 1000 cows are sold',gotIt:'✅ Got it',prizeList:[{rank:'1st',prize:'40 TON'},{rank:'2nd',prize:'30 TON'},{rank:'3rd',prize:'20 TON'},{rank:'4th',prize:'10 TON'},{rank:'5th',prize:'8 TON'},{rank:'6th',prize:'6 TON'},{rank:'7th',prize:'5 TON'},{rank:'8th',prize:'4 TON'},{rank:'9th-10th',prize:'3 TON'},{rank:'11th-18th',prize:'2 TON'},{rank:'19th-20th',prize:'1 TON'}]},ru:{title:'🏆 Как работает соревнование?',grandPrize:'🏆 Главный приз',totalPrize:'Общий призовой фонд 150 TON распределяется между топ-20 игроками',howToParticipate:'🐮 Как участвовать?',howToDesc:'Каждая новая купленная корова = 10 очков<br>Вы должны купить хотя бы одну корову, чтобы появиться',whenEnds:'⏰ Когда заканчивается?',whenDesc:'Соревнование заканчивается, когда продано 1000 коров',gotIt:'✅ Понятно',prizeList:[{rank:'1 место',prize:'40 TON'},{rank:'2 место',prize:'30 TON'},{rank:'3 место',prize:'20 TON'},{rank:'4 место',prize:'10 TON'},{rank:'5 место',prize:'8 TON'},{rank:'6 место',prize:'6 TON'},{rank:'7 место',prize:'5 TON'},{rank:'8 место',prize:'4 TON'},{rank:'9-10 место',prize:'3 TON'},{rank:'11-18 место',prize:'2 TON'},{rank:'19-20 место',prize:'1 TON'}]}};
+        
+        // كائن التطبيق الرئيسي
         let App={userId:null,user:null,global:null,constants:null,referral:null,market:null,tasks:null,leaderboard:null,ranch:{cowLevels:{1:0,2:0,3:0},cowActive:{1:0,2:0,3:0},cowActiveUntil:{},milkStored:0,storageLevel:1,storageCapacity:2000,hourlyProduction:0},telegram:null,wallet:null,tonConnectUI:null,timerInterval:null,marketInterval:null,depositCheckInterval:null,currentMarketResource:'milk',currentMarketPage:1,hasMoreOrders:false,currentDepositId:null,currentTxHash:null,pendingOrder:null,pendingTask:null,currentLanguage:'en',referralsPage:1,earningsPage:1,hasMoreReferrals:false,hasMoreEarnings:false,currentTaskTab:'partner',currentActivateLevel:1,currentUpgradeFromLevel:1,initialized:false};
+        
+        // المتغيرات والدوال المساعدة
         const lastClickTimers={},CLICK_COOLDOWN=1e4;
         
         function checkClickCooldown(b){let n=Date.now(),t=lastClickTimers[b]||0,o=CLICK_COOLDOWN-(n-t);return!(o>0)||(showNotification(App.currentLanguage==='ru'?`⏳ Пожалуйста, подождите ${Math.ceil(o/1e3)} секунд перед повторным нажатием`:`⏳ Please wait ${Math.ceil(o/1e3)} seconds before clicking again`,'warning'),!1)}
+        
         async function disableButtonTemporarily(b,e){if(!b)return;b.disabled=!0;let t=b.innerHTML;b.innerHTML=`<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CLICK_COOLDOWN/1e3)}s`;setTimeout(()=>{b.disabled=!1,b.innerHTML=t},CLICK_COOLDOWN)}
+        
         function validateAndCooldown(b,e){return checkClickCooldown(b)?(disableButtonTemporarily(e,b),!0):!1}
+        
         function showNotification(m,t='success',d=5e3){let n=document.getElementById('notificationContainer'),o=document.createElement('div');o.className=`notification ${t}`,o.innerHTML=m.replace(/\n/g,'<br>'),n.appendChild(o),setTimeout(()=>{o.classList.add('fade-out'),setTimeout(()=>{o.parentNode&&o.parentNode.removeChild(o)},300)},d)}
+        
         function formatFullPrecision(n){return n==null?'0':Math.abs(n)<.0001&&n!==0?n.toFixed(8).replace(/\.?0+$/,''):n.toFixed(8).replace(/\.?0+$/,'')}
+        
         function formatTON(a){return a==null||isNaN(a)?'0':Math.abs(a)<.0001&&a!==0?a.toFixed(8).replace(/\.?0+$/,''):parseFloat(a).toFixed(4)}
+        
         function formatNumber(n){return n==null?'0':n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':n.toLocaleString()}
+        
         function setLanguage(l){if(!TRANSLATIONS[l])return;App.currentLanguage=l,localStorage.setItem('crystal_ranch_lang',l),document.querySelectorAll('[data-i18n]').forEach(e=>{let k=e.getAttribute('data-i18n');if(TRANSLATIONS[l][k]){let t=TRANSLATIONS[l][k];e.tagName==='P'||e.tagName==='DIV'?(t=t.replace(/<br>/g,'<br>'),e.innerHTML=t):(t=t.replace(/<br>/g,' '),e.textContent=t)}}),document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.dataset.lang===l)}),App.tonConnectUI&&(App.tonConnectUI.language=l==='ru'?'ru':'en'),updateLeaderboardInfoLanguage()}
+        
         function updateLeaderboardInfoLanguage(){let l=App.currentLanguage||'en',t=LEADERBOARD_INFO_TRANSLATIONS[l];document.getElementById('infoTitle').innerHTML=t.title,document.getElementById('infoGrandPrize').innerHTML=t.grandPrize,document.getElementById('infoTotalPrize').innerHTML=t.totalPrize,document.getElementById('infoHowToParticipate').innerHTML=t.howToParticipate,document.getElementById('infoHowToDesc').innerHTML=t.howToDesc,document.getElementById('infoWhenEnds').innerHTML=t.whenEnds,document.getElementById('infoWhenDesc').innerHTML=t.whenDesc,document.getElementById('infoGotIt').innerHTML=t.gotIt;let p='';t.prizeList.forEach(i=>{p+=`<div class="info-prize-row"><span>${i.rank}</span> <span style="color:#FFD700;">${i.prize}</span></div>`}),document.getElementById('infoPrizeList').innerHTML=p}
+        
         async function initApp(){console.log('Crystal Ranch · Initializing...'),setLanguage(localStorage.getItem('crystal_ranch_lang')||'en'),await setupTelegram(),await initializeUser(),setTimeout(()=>initTONConnect(),1e3),await loadGameState(),setupIntervals(),setupEventListeners(),console.log('Crystal Ranch · Ready')}
+        
         async function setupTelegram(){return new Promise(r=>{if(window.Telegram&&window.Telegram.WebApp){App.telegram=window.Telegram.WebApp,App.telegram.ready(),App.telegram.expand();if(App.telegram.initDataUnsafe&&App.telegram.initDataUnsafe.user){let u=App.telegram.initDataUnsafe.user;App.userId=String(u.id),document.getElementById('profileName').innerHTML=`${u.first_name||''} ${u.last_name||''}`.trim()||'Farmer',document.getElementById('profileUsername').innerHTML=u.username?`@${u.username}`:'@crystal_ranch',document.getElementById('profileUserId').innerHTML=`ID: ${App.userId}`,document.getElementById('depositUserIdDisplay').innerHTML=App.userId,u.photo_url&&(document.getElementById('profileAvatar').innerHTML=`<img src="${u.photo_url}" style="width:100%;height:100%;object-fit:cover">`)}App.telegram.initDataUnsafe&&App.telegram.initDataUnsafe.start_param&&console.log('Start param:',App.telegram.initDataUnsafe.start_param),r()}else App.userId='demo_'+Math.floor(1e6*Math.random()),document.getElementById('profileName').innerHTML='Demo Farmer',document.getElementById('profileUsername').innerHTML='@demo',document.getElementById('profileUserId').innerHTML=`ID: ${App.userId}`,document.getElementById('depositUserIdDisplay').innerHTML=App.userId,r()})}
-        async function initializeUser(){try{let r=sessionStorage.getItem('referrer'),u=App.telegram?.initDataUnsafe?.user?{first_name:App.telegram.initDataUnsafe.user.first_name,last_name:App.telegram.initDataUnsafe.user.last_name,username:App.telegram.initDataUnsafe.user.username,photo_url:App.telegram.initDataUnsafe.user.photo_url}:null,o=await fetch(`${CONFIG.API_URL}/api`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Telegram ${App.telegram?.initData||''}`,'X-Action':'initializeUser','X-CSRF-Token':CONFIG.CSRF_TOKEN},body:JSON.stringify({action:'initializeUser',data:{startParam:r,userInfo:u}})}),i=await o.json();console.log('Initialize user result:',i)}catch(e){console.error('Init user error:',e)}}
+        
+        async function initializeUser(){try{let r=sessionStorage.getItem('referrer'),u=App.telegram?.initDataUnsafe?.user?{first_name:u.first_name,last_name:u.last_name,username:u.username,photo_url:u.photo_url}:null,o=await fetch(`${CONFIG.API_URL}/api`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Telegram ${App.telegram?.initData||''}`,'X-Action':'initializeUser','X-CSRF-Token':CONFIG.CSRF_TOKEN},body:JSON.stringify({action:'initializeUser',data:{startParam:r,userInfo:u}})}),i=await o.json();console.log('Initialize user result:',i)}catch(e){console.error('Init user error:',e)}}
+        
         async function initTONConnect(){try{if(window.TON_CONNECT_UI){let m=`${CONFIG.API_URL}/tonconnect-manifest.json`;App.tonConnectUI=new TON_CONNECT_UI.TonConnectUI({manifestUrl:m,language:App.currentLanguage==='ru'?'ru':'en',uiPreferences:{theme:'DARK'}}),App.tonConnectUI.onStatusChange(w=>{w?handleWalletConnected(w):handleWalletDisconnected()}),setTimeout(()=>{App.tonConnectUI.connected&&App.tonConnectUI.getWallets()},500)}}catch(e){console.error('TON Connect init error:',e)}}
+        
         function handleWalletConnected(w){App.wallet={address:w.account.address,chain:w.account.chain,appName:w.device.appName};let d=document.getElementById('walletAddressDisplay'),b=document.getElementById('connectWalletBtn'),s=`${App.wallet.address.substring(0,6)}...${App.wallet.address.substring(App.wallet.address.length-4)}`;d.innerHTML=`${s} · ${App.wallet.appName}`,b.innerHTML='<i class="fas fa-unplug"></i> '+(App.currentLanguage==='ru'?'Отключить':'Disconnect'),b.onclick=disconnectWallet,document.getElementById('submitDepositBtn').disabled=!1}
+        
         function handleWalletDisconnected(){App.wallet=null,document.getElementById('walletAddressDisplay').innerHTML=App.currentLanguage==='ru'?'Не подключен':'Not connected',document.getElementById('connectWalletBtn').innerHTML='<i class="fas fa-plug"></i> '+(App.currentLanguage==='ru'?'Подключить':'Connect'),document.getElementById('connectWalletBtn').onclick=connectWallet,document.getElementById('submitDepositBtn').disabled=!0}
+        
         async function connectWallet(){App.tonConnectUI&&await App.tonConnectUI.openModal()}async function disconnectWallet(){App.tonConnectUI&&await App.tonConnectUI.disconnect()}
+        
         async function callAPI(a,d={}){try{let h={'Content-Type':'application/json','X-Action':a,'X-CSRF-Token':CONFIG.CSRF_TOKEN};App.telegram&&App.telegram.initData&&(h.Authorization=`Telegram ${App.telegram.initData}`);let r=await fetch(`${CONFIG.API_URL}/api`,{method:'POST',headers:h,body:JSON.stringify({action:a,data:d})}),o=await r.json();if(!o.success)throw console.error(`API Error [${a}]:`,o.error),showNotification(o.error||'Transaction failed','error'),new Error(o.error);return o.data}catch(e){throw console.error('API call failed:',e),e}}
+        
         async function loadGameState(){try{let s=await callAPI('getState');App.user=s.user,App.global=s.global,App.constants=s.constants,App.referral=s.referral||{totalReferrals:0,totalEarnings:0,recentReferrals:[],recentEarnings:[]},App.market=s.market||{milk:{sellOrders:0,buyOrders:0,bestSellPrice:0,bestBuyPrice:0,totalMilk:0,totalEggs:0},eggs:{sellOrders:0,buyOrders:0,bestSellPrice:0,bestBuyPrice:0}},App.tasks=s.tasks||{partner:[],community:[]},App.leaderboard=s.leaderboard||{isActive:!0,totalCowSales:0,cowCap:1e3,remainingCows:1e3,leaderboard:[],currentUser:{rank:0,cowCount:0,points:0,prize:0,photoUrl:''},prizesDistributed:!1,winners:{}},s.ranch&&(App.ranch=s.ranch),App.global&&(App.global.diamond_price=CONFIG.CRYSTAL_PRICE),updateAllUI(),updateReferralUI(),updateTasksUI(),updateLeaderboardUI(),updateRanchUI(),animateTonBalance(),updateLockedStates(),s.pendingDeposits&&s.pendingDeposits.length>0&&s.pendingDeposits[0].status==='pending'&&startDepositVerification(s.pendingDeposits[0].depositId,s.pendingDeposits[0].txHash)}catch(e){console.error('Load game state error:',e)}}
+        
+        // دالة تحديث واجهة الرانش
+        function updateRanchUI() {
+            if (!App.ranch) return;
+            
+            let r = App.ranch;
+            let totalCows = (r.cowLevels[1] || 0) + (r.cowLevels[2] || 0) + (r.cowLevels[3] || 0);
+            let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
+            
+            document.getElementById('ranchTotalCows').innerHTML = totalCows;
+            document.getElementById('ranchActiveCows').innerHTML = activeCows;
+            document.getElementById('ranchInactiveCows').innerHTML = totalCows - activeCows;
+            
+            document.getElementById('ranchHourlyProduction').innerHTML = Math.round(r.hourlyProduction || 0);
+            
+            let sold = App.global?.cows_sold || 0;
+            document.getElementById('ranchCowsSold').innerHTML = sold;
+            document.getElementById('ranchCowsProgress').style.width = `${sold/10}%`;
+            
+            document.getElementById('level1Count').innerHTML = (r.cowLevels[1] || 0) + ' cows';
+            document.getElementById('level2Count').innerHTML = (r.cowLevels[2] || 0) + ' cows';
+            document.getElementById('level3Count').innerHTML = (r.cowLevels[3] || 0) + ' cows';
+            
+            document.getElementById('level1Active').innerHTML = r.cowActive[1] || 0;
+            document.getElementById('level2Active').innerHTML = r.cowActive[2] || 0;
+            document.getElementById('level3Active').innerHTML = r.cowActive[3] || 0;
+            
+            // حساب الوقت المتبقي (افتراضي)
+            if (r.remainingTime) {
+                document.getElementById('level1Remaining').innerHTML = r.remainingTime[1] ? r.remainingTime[1] + 'h' : 'Needs activation';
+                document.getElementById('level2Remaining').innerHTML = r.remainingTime[2] ? r.remainingTime[2] + 'h' : 'Needs activation';
+                document.getElementById('level3Remaining').innerHTML = r.remainingTime[3] ? r.remainingTime[3] + 'h' : 'Needs activation';
+            } else {
+                document.getElementById('level1Remaining').innerHTML = activeCows > 0 ? '24h' : 'Needs activation';
+                document.getElementById('level2Remaining').innerHTML = activeCows > 0 ? '24h' : 'Needs activation';
+                document.getElementById('level3Remaining').innerHTML = activeCows > 0 ? '24h' : 'Needs activation';
+            }
+            
+            let milk = r.milkStored || 0;
+            let capacity = r.storageCapacity || 2000;
+            let level = r.storageLevel || 1;
+            
+            document.getElementById('milkStored').innerHTML = formatNumber(milk);
+            document.getElementById('storageLevel').innerHTML = level + '/10';
+            document.getElementById('storageCapacity').innerHTML = formatNumber(capacity);
+            document.getElementById('storageProgressFill').style.width = `${(milk/capacity*100)}%`;
+            document.getElementById('storageFullBadge').style.display = milk >= capacity ? 'block' : 'none';
+        }
         
         // دالة الذهاب إلى Ranch
         function goToRanch() {
@@ -598,12 +675,10 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             updateRanchUI();
         }
-
+        
         // دالة فتح Modal ترقية المخزن
         window.openStorageUpgradeModal = async function() {
             try {
-                if (!App.ranch) return;
-                
                 let currentLevel = App.ranch.storageLevel || 1;
                 let nextLevel = currentLevel + 1;
                 
@@ -613,21 +688,21 @@
                 }
                 
                 let currentCapacity = CONFIG.STORAGE_LEVELS[currentLevel].capacity;
-                let nextCapacity = CONFIG.STORAGE_LEVELS[nextLevel].capacity;
+                let newCapacity = CONFIG.STORAGE_LEVELS[nextLevel].capacity;
                 let upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel].cost;
-                let userMilk = App.user?.milk || 0;
+                let currentMilk = App.user?.milk || 0;
                 
                 document.getElementById('storageCurrentLevel').innerHTML = currentLevel;
                 document.getElementById('storageNextLevel').innerHTML = nextLevel;
                 document.getElementById('storageCurrentCapacity').innerHTML = formatNumber(currentCapacity);
-                document.getElementById('storageNewCapacity').innerHTML = formatNumber(nextCapacity);
-                document.getElementById('storageIncrease').innerHTML = '+' + formatNumber(nextCapacity - currentCapacity);
+                document.getElementById('storageNewCapacity').innerHTML = formatNumber(newCapacity);
+                document.getElementById('storageIncrease').innerHTML = '+' + formatNumber(newCapacity - currentCapacity);
                 document.getElementById('storageUpgradeCost').innerHTML = formatNumber(upgradeCost) + ' 🥛';
-                document.getElementById('storageUserBalance').innerHTML = formatNumber(userMilk) + ' 🥛';
+                document.getElementById('storageUserBalance').innerHTML = formatNumber(currentMilk) + ' 🥛';
                 
                 let btn = document.getElementById('confirmStorageUpgradeBtn');
-                btn.disabled = userMilk < upgradeCost;
-                btn.style.opacity = userMilk >= upgradeCost ? '1' : '0.5';
+                btn.disabled = currentMilk < upgradeCost;
+                btn.style.opacity = currentMilk < upgradeCost ? '0.5' : '1';
                 
                 document.getElementById('storageUpgradeModal').classList.add('active');
             } catch (e) {
@@ -635,7 +710,7 @@
                 showNotification('Failed to load storage info', 'error');
             }
         };
-
+        
         // دالة تنفيذ ترقية المخزن
         window.executeStorageUpgrade = async function() {
             let btn = document.getElementById('confirmStorageUpgradeBtn');
@@ -650,60 +725,8 @@
                 console.error('Upgrade error:', e);
             }
         };
-
-        function updateRanchUI() {
-            if (!App.ranch) return;
-            
-            let r = App.ranch;
-            let totalCows = (r.cowLevels[1] || 0) + (r.cowLevels[2] || 0) + (r.cowLevels[3] || 0);
-            let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
-            
-            // تحديث العناصر
-            document.getElementById('ranchTotalCows').innerHTML = totalCows;
-            document.getElementById('ranchActiveCows').innerHTML = activeCows;
-            document.getElementById('ranchInactiveCows').innerHTML = totalCows - activeCows;
-            
-            // الإنتاج
-            document.getElementById('ranchHourlyProduction').innerHTML = Math.round(r.hourlyProduction || 0);
-            
-            // البيع العالمي
-            let sold = App.global?.cows_sold || 0;
-            document.getElementById('ranchCowsSold').innerHTML = sold;
-            document.getElementById('ranchCowsProgress').style.width = `${sold/10}%`;
-            
-            // مستويات البقر
-            document.getElementById('level1Count').innerHTML = (r.cowLevels[1] || 0) + ' cows';
-            document.getElementById('level2Count').innerHTML = (r.cowLevels[2] || 0) + ' cows';
-            document.getElementById('level3Count').innerHTML = (r.cowLevels[3] || 0) + ' cows';
-            
-            document.getElementById('level1Active').innerHTML = r.cowActive[1] || 0;
-            document.getElementById('level2Active').innerHTML = r.cowActive[2] || 0;
-            document.getElementById('level3Active').innerHTML = r.cowActive[3] || 0;
-            
-            // الوقت المتبقي - محاكاة (يجب أن يأتي من API)
-            // في حالة عدم وجود بيانات حقيقية، نعرض رسالة افتراضية
-            document.getElementById('level1Remaining').innerHTML = r.cowActive[1] > 0 ? '~24h' : 'Needs activation';
-            document.getElementById('level2Remaining').innerHTML = r.cowActive[2] > 0 ? '~24h' : 'Needs activation';
-            document.getElementById('level3Remaining').innerHTML = r.cowActive[3] > 0 ? '~24h' : 'Needs activation';
-            
-            // المخزن
-            let milk = r.milkStored || 0;
-            let capacity = r.storageCapacity || 2000;
-            let level = r.storageLevel || 1;
-            
-            document.getElementById('milkStored').innerHTML = formatNumber(milk);
-            document.getElementById('storageLevel').innerHTML = level + '/10';
-            document.getElementById('storageCapacity').innerHTML = formatNumber(capacity);
-            document.getElementById('storageProgressFill').style.width = `${(milk/capacity*100)}%`;
-            document.getElementById('storageFullBadge').style.display = milk >= capacity ? 'block' : 'none';
-        }
-
-        function updateLeaderboardUI(){
-            if(!App.leaderboard)return;
-            let l=App.leaderboard;
-            document.getElementById('leaderboardCowsSold').innerHTML=l.totalCowSales||0,document.getElementById('leaderboardProgressFill').style.width=`${(l.totalCowSales||0)/10}%`,document.getElementById('leaderboardRemaining').innerHTML=`Remaining: ${l.remainingCows||0}`;
-            let u=l.currentUser||{rank:0,points:0,cowCount:0,prize:0,photoUrl:''};
-            document.getElementById('userRank').innerHTML=`#${u.rank||0}`,document.getElementById('userPoints').innerHTML=u.points||0,document.getElementById('userPrize').innerHTML=`<img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:12px;height:12px;object-fit:contain"> ${u.prize||0}`,document.getElementById('winnersSection').style.display=!l.isActive&&l.prizesDistributed?'block':'none',displayLeaderboardList(l.leaderboard),u&&u.photoUrl&&(document.getElementById('profileAvatar').innerHTML=`<img src="${u.photoUrl}" style="width:100%;height:100%;object-fit:cover">`)}
+        
+        function updateLeaderboardUI(){if(!App.leaderboard)return;let l=App.leaderboard;document.getElementById('leaderboardCowsSold').innerHTML=l.totalCowSales||0,document.getElementById('leaderboardProgressFill').style.width=`${(l.totalCowSales||0)/10}%`,document.getElementById('leaderboardRemaining').innerHTML=`Remaining: ${l.remainingCows||0}`;let u=l.currentUser||{rank:0,points:0,cowCount:0,prize:0,photoUrl:''};document.getElementById('userRank').innerHTML=`#${u.rank||0}`,document.getElementById('userPoints').innerHTML=u.points||0,document.getElementById('userPrize').innerHTML=`<img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:12px;height:12px;object-fit:contain"> ${u.prize||0}`,document.getElementById('winnersSection').style.display=!l.isActive&&l.prizesDistributed?'block':'none',displayLeaderboardList(l.leaderboard),u&&u.photoUrl&&(document.getElementById('profileAvatar').innerHTML=`<img src="${u.photoUrl}" style="width:100%;height:100%;object-fit:cover">`)}
         
         function displayLeaderboardList(l){let c=document.getElementById('leaderboardList');if(!l||!l.length){c.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)"><i class="fas fa-trophy" style="font-size:48px;margin-bottom:15px;opacity:.5"></i><p>No players yet - Buy a cow to appear!</p></div>';return}let h='';l.slice(0,50).forEach(p=>{let r=p.rank||0,n=p.firstName||p.username||`Farmer #${p.userId?.substring(0,4)}`,o=p.points||0,i=p.prize||0,t=r===1?'gold':r===2?'silver':r===3?'bronze':'';h+=`<div class="leaderboard-card ${r===1?'top-1':r===2?'top-2':r===3?'top-3':''}"><div class="card-content"><div class="rank-badge ${t}">${r}</div><div class="user-info"><div class="user-name-row"><span class="user-name">${n}</span>${r<=3?'<span class="user-crown"><i class="fas fa-crown"></i></span>':''}</div></div><div class="points-section"><div class="points-box"><i class="fas fa-cow"></i> ${o}</div>${i>0?`<div class="prize-pill"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:16px;height:16px;object-fit:contain"> ${i}</div>`:''}</div></div></div>`}),c.innerHTML=h}
         
@@ -756,6 +779,7 @@
         window.openAddTaskModal=function(){document.getElementById('addTaskModal').classList.add('active'),calculateTaskPrice()};
         window.openDepositModal=function(){document.getElementById('depositModal').classList.add('active')};
         window.closeAllModals=function(){document.querySelectorAll('.modal-overlay').forEach(m=>{m.classList.remove('active')}),App.pendingOrder=null,App.pendingTask=null};
+        
         window.openActivateModal=function(l){App.currentActivateLevel=l;let m=document.getElementById('activateCowModal'),c=CONFIG.COW_LEVELS[l],e={1:'🐮',2:'🦬',3:'🐃'},t={1:'Level 1 Cows',2:'Level 2 Cows',3:'Level 3 Cows'};document.getElementById('activateLevelEmoji').innerHTML=e[l],document.getElementById('activateLevelTitle').innerHTML=t[l],document.getElementById('activateLevelInfo').innerHTML=`${c.productionPerDay} Milk/day · ${c.activationCost}🥛 activation`;let a=App.ranch.cowLevels[l]||0;document.getElementById('activateAvailable').innerHTML=a,document.getElementById('activateAmount').max=a,document.getElementById('activateAmount').value=Math.min(1,a),document.getElementById('activateBalance').innerHTML=formatNumber(App.user?.milk||0)+' 🥛',updateActivateCost(),m.classList.add('active')};
         
         function updateActivateCost(){let l=App.currentActivateLevel,a=parseInt(document.getElementById('activateAmount').value)||0,c=a*CONFIG.COW_LEVELS[l].activationCost;document.getElementById('activateCost').innerHTML=formatNumber(c)+' 🥛';let o=App.ranch.cowLevels[l]||0,m=App.user?.milk||0,d=document.getElementById('confirmActivateBtn');d.disabled=a>o||a<=0||c>m,document.querySelectorAll('[data-activate]').forEach(b=>{b.classList.remove('active')})}
@@ -795,6 +819,8 @@
         async function handleDepositSuccess(r,a,c){try{let d=await callAPI('deposit',{amount:a,txHash:r.boc,comment:c});App.currentDepositId=d.depositId,App.currentTxHash=r.boc;let s=document.getElementById('depositStatus');s.classList.add('visible'),s.querySelector('.status-icon').innerHTML='⏳',s.querySelector('.status-message').innerHTML=App.currentLanguage==='ru'?'Транзакция отправлена!':'Transaction sent!',document.getElementById('depositStatusDetail').innerHTML=App.currentLanguage==='ru'?'Ожидание подтверждения (≈1 мин)...':'Waiting for confirmation (≈1 min)...',startDepositVerification(d.depositId,r.boc)}catch(e){console.error('Deposit API error:',e);let s=document.getElementById('depositStatus');s.classList.add('visible'),s.querySelector('.status-icon').innerHTML='❌',s.querySelector('.status-message').innerHTML=App.currentLanguage==='ru'?'Не удалось обработать депозит':'Failed to process deposit',document.getElementById('depositStatusDetail').innerHTML=e.message}}
         
         function startDepositVerification(i,t){if(App.depositCheckInterval&&clearInterval(App.depositCheckInterval),!i||!t)return;let a=0,m=18;App.depositCheckInterval=setInterval(async()=>{a++;try{let r=await callAPI('verifyDeposit',{depositId:i,txHash:t});if(r.status==='completed'){clearInterval(App.depositCheckInterval);let s=document.getElementById('depositStatus');s.querySelector('.status-icon').innerHTML='✅',s.querySelector('.status-message').innerHTML=App.currentLanguage==='ru'?'Депозит подтвержден!':'Deposit confirmed!',document.getElementById('depositStatusDetail').innerHTML=App.currentLanguage==='ru'?`${r.amount} TON добавлено на баланс`:`${r.amount} TON added to your balance`,showNotification(App.currentLanguage==='ru'?`💰 Депозит подтвержден! ${r.amount} TON добавлено`:`💰 Deposit confirmed! ${r.amount} TON added`,'success'),loadGameState(),animateTonBalance(),setTimeout(()=>{s.classList.remove('visible'),closeAllModals()},3e0)}}catch(e){console.error('Verification error:',e),a>=m&&clearInterval(App.depositCheckInterval)}},1e4)}
+        
+        window.hatchCow=async function(){let b=document.getElementById('hatchCowConfirm');if(!validateAndCooldown('hatchCowConfirm',b))return;let a=parseInt(document.getElementById('hatchCowAmount').value);if(!a||a<=0)return;try{let r=await callAPI('hatchCow',{amount:a});await loadGameState(),closeAllModals(),showNotification(App.currentLanguage==='ru'?`✅ Выведено ${r.amount} коров(а)!`:`✅ Hatched ${r.amount} cow(s)!`,'success')}catch(e){console.error('Hatch error:',e)}};
     </script>
 </body>
 </html>

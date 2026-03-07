@@ -54,8 +54,7 @@
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-card: rgba(15, 20, 30, 0.65);
             --glass-strong: rgba(25, 30, 40, 0.85);
-            --glass-active: rgba(0, 242, 122, 0.15);
-            --glass-inactive: rgba(255, 75, 92, 0.15);
+            --glass-light: rgba(30, 35, 45, 0.4);
             
             --text-primary: #FFFFFF;
             --text-secondary: rgba(255, 255, 255, 0.85);
@@ -960,11 +959,12 @@
             font-weight: 600;
         }
         
+        /* ===== MACHINE STYLES - ALL SAME SIZE ===== */
         .farm-grid {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .machine-card {
@@ -978,20 +978,12 @@
             transition: transform 0.2s;
             animation: fade-in 0.5s ease;
             width: 100%;
-            min-height: 240px;
-        }
-        
-        .machine-card:hover {
-            transform: scale(1.01);
+            min-height: 200px;
         }
         
         .machine-card.cow {
             border-left: 4px solid var(--primary-pink);
             cursor: pointer;
-        }
-        
-        .machine-card.cow:active {
-            transform: scale(0.98);
         }
         
         .machine-card.chicken {
@@ -1047,7 +1039,7 @@
             width: 60px;
             height: 60px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 18px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1058,7 +1050,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 16px;
+            border-radius: 14px;
         }
         
         .machine-info {
@@ -1073,14 +1065,14 @@
         }
         
         .machine-name {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
         }
         
         .machine-badge {
             font-size: 10px;
             font-weight: 600;
-            padding: 3px 8px;
+            padding: 4px 8px;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.2px;
@@ -1113,19 +1105,19 @@
         .machine-price {
             display: flex;
             align-items: center;
-            gap: 3px;
-            font-size: 12px;
+            gap: 4px;
+            font-size: 13px;
             color: var(--text-secondary);
         }
         
         .machine-price i {
             color: var(--crystal-blue);
-            font-size: 11px;
+            font-size: 12px;
         }
         
         .machine-stats {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 8px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 18px;
@@ -1140,7 +1132,7 @@
         .stat-label {
             font-size: 10px;
             color: var(--text-muted);
-            margin-bottom: 3px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
         
@@ -1150,13 +1142,13 @@
         }
         
         .stat-unit {
-            font-size: 9px;
+            font-size: 10px;
             color: var(--text-secondary);
             margin-left: 2px;
         }
         
         .progress-section {
-            margin-bottom: 12px;
+            margin-bottom: 0;
         }
         
         .progress-header {
@@ -1187,8 +1179,8 @@
             font-size: 12px;
             margin: 12px 0;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 18px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 10px;
         }
         
         .crystal-recipe-item {
@@ -1212,16 +1204,20 @@
             color: var(--crystal-blue);
         }
         
+        .cow-single-button {
+            margin-top: 8px;
+        }
+        
         .btn {
             border: none;
             border-radius: 18px;
             padding: 12px;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
             transition: all 0.15s;
             font-family: 'Inter', sans-serif;
@@ -1271,26 +1267,20 @@
         }
         
         .btn-open-ranch {
-            background: linear-gradient(145deg, var(--crystal-blue), #0099cc);
+            background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             color: white;
-            box-shadow: 0 4px 12px var(--blue-glow);
-            font-size: 14px;
-            padding: 12px 20px;
-            border-radius: 40px;
+            box-shadow: 0 4px 12px var(--pink-glow);
             width: auto;
-            min-width: 140px;
-            margin-left: 0;
-            margin-top: 8px;
-        }
-        
-        .btn-open-ranch i {
-            font-size: 14px;
+            padding: 10px 16px;
+            font-size: 13px;
+            border-radius: 40px;
+            margin-left: auto;
         }
         
         .action-buttons {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            align-items: center;
+            justify-content: flex-end;
         }
         
         .market-stats {
@@ -1432,12 +1422,7 @@
             width: 100%;
             padding: 10px 8px;
             border-radius: 20px;
-            background: linear-gradient(
-                145deg,
-                #3a1c71 0%,
-                #5f2c82 50%,
-                #a4508b 100%
-            );
+            background: linear-gradient(145deg, #3a1c71 0%, #5f2c82 50%, #a4508b 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 215, 0, 0.1) inset;
@@ -1553,13 +1538,8 @@
             font-size: 14px;
             font-weight: 700;
             color: white;
-            background: linear-gradient(
-                180deg,
-                #a8ff00 0%,
-                #45d100 100%
-            );
-            box-shadow: 0 6px 15px rgba(0, 255, 0, 0.5),
-                        inset 0 2px 4px rgba(255, 255, 255, 0.6);
+            background: linear-gradient(180deg, #a8ff00 0%, #45d100 100%);
+            box-shadow: 0 6px 15px rgba(0, 255, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.6);
             cursor: pointer;
             transition: 0.1s ease;
             line-height: 1;
@@ -2144,10 +2124,109 @@
             transform: scale(0.98);
         }
         
+        /* Ranch Styles */
+        .glass-stats {
+            background: var(--glass-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 14px;
+        }
+        
+        .active-badge {
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+        
+        .inactive-badge {
+            color: var(--danger-red);
+            font-weight: 600;
+        }
+        
+        .timer-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .timer-badge i {
+            color: var(--warning);
+            font-size: 10px;
+        }
+        
+        .time-remaining {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--warning);
+            font-weight: 600;
+        }
+        
+        .time-remaining i {
+            color: var(--warning);
+            font-size: 10px;
+        }
+        
+        .storage-upgrade-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 340px;
+            background: var(--glass-strong);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--crystal-blue);
+            border-radius: 24px;
+            padding: 20px;
+            z-index: 1002;
+            display: none;
+        }
+        
+        .storage-upgrade-modal.active {
+            display: block;
+            animation: fade-in 0.3s ease;
+        }
+        
+        .upgrade-info {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        
+        .upgrade-info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        
+        .upgrade-info-item span:last-child {
+            font-weight: 700;
+            color: var(--crystal-blue);
+        }
+        
+        .upgrade-cost {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--neon-green);
+        }
+        
         @media (max-width: 400px) {
             .status-value { font-size: 14px; }
             .machine-emoji { width: 50px; height: 50px; }
-            .machine-name { font-size: 14px; }
+            .machine-name { font-size: 16px; }
             .stat-number { font-size: 16px; }
             .market-stats { grid-template-columns: 1fr 1fr; gap: 6px; }
             .ton-amount { font-size: 13px; }
@@ -2454,7 +2533,8 @@
         
         <div id="sectionFarm" class="section active">
             <div class="farm-grid">
-                <div class="machine-card cow" id="cowCard" onclick="navigateToRanch()">
+                <!-- Cow Machine Card -->
+                <div class="machine-card cow" id="cowCard" onclick="window.goToRanch()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow">
                             <img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow Machine">
@@ -2479,11 +2559,15 @@
                             <div class="stat-label" data-i18n="farm.owned">Owned</div>
                             <div class="stat-number" id="cowsOwned">0</div>
                         </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Supply</div>
+                            <div class="stat-number" id="cowsSupply">1000</div>
+                        </div>
                     </div>
                     
                     <div class="progress-section">
                         <div class="progress-header">
-                            <span data-i18n="farm.supply">Supply</span>
+                            <span data-i18n="farm.supply">Global Supply</span>
                             <span id="cowProgressText">0/1000</span>
                         </div>
                         <div class="progress-bar">
@@ -2491,13 +2575,14 @@
                         </div>
                     </div>
                     
-                    <div class="action-buttons" style="justify-content: flex-start;">
-                        <button class="btn btn-open-ranch" onclick="event.stopPropagation(); navigateToRanch()">
+                    <div class="action-buttons">
+                        <button class="btn btn-open-ranch" onclick="event.stopPropagation(); window.goToRanch()">
                             <i class="fas fa-door-open"></i> OPEN RANCH
                         </button>
                     </div>
                 </div>
                 
+                <!-- Chicken Machine Card -->
                 <div class="machine-card chicken" id="chickenCard">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow">
@@ -2523,11 +2608,15 @@
                             <div class="stat-label" data-i18n="farm.owned">Owned</div>
                             <div class="stat-number" id="chickensOwned">0</div>
                         </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Supply</div>
+                            <div class="stat-number" id="chickensSupply">1000</div>
+                        </div>
                     </div>
                     
                     <div class="progress-section">
                         <div class="progress-header">
-                            <span data-i18n="farm.supply">Supply</span>
+                            <span data-i18n="farm.supply">Global Supply</span>
                             <span id="chickenProgressText">0/1000</span>
                         </div>
                         <div class="progress-bar">
@@ -2535,83 +2624,70 @@
                         </div>
                     </div>
                     
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" id="buyChickenBtn" disabled>
-                            <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
-                        </button>
-                        <button class="btn btn-hatch" id="hatchChickenBtn">
-                            <i class="fas fa-egg"></i> <span data-i18n="farm.hatch">Hatch</span>
-                        </button>
-                    </div>
-                    
                     <div class="locked-overlay" id="chickenLockedOverlay" style="display: flex;">
                         <div class="big-lock">🔒</div>
                         <div class="unlock-timer" id="chickenUnlockTimer"></div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="machine-card diamond" id="diamondCard">
-                <div class="machine-header">
-                    <div class="machine-emoji spin-slow">
-                        <img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal Engine">
-                    </div>
-                    <div class="machine-info">
-                        <div class="machine-name-row">
-                            <span class="machine-name" data-i18n="farm.crystal.name">Crystal Engine</span>
-                            <span class="machine-badge" id="diamondBadge">Locked</span>
+                
+                <!-- Crystal Engine Card -->
+                <div class="machine-card diamond" id="diamondCard">
+                    <div class="machine-header">
+                        <div class="machine-emoji spin-slow">
+                            <img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal Engine">
                         </div>
-                        <div class="machine-price">
-                            <i class="fas fa-bolt"></i> 20 TON
+                        <div class="machine-info">
+                            <div class="machine-name-row">
+                                <span class="machine-name" data-i18n="farm.crystal.name">Crystal Engine</span>
+                                <span class="machine-badge" id="diamondBadge">Locked</span>
+                            </div>
+                            <div class="machine-price">
+                                <i class="fas fa-bolt"></i> 20 TON
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="crystal-recipe">
-                    <div class="crystal-recipe-item">
-                        <span class="crystal-recipe-emoji">🥛</span>
-                        <span>20k</span>
+                    
+                    <div class="crystal-recipe">
+                        <div class="crystal-recipe-item">
+                            <span class="crystal-recipe-emoji">🥛</span>
+                            <span>20k</span>
+                        </div>
+                        <span class="crystal-recipe-plus">+</span>
+                        <div class="crystal-recipe-item">
+                            <span class="crystal-recipe-emoji">🥚</span>
+                            <span>20k</span>
+                        </div>
+                        <span class="crystal-recipe-equal">=</span>
+                        <div class="crystal-recipe-item">
+                            <span class="crystal-recipe-emoji">💎</span>
+                            <span>1</span>
+                        </div>
                     </div>
-                    <span class="crystal-recipe-plus">+</span>
-                    <div class="crystal-recipe-item">
-                        <span class="crystal-recipe-emoji">🥚</span>
-                        <span>20k</span>
+                    
+                    <div class="machine-stats">
+                        <div class="stat-item">
+                            <div class="stat-label" data-i18n="farm.owned">Owned</div>
+                            <div class="stat-number" id="diamondEnginesOwned">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label" data-i18n="farm.yield">Yield</div>
+                            <div class="stat-number">1 💎</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Supply</div>
+                            <div class="stat-number">500</div>
+                        </div>
                     </div>
-                    <span class="crystal-recipe-equal">=</span>
-                    <div class="crystal-recipe-item">
-                        <span class="crystal-recipe-emoji">💎</span>
-                        <span>1</span>
+                    
+                    <div class="locked-overlay" id="diamondLockedOverlay" style="display: flex;">
+                        <div class="big-lock">🔒</div>
+                        <div class="unlock-timer" id="diamondUnlockTimer"></div>
                     </div>
-                </div>
-                
-                <div style="display: flex; justify-content: space-between; margin-bottom: 14px; background: rgba(0,0,0,0.2); border-radius: 14px; padding: 8px;">
-                    <div style="text-align: center; flex: 1;">
-                        <div style="font-size: 10px; color: var(--text-muted);" data-i18n="farm.owned">Owned</div>
-                        <div style="font-size: 16px; font-weight: 700;" id="diamondEnginesOwned">0</div>
-                    </div>
-                    <div style="text-align: center; flex: 1;">
-                        <div style="font-size: 10px; color: var(--text-muted);" data-i18n="farm.yield">Yield</div>
-                        <div style="font-size: 16px; font-weight: 700;">1 💎</div>
-                    </div>
-                </div>
-                
-                <div class="action-buttons">
-                    <button class="btn btn-primary" id="buyDiamondBtn" disabled>
-                        <i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span>
-                    </button>
-                    <button class="btn btn-hatch" id="startDiamondBtn" disabled>
-                        <i class="fas fa-play"></i> <span data-i18n="farm.start">Start</span>
-                    </button>
-                </div>
-                
-                <div class="locked-overlay" id="diamondLockedOverlay" style="display: flex;">
-                    <div class="big-lock">🔒</div>
-                    <div class="unlock-timer" id="diamondUnlockTimer"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Ranch Page -->
+        <!-- Ranch Section -->
         <div id="sectionRanch" class="section">
             <!-- Ranch Overview Card -->
             <div class="ranch-card" style="background: linear-gradient(145deg, rgba(20,30,40,0.95), rgba(10,15,25,0.98)); border: 2px solid var(--primary-pink); border-radius: 24px; padding: 16px; margin-bottom: 16px; position: relative; overflow: hidden;">
@@ -2628,7 +2704,8 @@
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-                    <div style="background: rgba(20, 25, 35, 0.4); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 18px; padding: 14px;">
+                    <!-- Total Cows Card with Glass Stats -->
+                    <div class="glass-stats">
                         <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
                             <i class="fas fa-cow"></i> Total Cows
                         </div>
@@ -2636,17 +2713,18 @@
                             <span class="counter-number" id="ranchTotalCows" style="font-size: 32px; font-weight: 800;">0</span>
                         </div>
                         <div style="display: flex; gap: 16px; margin-top: 8px;">
-                            <div style="background: var(--glass-active); padding: 4px 10px; border-radius: 30px;"><span style="color: var(--neon-green);">🟢 Active:</span> <span id="ranchActiveCows" style="font-weight: 600;">0</span></div>
-                            <div style="background: var(--glass-inactive); padding: 4px 10px; border-radius: 30px;"><span style="color: var(--danger-red);">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight: 600;">0</span></div>
+                            <div><span class="active-badge">🟢 Active:</span> <span id="ranchActiveCows" style="font-weight: 600;">0</span></div>
+                            <div><span class="inactive-badge">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight: 600;">0</span></div>
                         </div>
                     </div>
                     
-                    <div style="background: rgba(20, 25, 35, 0.4); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 18px; padding: 14px;">
+                    <!-- Production Card - Simplified -->
+                    <div class="glass-stats">
                         <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
                             <i class="fas fa-chart-line"></i> Production
                         </div>
                         <div style="font-size: 32px; font-weight: 800; color: var(--crystal-blue);" id="ranchHourlyProduction">0</div>
-                        <div style="margin-top: 8px; font-size: 11px; color: var(--text-secondary);">🥛 Milk per hour</div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">🥛 per hour</div>
                     </div>
                 </div>
                 
@@ -2669,7 +2747,7 @@
                 </button>
             </div>
 
-            <!-- COW LEVELS Card -->
+            <!-- Cow Levels Card -->
             <div class="ranch-card" style="background: linear-gradient(145deg, rgba(30,20,40,0.95), rgba(20,10,30,0.98)); border: 2px solid var(--crystal-blue); border-radius: 24px; padding: 16px; margin-bottom: 16px;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                     <div style="width: 40px; height: 40px; background: linear-gradient(145deg, var(--crystal-blue), var(--neon-green)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -2679,7 +2757,7 @@
                 </div>
                 
                 <!-- Level 1 -->
-                <div class="level-card" style="background: rgba(255,255,255,0.03); border-radius: 20px; padding: 14px; margin-bottom: 12px; border-left: 4px solid #FFD700; transition: all 0.3s;">
+                <div class="level-card" style="background: rgba(255,255,255,0.03); border-radius: 20px; padding: 14px; margin-bottom: 12px; border-left: 4px solid #FFD700;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="width: 40px; height: 40px; background: rgba(255,215,0,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -2704,10 +2782,10 @@
                         <span style="font-weight: 700; color: var(--neon-green);" id="level1Active">0</span>
                     </div>
                     
-                    <!-- Activation Timer Display -->
-                    <div id="level1Timer" style="background: rgba(255, 215, 0, 0.1); border-radius: 20px; padding: 6px 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; gap: 6px;">
-                        <i class="fas fa-hourglass-half" style="color: var(--warning);"></i>
-                        <span id="level1TimerText">⏳ 24h 00m left</span>
+                    <!-- Time Remaining for Active Cows -->
+                    <div id="level1Timer" class="time-remaining" style="margin-bottom: 12px; display: none;">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level1TimeLeft">0h 0m</span> remaining
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -2745,9 +2823,10 @@
                         <span style="font-weight: 700; color: var(--neon-green);" id="level2Active">0</span>
                     </div>
                     
-                    <div id="level2Timer" style="background: rgba(255, 215, 0, 0.1); border-radius: 20px; padding: 6px 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; gap: 6px;">
-                        <i class="fas fa-hourglass-half" style="color: var(--warning);"></i>
-                        <span id="level2TimerText">⏳ 24h 00m left</span>
+                    <!-- Time Remaining for Active Cows -->
+                    <div id="level2Timer" class="time-remaining" style="margin-bottom: 12px; display: none;">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level2TimeLeft">0h 0m</span> remaining
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -2785,9 +2864,10 @@
                         <span style="font-weight: 700; color: var(--neon-green);" id="level3Active">0</span>
                     </div>
                     
-                    <div id="level3Timer" style="background: rgba(255, 215, 0, 0.1); border-radius: 20px; padding: 6px 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; gap: 6px;">
-                        <i class="fas fa-hourglass-half" style="color: var(--warning);"></i>
-                        <span id="level3TimerText">⏳ 24h 00m left</span>
+                    <!-- Time Remaining for Active Cows -->
+                    <div id="level3Timer" class="time-remaining" style="margin-bottom: 12px; display: none;">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level3TimeLeft">0h 0m</span> remaining
                     </div>
                     
                     <button class="btn btn-hatch" style="background: rgba(0,242,122,0.2); width: 100%;" onclick="openActivateModal(3)">
@@ -2796,7 +2876,7 @@
                 </div>
             </div>
 
-            <!-- MILK STORAGE Card -->
+            <!-- Milk Storage Card -->
             <div class="storage-card" style="background: linear-gradient(145deg, #1a2a3a, #0f1a24); border-radius: 24px; padding: 16px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
                 <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
                 
@@ -2842,7 +2922,7 @@
                     </button>
                 </div>
                 
-                <!-- Inactive badge if storage is full -->
+                <!-- Inactive Badge -->
                 <div id="storageFullBadge" style="display: none; position: absolute; top: 16px; right: 16px; background: var(--danger-red); color: white; padding: 6px 12px; border-radius: 30px; font-size: 11px; font-weight: 600; animation: pulse-glow 1.5s infinite;">
                     ⚠️ INACTIVE
                 </div>
@@ -3570,46 +3650,45 @@
         </div>
     </div>
 
-    <!-- Storage Upgrade Confirmation Modal -->
-    <div class="modal-overlay" id="upgradeStorageModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <i class="fas fa-archive" style="color: var(--crystal-blue);"></i> Upgrade Storage
-                </h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+    <!-- Storage Upgrade Modal -->
+    <div class="storage-upgrade-modal" id="storageUpgradeModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fas fa-arrow-up" style="color: var(--crystal-blue);"></i> Upgrade Milk Storage
+            </h3>
+            <i class="fas fa-times modal-close" onclick="document.getElementById('storageUpgradeModal').classList.remove('active')"></i>
+        </div>
+        
+        <div class="upgrade-info">
+            <div class="upgrade-info-item">
+                <span>Current Level:</span>
+                <span id="currentStorageLevel">1</span>
             </div>
-            
-            <div style="text-align: center; margin-bottom: 16px;">
-                <div style="font-size: 48px; margin-bottom: 8px;">📦 → 📦</div>
-                <div style="font-size: 16px; font-weight: 700;" id="upgradeStorageTitle">Level 1 → Level 2</div>
+            <div class="upgrade-info-item">
+                <span>Current Capacity:</span>
+                <span id="currentStorageCapacity">2,000 🥛</span>
             </div>
-            
-            <div style="background: rgba(0,0,0,0.3); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
-                <div class="confirm-row" style="margin-bottom: 8px;">
-                    <span class="confirm-label">Current Capacity:</span>
-                    <span class="confirm-value" id="currentStorageCapacity">2,000 🥛</span>
-                </div>
-                <div class="confirm-row" style="margin-bottom: 8px;">
-                    <span class="confirm-label">Next Level Capacity:</span>
-                    <span class="confirm-value" style="color: var(--neon-green);" id="nextStorageCapacity">5,000 🥛</span>
-                </div>
-                <div class="confirm-row" style="margin-bottom: 8px;">
-                    <span class="confirm-label">Upgrade Cost:</span>
-                    <span class="confirm-value" style="color: var(--neon-green);" id="storageUpgradeCost">2,000 🥛</span>
-                </div>
-                <div class="confirm-row">
-                    <span class="confirm-label">Your Milk Balance:</span>
-                    <span class="confirm-value" id="storageUserBalance">0 🥛</span>
-                </div>
+            <div class="upgrade-info-item">
+                <span>Next Level:</span>
+                <span id="nextStorageLevel">2</span>
             </div>
-            
-            <div class="confirm-buttons">
-                <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
-                <button class="btn btn-primary" id="confirmStorageUpgradeBtn" onclick="executeUpgradeStorage()">
-                    <i class="fas fa-check-circle"></i> Confirm Upgrade
-                </button>
+            <div class="upgrade-info-item">
+                <span>New Capacity:</span>
+                <span id="nextStorageCapacity">5,000 🥛</span>
             </div>
+            <div class="upgrade-info-item">
+                <span>Upgrade Cost:</span>
+                <span class="upgrade-cost" id="storageUpgradeCost">2,000 🥛</span>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-secondary" onclick="document.getElementById('storageUpgradeModal').classList.remove('active')" style="flex: 1;">
+                Cancel
+            </button>
+            <button class="btn btn-primary" id="confirmStorageUpgradeBtn" style="flex: 1; background: linear-gradient(145deg, var(--crystal-blue), #0099cc);" onclick="executeUpgradeStorage()">
+                <i class="fas fa-check-circle"></i> Upgrade
+            </button>
         </div>
     </div>
 
@@ -3628,14 +3707,14 @@
             MIN_ORDER_PRICE: 0.0002,
             ORDER_PENALTY_FEE: 0.2,
             
-            // Cow level system
+            // Cow Level System
             COW_LEVELS: {
-                1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000, activationDuration: 24 * 60 * 60 * 1000 }, // 24 hours in ms
-                2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000, activationDuration: 24 * 60 * 60 * 1000 },
-                3: { productionPerDay: 2500, activationCost: 1200, upgradeCost: 0, activationDuration: 24 * 60 * 60 * 1000 }
+                1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000, activationHours: 24 },
+                2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000, activationHours: 24 },
+                3: { productionPerDay: 2500, activationCost: 1200, upgradeCost: 0, activationHours: 24 }
             },
             
-            // Milk storage levels
+            // Milk Storage Levels
             STORAGE_LEVELS: {
                 1: { capacity: 2000, cost: 0 },
                 2: { capacity: 5000, cost: 2000 },
@@ -3970,7 +4049,7 @@
             }
         };
 
-        // Application state
+        // App variables
         let App = {
             userId: null,
             user: null,
@@ -3985,7 +4064,11 @@
             ranch: {
                 cowLevels: {1:0, 2:0, 3:0},
                 cowActive: {1:0, 2:0, 3:0},
-                cowActiveUntil: {},
+                cowActiveUntil: {
+                    1: null,
+                    2: null,
+                    3: null
+                },
                 milkStored: 0,
                 storageLevel: 1,
                 storageCapacity: 2000,
@@ -4017,7 +4100,7 @@
             
             currentTaskTab: 'partner',
             
-            // Activation and upgrade state
+            // Activation and upgrade variables
             currentActivateLevel: 1,
             currentUpgradeFromLevel: 1,
             
@@ -4111,15 +4194,11 @@
             return num.toLocaleString();
         }
 
-        function navigateToRanch() {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById('sectionRanch').classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            // Find and activate the Farm nav item (since Ranch is not in nav)
-            document.querySelector('[data-section="sectionFarm"]').classList.add('active');
-            
-            updateRanchUI();
+        function formatTimeRemaining(seconds) {
+            if (!seconds || seconds <= 0) return null;
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${hours}h ${minutes}m`;
         }
 
         function setLanguage(lang) {
@@ -4174,7 +4253,15 @@
             document.getElementById('infoPrizeList').innerHTML = prizeHtml;
         }
 
-        // Initialize application
+        // Go to Ranch
+        window.goToRanch = function() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('sectionRanch').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            updateRanchUI();
+        };
+
+        // Initialize App
         async function initApp() {
             console.log('Crystal Ranch · Initializing...');
             
@@ -4194,7 +4281,6 @@
             console.log('Crystal Ranch · Ready');
         }
 
-        // Telegram setup
         async function setupTelegram() {
             return new Promise((resolve) => {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -4416,6 +4502,7 @@
                     winners: {}
                 };
                 
+                // Update ranch data if available
                 if (state.ranch) {
                     App.ranch = state.ranch;
                 }
@@ -4429,6 +4516,7 @@
                 updateTasksUI();
                 updateLeaderboardUI();
                 updateRanchUI();
+                updateCowTimers();
                 
                 animateTonBalance();
                 
@@ -4446,6 +4534,30 @@
             }
         }
 
+        function updateCowTimers() {
+            if (!App.ranch || !App.ranch.cowActiveUntil) return;
+            
+            const now = Date.now() / 1000; // Current time in seconds
+            
+            for (let level = 1; level <= 3; level++) {
+                const until = App.ranch.cowActiveUntil[level];
+                const timerElement = document.getElementById(`level${level}Timer`);
+                const timeElement = document.getElementById(`level${level}TimeLeft`);
+                
+                if (until && until > now) {
+                    const secondsLeft = until - now;
+                    if (secondsLeft > 0) {
+                        timerElement.style.display = 'flex';
+                        timeElement.innerHTML = formatTimeRemaining(secondsLeft);
+                    } else {
+                        timerElement.style.display = 'none';
+                    }
+                } else {
+                    timerElement.style.display = 'none';
+                }
+            }
+        }
+
         function updateRanchUI() {
             if (!App.ranch) return;
             
@@ -4460,7 +4572,7 @@
             document.getElementById('ranchActiveCows').innerHTML = activeCows;
             document.getElementById('ranchInactiveCows').innerHTML = inactiveCows;
             
-            // Production - show only milk per hour
+            // Production - Milk only
             const hourlyProduction = ranch.hourlyProduction || 0;
             document.getElementById('ranchHourlyProduction').innerHTML = Math.round(hourlyProduction);
             
@@ -4478,9 +4590,6 @@
             document.getElementById('level1Active').innerHTML = ranch.cowActive[1] || 0;
             document.getElementById('level2Active').innerHTML = ranch.cowActive[2] || 0;
             document.getElementById('level3Active').innerHTML = ranch.cowActive[3] || 0;
-            
-            // Update activation timers
-            updateActivationTimers();
             
             // Milk storage
             const milkStored = ranch.milkStored || 0;
@@ -4501,31 +4610,8 @@
             } else {
                 storageFullBadge.style.display = 'none';
             }
-        }
-
-        function updateActivationTimers() {
-            const now = Date.now();
             
-            for (let level = 1; level <= 3; level++) {
-                const activeUntil = App.ranch.cowActiveUntil[level] || 0;
-                const timerElement = document.getElementById(`level${level}TimerText`);
-                const timerContainer = document.getElementById(`level${level}Timer`);
-                
-                if (timerElement && timerContainer) {
-                    if (activeUntil > now && App.ranch.cowActive[level] > 0) {
-                        // Calculate time remaining
-                        const timeRemaining = activeUntil - now;
-                        const hours = Math.floor(timeRemaining / (60 * 60 * 1000));
-                        const minutes = Math.floor((timeRemaining % (60 * 60 * 1000)) / (60 * 1000));
-                        
-                        timerElement.innerHTML = `⏳ ${hours}h ${minutes}m left`;
-                        timerContainer.style.display = 'flex';
-                    } else {
-                        timerElement.innerHTML = '❌ Inactive';
-                        timerContainer.style.display = 'flex';
-                    }
-                }
-            }
+            updateCowTimers();
         }
 
         function updateLeaderboardUI() {
@@ -4680,7 +4766,6 @@
             }
         }
 
-        // Market UI update
         async function updateMarketUI(page = 1, reset = true) {
             if (!App.currentMarketResource) return;
             
@@ -5182,6 +5267,7 @@
             updateProductionTimer();
             
             document.getElementById('cowsOwned').innerHTML = App.user.cows_owned || 0;
+            document.getElementById('cowsSupply').innerHTML = App.global.cows_remaining || 0;
             const cowProgress = App.global.cows_progress || 0;
             document.getElementById('cowProgressText').innerHTML = `${App.global.cows_sold || 0}/${App.global.cows_cap}`;
             document.getElementById('cowProgressFill').style.width = `${cowProgress}%`;
@@ -5202,6 +5288,7 @@
             }
             
             document.getElementById('chickensOwned').innerHTML = App.user.chickens_owned || 0;
+            document.getElementById('chickensSupply').innerHTML = App.global.chickens_remaining || 0;
             const chickenProgress = App.global.chickens_progress || 0;
             document.getElementById('chickenProgressText').innerHTML = `${App.global.chickens_sold || 0}/${App.global.chickens_cap}`;
             document.getElementById('chickenProgressFill').style.width = `${chickenProgress}%`;
@@ -5961,6 +6048,7 @@
             document.querySelectorAll('.modal-overlay').forEach(modal => {
                 modal.classList.remove('active');
             });
+            document.getElementById('storageUpgradeModal').classList.remove('active');
             App.pendingOrder = null;
             App.pendingTask = null;
         };
@@ -5976,7 +6064,7 @@
             
             document.getElementById('activateLevelEmoji').innerHTML = emojis[level];
             document.getElementById('activateLevelTitle').innerHTML = titles[level];
-            document.getElementById('activateLevelInfo').innerHTML = `${levelConfig.productionPerDay} Milk/day · ${levelConfig.activationCost}🥛 activation`;
+            document.getElementById('activateLevelInfo').innerHTML = `${levelConfig.productionPerDay} Milk/day · ${levelConfig.activationCost}🥛 activation · ${levelConfig.activationHours}h duration`;
             
             const available = App.ranch.cowLevels[level] || 0;
             document.getElementById('activateAvailable').innerHTML = available;
@@ -6166,6 +6254,46 @@
             }
             
             const nextLevel = currentLevel + 1;
+            const currentCapacity = CONFIG.STORAGE_LEVELS[currentLevel].capacity;
+            const nextCapacity = CONFIG.STORAGE_LEVELS[nextLevel].capacity;
+            const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel].cost;
+            
+            document.getElementById('currentStorageLevel').innerHTML = currentLevel;
+            document.getElementById('currentStorageCapacity').innerHTML = formatNumber(currentCapacity) + ' 🥛';
+            document.getElementById('nextStorageLevel').innerHTML = nextLevel;
+            document.getElementById('nextStorageCapacity').innerHTML = formatNumber(nextCapacity) + ' 🥛';
+            document.getElementById('storageUpgradeCost').innerHTML = formatNumber(upgradeCost) + ' 🥛';
+            
+            const milkBalance = App.user?.milk || 0;
+            const confirmBtn = document.getElementById('confirmStorageUpgradeBtn');
+            
+            if (milkBalance < upgradeCost) {
+                confirmBtn.disabled = true;
+                document.getElementById('storageUpgradeCost').style.color = 'var(--danger-red)';
+            } else {
+                confirmBtn.disabled = false;
+                document.getElementById('storageUpgradeCost').style.color = 'var(--neon-green)';
+            }
+            
+            document.getElementById('storageUpgradeModal').classList.add('active');
+        };
+
+        window.executeUpgradeStorage = async function() {
+            const buttonId = 'confirmStorageUpgradeBtn';
+            const button = document.getElementById('confirmStorageUpgradeBtn');
+            
+            if (!validateAndCooldown(buttonId, button)) {
+                return;
+            }
+            
+            const currentLevel = App.ranch.storageLevel || 1;
+            
+            if (currentLevel >= 10) {
+                showNotification('Maximum level reached', 'info');
+                return;
+            }
+            
+            const nextLevel = currentLevel + 1;
             const upgradeCost = CONFIG.STORAGE_LEVELS[nextLevel]?.cost || 0;
             
             if ((App.user?.milk || 0) < upgradeCost) {
@@ -6175,25 +6303,6 @@
                     `Insufficient milk. Need ${formatNumber(upgradeCost)} 🥛`,
                     'error'
                 );
-                return;
-            }
-            
-            const modal = document.getElementById('upgradeStorageModal');
-            
-            document.getElementById('upgradeStorageTitle').innerHTML = `Level ${currentLevel} → Level ${nextLevel}`;
-            document.getElementById('currentStorageCapacity').innerHTML = formatNumber(CONFIG.STORAGE_LEVELS[currentLevel].capacity) + ' 🥛';
-            document.getElementById('nextStorageCapacity').innerHTML = formatNumber(CONFIG.STORAGE_LEVELS[nextLevel].capacity) + ' 🥛';
-            document.getElementById('storageUpgradeCost').innerHTML = formatNumber(upgradeCost) + ' 🥛';
-            document.getElementById('storageUserBalance').innerHTML = formatNumber(App.user?.milk || 0) + ' 🥛';
-            
-            modal.classList.add('active');
-        };
-
-        window.executeUpgradeStorage = async function() {
-            const buttonId = 'confirmStorageUpgradeBtn';
-            const button = document.getElementById('confirmStorageUpgradeBtn');
-            
-            if (!validateAndCooldown(buttonId, button)) {
                 return;
             }
             
@@ -6393,9 +6502,7 @@
                 } else {
                     loadGameState();
                 }
-                
-                // Update activation timers every minute
-                updateActivationTimers();
+                updateCowTimers();
             }, 1000);
             
             if (App.marketInterval) clearInterval(App.marketInterval);
@@ -6551,6 +6658,7 @@
             document.getElementById('submitTaskBtn').addEventListener('click', window.createTask);
             document.getElementById('taskTarget').addEventListener('input', calculateTaskPrice);
             
+            // Activation buttons
             document.querySelectorAll('[data-activate]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const value = this.dataset.activate;
@@ -6633,6 +6741,7 @@
             document.getElementById('sellTotalPrice').addEventListener('input', updateSellDetails);
         }
 
+        // Start App
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>

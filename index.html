@@ -82,37 +82,437 @@
         .winners-title{font-size:14px;font-weight:600;color:#FFD700;margin-bottom:12px;display:flex;align-items:center;gap:6px}.winners-grid{display:flex;flex-direction:column;gap:8px}
         .winner-item{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.05);border-radius:14px;padding:8px 12px;font-size:12px}
         .winner-rank{font-weight:700;color:#FFD700;margin-right:10px}.winner-name{flex:1;color:var(--text-secondary)}.winner-prize{color:#FFD700;font-weight:600}
-        /* تحديث هيكل صفحة المزرعة: ثلاث ماكينات بنفس الحجم */
-        .farm-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:10px}
-        .machine-card{width:100%;background:var(--glass-strong);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:24px;padding:16px;position:relative;overflow:hidden;transition:transform .2s;animation:fade-in .5s ease}
-        .machine-card:hover{transform:scale(1.01)}
-        .machine-card.cow{background:linear-gradient(145deg,rgba(255,92,168,.15),var(--glass-strong));border-left:4px solid var(--primary-pink)}
-        .machine-card.chicken{background:linear-gradient(145deg,rgba(0,242,122,.1),var(--glass-strong));border-left:4px solid var(--neon-green)}
-        .machine-card.diamond{background:linear-gradient(145deg,rgba(0,212,255,.1),var(--glass-strong));border-left:4px solid var(--crystal-blue)}
-        .machine-card.locked{position:relative}.locked-overlay{position:absolute;inset:0;backdrop-filter:blur(6px);background:rgba(0,0,0,.6);display:flex;flex-direction:column;justify-content:center;align-items:center;border-radius:20px;z-index:5;text-align:center;padding:10px}
-        .big-lock{font-size:36px;animation:pulse-lock 1.5s infinite}.unlock-timer{font-size:11px;color:var(--text-secondary);margin-top:8px;background:rgba(0,0,0,.3);padding:4px 8px;border-radius:20px}
-        .machine-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}.machine-emoji{width:48px;height:48px;background:rgba(255,255,255,.05);border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-        .machine-emoji img{width:100%;height:100%;object-fit:cover;border-radius:12px}.machine-info{flex:1}.machine-name-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-        .machine-name{font-size:16px;font-weight:700}.machine-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.2px}
-        .badge-available{background:rgba(0,242,122,.15);color:var(--neon-green);border:1px solid rgba(0,242,122,.3)}.badge-owned{background:rgba(255,92,168,.15);color:var(--primary-pink);border:1px solid rgba(255,92,168,.3)}
-        .badge-soldout{background:rgba(255,75,92,.15);color:var(--danger-red);border:1px solid rgba(255,75,92,.3)}.badge-locked{background:rgba(255,255,255,.08);color:var(--text-secondary);border:1px solid rgba(255,255,255,.1)}
-        .machine-price{display:flex;align-items:center;gap:3px;font-size:12px;color:var(--text-secondary)}.machine-price i{color:var(--crystal-blue);font-size:11px}
-        .machine-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:rgba(0,0,0,.2);border-radius:16px;padding:12px;margin-bottom:12px}
-        .stat-item{text-align:center}.stat-label{font-size:10px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase}.stat-number{font-size:18px;font-weight:700}
-        .stat-unit{font-size:10px;color:var(--text-secondary);margin-left:2px}.progress-section{margin-bottom:12px}.progress-header{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px}
-        .progress-bar{height:6px;background:rgba(0,0,0,.3);border-radius:3px;overflow:hidden}.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary-pink),var(--crystal-blue));border-radius:3px;transition:width .3s ease}
-        .crystal-recipe{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin:12px 0;background:rgba(0,0,0,.2);border-radius:16px;padding:10px}
-        .crystal-recipe-item{display:flex;flex-direction:column;align-items:center;gap:1px}.crystal-recipe-emoji{font-size:20px}.crystal-recipe-plus{font-size:16px;color:var(--text-muted)}.crystal-recipe-equal{font-size:18px;color:var(--crystal-blue)}
-        .btn{border:none;border-radius:14px;padding:10px;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;width:100%}
-        .btn:active{transform:scale(.96)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.btn-primary{background:linear-gradient(145deg,var(--primary-pink),#D94A8F);color:#fff;box-shadow:0 4px 12px var(--pink-glow);animation:pulse-glow 3s infinite}
-        .btn-secondary{background:rgba(255,255,255,.05);border:1px solid var(--glass-border);color:var(--text-primary)}.btn-hatch{background:rgba(0,242,122,.15);border:1px solid rgba(0,242,122,.3);color:var(--neon-green);font-size:11px}
-        .btn-buy{background:rgba(0,242,122,.15);border:1px solid rgba(0,242,122,.3);color:var(--neon-green)}.btn-sell{background:rgba(255,75,92,.15);border:1px solid rgba(255,75,92,.3);color:var(--danger-red)}
-        /* زر Open Ranch في أسفل يسار كارت البقرة */
-        .ranch-button-container{display:flex;justify-content:flex-end;margin-top:12px}
-        .btn-ranch{background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.3);color:var(--crystal-blue);width:auto;padding:8px 16px;border-radius:30px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s}
-        .btn-ranch:hover{background:rgba(0,212,255,.25)}.btn-ranch i{margin-right:4px}
-        .action-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}.market-stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;font-size:10px;margin-bottom:10px;background:var(--glass-bg);border-radius:16px;padding:8px;border:1px solid var(--glass-border)}
-        .market-stat-item{text-align:center}.market-stat-label{color:var(--text-muted);margin-bottom:2px;font-size:8px}.market-stat-value{font-weight:700;color:var(--primary-pink);font-size:11px}
+        
+        /* تعديلات حجم الماكينات - كلها بنفس حجم ماكينة الكريستال */
+        .farm-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .machine-card {
+            width: 100%;
+            background: var(--glass-strong);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .2s;
+            animation: fade-in .5s ease;
+        }
+        
+        .machine-card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 20px rgba(255,92,168,.2);
+        }
+        
+        .machine-card.cow {
+            border-left: 4px solid var(--primary-pink);
+            cursor: pointer;
+        }
+        
+        .machine-card.chicken {
+            border-left: 4px solid var(--neon-green);
+        }
+        
+        .machine-card.diamond {
+            border-left: 4px solid var(--crystal-blue);
+            background: linear-gradient(145deg, rgba(0,212,255,.1), var(--glass-strong));
+        }
+        
+        .machine-card.locked {
+            position: relative;
+        }
+        
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(6px);
+            background: rgba(0,0,0,.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            z-index: 5;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .big-lock {
+            font-size: 36px;
+            animation: pulse-lock 1.5s infinite;
+        }
+        
+        .unlock-timer {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            background: rgba(0,0,0,.3);
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        
+        .machine-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .machine-emoji {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,.05);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .machine-emoji img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .machine-info {
+            flex: 1;
+        }
+        
+        .machine-name-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .machine-name {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .machine-badge {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: .2px;
+        }
+        
+        .badge-available {
+            background: rgba(0,242,122,.15);
+            color: var(--neon-green);
+            border: 1px solid rgba(0,242,122,.3);
+        }
+        
+        .badge-owned {
+            background: rgba(255,92,168,.15);
+            color: var(--primary-pink);
+            border: 1px solid rgba(255,92,168,.3);
+        }
+        
+        .badge-soldout {
+            background: rgba(255,75,92,.15);
+            color: var(--danger-red);
+            border: 1px solid rgba(255,75,92,.3);
+        }
+        
+        .badge-locked {
+            background: rgba(255,255,255,.08);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255,255,255,.1);
+        }
+        
+        .machine-price {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        
+        .machine-price i {
+            color: var(--crystal-blue);
+            font-size: 10px;
+        }
+        
+        .machine-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: rgba(0,0,0,.2);
+            border-radius: 16px;
+            padding: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+        
+        .stat-number {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .stat-unit {
+            font-size: 9px;
+            color: var(--text-secondary);
+            margin-left: 2px;
+        }
+        
+        .progress-section {
+            margin-bottom: 12px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            margin-bottom: 3px;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: rgba(0,0,0,.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-pink), var(--crystal-blue));
+            border-radius: 3px;
+            transition: width .3s ease;
+        }
+        
+        .crystal-recipe {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            margin: 12px 0;
+            background: rgba(0,0,0,.2);
+            border-radius: 14px;
+            padding: 10px;
+        }
+        
+        .crystal-recipe-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+        
+        .crystal-recipe-emoji {
+            font-size: 20px;
+        }
+        
+        .crystal-recipe-plus {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        .crystal-recipe-equal {
+            font-size: 16px;
+            color: var(--crystal-blue);
+        }
+        
+        .btn {
+            border: none;
+            border-radius: 14px;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: .15s;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+        }
+        
+        .btn:active {
+            transform: scale(.96);
+        }
+        
+        .btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
+            color: #fff;
+            box-shadow: 0 4px 12px var(--pink-glow);
+            animation: pulse-glow 3s infinite;
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+        
+        .btn-hatch {
+            background: rgba(0,242,122,.15);
+            border: 1px solid rgba(0,242,122,.3);
+            color: var(--neon-green);
+            font-size: 11px;
+        }
+        
+        .btn-buy {
+            background: rgba(0,242,122,.15);
+            border: 1px solid rgba(0,242,122,.3);
+            color: var(--neon-green);
+        }
+        
+        .btn-sell {
+            background: rgba(255,75,92,.15);
+            border: 1px solid rgba(255,75,92,.3);
+            color: var(--danger-red);
+        }
+        
+        /* زر Open Ranch - أسفل يسار الكارت */
+        .open-ranch-btn {
+            background: linear-gradient(145deg, var(--crystal-blue), #0099cc);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(0,212,255,.3);
+        }
+        
+        .open-ranch-btn:active {
+            transform: scale(.95);
+        }
+        
+        .open-ranch-btn i {
+            font-size: 11px;
+        }
+        
+        /* تعديلات RANCH OVERVIEW - زجاج شفاف */
+        .stats-glass {
+            background: rgba(255,255,255,.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 14px;
+        }
+        
+        .active-stat {
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+        
+        .inactive-stat {
+            color: var(--danger-red);
+            font-weight: 600;
+        }
+        
+        /* تعديلات COW LEVELS - مؤقت التفعيل */
+        .activation-timer {
+            background: rgba(255,255,255,.05);
+            border-radius: 20px;
+            padding: 6px 10px;
+            font-size: 10px;
+            color: var(--warning-yellow);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+        
+        .activation-timer i {
+            font-size: 10px;
+            color: var(--warning-yellow);
+        }
+        
+        .timer-expired {
+            color: var(--danger-red);
+        }
+        
+        .timer-expired i {
+            color: var(--danger-red);
+        }
+        
+        /* تعديلات زر الترقية - يفتح نافذة */
+        .upgrade-info-btn {
+            background: linear-gradient(145deg, var(--crystal-blue), #0099cc);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .upgrade-info-btn:active {
+            transform: scale(.95);
+        }
+        
+        .upgrade-info-btn i {
+            font-size: 10px;
+        }
+        
+        .market-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 5px;
+            font-size: 10px;
+            margin-bottom: 10px;
+            background: var(--glass-bg);
+            border-radius: 16px;
+            padding: 8px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .market-stat-item {
+            text-align: center;
+        }
+        
+        .market-stat-label {
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            font-size: 8px;
+        }
+        
+        .market-stat-value {
+            font-weight: 700;
+            color: var(--primary-pink);
+            font-size: 11px;
+        }
+        
         .market-tabs{display:flex;background:rgba(0,0,0,.3);border-radius:40px;padding:4px;margin-bottom:12px}.market-tab{flex:1;text-align:center;padding:6px;border-radius:40px;font-weight:600;font-size:11px;color:var(--text-secondary);cursor:pointer;transition:.2s}
         .market-tab.active{background:var(--glass-strong);color:var(--primary-pink);border:1px solid var(--glass-border)}.resource-switch{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px}
         .resource-option{display:flex;align-items:center;gap:4px;padding:6px 12px;background:rgba(255,255,255,.05);border-radius:30px;border:1px solid transparent;cursor:pointer;font-weight:500;font-size:11px;transition:.2s}
@@ -131,23 +531,6 @@
         .unit-price{font-size:9px;opacity:.8;margin-bottom:8px;color:#eee}.buy-btn{width:100%;height:38px;padding:0 10px;border-radius:16px;border:2px solid rgba(255,255,255,.5);font-size:14px;font-weight:700;color:#fff;background:linear-gradient(180deg,#a8ff00,#45d100);box-shadow:0 6px 15px rgba(0,255,0,.5),inset 0 2px 4px rgba(255,255,255,.6);cursor:pointer;transition:.1s ease;line-height:1;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;justify-content:center}
         .buy-btn:hover{transform:scale(1.02);background:linear-gradient(180deg,#b8ff1a,#55e10a)}.buy-btn:active{transform:scale(.98)}
         .best-price-badge{background:rgba(255,92,168,.2);color:var(--primary-pink);font-size:10px;padding:3px 8px;border-radius:30px;display:inline-flex;align-items:center;gap:3px;border:1px solid rgba(255,92,168,.3)}.best-price-badge i{animation:pulse-glow 1.5s infinite}
-        /* تحسينات صفحة Ranch */
-        .ranch-overview{background:linear-gradient(145deg,rgba(20,30,40,.95),rgba(10,15,25,.98));border:2px solid var(--primary-pink);border-radius:24px;padding:16px;margin-bottom:16px;position:relative;overflow:hidden}
-        .ranch-overview::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary-pink),var(--crystal-blue),var(--neon-green))}
-        .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-        .stat-card{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border-radius:18px;padding:16px;border:1px solid rgba(255,255,255,.08)}
-        .stat-card-title{font-size:11px;color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:4px}
-        .stat-card-value{font-size:28px;font-weight:800;background:linear-gradient(145deg,var(--crystal-blue),var(--primary-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
-        .stat-card-sub{display:flex;gap:16px;margin-top:8px}
-        .stat-badge{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:30px;font-size:11px;font-weight:600}
-        .badge-active{background:rgba(0,242,122,.15);color:var(--neon-green);border:1px solid rgba(0,242,122,.3)}
-        .badge-inactive{background:rgba(255,75,92,.15);color:var(--danger-red);border:1px solid rgba(255,75,92,.3)}
-        .production-card{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:18px;padding:16px;margin-bottom:16px;text-align:center}
-        .production-label{font-size:11px;color:var(--text-secondary);margin-bottom:4px}
-        .production-value{font-size:36px;font-weight:800;color:var(--crystal-blue);line-height:1.2;margin-bottom:2px}
-        .production-unit{font-size:12px;color:var(--text-muted);margin-left:4px}
-        .expiration-timer{background:rgba(0,0,0,.3);border-radius:30px;padding:6px 12px;display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--warning);margin-top:8px}
-        .expiration-timer i{color:var(--warning);font-size:10px}
         .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;visibility:hidden;transition:.2s}
         .modal-overlay.active{opacity:1;visibility:visible}.modal-content{background:var(--glass-strong);border:1px solid var(--glass-border);border-radius:24px;padding:18px;width:90%;max-width:360px;animation:fade-in .3s ease}
         .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-title{font-size:16px;font-weight:700;display:flex;align-items:center;gap:6px}
@@ -170,6 +553,8 @@
         .notification{background:var(--glass-strong);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-left:4px solid var(--neon-green);border-radius:12px;padding:12px;color:#fff;font-size:12px;box-shadow:0 8px 20px rgba(0,0,0,.5);animation:slide-in .3s ease;transform:translateX(0);opacity:1;transition:.3s}
         .notification.success{border-left-color:var(--neon-green)}.notification.error{border-left-color:var(--danger-red)}.notification.warning{border-left-color:var(--warning)}.notification.info{border-left-color:var(--crystal-blue)}
         .notification.fade-out{opacity:0;transform:translateX(100px)}@keyframes slide-in{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}
+        
+        /* تحديث شريط التنقل - إزالة Ranch */
         .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--glass-strong);backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);display:flex;justify-content:space-around;padding:8px 4px;z-index:100}
         .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--text-secondary);cursor:pointer;transition:.2s;padding:5px 6px;border-radius:14px}
         .nav-item.active{color:var(--primary-pink);background:rgba(255,92,168,.1)}.nav-icon{font-size:16px;transition:transform .2s}.nav-item.active .nav-icon{transform:scale(1.1)}
@@ -187,14 +572,7 @@
         .info-section{margin-bottom:15px}.info-section h4{font-size:14px;color:var(--crystal-blue);margin-bottom:5px}.info-section p{font-size:12px;color:var(--text-secondary);line-height:1.5}
         .info-prize{background:rgba(255,215,0,.15);border-radius:12px;padding:10px;margin:10px 0}.info-prize-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
         .info-close{width:100%;padding:10px;background:linear-gradient(145deg,#FFD700,#DAA520);border:none;border-radius:30px;color:#000;font-weight:700;font-size:14px;cursor:pointer;margin-top:10px}
-        .info-close:active{transform:scale(.98)}.upgrade-preview{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);border-radius:16px;padding:16px;margin-bottom:16px;text-align:center}
-        .upgrade-preview-title{font-size:12px;color:var(--text-secondary);margin-bottom:8px}
-        .upgrade-preview-value{font-size:24px;font-weight:800;color:var(--crystal-blue);margin-bottom:4px}
-        .upgrade-preview-desc{font-size:11px;color:var(--text-muted);margin-bottom:8px}
-        .upgrade-cost{background:rgba(0,0,0,.3);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-        .cost-label{font-size:12px;color:var(--text-secondary)}
-        .cost-value{font-size:18px;font-weight:700;color:var(--neon-green);display:flex;align-items:center;gap:4px}
-        .cost-value i{color:var(--neon-green)}
+        .info-close:active{transform:scale(.98)}@media(max-width:400px){.status-value{font-size:14px}.machine-emoji{width:40px;height:40px}.machine-name{font-size:13px}.stat-number{font-size:14px}.market-stats{grid-template-columns:1fr 1fr;gap:6px}.ton-amount{font-size:13px}.mining-timer{font-size:11px;padding:4px 8px}.leaderboard-title{font-size:20px}.counter-main{font-size:24px}.prize-amount{font-size:18px}.position-row{flex-wrap:wrap;gap:8px}.position-label{min-width:60px;font-size:12px}.position-value{font-size:16px;padding:2px 8px;min-width:50px}.stat-box{padding:2px 6px}.stat-box-label{font-size:9px}.stat-box-value{font-size:12px}.points-box{font-size:14px;padding:4px 8px}.prize-pill{font-size:14px;padding:4px 8px}.rank-badge{width:36px;height:36px;font-size:16px}}
     </style>
 </head>
 <body>
@@ -237,7 +615,6 @@
     </div>
 
     <div class="container" id="appContainer">
-        <!-- صفحة Leaderboard -->
         <div id="sectionLeaderboard" class="section">
             <div class="leaderboard-header">
                 <div class="leaderboard-title"><i class="fas fa-trophy"></i> LEADERBOARD <span class="leaderboard-help-icon" onclick="document.getElementById('leaderboardInfoModal').classList.add('active');updateLeaderboardInfoLanguage()"><i class="fas fa-question"></i></span></div>
@@ -251,11 +628,10 @@
             <div class="winners-section" id="winnersSection" style="display:none"><div class="winners-title"><i class="fas fa-crown"></i> Competition Winners</div><div class="winners-grid" id="winnersList"></div></div>
         </div>
 
-        <!-- صفحة Farm (الصفحة الرئيسية) - تم تعديلها: ثلاث ماكينات بنفس الحجم، وإزالة Ranch من الشريط السفلي -->
         <div id="sectionFarm" class="section active">
             <div class="farm-grid">
-                <!-- ماكينة البقرة - مع زر Open Ranch في الأسفل -->
-                <div class="machine-card cow" id="cowCard" style="cursor:pointer;" onclick="window.location.href='#sectionRanch'; document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById('sectionRanch').classList.add('active'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));">
+                <!-- ماكينة البقرة - بحجم الكريستال وزر Open Ranch -->
+                <div class="machine-card cow" id="cowCard" onclick="openRanchPage()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
                         <div class="machine-info">
@@ -274,13 +650,13 @@
                         <div class="progress-header"><span data-i18n="farm.supply">Supply</span><span id="cowProgressText">0/1000</span></div>
                         <div class="progress-bar"><div class="progress-fill" id="cowProgressFill" style="width:0%"></div></div>
                     </div>
-                    <!-- زر Open Ranch فقط - في أسفل الكارت -->
-                    <div class="ranch-button-container" onclick="event.stopPropagation();">
-                        <button class="btn-ranch" onclick="event.stopPropagation(); document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById('sectionRanch').classList.add('active'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));"><i class="fas fa-door-open"></i> Open Ranch</button>
-                    </div>
+                    <!-- زر Open Ranch فقط - أسفل يسار الكارت -->
+                    <button class="open-ranch-btn" onclick="event.stopPropagation(); openRanchPage()">
+                        <i class="fas fa-arrow-right"></i> Open Ranch
+                    </button>
                 </div>
-
-                <!-- ماكينة الدجاج -->
+                
+                <!-- ماكينة الدجاج - بحجم الكريستال -->
                 <div class="machine-card chicken" id="chickenCard">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken"></div>
@@ -304,12 +680,9 @@
                         <button class="btn btn-primary" id="buyChickenBtn" disabled><i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span></button>
                         <button class="btn btn-hatch" id="hatchChickenBtn"><i class="fas fa-egg"></i> <span data-i18n="farm.hatch">Hatch</span></button>
                     </div>
-                    <div class="locked-overlay" id="chickenLockedOverlay" style="display:flex">
-                        <div class="big-lock">🔒</div>
-                        <div class="unlock-timer" id="chickenUnlockTimer"></div>
-                    </div>
+                    <div class="locked-overlay" id="chickenLockedOverlay" style="display:flex"><div class="big-lock">🔒</div><div class="unlock-timer" id="chickenUnlockTimer"></div></div>
                 </div>
-
+                
                 <!-- ماكينة الكريستال -->
                 <div class="machine-card diamond" id="diamondCard">
                     <div class="machine-header">
@@ -337,41 +710,42 @@
                         <button class="btn btn-primary" id="buyDiamondBtn" disabled><i class="fas fa-lock"></i> <span data-i18n="farm.buy">Buy</span></button>
                         <button class="btn btn-hatch" id="startDiamondBtn" disabled><i class="fas fa-play"></i> <span data-i18n="farm.start">Start</span></button>
                     </div>
-                    <div class="locked-overlay" id="diamondLockedOverlay" style="display:flex">
-                        <div class="big-lock">🔒</div>
-                        <div class="unlock-timer" id="diamondUnlockTimer"></div>
-                    </div>
+                    <div class="locked-overlay" id="diamondLockedOverlay" style="display:flex"><div class="big-lock">🔒</div><div class="unlock-timer" id="diamondUnlockTimer"></div></div>
                 </div>
             </div>
         </div>
 
-        <!-- صفحة Ranch - تم تعديلها وإصلاح المشاكل -->
+        <!-- صفحة Ranch (تم إزالتها من شريط التنقل) -->
         <div id="sectionRanch" class="section">
-            <!-- RANCH OVERVIEW - تم إصلاح حساب total cows و active/inactive -->
-            <div class="ranch-overview">
+            <!-- RANCH OVERVIEW مع التعديلات -->
+            <div class="ranch-card" style="background:linear-gradient(145deg,rgba(20,30,40,.95),rgba(10,15,25,.98));border:2px solid var(--primary-pink);border-radius:24px;padding:16px;margin-bottom:16px;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary-pink),var(--crystal-blue),var(--neon-green))"></div>
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
                     <div style="width:50px;height:50px;background:linear-gradient(145deg,var(--primary-pink),var(--crystal-blue));border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px var(--pink-glow)"><i class="fas fa-cow" style="color:#fff;font-size:28px"></i></div>
                     <div><h2 style="font-size:24px;font-weight:800;background:linear-gradient(145deg,#fff,var(--primary-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent">RANCH OVERVIEW</h2><p style="font-size:11px;color:var(--text-muted)">Manage your cows & production</p></div>
                 </div>
                 
-                <div class="stats-grid">
-                    <!-- إجمالي البقرات مع زجاج شفاف وألوان -->
-                    <div class="stat-card">
-                        <div class="stat-card-title"><i class="fas fa-cow"></i> Total Cows</div>
-                        <div class="stat-card-value" id="ranchTotalCows">0</div>
-                        <div class="stat-card-sub">
-                            <div class="stat-badge badge-active"><i class="fas fa-check-circle"></i> Active: <span id="ranchActiveCows">0</span></div>
-                            <div class="stat-badge badge-inactive"><i class="fas fa-hourglass"></i> Inactive: <span id="ranchInactiveCows">0</span></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+                    <!-- Total Cows - زجاج شفاف -->
+                    <div class="stats-glass">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:4px"><i class="fas fa-cow"></i> Total Cows</div>
+                        <div style="display:flex;align-items:baseline;justify-content:space-between">
+                            <span class="counter-number" id="ranchTotalCows" style="font-size:32px;font-weight:800">0</span>
+                        </div>
+                        <div style="display:flex;gap:16px;margin-top:8px">
+                            <div><span class="active-stat">🟢 Active:</span> <span id="ranchActiveCows" style="font-weight:600">0</span></div>
+                            <div><span class="inactive-stat">🔴 Inactive:</span> <span id="ranchInactiveCows" style="font-weight:600">0</span></div>
                         </div>
                     </div>
-                    <!-- الإنتاج - فقط عرض كمية الحليب كل ساعة بدون Next Production -->
-                    <div class="stat-card">
-                        <div class="stat-card-title"><i class="fas fa-chart-line"></i> Production</div>
-                        <div class="stat-card-value" id="ranchHourlyProduction">0</div>
-                        <div class="stat-badge" style="background:rgba(0,212,255,.15);color:var(--crystal-blue);border:1px solid rgba(0,212,255,.3);margin-top:8px;justify-content:center"><i class="fas fa-clock"></i> <span id="ranchHourlyUnit">per hour</span></div>
+                    
+                    <!-- Production - عرض الحليب فقط (تمت إزالة Next Production) -->
+                    <div class="stats-glass">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:4px"><i class="fas fa-chart-line"></i> Production</div>
+                        <div style="font-size:32px;font-weight:800;color:var(--crystal-blue)" id="ranchHourlyProduction">0</div>
+                        <div style="margin-top:8px;font-size:11px;color:var(--text-secondary)">🥛 per hour</div>
                     </div>
                 </div>
-
+                
                 <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:14px;margin-bottom:16px">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
                         <span style="font-size:12px;color:var(--text-secondary)"><i class="fas fa-chart-simple" style="margin-right:4px"></i>Global Cow Sales</span>
@@ -382,14 +756,14 @@
                 <button class="btn btn-primary pulse-pink" id="ranchBuyCowBtn" style="width:100%;padding:16px;font-size:16px;border-radius:40px"><i class="fas fa-cart-plus"></i> BUY COW (1 TON)</button>
             </div>
 
-            <!-- COW LEVELS - مع إضافة مؤقت انتهاء التفعيل -->
+            <!-- COW LEVELS مع مؤقت التفعيل -->
             <div class="ranch-card" style="background:linear-gradient(145deg,rgba(30,20,40,.95),rgba(20,10,30,.98));border:2px solid var(--crystal-blue);border-radius:24px;padding:16px;margin-bottom:16px">
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
                     <div style="width:40px;height:40px;background:linear-gradient(145deg,var(--crystal-blue),var(--neon-green));border-radius:12px;display:flex;align-items:center;justify-content:center"><i class="fas fa-layer-group" style="color:#fff;font-size:20px"></i></div>
                     <h2 style="font-size:20px;font-weight:700">📊 COW LEVELS</h2>
                 </div>
                 
-                <!-- Level 1 -->
+                <!-- Level 1 مع مؤقت التفعيل -->
                 <div class="level-card" style="background:rgba(255,255,255,.03);border-radius:20px;padding:14px;margin-bottom:12px;border-left:4px solid #FFD700">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                         <div style="display:flex;align-items:center;gap:10px">
@@ -400,21 +774,22 @@
                             </div>
                         </div>
                     </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.3);border-radius:30px;padding:8px 12px;margin-bottom:8px">
+                    <!-- مؤقت التفعيل - مستوى 1 -->
+                    <div class="activation-timer" id="level1Timer" style="display:none">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level1TimerText">Activation ends in: 23:59</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.3);border-radius:30px;padding:8px 12px;margin-bottom:12px">
                         <div style="display:flex;align-items:center;gap:8px"><i class="fas fa-clock" style="color:var(--neon-green);font-size:12px"></i><span style="font-size:11px">Active cows:</span></div>
                         <span style="font-weight:700;color:var(--neon-green)" id="level1Active">0</span>
-                    </div>
-                    <!-- مؤقت انتهاء التفعيل - يظهر إذا كان هناك بقرات نشطة -->
-                    <div id="level1Expiration" class="expiration-timer" style="display:none; margin-bottom:12px">
-                        <i class="fas fa-hourglass-half"></i> <span id="level1ExpirationTime"></span>
                     </div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
                         <button class="btn btn-hatch" style="background:rgba(0,242,122,.2)" onclick="openActivateModal(1)"><i class="fas fa-power-off"></i> Activate</button>
                         <button class="btn btn-primary" style="background:linear-gradient(145deg,#9b59b6,#8e44ad)" onclick="openUpgradeModal(1)"><i class="fas fa-arrow-up"></i> Upgrade (6000🥛)</button>
                     </div>
                 </div>
-
-                <!-- Level 2 -->
+                
+                <!-- Level 2 مع مؤقت التفعيل -->
                 <div class="level-card" style="background:rgba(255,255,255,.03);border-radius:20px;padding:14px;margin-bottom:12px;border-left:4px solid #C0C0C0">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                         <div style="display:flex;align-items:center;gap:10px">
@@ -425,21 +800,22 @@
                             </div>
                         </div>
                     </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.3);border-radius:30px;padding:8px 12px;margin-bottom:8px">
+                    <!-- مؤقت التفعيل - مستوى 2 -->
+                    <div class="activation-timer" id="level2Timer" style="display:none">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level2TimerText">Activation ends in: 23:59</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.3);border-radius:30px;padding:8px 12px;margin-bottom:12px">
                         <div style="display:flex;align-items:center;gap:8px"><i class="fas fa-clock" style="color:var(--neon-green);font-size:12px"></i><span style="font-size:11px">Active cows:</span></div>
                         <span style="font-weight:700;color:var(--neon-green)" id="level2Active">0</span>
-                    </div>
-                    <!-- مؤقت انتهاء التفعيل -->
-                    <div id="level2Expiration" class="expiration-timer" style="display:none; margin-bottom:12px">
-                        <i class="fas fa-hourglass-half"></i> <span id="level2ExpirationTime"></span>
                     </div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
                         <button class="btn btn-hatch" style="background:rgba(0,242,122,.2)" onclick="openActivateModal(2)"><i class="fas fa-power-off"></i> Activate</button>
                         <button class="btn btn-primary" style="background:linear-gradient(145deg,#9b59b6,#8e44ad)" onclick="openUpgradeModal(2)"><i class="fas fa-arrow-up"></i> Upgrade (20000🥛)</button>
                     </div>
                 </div>
-
-                <!-- Level 3 -->
+                
+                <!-- Level 3 مع مؤقت التفعيل -->
                 <div class="level-card" style="background:rgba(255,255,255,.03);border-radius:20px;padding:14px;border-left:4px solid #CD7F32">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                         <div style="display:flex;align-items:center;gap:10px">
@@ -450,19 +826,20 @@
                             </div>
                         </div>
                     </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.3);border-radius:30px;padding:8px 12px;margin-bottom:8px">
+                    <!-- مؤقت التفعيل - مستوى 3 -->
+                    <div class="activation-timer" id="level3Timer" style="display:none">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span id="level3TimerText">Activation ends in: 23:59</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.3);border-radius:30px;padding:8px 12px;margin-bottom:12px">
                         <div style="display:flex;align-items:center;gap:8px"><i class="fas fa-clock" style="color:var(--neon-green);font-size:12px"></i><span style="font-size:11px">Active cows:</span></div>
                         <span style="font-weight:700;color:var(--neon-green)" id="level3Active">0</span>
-                    </div>
-                    <!-- مؤقت انتهاء التفعيل -->
-                    <div id="level3Expiration" class="expiration-timer" style="display:none; margin-bottom:12px">
-                        <i class="fas fa-hourglass-half"></i> <span id="level3ExpirationTime"></span>
                     </div>
                     <button class="btn btn-hatch" style="background:rgba(0,242,122,.2);width:100%" onclick="openActivateModal(3)"><i class="fas fa-power-off"></i> Activate (1200🥛)</button>
                 </div>
             </div>
 
-            <!-- MILK STORAGE - مع نافذة ترقية محسنة -->
+            <!-- MILK STORAGE مع زر ترقية يفتح نافذة -->
             <div class="storage-card">
                 <div style="position:absolute;top:0;right:0;width:150px;height:150px;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%);border-radius:50%"></div>
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
@@ -490,13 +867,15 @@
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
                     <button class="btn btn-primary" id="claimMilkBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e)"><i class="fas fa-hand-holding-heart"></i> CLAIM</button>
-                    <button class="btn btn-primary" id="upgradeStorageBtn" style="background:linear-gradient(145deg,var(--crystal-blue),#0099cc)"><i class="fas fa-arrow-up"></i> UPGRADE</button>
+                    <!-- زر الترقية - يفتح نافذة معلومات -->
+                    <button class="btn btn-primary upgrade-info-btn" id="upgradeStorageBtn" style="background:linear-gradient(145deg,var(--crystal-blue),#0099cc)" onclick="openUpgradeStorageModal()">
+                        <i class="fas fa-info-circle"></i> UPGRADE INFO
+                    </button>
                 </div>
                 <div id="storageFullBadge" style="display:none;position:absolute;top:16px;right:16px;background:var(--danger-red);color:#fff;padding:6px 12px;border-radius:30px;font-size:11px;font-weight:600;animation:pulse-glow 1.5s infinite">⚠️ INACTIVE</div>
             </div>
         </div>
 
-        <!-- صفحة Market -->
         <div id="sectionMarket" class="section">
             <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="market.title">P2P Market</span></div>
                 <div class="market-tabs"><div class="market-tab active" data-market-tab="buy" data-i18n="market.buy">Buy</div><div class="market-tab" data-market-tab="orders" data-i18n="market.myOrders">My Orders</div></div>
@@ -508,24 +887,20 @@
             </div>
         </div>
 
-        <!-- صفحة Crystal -->
         <div id="sectionDiamond" class="section">
             <div class="card" style="background:transparent;border:none;backdrop-filter:none"><div class="card-title"><i class="fas fa-gem" style="color:var(--crystal-blue)"></i> <span data-i18n="crystal.title">Crystal Conversion</span></div><div style="text-align:center"><div class="diamond-glow">💎</div><div class="counter-number" id="crystalPriceMain">25</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:14px" data-i18n="crystal.perTon">TON per Crystal</div></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:18px"><div style="flex:1;background:rgba(0,0,0,.2);border-radius:14px;padding:12px"><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px" data-i18n="crystal.yourCrystals">Your Crystals</div><div style="font-size:24px;font-weight:800;color:var(--crystal-blue)" id="diamondBalanceMain">0</div></div><div style="font-size:18px;color:var(--text-secondary)"><i class="fas fa-arrow-right"></i></div><div style="flex:1;background:rgba(0,0,0,.2);border-radius:14px;padding:12px"><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px" data-i18n="crystal.youReceive">You Receive</div><div style="font-size:24px;font-weight:800;color:var(--neon-green)" id="tonReceiveMain">0</div></div></div><div style="display:flex;gap:8px"><input type="number" id="convertAmount" class="form-input" placeholder="Amount" min="1" style="flex:1"><button class="btn btn-primary" id="convertDiamondBtn" style="width:auto;padding:0 16px"><span data-i18n="crystal.convert">Convert</span></button></div><div style="margin-top:12px;padding:12px;background:rgba(0,0,0,.2);border-radius:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;color:var(--text-secondary)" data-i18n="crystal.milkAvailable">Milk available</span><span style="font-weight:700;animation:soft-shine 3s infinite" id="milkForDiamond">0</span></div><div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--text-secondary)" data-i18n="crystal.eggsAvailable">Eggs available</span><span style="font-weight:700;animation:soft-shine 3s infinite" id="eggsForDiamond">0</span></div></div></div>
         </div>
 
-        <!-- صفحة Friends -->
         <div id="sectionFriends" class="section">
             <div class="card" style="background:linear-gradient(145deg,rgba(255,92,168,.15),var(--glass-strong))"><div class="card-title"><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></div><div style="background:rgba(255,255,255,.03);border-radius:14px;padding:14px;margin-bottom:14px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px" data-i18n="referral.description">Earn <strong style="color:var(--primary-pink);font-size:20px">10%</strong> commission when friends buy!</div><div style="display:flex;gap:5px;margin-bottom:5px"><input type="text" id="referralLink" class="form-input" readonly style="flex:1;background:rgba(0,0,0,.3);font-size:11px"><button class="btn btn-primary" id="copyReferralBtn" style="width:auto;padding:0 14px"><i class="fas fa-copy"></i></button></div><div style="font-size:9px;color:var(--text-muted)" data-i18n="referral.share">Share this link with friends</div></div><button class="btn btn-primary" id="claimReferralBtn"><i class="fas fa-hand-holding-usd"></i> <span data-i18n="referral.claim">Claim Earnings</span></button></div>
             <div class="card"><div class="card-title" style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:6px"><i class="fas fa-history"></i> <span data-i18n="referral.recent">Recent Referrals</span></div><div style="display:flex;align-items:center;gap:4px;background:rgba(0,242,122,.15);padding:4px 10px;border-radius:30px;border:1px solid rgba(0,242,122,.3)"><span style="font-size:12px;font-weight:700" id="totalReferrals">0</span><span style="font-size:10px;color:var(--text-secondary)" data-i18n="referral.friends">Friends</span></div></div><div id="recentReferralsList" style="min-height:70px;max-height:300px;overflow-y:auto"><div style="text-align:center;padding:18px;color:var(--text-secondary)"><i class="fas fa-users" style="font-size:24px;margin-bottom:8px;opacity:.5"></i><p data-i18n="referral.noReferrals">No referrals yet</p></div></div><button class="load-more-btn" id="loadMoreReferralsBtn" style="margin-top:10px;display:none"><i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span></button></div>
             <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="referral.earningsHistory">Earnings History</span></div><div id="earningsHistoryList" style="min-height:70px;max-height:200px;overflow-y:auto"><div style="text-align:center;padding:18px;color:var(--text-secondary)"><i class="fas fa-coins" style="font-size:24px;margin-bottom:8px;opacity:.5"></i><p data-i18n="referral.noEarnings">No earnings yet</p></div></div><button class="load-more-btn" id="loadMoreEarningsBtn" style="margin-top:10px;display:none"><i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span></button></div>
         </div>
 
-        <!-- صفحة Tasks -->
         <div id="sectionTasks" class="section">
             <div class="card"><div class="card-title"><i class="fas fa-tasks"></i> <span data-i18n="tasks.title">Tasks & Rewards</span></div><div class="market-tabs" style="margin-bottom:16px"><div class="market-tab active" data-task-tab="partner" data-i18n="tasks.partner">Partner Tasks</div><div class="market-tab" data-task-tab="community" data-i18n="tasks.community">Community Tasks</div></div><div class="market-actions" style="margin-bottom:16px" id="addTaskContainer"><button class="create-order-top" id="addTaskBtn" style="background:linear-gradient(145deg,#FF5CA8,#D94A8F)"><i class="fas fa-plus-circle"></i> <span data-i18n="tasks.addTask">Add Task</span></button><button class="refresh-market-btn" id="refreshTasksBtn"><i class="fas fa-sync-alt"></i> <span data-i18n="tasks.refresh">Refresh</span></button></div><div id="tasksGrid" class="task-grid"><div style="text-align:center;padding:40px;color:var(--text-secondary)"><i class="fas fa-clipboard-list" style="font-size:48px;margin-bottom:15px;opacity:.5"></i><p data-i18n="tasks.noTasks">No tasks available</p></div></div></div>
         </div>
 
-        <!-- صفحة Profile -->
         <div id="sectionProfile" class="section">
             <div class="card"><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div style="width:50px;height:50px;background:linear-gradient(145deg,var(--primary-pink),var(--crystal-blue));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden" id="profileAvatar">👨‍🌾</div><div><div style="font-size:16px;font-weight:700" id="profileName">Farmer</div><div style="font-size:11px;color:var(--text-secondary)" id="profileUsername">@crystal_ranch</div><div style="font-size:10px;color:var(--text-muted);margin-top:2px" id="profileUserId">ID: </div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px"><div style="background:rgba(255,255,255,.03);border-radius:14px;padding:10px"><div style="font-size:10px;color:var(--text-muted)" data-i18n="profile.totalMachines">Total Machines</div><div style="font-size:20px;font-weight:700" id="totalMachines">0</div></div><div style="background:rgba(255,255,255,.03);border-radius:14px;padding:10px"><div style="font-size:10px;color:var(--text-muted)" data-i18n="profile.production">Production</div><div style="font-size:20px;font-weight:700" id="totalProduction">0/h</div></div></div></div>
             <div class="card"><div class="card-title"><i class="fas fa-wallet"></i> <span data-i18n="profile.assets">Assets</span></div><div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">🥛</span><div><div style="font-weight:600;font-size:12px" data-i18n="status.milk">Milk</div><div style="font-size:9px;color:var(--text-muted)"><span id="profileMilkRate">0</span>/h</div></div></div><div style="font-size:18px;font-weight:700" id="profileMilk">0</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">🥚</span><div><div style="font-weight:600;font-size:12px" data-i18n="status.eggs">Eggs</div><div style="font-size:9px;color:var(--text-muted)"><span id="profileEggsRate">0</span>/h</div></div></div><div style="font-size:18px;font-weight:700" id="profileEggs">0</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">💎</span><div><div style="font-weight:600;font-size:12px" data-i18n="status.crystal">Crystal</div><div style="font-size:9px;color:var(--text-muted)">1 = <span id="profileDiamondPrice">25</span> TON</div></div></div><div style="font-size:18px;font-weight:700" id="profileDiamond">0</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px"><div style="display:flex;align-items:center;gap:8px"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:20px;height:20px;object-fit:contain;animation:soft-shine 3s infinite"><div><div style="font-weight:600;font-size:12px">TON</div><div style="font-size:9px;color:var(--text-muted)" data-i18n="profile.balance">Balance</div></div></div><div style="font-size:18px;font-weight:700" id="profileTon">0.0000</div></div></div></div>
@@ -533,7 +908,7 @@
         </div>
     </div>
 
-    <!-- شريط التنقل السفلي - تمت إزالة Ranch -->
+    <!-- شريط التنقل السفلي - بدون Ranch -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-section="sectionFarm"><div class="nav-icon">🚜</div><div class="nav-text" data-i18n="nav.farm">Farm</div></div>
         <div class="nav-item" data-section="sectionMarket"><div class="nav-icon">📊</div><div class="nav-text" data-i18n="nav.market">Market</div></div>
@@ -543,108 +918,94 @@
         <div class="nav-item" data-section="sectionProfile"><div class="nav-icon">👤</div><div class="nav-text" data-i18n="nav.profile">Profile</div></div>
     </nav>
 
-    <!-- النوافذ المنبثقة -->
+    <!-- المودالات (جميعها موجودة كما هي) -->
     <div class="modal-overlay" id="sellOrderModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-tag" style="color:var(--neon-green)"></i> <span data-i18n="modal.sell.title">Sell Order</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="form-group"><label class="form-label" data-i18n="modal.sell.resource">Resource</label><div style="display:flex;gap:8px"><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="sellResource" value="milk" checked style="accent-color:var(--neon-green)"> 🥛 <span data-i18n="market.milk">Milk</span></label><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="sellResource" value="eggs" style="accent-color:var(--primary-pink)"> 🥚 <span data-i18n="market.eggs">Eggs</span></label></div></div><div class="form-group"><label class="form-label" data-i18n="modal.sell.quantity">Quantity (min 100)</label><input type="number" id="sellQuantity" class="form-input" placeholder="1000" min="100" oninput="updateSellDetails()"><div class="preset-buttons"><span class="preset-btn" data-sell-percent="25">25%</span><span class="preset-btn" data-sell-percent="50">50%</span><span class="preset-btn" data-sell-percent="75">75%</span><span class="preset-btn" data-sell-percent="100">MAX</span></div></div><div class="form-group"><label class="form-label">Total Price (TON)</label><input type="number" id="sellTotalPrice" class="form-input" placeholder="0.01" step="any" min="0.0001" oninput="updateSellDetails()"><div style="font-size:10px;color:var(--text-secondary);margin-top:5px" id="sellPerUnitHint">≈ 0.0000 TON per unit</div><div style="font-size:10px;color:var(--text-muted);margin-top:5px" id="sellBalanceHint">Available: 0 Milk</div><div class="total-ton-result" id="sellTotalTon">Total: 0.0000 TON (You get: 0.0000 TON after 10% fee)</div><div style="font-size:9px;color:var(--warning);margin-top:4px" id="sellFeeDisplay">⚠️ 10% market fee will be deducted when sold</div></div><button class="btn btn-primary" id="submitSellOrderBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e)"><i class="fas fa-check-circle"></i> <span data-i18n="modal.sell.place">Place Sell Order</span></button></div></div>
-    
     <div class="modal-overlay" id="confirmPurchaseModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-shopping-cart" style="color:var(--neon-green)"></i> <span data-i18n="modal.confirm.title">Confirm Purchase</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="confirm-card" id="confirmCard"><div class="confirm-emoji" id="confirmEmoji">🥛</div><div style="font-size:16px;font-weight:700" id="confirmResource" data-i18n="modal.confirm.package">Milk Package</div></div><div class="confirm-details" id="confirmDetails"></div><div class="confirm-buttons"><button class="btn btn-secondary" onclick="closeAllModals()"><span data-i18n="modal.confirm.cancel">Cancel</span></button><button class="btn btn-primary" id="confirmExecuteBtn"><span data-i18n="modal.confirm.confirm">Confirm & Pay</span></button></div></div></div>
-    
     <div class="modal-overlay" id="hatchModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-egg" style="color:var(--neon-green)"></i> <span data-i18n="modal.hatch.title">Hatch Machine</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="hatch-option" id="hatchCowOption"><div class="hatch-info"><span class="hatch-title">🐮 <span data-i18n="farm.cow.name">Cow</span></span><span class="hatch-cost" data-i18n="modal.hatch.cowCost">50,000 Milk</span><span class="hatch-balance" id="hatchCowBalance">Your milk: 0</span></div><div style="display:flex;align-items:center;gap:5px"><input type="number" id="hatchCowAmount" class="hatch-input" placeholder="1" min="1" value="1"><button class="btn btn-hatch" id="hatchCowConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button></div></div><div class="hatch-option" id="hatchChickenOption"><div class="hatch-info"><span class="hatch-title">🐔 <span data-i18n="farm.chicken.name">Chicken</span></span><span class="hatch-cost" data-i18n="modal.hatch.chickenCost">5,000 Eggs</span><span class="hatch-balance" id="hatchChickenBalance">Your eggs: 0</span></div><div style="display:flex;align-items:center;gap:5px"><input type="number" id="hatchChickenAmount" class="hatch-input" placeholder="1" min="1" value="1"><button class="btn btn-hatch" id="hatchChickenConfirm" style="padding:6px 10px" data-i18n="modal.hatch.hatchBtn">Hatch</button></div></div></div></div>
-    
     <div class="modal-overlay" id="depositModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-arrow-down" style="color:var(--neon-green)"></i> <span data-i18n="modal.deposit.title">Deposit TON</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div id="walletStatus" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border-radius:12px;padding:12px;margin-bottom:14px"><div><div style="font-size:12px;font-weight:600" data-i18n="modal.deposit.wallet">Wallet</div><div style="font-size:10px;color:var(--text-secondary)" id="walletAddressDisplay" data-i18n="modal.deposit.notConnected">Not connected</div></div><button class="btn btn-primary" id="connectWalletBtn" style="width:auto;padding:6px 14px"><i class="fas fa-plug"></i> <span data-i18n="modal.deposit.connect">Connect</span></button></div><div class="deposit-warning"><i class="fas fa-exclamation-triangle"></i><div class="deposit-warning-text"><strong data-i18n="modal.deposit.important">IMPORTANT:</strong> <span data-i18n="modal.deposit.warning">Your User ID</span> <span id="depositUserIdDisplay" style="background:rgba(255,255,255,.1);padding:2px 5px;border-radius:20px"></span> <span data-i18n="modal.deposit.mustBeComment">must be the ONLY comment</span>.</div></div><div class="form-group"><label class="form-label" data-i18n="modal.deposit.amount">Amount (TON)</label><input type="number" id="depositAmountInput" class="form-input" placeholder="0.1" step="0.1" min="0.1"><div class="preset-buttons"><span class="preset-btn" data-deposit="0.5">0.5</span><span class="preset-btn" data-deposit="1">1</span><span class="preset-btn" data-deposit="2">2</span><span class="preset-btn" data-deposit="5">5</span><span class="preset-btn" data-deposit="10">10</span></div></div><button class="btn btn-primary" id="submitDepositBtn" disabled><i class="fas fa-arrow-down"></i> <span data-i18n="modal.deposit.submit">Deposit TON</span></button><div class="transaction-status" id="depositStatus"><div class="status-icon">⏳</div><div class="status-message" data-i18n="modal.deposit.processing">Processing deposit...</div><div class="status-detail" id="depositStatusDetail"></div></div></div></div>
-    
     <div class="modal-overlay" id="addTaskModal"><div class="modal-content" style="max-width:400px"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-plus-circle" style="color:var(--neon-green)"></i> <span data-i18n="tasks.addTask">Add Community Task</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div class="form-group"><label class="form-label" data-i18n="tasks.taskType">Task Type</label><div style="display:flex;gap:8px;margin-bottom:10px"><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="taskType" value="channel" checked style="accent-color:var(--crystal-blue)"> 📢 <span data-i18n="tasks.channel">Channel</span></label><label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer"><input type="radio" name="taskType" value="bot" style="accent-color:var(--primary-pink)"> 🤖 <span data-i18n="tasks.bot">Bot</span></label></div></div><div class="form-group" id="channelNote" style="background:rgba(255,92,168,.1);border-radius:10px;padding:10px;margin-bottom:14px;display:none"><i class="fas fa-info-circle" style="color:var(--primary-pink);margin-right:5px"></i><span data-i18n="tasks.channelNote">⚠️ Bot must be admin in the channel for verification to work!</span></div><div class="form-group"><label class="form-label" data-i18n="tasks.link">Link</label><input type="text" id="taskLink" class="form-input" placeholder="https://t.me/..." value=""></div><div class="form-group"><label class="form-label" data-i18n="tasks.targetUsers">Target Users (min 100)</label><input type="number" id="taskTarget" class="form-input" placeholder="100" min="100" value="100" oninput="calculateTaskPrice()"></div><div class="form-group"><label class="form-label" data-i18n="tasks.rewardPerUser">Reward Per User (TON)</label><input type="number" id="taskReward" class="form-input" value="0.001" step="0.0001" min="0.0001" readonly style="background:rgba(255,255,255,.05);color:var(--neon-green);font-weight:600"><div style="font-size:9px;color:var(--text-muted);margin-top:3px" data-i18n="tasks.rewardFixed">Fixed at 0.001 TON per completion</div></div><div class="total-ton-result" id="taskTotalCost" style="margin-bottom:16px">Total Cost: 0.0000 TON</div><div class="form-group"><label class="form-label" data-i18n="tasks.yourBalance">Your Balance</label><div style="background:rgba(0,212,255,.1);border-radius:10px;padding:10px;text-align:center"><span style="font-size:16px;font-weight:700;color:var(--crystal-blue)" id="taskUserBalance">0.0000</span> TON</div></div><button class="btn btn-primary" id="submitTaskBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e);margin-top:10px"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.confirm">Confirm & Pay</span></button></div></div>
-    
     <div class="modal-overlay" id="taskVerifyModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-clipboard-check" style="color:var(--neon-green)"></i> <span data-i18n="tasks.verify">Task Verification</span></h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div style="text-align:center;padding:20px"><div style="font-size:48px;margin-bottom:15px" id="verifyEmoji">🤖</div><div style="font-size:16px;font-weight:700;margin-bottom:5px" id="verifyTitle">Join Channel</div><div style="font-size:12px;color:var(--text-secondary);margin-bottom:20px" id="verifyLink">https://t.me/...</div><div class="confirm-details" style="margin:20px 0"><div class="confirm-row"><span class="confirm-label" data-i18n="tasks.reward">Reward:</span><span class="confirm-value" style="color:var(--neon-green)" id="verifyReward">0.0010 TON</span></div></div><div class="task-actions" style="flex-direction:column;gap:10px"><a href="#" target="_blank" id="verifyJoinLink" class="task-btn join" style="width:100%;text-decoration:none;display:inline-block;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--crystal-blue),#0099cc);color:#fff"><i class="fas fa-external-link-alt"></i> <span data-i18n="tasks.join">Join</span></a><button class="task-btn check" id="verifyCheckBtn" style="width:100%;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--neon-green),#00b35e);color:#fff;border:none;margin-top:10px"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.check">Verify & Claim</span></button></div><div id="verifyStatus" style="margin-top:15px;padding:10px;border-radius:10px;display:none"></div></div></div></div>
-    
-    <!-- نافذة تنشيط البقرات -->
     <div class="modal-overlay" id="activateCowModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-power-off" style="color:var(--neon-green)"></i> Activate Cows</h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div style="text-align:center;margin-bottom:16px"><div style="font-size:48px;margin-bottom:8px" id="activateLevelEmoji">🐮</div><div style="font-size:16px;font-weight:700" id="activateLevelTitle">Level 1 Cows</div><div style="font-size:12px;color:var(--text-secondary);margin-top:4px" id="activateLevelInfo">500 Milk/day · 200🥛 activation</div></div><div class="form-group"><label class="form-label">How many cows?</label><input type="number" id="activateAmount" class="form-input" value="1" min="1" max="100" oninput="updateActivateCost()"><div class="preset-buttons" style="margin-top:10px"><span class="preset-btn" data-activate="1">1</span><span class="preset-btn" data-activate="5">5</span><span class="preset-btn" data-activate="10">10</span><span class="preset-btn" data-activate="25">25</span><span class="preset-btn" data-activate="50">50</span><span class="preset-btn" data-activate="all">ALL</span></div></div><div style="background:rgba(0,0,0,.3);border-radius:14px;padding:12px;margin-bottom:16px"><div class="confirm-row"><span class="confirm-label">Available cows:</span><span class="confirm-value" id="activateAvailable">0</span></div><div class="confirm-row"><span class="confirm-label">Activation cost:</span><span class="confirm-value" style="color:var(--neon-green)" id="activateCost">0 🥛</span></div><div class="confirm-row"><span class="confirm-label">Your milk balance:</span><span class="confirm-value" id="activateBalance">0 🥛</span></div></div><div class="confirm-buttons"><button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button><button class="btn btn-primary" id="confirmActivateBtn" onclick="executeActivateCows()"><i class="fas fa-check-circle"></i> Activate</button></div></div></div>
-    
-    <!-- نافذة ترقية البقرات -->
     <div class="modal-overlay" id="upgradeCowModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-arrow-up" style="color:var(--crystal-blue)"></i> Upgrade Cows</h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div><div style="text-align:center;margin-bottom:16px"><div style="font-size:48px;margin-bottom:8px" id="upgradeFromEmoji">🐮 → 🦬</div><div style="font-size:16px;font-weight:700" id="upgradeLevelTitle">Level 1 → Level 2</div><div style="font-size:12px;color:var(--text-secondary);margin-top:4px" id="upgradeLevelInfo">500 → 1000 Milk/day · 6000🥛 upgrade</div></div><div class="form-group"><label class="form-label">How many cows?</label><input type="number" id="upgradeAmount" class="form-input" value="1" min="1" max="100" oninput="updateUpgradeCost()"><div class="preset-buttons" style="margin-top:10px"><span class="preset-btn" data-upgrade="1">1</span><span class="preset-btn" data-upgrade="5">5</span><span class="preset-btn" data-upgrade="10">10</span><span class="preset-btn" data-upgrade="25">25</span><span class="preset-btn" data-upgrade="50">50</span><span class="preset-btn" data-upgrade="all">ALL</span></div></div><div style="background:rgba(0,0,0,.3);border-radius:14px;padding:12px;margin-bottom:16px"><div class="confirm-row"><span class="confirm-label">Available cows:</span><span class="confirm-value" id="upgradeAvailable">0</span></div><div class="confirm-row"><span class="confirm-label">Upgrade cost:</span><span class="confirm-value" style="color:var(--neon-green)" id="upgradeCost">0 🥛</span></div><div class="confirm-row"><span class="confirm-label">Your milk balance:</span><span class="confirm-value" id="upgradeBalance">0 🥛</span></div></div><div class="confirm-buttons"><button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button><button class="btn btn-primary" id="confirmUpgradeBtn" onclick="executeUpgradeCows()"><i class="fas fa-check-circle"></i> Upgrade</button></div></div></div>
     
-    <!-- نافذة ترقية المخزن المحسنة -->
-    <div class="modal-overlay" id="upgradeStorageModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-archive" style="color:var(--crystal-blue)"></i> Upgrade Milk Storage</h3><i class="fas fa-times modal-close" onclick="closeAllModals()"></i></div>
-        <div class="upgrade-preview">
-            <div class="upgrade-preview-title">Next Level</div>
-            <div class="upgrade-preview-value" id="nextStorageLevel">Level 2</div>
-            <div class="upgrade-preview-desc" id="nextStorageCapacity">Capacity: 5,000 🥛 (+3,000)</div>
+    <!-- مودال معلومات ترقية المخزن -->
+    <div class="modal-overlay" id="upgradeStorageInfoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-arrow-up" style="color:var(--crystal-blue)"></i> Upgrade Storage</h3>
+                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
+            </div>
+            <div style="text-align:center;margin-bottom:16px">
+                <div style="font-size:48px;margin-bottom:8px">📦 → 📦</div>
+                <div style="font-size:16px;font-weight:700" id="upgradeStorageTitle">Level 1 → Level 2</div>
+            </div>
+            <div style="background:rgba(0,0,0,.3);border-radius:14px;padding:12px;margin-bottom:16px">
+                <div class="confirm-row"><span class="confirm-label">Current Capacity:</span><span class="confirm-value" id="currentCapacity">2,000 🥛</span></div>
+                <div class="confirm-row"><span class="confirm-label">Next Level:</span><span class="confirm-value" style="color:var(--crystal-blue)" id="nextCapacity">5,000 🥛</span></div>
+                <div class="confirm-row"><span class="confirm-label">Upgrade Cost:</span><span class="confirm-value" style="color:var(--neon-green)" id="upgradeCostDisplay">2,000 🥛</span></div>
+                <div class="confirm-row"><span class="confirm-label">Your Milk:</span><span class="confirm-value" id="yourMilkDisplay">0 🥛</span></div>
+            </div>
+            <div class="confirm-buttons">
+                <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+                <button class="btn btn-primary" id="confirmUpgradeStorageBtn" onclick="executeUpgradeStorage()"><i class="fas fa-check-circle"></i> Upgrade Now</button>
+            </div>
         </div>
-        <div class="upgrade-cost">
-            <span class="cost-label">Upgrade Cost:</span>
-            <span class="cost-value"><i class="fas fa-glass-whiskey"></i> <span id="storageUpgradeCost">2,000</span> 🥛</span>
-        </div>
-        <div style="background:rgba(0,0,0,.3);border-radius:12px;padding:12px;margin-bottom:16px">
-            <div class="confirm-row"><span class="confirm-label">Your Milk Balance:</span><span class="confirm-value" id="storageUserMilk">0 🥛</span></div>
-        </div>
-        <div class="confirm-buttons">
-            <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
-            <button class="btn btn-primary" id="confirmStorageUpgradeBtn" onclick="executeStorageUpgrade()"><i class="fas fa-arrow-up"></i> Upgrade</button>
-        </div>
-    </div></div>
+    </div>
 
     <script>
-        const CONFIG={API_URL:'https://noisy-dust-b9e8.mmrr2872008.workers.dev',BOT_USERNAME:'@Crystal_Ranch_bot',DEPOSIT_WALLET:'UQAzGsppYQfQwVnVVQDt2Jq9r4cm7fO3iVuLCxv30FixJq1-',PRODUCTION_INTERVAL:60000,MARKET_REFRESH:15000,DEPOSIT_VERIFY_INTERVAL:10000,CSRF_TOKEN:'crystal-ranch-secure-token-2026',CRYSTAL_PRICE:25,TASK_REWARD:.001,MAX_ACTIVE_ORDERS:2,COW_LEVELS:{1:{productionPerDay:500,activationCost:200,upgradeCost:6000,activationHours:24},2:{productionPerDay:1000,activationCost:350,upgradeCost:20000,activationHours:24},3:{productionPerDay:2500,activationCost:1200,upgradeCost:0,activationHours:24}},STORAGE_LEVELS:{1:{capacity:2000,cost:0},2:{capacity:5000,cost:2000},3:{capacity:10000,cost:5000},4:{capacity:20000,cost:10000},5:{capacity:40000,cost:20000},6:{capacity:80000,cost:40000},7:{capacity:160000,cost:80000},8:{capacity:320000,cost:160000},9:{capacity:640000,cost:320000},10:{capacity:1000000,cost:600000}}};
+        const CONFIG={API_URL:'https://noisy-dust-b9e8.mmrr2872008.workers.dev',BOT_USERNAME:'@Crystal_Ranch_bot',DEPOSIT_WALLET:'UQAzGsppYQfQwVnVVQDt2Jq9r4cm7fO3iVuLCxv30FixJq1-',PRODUCTION_INTERVAL:60000,MARKET_REFRESH:15000,DEPOSIT_VERIFY_INTERVAL:10000,CSRF_TOKEN:'crystal-ranch-secure-token-2026',CRYSTAL_PRICE:25,TASK_REWARD:.001,MAX_ACTIVE_ORDERS:2,COW_LEVELS:{1:{productionPerDay:500,activationCost:200,upgradeCost:6000},2:{productionPerDay:1000,activationCost:350,upgradeCost:20000},3:{productionPerDay:2500,activationCost:1200,upgradeCost:0}},STORAGE_LEVELS:{1:{capacity:2000,cost:0},2:{capacity:5000,cost:2000},3:{capacity:10000,cost:5000},4:{capacity:20000,cost:10000},5:{capacity:40000,cost:20000},6:{capacity:80000,cost:40000},7:{capacity:160000,cost:80000},8:{capacity:320000,cost:160000},9:{capacity:640000,cost:320000},10:{capacity:1000000,cost:600000}}};
         const TRANSLATIONS={en:{'nav.farm':'Farm','nav.market':'Market','nav.crystal':'Crystal','nav.friends':'Friends','nav.tasks':'Tasks','nav.profile':'Profile','status.milk':'MILK','status.eggs':'EGGS','status.crystal':'CRYSTAL','status.deposit':'Deposit','farm.cow.name':'Cow','farm.chicken.name':'Chicken','farm.crystal.name':'Crystal Engine','farm.prod':'Prod','farm.owned':'Owned','farm.supply':'Supply','farm.buy':'Buy Multiple','farm.hatch':'Hatch','farm.start':'Start','farm.yield':'Yield','market.title':'P2P Market','market.buy':'Buy','market.myOrders':'My Orders','market.milk':'Milk','market.eggs':'Eggs','market.totalOrders':'Total Orders','market.milkQty':'Milk','market.eggsQty':'Eggs','market.bestPrice':'Best Price','market.createSell':'Create Sell Order','market.refresh':'Refresh','market.loadMore':'Show More','market.noOrders':'No active sell orders','market.activeOrders':'Active Orders','market.history':'History','crystal.title':'Crystal Conversion','crystal.perTon':'TON per Crystal','crystal.yourCrystals':'Your Crystals','crystal.youReceive':'You Receive','crystal.convert':'Convert','crystal.milkAvailable':'Milk available','crystal.eggsAvailable':'Eggs available','referral.title':'Referral Program','referral.description':'Earn 10% commission when your friends buy machines with TON!','referral.share':'Share this link with friends','referral.friends':'Friends','referral.claim':'Claim Earnings','referral.recent':'Recent Referrals','referral.noReferrals':'No referrals yet','referral.earningsHistory':'Earnings History','referral.noEarnings':'No earnings yet','tasks.title':'Tasks & Rewards','tasks.partner':'Partner Tasks','tasks.community':'Community Tasks','tasks.addTask':'Add Task','tasks.refresh':'Refresh','tasks.noTasks':'No tasks available','tasks.taskType':'Task Type','tasks.channel':'Channel','tasks.bot':'Bot','tasks.channelNote':'⚠️ Bot must be admin in the channel for verification to work!','tasks.link':'Link','tasks.targetUsers':'Target Users (min 100)','tasks.rewardPerUser':'Reward Per User (TON)','tasks.rewardFixed':'Fixed at 0.001 TON per completion','tasks.yourBalance':'Your Balance','tasks.confirm':'Confirm & Pay','tasks.verify':'Task Verification','tasks.join':'Join','tasks.check':'Verify & Claim','tasks.reward':'Reward','profile.totalMachines':'Total Machines','profile.production':'Production','profile.assets':'Assets','profile.balance':'Balance','profile.withdraw':'Withdraw TON','profile.withdrawAmount':'Amount (min 0.1 TON)','profile.withdrawAddress':'TON Wallet Address','profile.fee':'Fee (5%)','profile.youReceive':'You receive','profile.withdrawBtn':'Withdraw','modal.sell.title':'Sell Order','modal.sell.resource':'Resource','modal.sell.quantity':'Quantity (min 100)','modal.sell.place':'Place Sell Order','modal.confirm.title':'Confirm Purchase','modal.confirm.package':'Milk Package','modal.confirm.cancel':'Cancel','modal.confirm.confirm':'Confirm & Pay','modal.hatch.title':'Hatch Machine','modal.hatch.cowCost':'50,000 Milk','modal.hatch.chickenCost':'5,000 Eggs','modal.hatch.hatchBtn':'Hatch','modal.deposit.title':'Deposit TON','modal.deposit.wallet':'Wallet','modal.deposit.notConnected':'Not connected','modal.deposit.connect':'Connect','modal.deposit.important':'IMPORTANT:','modal.deposit.warning':'Your User ID','modal.deposit.mustBeComment':'must be the ONLY comment','modal.deposit.amount':'Amount (TON)','modal.deposit.submit':'Deposit TON','modal.deposit.processing':'Processing deposit...','help.title':'How to Play','help.cow.title':'Cow Machine','help.cow.desc':'1 TON · 41 Milk/h<br>Global cap: 1000<br>Hatch: 50,000 Milk = 1 Cow','help.chicken.title':'Chicken Machine','help.chicken.desc':'1 TON · 41 Eggs/h<br>Unlocks after all Cows sold','help.crystal.title':'Crystal Engine','help.crystal.desc':'20 TON · 20k Milk + 20k Eggs = 1 Crystal<br>Convert Crystals → TON','help.hatch.title':'Hatch System','help.hatch.desc':'50,000 Milk = 1 Cow<br>5,000 Eggs = 1 Chicken<br>No global cap limit','help.market.title':'P2P Market','help.market.desc':'Trade Milk & Eggs with other players','help.referral.title':'Referral','help.referral.desc':'Earn 10% of every TON purchase made by your friends','help.tasks.title':'Tasks & Rewards','help.tasks.desc':'Complete tasks to earn 0.001 TON<br>Create your own community tasks (min 100 users)','help.leaderboard.title':'Leaderboard Competition','help.leaderboard.desc':'1 new cow = 10 points · Top 20 win 150 TON total<br>Ends when 1000 cows sold<br>⚠️ You must buy a cow to appear on leaderboard!'},ru:{'nav.farm':'Ферма','nav.market':'Рынок','nav.crystal':'Кристалл','nav.friends':'Друзья','nav.tasks':'Задания','nav.profile':'Профиль','status.milk':'МОЛОКО','status.eggs':'ЯЙЦА','status.crystal':'КРИСТАЛЛ','status.deposit':'Депозит','farm.cow.name':'Корова','farm.chicken.name':'Курица','farm.crystal.name':'Кристальный двигатель','farm.prod':'Произ','farm.owned':'Влад','farm.supply':'Предл','farm.buy':'Купить несколько','farm.hatch':'Вывести','farm.start':'Запустить','farm.yield':'Выход','market.title':'P2P Рынок','market.buy':'Купить','market.myOrders':'Мои заказы','market.milk':'Молоко','market.eggs':'Яйца','market.totalOrders':'Всего','market.milkQty':'Молоко','market.eggsQty':'Яйца','market.bestPrice':'Лучшая цена','market.createSell':'Создать ордер','market.refresh':'Обновить','market.loadMore':'Показать еще','market.noOrders':'Нет активных ордеров','market.activeOrders':'Активные','market.history':'История','crystal.title':'Конвертация кристаллов','crystal.perTon':'TON за кристалл','crystal.yourCrystals':'Ваши кристаллы','crystal.youReceive':'Вы получите','crystal.convert':'Конвертировать','crystal.milkAvailable':'Молоко доступно','crystal.eggsAvailable':'Яйца доступны','referral.title':'Реферальная программа','referral.description':'Зарабатывайте 10% комиссии, когда ваши друзья покупают машины!','referral.share':'Поделитесь этой ссылкой с друзьями','referral.friends':'Друзей','referral.claim':'Забрать доход','referral.recent':'Недавние рефералы','referral.noReferrals':'Пока нет рефералов','referral.earningsHistory':'История доходов','referral.noEarnings':'Пока нет доходов','tasks.title':'Задания и награды','tasks.partner':'Партнерские','tasks.community':'Сообщества','tasks.addTask':'Добавить задание','tasks.refresh':'Обновить','tasks.noTasks':'Нет доступных заданий','tasks.taskType':'Тип задания','tasks.channel':'Канал','tasks.bot':'Бот','tasks.channelNote':'⚠️ Бот должен быть администратором канала!','tasks.link':'Ссылка','tasks.targetUsers':'Цель (мин 100)','tasks.rewardPerUser':'Награда за пользователя','tasks.rewardFixed':'Фиксировано 0.001 TON','tasks.yourBalance':'Ваш баланс','tasks.confirm':'Подтвердить и оплатить','tasks.verify':'Проверка задания','tasks.join':'Присоединиться','tasks.check':'Проверить и получить','tasks.reward':'Награда','profile.totalMachines':'Всего машин','profile.production':'Производство','profile.assets':'Активы','profile.balance':'Баланс','profile.withdraw':'Вывести TON','profile.withdrawAmount':'Сумма (мин 0.1 TON)','profile.withdrawAddress':'TON адрес кошелька','profile.fee':'Комиссия (5%)','profile.youReceive':'Вы получите','profile.withdrawBtn':'Вывести','modal.sell.title':'Ордер на продажу','modal.sell.resource':'Ресурс','modal.sell.quantity':'Количество (мин 100)','modal.sell.place':'Разместить ордер','modal.confirm.title':'Подтверждение покупки','modal.confirm.package':'Пакет молока','modal.confirm.cancel':'Отмена','modal.confirm.confirm':'Подтвердить и оплатить','modal.hatch.title':'Вывести машину','modal.hatch.cowCost':'50,000 Молока','modal.hatch.chickenCost':'5,000 Яиц','modal.hatch.hatchBtn':'Вывести','modal.deposit.title':'Депозит TON','modal.deposit.wallet':'Кошелек','modal.deposit.notConnected':'Не подключен','modal.deposit.connect':'Подключить','modal.deposit.important':'ВАЖНО:','modal.deposit.warning':'Ваш User ID','modal.deposit.mustBeComment':'должен быть ЕДИНСТВЕННЫМ комментарием','modal.deposit.amount':'Сумма (TON)','modal.deposit.submit':'Депозит TON','modal.deposit.processing':'Обработка депозита...','help.title':'Как играть','help.cow.title':'Корова','help.cow.desc':'1 TON · 41 Молоко/час<br>Всего: 1000 машин<br>Вывод: 50,000 Молока = 1 Корова','help.chicken.title':'Курица','help.chicken.desc':'1 TON · 41 Яйца/час<br>Открывается после всех коров','help.crystal.title':'Кристальный двигатель','help.crystal.desc':'20 TON · 20k Молока + 20k Яиц = 1 Кристалл<br>Конвертация в TON','help.hatch.title':'Система вывода','help.hatch.desc':'50,000 Молока = 1 Корова<br>5,000 Яиц = 1 Курица<br>Без лимита','help.market.title':'P2P Рынок','help.market.desc':'Торгуйте молоком и яйцами','help.referral.title':'Рефералы','help.referral.desc':'10% от покупок друзей','help.tasks.title':'Задания','help.tasks.desc':'Выполняйте задания за 0.001 TON','help.leaderboard.title':'Соревнование','help.leaderboard.desc':'1 новая корова = 10 очков · Топ-20 выигрывают 150 TON<br>Заканчивается когда продано 1000 коров'}};
         const LEADERBOARD_INFO_TRANSLATIONS={en:{title:'🏆 How does the competition work?',grandPrize:'🏆 Grand Prize',totalPrize:'Total prize pool 150 TON distributed to top 20 players',howToParticipate:'🐮 How to participate?',howToDesc:'Each new cow you buy = 10 points<br>You must buy at least one cow to appear',whenEnds:'⏰ When does it end?',whenDesc:'The competition ends when 1000 cows are sold',gotIt:'✅ Got it',prizeList:[{rank:'1st',prize:'40 TON'},{rank:'2nd',prize:'30 TON'},{rank:'3rd',prize:'20 TON'},{rank:'4th',prize:'10 TON'},{rank:'5th',prize:'8 TON'},{rank:'6th',prize:'6 TON'},{rank:'7th',prize:'5 TON'},{rank:'8th',prize:'4 TON'},{rank:'9th-10th',prize:'3 TON'},{rank:'11th-18th',prize:'2 TON'},{rank:'19th-20th',prize:'1 TON'}]},ru:{title:'🏆 Как работает соревнование?',grandPrize:'🏆 Главный приз',totalPrize:'Общий призовой фонд 150 TON распределяется между топ-20 игроками',howToParticipate:'🐮 Как участвовать?',howToDesc:'Каждая новая купленная корова = 10 очков<br>Вы должны купить хотя бы одну корову, чтобы появиться',whenEnds:'⏰ Когда заканчивается?',whenDesc:'Соревнование заканчивается, когда продано 1000 коров',gotIt:'✅ Понятно',prizeList:[{rank:'1 место',prize:'40 TON'},{rank:'2 место',prize:'30 TON'},{rank:'3 место',prize:'20 TON'},{rank:'4 место',prize:'10 TON'},{rank:'5 место',prize:'8 TON'},{rank:'6 место',prize:'6 TON'},{rank:'7 место',prize:'5 TON'},{rank:'8 место',prize:'4 TON'},{rank:'9-10 место',prize:'3 TON'},{rank:'11-18 место',prize:'2 TON'},{rank:'19-20 место',prize:'1 TON'}]}};
         let App={userId:null,user:null,global:null,constants:null,referral:null,market:null,tasks:null,leaderboard:null,ranch:{cowLevels:{1:0,2:0,3:0},cowActive:{1:0,2:0,3:0},cowActiveUntil:{},milkStored:0,storageLevel:1,storageCapacity:2000,hourlyProduction:0},telegram:null,wallet:null,tonConnectUI:null,timerInterval:null,marketInterval:null,depositCheckInterval:null,currentMarketResource:'milk',currentMarketPage:1,hasMoreOrders:false,currentDepositId:null,currentTxHash:null,pendingOrder:null,pendingTask:null,currentLanguage:'en',referralsPage:1,earningsPage:1,hasMoreReferrals:false,hasMoreEarnings:false,currentTaskTab:'partner',currentActivateLevel:1,currentUpgradeFromLevel:1,initialized:false};
         const lastClickTimers={},CLICK_COOLDOWN=1e4;
         
+        // دالة لفتح صفحة Ranch
+        function openRanchPage() {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('sectionRanch').classList.add('active');
+            loadGameState(); // تحديث البيانات
+        }
+        
         function checkClickCooldown(b){let n=Date.now(),t=lastClickTimers[b]||0,o=CLICK_COOLDOWN-(n-t);return!(o>0)||(showNotification(App.currentLanguage==='ru'?`⏳ Пожалуйста, подождите ${Math.ceil(o/1e3)} секунд перед повторным нажатием`:`⏳ Please wait ${Math.ceil(o/1e3)} seconds before clicking again`,'warning'),!1)}
-        
         async function disableButtonTemporarily(b,e){if(!b)return;b.disabled=!0;let t=b.innerHTML;b.innerHTML=`<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CLICK_COOLDOWN/1e3)}s`;setTimeout(()=>{b.disabled=!1,b.innerHTML=t},CLICK_COOLDOWN)}
-        
         function validateAndCooldown(b,e){return checkClickCooldown(b)?(disableButtonTemporarily(e,b),!0):!1}
-        
         function showNotification(m,t='success',d=5e3){let n=document.getElementById('notificationContainer'),o=document.createElement('div');o.className=`notification ${t}`,o.innerHTML=m.replace(/\n/g,'<br>'),n.appendChild(o),setTimeout(()=>{o.classList.add('fade-out'),setTimeout(()=>{o.parentNode&&o.parentNode.removeChild(o)},300)},d)}
-        
         function formatFullPrecision(n){return n==null?'0':Math.abs(n)<.0001&&n!==0?n.toFixed(8).replace(/\.?0+$/,''):n.toFixed(8).replace(/\.?0+$/,'')}
-        
         function formatTON(a){return a==null||isNaN(a)?'0':Math.abs(a)<.0001&&a!==0?a.toFixed(8).replace(/\.?0+$/,''):parseFloat(a).toFixed(4)}
-        
         function formatNumber(n){return n==null?'0':n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':n.toLocaleString()}
-        
         function setLanguage(l){if(!TRANSLATIONS[l])return;App.currentLanguage=l,localStorage.setItem('crystal_ranch_lang',l),document.querySelectorAll('[data-i18n]').forEach(e=>{let k=e.getAttribute('data-i18n');if(TRANSLATIONS[l][k]){let t=TRANSLATIONS[l][k];e.tagName==='P'||e.tagName==='DIV'?(t=t.replace(/<br>/g,'<br>'),e.innerHTML=t):(t=t.replace(/<br>/g,' '),e.textContent=t)}}),document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.dataset.lang===l)}),App.tonConnectUI&&(App.tonConnectUI.language=l==='ru'?'ru':'en'),updateLeaderboardInfoLanguage()}
-        
         function updateLeaderboardInfoLanguage(){let l=App.currentLanguage||'en',t=LEADERBOARD_INFO_TRANSLATIONS[l];document.getElementById('infoTitle').innerHTML=t.title,document.getElementById('infoGrandPrize').innerHTML=t.grandPrize,document.getElementById('infoTotalPrize').innerHTML=t.totalPrize,document.getElementById('infoHowToParticipate').innerHTML=t.howToParticipate,document.getElementById('infoHowToDesc').innerHTML=t.howToDesc,document.getElementById('infoWhenEnds').innerHTML=t.whenEnds,document.getElementById('infoWhenDesc').innerHTML=t.whenDesc,document.getElementById('infoGotIt').innerHTML=t.gotIt;let p='';t.prizeList.forEach(i=>{p+=`<div class="info-prize-row"><span>${i.rank}</span> <span style="color:#FFD700;">${i.prize}</span></div>`}),document.getElementById('infoPrizeList').innerHTML=p}
-        
         async function initApp(){console.log('Crystal Ranch · Initializing...'),setLanguage(localStorage.getItem('crystal_ranch_lang')||'en'),await setupTelegram(),await initializeUser(),setTimeout(()=>initTONConnect(),1e3),await loadGameState(),setupIntervals(),setupEventListeners(),console.log('Crystal Ranch · Ready')}
-        
         async function setupTelegram(){return new Promise(r=>{if(window.Telegram&&window.Telegram.WebApp){App.telegram=window.Telegram.WebApp,App.telegram.ready(),App.telegram.expand();if(App.telegram.initDataUnsafe&&App.telegram.initDataUnsafe.user){let u=App.telegram.initDataUnsafe.user;App.userId=String(u.id),document.getElementById('profileName').innerHTML=`${u.first_name||''} ${u.last_name||''}`.trim()||'Farmer',document.getElementById('profileUsername').innerHTML=u.username?`@${u.username}`:'@crystal_ranch',document.getElementById('profileUserId').innerHTML=`ID: ${App.userId}`,document.getElementById('depositUserIdDisplay').innerHTML=App.userId,u.photo_url&&(document.getElementById('profileAvatar').innerHTML=`<img src="${u.photo_url}" style="width:100%;height:100%;object-fit:cover">`)}App.telegram.initDataUnsafe&&App.telegram.initDataUnsafe.start_param&&console.log('Start param:',App.telegram.initDataUnsafe.start_param),r()}else App.userId='demo_'+Math.floor(1e6*Math.random()),document.getElementById('profileName').innerHTML='Demo Farmer',document.getElementById('profileUsername').innerHTML='@demo',document.getElementById('profileUserId').innerHTML=`ID: ${App.userId}`,document.getElementById('depositUserIdDisplay').innerHTML=App.userId,r()})}
-        
         async function initializeUser(){try{let r=sessionStorage.getItem('referrer'),u=App.telegram?.initDataUnsafe?.user?{first_name:u.first_name,last_name:u.last_name,username:u.username,photo_url:u.photo_url}:null,o=await fetch(`${CONFIG.API_URL}/api`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Telegram ${App.telegram?.initData||''}`,'X-Action':'initializeUser','X-CSRF-Token':CONFIG.CSRF_TOKEN},body:JSON.stringify({action:'initializeUser',data:{startParam:r,userInfo:u}})}),i=await o.json();console.log('Initialize user result:',i)}catch(e){console.error('Init user error:',e)}}
-        
         async function initTONConnect(){try{if(window.TON_CONNECT_UI){let m=`${CONFIG.API_URL}/tonconnect-manifest.json`;App.tonConnectUI=new TON_CONNECT_UI.TonConnectUI({manifestUrl:m,language:App.currentLanguage==='ru'?'ru':'en',uiPreferences:{theme:'DARK'}}),App.tonConnectUI.onStatusChange(w=>{w?handleWalletConnected(w):handleWalletDisconnected()}),setTimeout(()=>{App.tonConnectUI.connected&&App.tonConnectUI.getWallets()},500)}}catch(e){console.error('TON Connect init error:',e)}}
-        
         function handleWalletConnected(w){App.wallet={address:w.account.address,chain:w.account.chain,appName:w.device.appName};let d=document.getElementById('walletAddressDisplay'),b=document.getElementById('connectWalletBtn'),s=`${App.wallet.address.substring(0,6)}...${App.wallet.address.substring(App.wallet.address.length-4)}`;d.innerHTML=`${s} · ${App.wallet.appName}`,b.innerHTML='<i class="fas fa-unplug"></i> '+(App.currentLanguage==='ru'?'Отключить':'Disconnect'),b.onclick=disconnectWallet,document.getElementById('submitDepositBtn').disabled=!1}
-        
         function handleWalletDisconnected(){App.wallet=null,document.getElementById('walletAddressDisplay').innerHTML=App.currentLanguage==='ru'?'Не подключен':'Not connected',document.getElementById('connectWalletBtn').innerHTML='<i class="fas fa-plug"></i> '+(App.currentLanguage==='ru'?'Подключить':'Connect'),document.getElementById('connectWalletBtn').onclick=connectWallet,document.getElementById('submitDepositBtn').disabled=!0}
-        
         async function connectWallet(){App.tonConnectUI&&await App.tonConnectUI.openModal()}async function disconnectWallet(){App.tonConnectUI&&await App.tonConnectUI.disconnect()}
-        
         async function callAPI(a,d={}){try{let h={'Content-Type':'application/json','X-Action':a,'X-CSRF-Token':CONFIG.CSRF_TOKEN};App.telegram&&App.telegram.initData&&(h.Authorization=`Telegram ${App.telegram.initData}`);let r=await fetch(`${CONFIG.API_URL}/api`,{method:'POST',headers:h,body:JSON.stringify({action:a,data:d})}),o=await r.json();if(!o.success)throw console.error(`API Error [${a}]:`,o.error),showNotification(o.error||'Transaction failed','error'),new Error(o.error);return o.data}catch(e){throw console.error('API call failed:',e),e}}
+        async function loadGameState(){try{let s=await callAPI('getState');App.user=s.user,App.global=s.global,App.constants=s.constants,App.referral=s.referral||{totalReferrals:0,totalEarnings:0,recentReferrals:[],recentEarnings:[]},App.market=s.market||{milk:{sellOrders:0,buyOrders:0,bestSellPrice:0,bestBuyPrice:0,totalMilk:0,totalEggs:0},eggs:{sellOrders:0,buyOrders:0,bestSellPrice:0,bestBuyPrice:0}},App.tasks=s.tasks||{partner:[],community:[]},App.leaderboard=s.leaderboard||{isActive:!0,totalCowSales:0,cowCap:1e3,remainingCows:1e3,leaderboard:[],currentUser:{rank:0,cowCount:0,points:0,prize:0,photoUrl:''},prizesDistributed:!1,winners:{}},s.ranch&&(App.ranch=s.ranch),App.global&&(App.global.diamond_price=CONFIG.CRYSTAL_PRICE),updateAllUI(),updateReferralUI(),updateTasksUI(),updateLeaderboardUI(),updateRanchUI(),animateTonBalance(),updateLockedStates(),s.pendingDeposits&&s.pendingDeposits.length>0&&s.pendingDeposits[0].status==='pending'&&startDepositVerification(s.pendingDeposits[0].depositId,s.pendingDeposits[0].txHash)}catch(e){console.error('Load game state error:',e)}}
         
-        async function loadGameState(){try{let s=await callAPI('getState');App.user=s.user,App.global=s.global,App.constants=s.constants,App.referral=s.referral||{totalReferrals:0,totalEarnings:0,recentReferrals:[],recentEarnings:[]},App.market=s.market||{milk:{sellOrders:0,buyOrders:0,bestSellPrice:0,bestBuyPrice:0,totalMilk:0,totalEggs:0},eggs:{sellOrders:0,buyOrders:0,bestSellPrice:0,bestBuyPrice:0}},App.tasks=s.tasks||{partner:[],community:[]},App.leaderboard=s.leaderboard||{isActive:!0,totalCowSales:0,cowCap:1e3,remainingCows:1e3,leaderboard:[],currentUser:{rank:0,cowCount:0,points:0,prize:0,photoUrl:''},prizesDistributed:!1,winners:{}},s.ranch&&(App.ranch=s.ranch),App.global&&(App.global.diamond_price=CONFIG.CRYSTAL_PRICE),updateAllUI(),updateReferralUI(),updateTasksUI(),updateLeaderboardUI(),updateRanchUI(),updateExpirationTimers(),animateTonBalance(),updateLockedStates(),s.pendingDeposits&&s.pendingDeposits.length>0&&s.pendingDeposits[0].status==='pending'&&startDepositVerification(s.pendingDeposits[0].depositId,s.pendingDeposits[0].txHash)}catch(e){console.error('Load game state error:',e)}}
-        
-        // تحديث صفحة Ranch - إصلاح حساب total cows و active/inactive
-        function updateRanchUI(){if(!App.ranch)return;let r=App.ranch;
-            // إجمالي البقرات = مجموع البقرات من جميع المستويات (نشطة + غير نشطة)
+        // تحديث صفحة Ranch مع الإصلاحات
+        function updateRanchUI(){
+            if(!App.ranch) return;
+            let r=App.ranch;
+            
+            // حساب إجمالي البقرات (نشطة + غير نشطة)
             let totalCows = (r.cowLevels[1]||0) + (r.cowLevels[2]||0) + (r.cowLevels[3]||0);
             let activeCows = (r.cowActive[1]||0) + (r.cowActive[2]||0) + (r.cowActive[3]||0);
-            let inactiveCows = totalCows - activeCows; // يتم حساب غير النشطة بشكل صحيح
+            let inactiveCows = totalCows - activeCows; // غير نشطة = إجمالي - نشطة (لا يمكن أن تكون سالبة)
             
             document.getElementById('ranchTotalCows').innerHTML = totalCows;
             document.getElementById('ranchActiveCows').innerHTML = activeCows;
-            document.getElementById('ranchInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0; // منع السالب
+            document.getElementById('ranchInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
             
-            // الإنتاج - فقط عرض كمية الحليب كل ساعة
-            let hourlyProduction = r.hourlyProduction || 0;
-            document.getElementById('ranchHourlyProduction').innerHTML = Math.round(hourlyProduction);
+            let p=r.hourlyProduction||0;
+            document.getElementById('ranchHourlyProduction').innerHTML = Math.round(p);
             
             let s=App.global?.cows_sold||0;
             document.getElementById('ranchCowsSold').innerHTML=s;
             document.getElementById('ranchCowsProgress').style.width=`${s/10}%`;
             
-            // تحديث أعداد البقرات في المستويات
             document.getElementById('level1Count').innerHTML=(r.cowLevels[1]||0)+' cows';
             document.getElementById('level2Count').innerHTML=(r.cowLevels[2]||0)+' cows';
             document.getElementById('level3Count').innerHTML=(r.cowLevels[3]||0)+' cows';
@@ -652,7 +1013,54 @@
             document.getElementById('level2Active').innerHTML=r.cowActive[2]||0;
             document.getElementById('level3Active').innerHTML=r.cowActive[3]||0;
             
-            // تحديث المخزن
+            // تحديث مؤقتات التفعيل (محاكاة)
+            let now = Date.now();
+            if(r.cowActiveUntil && r.cowActiveUntil[1]) {
+                let timeLeft = Math.max(0, r.cowActiveUntil[1] - now);
+                if(timeLeft > 0 && r.cowActive[1] > 0) {
+                    let hours = Math.floor(timeLeft / 3600000);
+                    let minutes = Math.floor((timeLeft % 3600000) / 60000);
+                    document.getElementById('level1Timer').style.display = 'flex';
+                    document.getElementById('level1TimerText').innerHTML = `Activation ends in: ${hours}h ${minutes}m`;
+                } else {
+                    document.getElementById('level1Timer').style.display = 'none';
+                    // إذا انتهى الوقت، يجب أن تصبح البقرة غير نشطة
+                    if(r.cowActive[1] > 0) {
+                        // سيتم تحديثه من API
+                    }
+                }
+            } else {
+                document.getElementById('level1Timer').style.display = 'none';
+            }
+            
+            if(r.cowActiveUntil && r.cowActiveUntil[2]) {
+                let timeLeft = Math.max(0, r.cowActiveUntil[2] - now);
+                if(timeLeft > 0 && r.cowActive[2] > 0) {
+                    let hours = Math.floor(timeLeft / 3600000);
+                    let minutes = Math.floor((timeLeft % 3600000) / 60000);
+                    document.getElementById('level2Timer').style.display = 'flex';
+                    document.getElementById('level2TimerText').innerHTML = `Activation ends in: ${hours}h ${minutes}m`;
+                } else {
+                    document.getElementById('level2Timer').style.display = 'none';
+                }
+            } else {
+                document.getElementById('level2Timer').style.display = 'none';
+            }
+            
+            if(r.cowActiveUntil && r.cowActiveUntil[3]) {
+                let timeLeft = Math.max(0, r.cowActiveUntil[3] - now);
+                if(timeLeft > 0 && r.cowActive[3] > 0) {
+                    let hours = Math.floor(timeLeft / 3600000);
+                    let minutes = Math.floor((timeLeft % 3600000) / 60000);
+                    document.getElementById('level3Timer').style.display = 'flex';
+                    document.getElementById('level3TimerText').innerHTML = `Activation ends in: ${hours}h ${minutes}m`;
+                } else {
+                    document.getElementById('level3Timer').style.display = 'none';
+                }
+            } else {
+                document.getElementById('level3Timer').style.display = 'none';
+            }
+            
             let m=r.milkStored||0,l=r.storageCapacity||2e3,h=r.storageLevel||1;
             document.getElementById('milkStored').innerHTML=formatNumber(m);
             document.getElementById('storageLevel').innerHTML=h+'/10';
@@ -661,161 +1069,93 @@
             document.getElementById('storageFullBadge').style.display=m>=l?'block':'none';
         }
         
-        // تحديث مؤقتات انتهاء التفعيل
-        function updateExpirationTimers() {
-            if(!App.ranch || !App.ranch.cowActiveUntil) return;
-            let now = Math.floor(Date.now() / 1000);
-            for(let level = 1; level <= 3; level++) {
-                let expirationDiv = document.getElementById(`level${level}Expiration`);
-                let expirationSpan = document.getElementById(`level${level}ExpirationTime`);
-                let activeCount = App.ranch.cowActive[level] || 0;
-                
-                if(activeCount > 0 && App.ranch.cowActiveUntil[level]) {
-                    let timeLeft = App.ranch.cowActiveUntil[level] - now;
-                    if(timeLeft > 0) {
-                        let hours = Math.floor(timeLeft / 3600);
-                        let minutes = Math.floor((timeLeft % 3600) / 60);
-                        expirationSpan.innerHTML = `Expires in: ${hours}h ${minutes}m`;
-                        expirationDiv.style.display = 'flex';
-                    } else {
-                        // انتهى الوقت - يجب أن تصبح البقرة غير نشطة
-                        expirationSpan.innerHTML = 'Expired';
-                        expirationDiv.style.display = 'flex';
-                        // سيتم تحديث الحالة من الخادم في المرة القادمة
-                    }
-                } else {
-                    expirationDiv.style.display = 'none';
-                }
-            }
-        }
-        
-        // نافذة ترقية المخزن المحسنة
-        window.openUpgradeStorageModal = function() {
-            let currentLevel = App.ranch.storageLevel || 1;
-            if(currentLevel >= 10) {
+        // فتح نافذة ترقية المخزن
+        function openUpgradeStorageModal() {
+            let level = App.ranch.storageLevel || 1;
+            if(level >= 10) {
                 showNotification('Maximum storage level reached', 'info');
                 return;
             }
-            let nextLevel = currentLevel + 1;
+            let nextLevel = level + 1;
+            let currentCapacity = CONFIG.STORAGE_LEVELS[level].capacity;
             let nextCapacity = CONFIG.STORAGE_LEVELS[nextLevel].capacity;
-            let currentCapacity = CONFIG.STORAGE_LEVELS[currentLevel].capacity;
             let cost = CONFIG.STORAGE_LEVELS[nextLevel].cost;
             
-            document.getElementById('nextStorageLevel').innerHTML = `Level ${nextLevel}`;
-            document.getElementById('nextStorageCapacity').innerHTML = `Capacity: ${formatNumber(nextCapacity)} 🥛 (+${formatNumber(nextCapacity - currentCapacity)})`;
-            document.getElementById('storageUpgradeCost').innerHTML = formatNumber(cost);
-            document.getElementById('storageUserMilk').innerHTML = formatNumber(App.user?.milk || 0) + ' 🥛';
+            document.getElementById('upgradeStorageTitle').innerHTML = `Level ${level} → Level ${nextLevel}`;
+            document.getElementById('currentCapacity').innerHTML = formatNumber(currentCapacity) + ' 🥛';
+            document.getElementById('nextCapacity').innerHTML = formatNumber(nextCapacity) + ' 🥛';
+            document.getElementById('upgradeCostDisplay').innerHTML = formatNumber(cost) + ' 🥛';
+            document.getElementById('yourMilkDisplay').innerHTML = formatNumber(App.user?.milk || 0) + ' 🥛';
             
-            document.getElementById('upgradeStorageModal').classList.add('active');
-        };
+            document.getElementById('confirmUpgradeStorageBtn').disabled = (App.user?.milk || 0) < cost;
+            
+            document.getElementById('upgradeStorageInfoModal').classList.add('active');
+        }
         
-        window.executeStorageUpgrade = async function() {
-            let btn = document.getElementById('confirmStorageUpgradeBtn');
-            if(!validateAndCooldown('confirmStorageUpgradeBtn', btn)) return;
+        // تنفيذ ترقية المخزن
+        async function executeUpgradeStorage() {
+            let b = document.getElementById('confirmUpgradeStorageBtn');
+            if(!validateAndCooldown('confirmUpgradeStorageBtn', b)) return;
             
             try {
-                let result = await callAPI('upgradeMilkStorage');
+                let r = await callAPI('upgradeMilkStorage');
                 await loadGameState();
                 closeAllModals();
-                showNotification(App.currentLanguage==='ru'?`✅ Хранилище улучшено до уровня ${result.newLevel}!`:`✅ Storage upgraded to level ${result.newLevel}!`,'success');
+                showNotification(App.currentLanguage==='ru'?`✅ Хранилище улучшено до уровня ${r.newLevel}!`:`✅ Storage upgraded to level ${r.newLevel}!`,'success');
             } catch(e) {
                 console.error('Upgrade storage error:', e);
             }
-        };
+        }
         
         function updateLeaderboardUI(){if(!App.leaderboard)return;let l=App.leaderboard;document.getElementById('leaderboardCowsSold').innerHTML=l.totalCowSales||0,document.getElementById('leaderboardProgressFill').style.width=`${(l.totalCowSales||0)/10}%`,document.getElementById('leaderboardRemaining').innerHTML=`Remaining: ${l.remainingCows||0}`;let u=l.currentUser||{rank:0,points:0,cowCount:0,prize:0,photoUrl:''};document.getElementById('userRank').innerHTML=`#${u.rank||0}`,document.getElementById('userPoints').innerHTML=u.points||0,document.getElementById('userPrize').innerHTML=`<img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:12px;height:12px;object-fit:contain"> ${u.prize||0}`,document.getElementById('winnersSection').style.display=!l.isActive&&l.prizesDistributed?'block':'none',displayLeaderboardList(l.leaderboard),u&&u.photoUrl&&(document.getElementById('profileAvatar').innerHTML=`<img src="${u.photoUrl}" style="width:100%;height:100%;object-fit:cover">`)}
-        
         function displayLeaderboardList(l){let c=document.getElementById('leaderboardList');if(!l||!l.length){c.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)"><i class="fas fa-trophy" style="font-size:48px;margin-bottom:15px;opacity:.5"></i><p>No players yet - Buy a cow to appear!</p></div>';return}let h='';l.slice(0,50).forEach(p=>{let r=p.rank||0,n=p.firstName||p.username||`Farmer #${p.userId?.substring(0,4)}`,o=p.points||0,i=p.prize||0,t=r===1?'gold':r===2?'silver':r===3?'bronze':'';h+=`<div class="leaderboard-card ${r===1?'top-1':r===2?'top-2':r===3?'top-3':''}"><div class="card-content"><div class="rank-badge ${t}">${r}</div><div class="user-info"><div class="user-name-row"><span class="user-name">${n}</span>${r<=3?'<span class="user-crown"><i class="fas fa-crown"></i></span>':''}</div></div><div class="points-section"><div class="points-box"><i class="fas fa-cow"></i> ${o}</div>${i>0?`<div class="prize-pill"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:16px;height:16px;object-fit:contain"> ${i}</div>`:''}</div></div></div>`}),c.innerHTML=h}
-        
         function updateLockedStates(){let c=document.getElementById('chickenLockedOverlay'),t=document.getElementById('chickenUnlockTimer');App.global&&!App.global.chicken_unlocked?(c.style.display='flex',t.innerHTML=`🔓 Unlocks after ${App.global.cows_remaining||0} more cows sold`):c.style.display='none';let d=document.getElementById('diamondLockedOverlay'),u=document.getElementById('diamondUnlockTimer');App.global&&!App.global.diamond_unlocked?(d.style.display='flex',u.innerHTML=`🔓 Unlocks after ${App.global.chickens_remaining||0} more chickens sold`):d.style.display='none'}
-        
         function animateTonBalance(){let t=document.getElementById('statusTon');t.classList.add('increased'),setTimeout(()=>{t.classList.remove('increased')},300)}
-        
         function updateProductionTimer(){if(App.user&&App.user.secondsUntilNext!==undefined){let s=App.user.secondsUntilNext,m=Math.floor(s/60),e=s%60;document.getElementById('productionTimer').innerHTML=`${m.toString().padStart(2,'0')}:${e.toString().padStart(2,'0')}`}}
-        
-        // تحديث السوق - إزالة قيد السعر الأدنى
         async function updateMarketUI(p=1,r=!0){if(!App.currentMarketResource)return;try{let s=await callAPI('getMarketOrders',{resource:App.currentMarketResource,type:'sell',page:p,limit:10}),o=s.orders?.length||0,l=0,e=0;App.currentMarketResource==='milk'?l=s.orders?.reduce((a,b)=>a+b.remaining,0)||0:e=s.orders?.reduce((a,b)=>a+b.remaining,0)||0,document.getElementById('marketTotalOrders').innerHTML=o,document.getElementById('marketMilkQty').innerHTML=formatNumber(l),document.getElementById('marketEggsQty').innerHTML=formatNumber(e),document.getElementById('marketBestPrice').innerHTML=formatFullPrecision(App.market?.[App.currentMarketResource]?.bestSellPrice||.0001);let g=document.getElementById('sellOrdersGrid'),b=document.getElementById('loadMoreSellBtn');if(s.orders&&s.orders.length){let h='';r&&(g.innerHTML='',App.currentMarketPage=1,App.hasMoreOrders=s.hasMore),s.orders.forEach(o=>{let i=o.pricePerUnit,t=o.remaining*i,u=App.currentMarketResource==='milk'?'🥛':'🥚',f=App.currentMarketResource==='milk'?'MILK':'EGG';h+=`<div class="market-card" onclick="showPurchaseConfirm('${o.id}','${o.resource}',${o.remaining},${i})"><div class="card-inner"><div class="card-title ${o.type}">${f}</div><div class="amount-box"><span class="egg-icon">${u}</span><span>${formatNumber(o.remaining)}</span></div><div class="price-label">PRICE</div><div class="price-box"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:18px;height:18px;display:inline-block;vertical-align:middle;filter:drop-shadow(0 0 2px rgba(255,255,255,.5))"><span>${formatFullPrecision(t)}</span></div><div class="unit-price">${formatFullPrecision(i)} TON/${f.toLowerCase()}</div><button class="buy-btn">${App.currentLanguage==='ru'?'Купить':'Buy'}</button></div></div>`}),r?g.innerHTML=h:g.innerHTML+=h,b.style.display=s.hasMore?'block':'none'}else g.innerHTML=`<div style="grid-column:span 2;text-align:center;padding:25px;color:var(--text-secondary)"><i class="fas fa-inbox" style="font-size:32px;margin-bottom:10px;opacity:.5"></i><p>${App.currentLanguage==='ru'?'Нет активных заказов на продажу':'No active sell orders'}</p></div>`,b.style.display='none';loadMyOrders()}catch(e){console.error('Market UI update error:',e)}}
-        
         function updateSellDetails(){let q=parseInt(document.getElementById('sellQuantity').value)||0,t=parseFloat(document.getElementById('sellTotalPrice').value)||0;q>0&&t>0?document.getElementById('sellPerUnitHint').innerHTML=`≈ ${formatFullPrecision(t/q)} TON per unit`:document.getElementById('sellPerUnitHint').innerHTML='≈ 0 TON per unit';let f=t*.1,p=t-f;document.getElementById('sellTotalTon').innerHTML=`Total: ${formatFullPrecision(t)} TON (You get: ${formatFullPrecision(p)} TON after 10% fee)`,document.getElementById('sellFeeDisplay').innerHTML=`⚠️ 10% market fee (${formatFullPrecision(f)} TON) will be deducted when sold`;let r=document.querySelector('input[name="sellResource"]:checked')?.value||'milk',b=r==='milk'?App.user?.milk:App.user?.eggs;document.getElementById('sellBalanceHint').innerHTML=`Available: ${formatNumber(b||0)} ${r==='milk'?'Milk':'Eggs'}`}
-        
         window.createSellOrder=async function(){let b=document.getElementById('submitSellOrderBtn');if(!validateAndCooldown('submitSellOrderBtn',b))return;let r=document.querySelector('input[name="sellResource"]:checked')?.value,q=parseInt(document.getElementById('sellQuantity').value),t=parseFloat(document.getElementById('sellTotalPrice').value);if(!r||!q||!t)return alert(App.currentLanguage==='ru'?'Заполните все поля':'Fill all fields');if(q<100)return alert(App.currentLanguage==='ru'?'Минимум 100 единиц':'Minimum 100 units');if(t<=0)return alert(App.currentLanguage==='ru'?'Общая цена должна быть > 0':'Total price must be > 0');let p=t/q,a=await checkActiveOrdersCount();if(a>=CONFIG.MAX_ACTIVE_ORDERS){let m=App.currentLanguage==='ru'?`⚠️ У вас может быть только ${CONFIG.MAX_ACTIVE_ORDERS} активных заказов. Пожалуйста, сначала отмените заказ.`:`⚠️ You can only have ${CONFIG.MAX_ACTIVE_ORDERS} active orders. Please cancel an order first.`;return showNotification(m,'warning')}try{let o=await callAPI('createSellOrder',{resource:r,quantity:q,pricePerUnit:p});showNotification(App.currentLanguage==='ru'?'✅ Ордер на продажу создан':'✅ Sell order created','success'),closeAllModals(),loadGameState()}catch(e){console.error('Create sell order error:',e)}};
-        
         window.showPurchaseConfirm=function(i,r,q,u){App.pendingOrder={id:i,resource:r,maxQuantity:q,pricePerUnit:u,type:'buy'};let m=document.getElementById('confirmPurchaseModal'),d=document.getElementById('confirmDetails'),e=document.getElementById('confirmEmoji'),t=document.getElementById('confirmResource');e.innerHTML=r==='milk'?'🥛':'🥚',t.innerHTML=r==='milk'?(App.currentLanguage==='ru'?'Пакет молока':'Milk Package'):(App.currentLanguage==='ru'?'Пакет яиц':'Eggs Package');let n=q*u;d.innerHTML=`<div class="confirm-row"><span class="confirm-label">${App.currentLanguage==='ru'?'Количество:':'Quantity:'}</span><span class="confirm-value">${formatNumber(q)}</span></div><div class="confirm-row"><span class="confirm-label">${App.currentLanguage==='ru'?'Цена за ед:':'Price per unit:'}</span><span class="confirm-value">${formatFullPrecision(u)} TON</span></div><div class="confirm-row"><span class="confirm-label">${App.currentLanguage==='ru'?'Итого:':'Total:'}</span><span class="confirm-total"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:14px;height:14px;object-fit:contain"> ${formatFullPrecision(n)}</span></div>`,document.getElementById('confirmExecuteBtn').onclick=function(){window.executeOrder(i,q)},m.classList.add('active')};
-        
         window.executeOrder=async function(i,q){let b=document.getElementById('confirmExecuteBtn');if(!validateAndCooldown('confirmExecuteBtn',b))return;try{let r=await callAPI('executeOrder',{orderId:i,quantity:q}),e=r.resource==='milk'?'🥛':'🥚',n=r.resource==='milk'?'MILK':'EGG';showNotification(`🎉 Order filled! ${q} ${e} ${n} for ${formatFullPrecision(r.totalCost)} TON`,'success'),loadGameState(),closeAllModals()}catch(e){console.error('Execute order error:',e)}};
-        
         window.cancelOrder=async function(i){if(!validateAndCooldown('cancelOrder_'+i))return;if(!confirm(App.currentLanguage==='ru'?'Отменить этот заказ?':'Cancel this order?'))return;try{await callAPI('cancelOrder',{orderId:i}),showNotification(App.currentLanguage==='ru'?'✅ Заказ отменен':'✅ Order cancelled','success'),loadGameState()}catch(e){console.error('Cancel order error:',e)}};
-        
         async function checkActiveOrdersCount(){try{let o=await callAPI('getMyOrders');return o.active?o.active.length:0}catch(e){return console.error('Error checking active orders:',e),0}}
-        
         async function loadMyOrders(){try{let o=await callAPI('getMyOrders'),a=document.getElementById('myActiveOrders');if(o.active&&o.active.length){let h='';o.active.forEach(o=>{let r=o.resource==='milk'?'🥛':'🥚',p=o.pricePerUnit,t=o.remaining*p;h+=`<div class="market-card"><div class="card-inner"><div class="card-title ${o.type}">${o.resource==='milk'?'MILK':'EGG'}</div><div class="amount-box"><span class="egg-icon">${r}</span><span>${formatNumber(o.remaining)}/${formatNumber(o.quantity)}</span></div><div class="price-label">PRICE</div><div class="price-box"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:18px;height:18px;display:inline-block;vertical-align:middle;filter:drop-shadow(0 0 2px rgba(255,255,255,.5))"><span>${formatFullPrecision(t)}</span></div><div class="unit-price">${formatFullPrecision(p)} TON/${o.resource==='milk'?'milk':'egg'}</div><button class="btn btn-secondary" style="padding:8px;font-size:12px;margin-top:8px" onclick="window.cancelOrder('${o.id}')">${App.currentLanguage==='ru'?'Отменить':'Cancel'}</button></div></div>`}),a.innerHTML=h}else a.innerHTML=`<div style="grid-column:span 2;text-align:center;padding:25px;color:var(--text-secondary)"><p>${App.currentLanguage==='ru'?'Нет активных заказов':'No active orders'}</p></div>`;let f=document.getElementById('myFilledOrders');if(o.filled&&o.filled.length){let h='';o.filled.slice(0,5).forEach(o=>{let d=new Date(o.createdAt).toLocaleDateString('en-GB');h+=`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid rgba(255,255,255,.05)"><div><span style="font-weight:600;font-size:11px">${o.type==='sell'?(App.currentLanguage==='ru'?'Продажа':'Sell'):(App.currentLanguage==='ru'?'Покупка':'Buy')} ${o.resource==='milk'?(App.currentLanguage==='ru'?'Молоко':'Milk'):(App.currentLanguage==='ru'?'Яйца':'Eggs')}</span><span style="font-size:9px;color:var(--text-muted);margin-left:4px">${d}</span></div><div><span style="color:var(--neon-green);font-size:11px">${formatNumber(o.quantity)}</span><span style="margin-left:4px;font-size:10px">@ ${formatFullPrecision(o.pricePerUnit)}</span></div></div>`}),f.innerHTML=h}else f.innerHTML=`<div style="text-align:center;padding:18px;color:var(--text-secondary)">${App.currentLanguage==='ru'?'Нет истории заказов':'No order history'}</div>`}catch(e){console.error('Load my orders error:',e)}}
-        
         function updateReferralUI(){App.referral&&(document.getElementById('totalReferrals').innerHTML=App.referral.totalReferrals||0,App.referralsPage=1,App.earningsPage=1,displayReferrals(1),displayEarnings(1))}
-        
         function displayReferrals(p=1,a=!1){let l=document.getElementById('recentReferralsList'),b=document.getElementById('loadMoreReferralsBtn');if(App.referral.recentReferrals&&App.referral.recentReferrals.length){let i=10,s=(p-1)*i,e=s+i,r=App.referral.recentReferrals.slice(s,e),h='';r.forEach(r=>{let d=r.joinedAt?new Date(r.joinedAt).toLocaleDateString('en-GB'):'Recently',n=r.firstName||r.username||`User ${r.userId?.substring(0,6)}`,u=r.photoUrl?`<img src="${r.photoUrl}" style="width:100%;height:100%;object-fit:cover">`:n.charAt(0).toUpperCase();h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid rgba(255,255,255,.05)"><div style="width:36px;height:36px;background:linear-gradient(145deg,var(--primary-pink),var(--crystal-blue));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;overflow:hidden;color:#fff;font-weight:600">${u}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:600;font-size:12px">${n}</div><div style="font-weight:700;color:var(--neon-green);font-size:11px">+${formatTON(r.totalEarnedFromThisUser||0)} TON</div></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px"><div style="font-size:9px;color:var(--text-muted)">${d}</div></div></div></div>`}),a?l.innerHTML+=h:l.innerHTML=h;let t=App.referral.recentReferrals.length>e;App.hasMoreReferrals=t,b.style.display=t?'block':'none'}else l.innerHTML=`<div style="text-align:center;padding:18px;color:var(--text-secondary)">${App.currentLanguage==='ru'?'Нет рефералов':'No referrals yet'}</div>`,b.style.display='none'}
-        
         function displayEarnings(p=1,a=!1){let l=document.getElementById('earningsHistoryList'),b=document.getElementById('loadMoreEarningsBtn');if(App.referral.recentEarnings&&App.referral.recentEarnings.length){let i=10,s=(p-1)*i,e=s+i,r=App.referral.recentEarnings.slice(s,e),h='';r.forEach(r=>{let d=new Date(r.timestamp).toLocaleDateString('en-GB'),n=r.firstName||r.username||`User ${r.userId?.substring(0,6)}`,u=r.type==='cow_purchase'?'🐮 Cow':r.type==='chicken_purchase'?'🐔 Chicken':r.type==='diamond_engine_purchase'?'💎 Crystal Engine':r.type||'purchase';h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid rgba(255,255,255,.05)"><div><div style="font-size:11px;font-weight:600">${n}</div><div style="font-size:9px;color:var(--text-muted)">${u}</div></div><div style="text-align:right"><div style="font-size:11px;font-weight:700;color:var(--neon-green)">+${formatTON(r.amount)} TON</div><div style="font-size:8px;color:var(--text-muted)">${d}</div></div></div>`}),a?l.innerHTML+=h:l.innerHTML=h;let t=App.referral.recentEarnings.length>e;App.hasMoreEarnings=t,b.style.display=t?'block':'none'}else l.innerHTML=`<div style="text-align:center;padding:18px;color:var(--text-secondary)">${App.currentLanguage==='ru'?'Нет доходов':'No earnings yet'}</div>`,b.style.display='none'}
-        
         function updateAllUI(){if(!App.user||!App.global)return;document.getElementById('statusMilk').innerHTML=formatNumber(App.user.milk),document.getElementById('statusEggs').innerHTML=formatNumber(App.user.eggs),document.getElementById('statusDiamond').innerHTML=formatNumber(App.user.diamond),document.getElementById('statusTon').innerHTML=formatTON(App.user.tonBalance),document.getElementById('milkPerHour').innerHTML=App.user.milkPerHour||0,document.getElementById('eggsPerHour').innerHTML=App.user.eggsPerHour||0,document.getElementById('crystalPriceHeader').innerHTML=CONFIG.CRYSTAL_PRICE,updateProductionTimer(),document.getElementById('cowsOwned').innerHTML=App.user.cows_owned||0;let p=App.global.cows_progress||0;document.getElementById('cowProgressText').innerHTML=`${App.global.cows_sold||0}/${App.global.cows_cap}`,document.getElementById('cowProgressFill').style.width=p+'%';let c=document.getElementById('buyCowBtn'),b=document.getElementById('cowBadge');App.global.cows_remaining<=0?(c.disabled=!0,c.innerHTML='<i class="fas fa-ban"></i> '+(App.currentLanguage==='ru'?'Продано':'Sold Out'),b.innerHTML=App.currentLanguage==='ru'?'ПРОДАНО':'SOLD OUT',b.className='machine-badge badge-soldout'):(c.disabled=!1,c.innerHTML='<i class="fas fa-shopping-cart"></i> '+(App.currentLanguage==='ru'?'Купить несколько':'Buy Multiple'),b.innerHTML=`${App.global.cows_remaining} `+(App.currentLanguage==='ru'?'ОСТАЛОСЬ':'LEFT'),b.className='machine-badge badge-available'),document.getElementById('chickensOwned').innerHTML=App.user.chickens_owned||0,document.getElementById('chickenProgressText').innerHTML=`${App.global.chickens_sold||0}/${App.global.chickens_cap}`,document.getElementById('chickenProgressFill').style.width=(App.global.chickens_progress||0)+'%';let k=document.getElementById('buyChickenBtn'),a=document.getElementById('chickenBadge');App.global.chicken_unlocked?(k.disabled=!1,k.innerHTML='<i class="fas fa-shopping-cart"></i> '+(App.currentLanguage==='ru'?'Купить':'Buy'),a.innerHTML=`${App.global.chickens_remaining} `+(App.currentLanguage==='ru'?'ОСТАЛОСЬ':'LEFT'),a.className='machine-badge badge-available'):(k.disabled=!0,k.innerHTML='<i class="fas fa-lock"></i> '+(App.currentLanguage==='ru'?'Заблокировано':'Locked'),a.innerHTML=App.currentLanguage==='ru'?'ЗАБЛОК':'LOCKED',a.className='machine-badge badge-locked'),document.getElementById('diamondEnginesOwned').innerHTML=App.user.diamond_engines_owned||0;let g=document.getElementById('buyDiamondBtn'),s=document.getElementById('startDiamondBtn'),l=document.getElementById('diamondBadge');App.global.diamond_unlocked?(g.disabled=App.user.tonBalance<20,g.innerHTML='<i class="fas fa-shopping-cart"></i> '+(App.currentLanguage==='ru'?'Купить':'Buy'),s.disabled=!0,l.innerHTML=App.currentLanguage==='ru'?'ДОСТУПНО':'AVAILABLE',l.className='machine-badge badge-available'):(g.disabled=!0,g.innerHTML='<i class="fas fa-lock"></i> '+(App.currentLanguage==='ru'?'Заблокировано':'Locked'),s.disabled=!0,l.innerHTML=App.currentLanguage==='ru'?'ЗАБЛОК':'LOCKED',l.className='machine-badge badge-locked'),document.getElementById('diamondBalanceMain').innerHTML=formatNumber(App.user.diamond||0),document.getElementById('crystalPriceMain').innerHTML=CONFIG.CRYSTAL_PRICE,document.getElementById('milkForDiamond').innerHTML=formatNumber(App.user.milk||0),document.getElementById('eggsForDiamond').innerHTML=formatNumber(App.user.eggs||0);let h=document.getElementById('convertAmount').value||0;document.getElementById('tonReceiveMain').innerHTML=formatTON(h*CONFIG.CRYSTAL_PRICE),document.getElementById('profileMilk').innerHTML=formatNumber(App.user.milk||0),document.getElementById('profileEggs').innerHTML=formatNumber(App.user.eggs||0),document.getElementById('profileDiamond').innerHTML=formatNumber(App.user.diamond||0),document.getElementById('profileTon').innerHTML=formatTON(App.user.tonBalance||0),document.getElementById('profileMilkRate').innerHTML=App.user.milkPerHour||0,document.getElementById('profileEggsRate').innerHTML=App.user.eggsPerHour||0,document.getElementById('profileDiamondPrice').innerHTML=CONFIG.CRYSTAL_PRICE,document.getElementById('totalMachines').innerHTML=(App.user.cows_owned||0)+(App.user.chickens_owned||0)+(App.user.diamond_engines_owned||0),document.getElementById('totalProduction').innerHTML=(App.user.milkPerHour+App.user.eggsPerHour)+'/h',App.user.referralCode&&(document.getElementById('referralLink').value=`https://t.me/${CONFIG.BOT_USERNAME.replace('@','')}?startapp=ref_${App.userId}`),document.getElementById('totalReferrals').innerHTML=App.referral?.totalReferrals||0;let r=document.getElementById('claimReferralBtn');App.user.referralEarnings>0?(r.disabled=!1,r.innerHTML=`<i class="fas fa-hand-holding-usd"></i> ${App.currentLanguage==='ru'?'Забрать ':'Claim '}${formatTON(App.user.referralEarnings)} TON`):(r.disabled=!0,r.innerHTML='<i class="fas fa-hand-holding-usd"></i> '+(App.currentLanguage==='ru'?'Нет дохода':'No Earnings'));let i=document.getElementById('sellBalanceHint');if(i){let u=document.querySelector('input[name="sellResource"]:checked')?.value||'milk';i.innerHTML=(App.currentLanguage==='ru'?'Доступно: ':'Available: ')+`${formatNumber(u==='milk'?App.user.milk:App.user.eggs)} ${u==='milk'?'Milk':'Eggs'}`}document.getElementById('hatchCowBalance').innerHTML=(App.currentLanguage==='ru'?'Ваше молоко: ':'Your milk: ')+formatNumber(App.user.milk||0),document.getElementById('hatchChickenBalance').innerHTML=(App.currentLanguage==='ru'?'Ваши яйца: ':'Your eggs: ')+formatNumber(App.user.eggs||0);let t=parseFloat(document.getElementById('withdrawAmount').value)||0,f=t*.05,y=t-f;document.getElementById('withdrawFee').innerHTML=`${formatTON(f)} TON`,document.getElementById('withdrawNet').innerHTML=`${formatTON(y)} TON`,document.getElementById('taskUserBalance').innerHTML=formatTON(App.user.tonBalance||0)}
-        
         function updateTasksUI(){if(!App.tasks)return;let g=document.getElementById('tasksGrid'),c=App.currentTaskTab,t=App.tasks[c]||[];if(!t.length){g.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-secondary)"><i class="fas fa-clipboard-list" style="font-size:48px;margin-bottom:15px;opacity:.5"></i><p data-i18n="tasks.noTasks">No tasks available</p></div>';return}let h='';t.forEach(s=>{let r=s.completedBy&&s.completedBy.includes(App.userId),u=s.type==='channel'?'📢':'🤖',i=s.type==='channel'?(App.currentLanguage==='ru'?'Канал':'Channel'):(App.currentLanguage==='ru'?'Бот':'Bot'),p=s.id.startsWith('partner_')?'partner-task':'',o=sessionStorage.getItem(`task_${s.id}_joined`)==='true';h+=`<div class="task-card ${p}" style="padding:10px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div style="width:24px;height:24px;background:rgba(255,92,168,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">${u}</div><div style="font-size:11px;font-weight:600;color:var(--text-secondary)">${s.name||i}</div></div><div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:4px"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:14px;height:14px;object-fit:contain"><span style="font-size:11px;font-weight:600;color:var(--neon-green)">${formatTON(s.reward||CONFIG.TASK_REWARD)}</span></div>${r?`<span style="font-size:10px;color:var(--text-muted)"><i class="fas fa-check-circle" style="color:var(--neon-green)"></i> ${App.currentLanguage==='ru'?'Выполнено':'Done'}</span>`:`<button class="task-btn" id="taskBtn_${s.id}" style="padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;background:${o?'linear-gradient(145deg,var(--neon-green),#00b35e)':'linear-gradient(145deg,var(--crystal-blue),#0099cc)'};color:#fff;border:none;cursor:pointer" onclick="window.handleTaskButton('${s.id}','${s.link}','${s.type}',${o})">${o?(App.currentLanguage==='ru'?'Проверить':'Verify'):(App.currentLanguage==='ru'?'Присоединиться':'Join')}</button>`}</div></div>`}),g.innerHTML=h}
-        
         window.handleTaskButton=function(i,l,t,o){if(!o){sessionStorage.setItem(`task_${i}_joined`,'true'),window.open(l,'_blank');setTimeout(()=>{let b=document.getElementById(`taskBtn_${i}`);b&&(b.innerHTML=App.currentLanguage==='ru'?'Проверить':'Verify',b.style.background='linear-gradient(145deg, var(--neon-green), #00b35e)',b.setAttribute('onclick',`window.verifyTask('${i}','${t}')`))},2e3)}else window.verifyTask(i,t)};
-        
         window.verifyTask=async function(i,t){try{let s=App.tasks[App.currentTaskTab].find(t=>t.id===i);if(!s)return showNotification('Task not found','error');let m=document.getElementById('taskVerifyModal');document.getElementById('verifyEmoji').innerHTML=s.type==='channel'?'📢':'🤖',document.getElementById('verifyTitle').innerHTML=s.type==='channel'?(App.currentLanguage==='ru'?'Присоединиться к каналу':'Join Channel'):(App.currentLanguage==='ru'?'Запустить бота':'Start Bot'),document.getElementById('verifyLink').innerHTML=s.link,document.getElementById('verifyReward').innerHTML=formatTON(s.reward||CONFIG.TASK_REWARD)+' TON',document.getElementById('verifyJoinLink').href=s.link,document.getElementById('verifyStatus').style.display='none',document.getElementById('verifyCheckBtn').onclick=async function(){await performTaskVerification(s)},m.classList.add('active')}catch(e){console.error('Task verification error:',e),showNotification('Verification failed','error')}};
-        
         async function performTaskVerification(t){let b=document.getElementById('verifyCheckBtn');if(!validateAndCooldown('verifyCheckBtn',b))return;try{let s=document.getElementById('verifyStatus');s.style.display='block',s.innerHTML=`<div style="text-align:center"><i class="fas fa-spinner fa-spin"></i> ${App.currentLanguage==='ru'?'Проверка...':'Verifying...'}</div>`;let r=await callAPI('verifyTask',{taskId:t.id,taskType:t.type});r&&(s.innerHTML=`<div style="color:var(--neon-green);text-align:center">✅ ${App.currentLanguage==='ru'?'Задание выполнено! Награда добавлена.':'Task completed! Reward added.'}</div>`,showNotification(App.currentLanguage==='ru'?`✅ Задание выполнено! +${formatTON(t.reward||CONFIG.TASK_REWARD)} TON`:`✅ Task completed! +${formatTON(t.reward||CONFIG.TASK_REWARD)} TON`,'success'),sessionStorage.removeItem(`task_${t.id}_joined`),setTimeout(()=>{closeAllModals(),loadGameState()},2e3))}catch(e){console.error('Task verification error:',e);let s=document.getElementById('verifyStatus');s.style.display='block',e.message.includes('Not a member')||e.message.includes('NOT_MEMBER')?(s.innerHTML=`<div style="color:var(--danger-red);text-align:center">❌ ${App.currentLanguage==='ru'?'Не участник канала':'Not a member of the channel'}</div>`,sessionStorage.removeItem(`task_${t.id}_joined`)):e.message.includes('already completed')||e.message.includes('TASK_ALREADY_COMPLETED')?s.innerHTML=`<div style="color:var(--warning);text-align:center">⚠️ ${App.currentLanguage==='ru'?'Задание уже выполнено':'Task already completed'}</div>`:s.innerHTML=`<div style="color:var(--danger-red);text-align:center">❌ ${e.message||(App.currentLanguage==='ru'?'Ошибка проверки':'Verification error')}</div>`}}
-        
-        function setupIntervals(){App.timerInterval&&clearInterval(App.timerInterval),App.timerInterval=setInterval(()=>{App.user&&App.user.secondsUntilNext>0?(App.user.secondsUntilNext--,updateProductionTimer()):loadGameState()},1e3),App.marketInterval&&clearInterval(App.marketInterval),App.marketInterval=setInterval(()=>{App.currentMarketResource&&updateMarketUI(1,!0)},CONFIG.MARKET_REFRESH),setInterval(()=>{loadGameState(); updateExpirationTimers();},3e4)}
-        
-        function setupEventListeners(){document.querySelectorAll('.nav-item').forEach(i=>{i.addEventListener('click',()=>{let s=i.dataset.section;document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')),document.getElementById(s).classList.add('active'),document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')),i.classList.add('active'),s==='sectionTasks'&&updateTasksUI(),s==='sectionLeaderboard'&&loadGameState(),s==='sectionRanch'&&updateRanchUI()})}),document.getElementById('leaderboardButton').addEventListener('click',function(){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')),document.getElementById('sectionLeaderboard').classList.add('active'),document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')),loadGameState()}),document.querySelectorAll('.lang-btn').forEach(b=>{b.addEventListener('click',function(){let l=this.dataset.lang;setLanguage(l),App.tonConnectUI&&(App.tonConnectUI.language=l==='ru'?'ru':'en'),updateAllUI()})}),document.querySelectorAll('[data-market-tab]').forEach(t=>{t.addEventListener('click',function(){document.querySelectorAll('[data-market-tab]').forEach(t=>t.classList.remove('active')),this.classList.add('active');let v=this.dataset.marketTab;document.getElementById('marketBuyView').style.display=v==='buy'?'block':'none',document.getElementById('marketMyOrdersView').style.display=v==='orders'?'block':'none',v==='orders'&&loadMyOrders()})}),document.querySelectorAll('[data-task-tab]').forEach(t=>{t.addEventListener('click',function(){document.querySelectorAll('[data-task-tab]').forEach(t=>t.classList.remove('active')),this.classList.add('active'),App.currentTaskTab=this.dataset.taskTab,updateTasksUI()})}),document.querySelectorAll('[data-resource]').forEach(r=>{r.addEventListener('click',function(){document.querySelectorAll('[data-resource]').forEach(r=>r.classList.remove('active')),this.classList.add('active'),App.currentMarketResource=this.dataset.resource,App.currentMarketPage=1,updateMarketUI(1,!0)})}),document.querySelectorAll('input[name="taskType"]').forEach(r=>{r.addEventListener('change',function(){document.getElementById('channelNote').style.display=this.value==='channel'?'block':'none'})}),document.getElementById('refreshMarketBtn').addEventListener('click',function(){App.currentMarketPage=1,updateMarketUI(1,!0),this.querySelector('i').style.animation='spin-slow 0.5s infinite linear',setTimeout(()=>{this.querySelector('i').style.animation='spin-slow 2s infinite linear'},500)}),document.getElementById('refreshTasksBtn').addEventListener('click',function(){loadGameState(),this.querySelector('i').style.animation='spin-slow 0.5s infinite linear',setTimeout(()=>{this.querySelector('i').style.animation='spin-slow 2s infinite linear'},500)}),document.getElementById('loadMoreSellBtn').addEventListener('click',function(){App.currentMarketPage++,updateMarketUI(App.currentMarketPage,!1)}),document.getElementById('loadMoreReferralsBtn').addEventListener('click',function(){App.referralsPage++,displayReferrals(App.referralsPage,!0)}),document.getElementById('loadMoreEarningsBtn').addEventListener('click',function(){App.earningsPage++,displayEarnings(App.earningsPage,!0)}),document.getElementById('buyCowBtn').addEventListener('click',window.buyCow),document.getElementById('ranchBuyCowBtn').addEventListener('click',window.buyRanchCow),document.getElementById('hatchCowBtn').addEventListener('click',window.openHatchModal),document.getElementById('hatchChickenBtn').addEventListener('click',window.openHatchModal),document.getElementById('hatchCowConfirm').addEventListener('click',window.hatchCow),document.getElementById('convertDiamondBtn').addEventListener('click',window.convertDiamond),document.getElementById('convertAmount').addEventListener('input',updateAllUI),document.getElementById('copyReferralBtn').addEventListener('click',window.copyReferralLink),document.getElementById('claimReferralBtn').addEventListener('click',window.claimReferral),document.getElementById('withdrawBtn').addEventListener('click',window.withdraw),document.getElementById('withdrawAmount').addEventListener('input',updateAllUI),document.getElementById('createSellOrderBtnTop').addEventListener('click',window.openSellOrderModal),document.getElementById('submitSellOrderBtn').addEventListener('click',window.createSellOrder),document.getElementById('depositButton').addEventListener('click',window.openDepositModal),document.getElementById('connectWalletBtn').addEventListener('click',connectWallet),document.getElementById('submitDepositBtn').addEventListener('click',window.initiateDeposit),document.getElementById('addTaskBtn').addEventListener('click',window.openAddTaskModal),document.getElementById('submitTaskBtn').addEventListener('click',window.createTask),document.getElementById('taskTarget').addEventListener('input',calculateTaskPrice),document.querySelectorAll('[data-activate]').forEach(b=>{b.addEventListener('click',function(){let v=this.dataset.activate,i=document.getElementById('activateAmount'),m=parseInt(i.max);i.value=v==='all'?m:Math.min(parseInt(v),m),updateActivateCost()})}),document.querySelectorAll('[data-upgrade]').forEach(b=>{b.addEventListener('click',function(){let v=this.dataset.upgrade,i=document.getElementById('upgradeAmount'),m=parseInt(i.max);i.value=v==='all'?m:Math.min(parseInt(v),m),updateUpgradeCost()})}),document.getElementById('activateAmount').addEventListener('input',updateActivateCost),document.getElementById('upgradeAmount').addEventListener('input',updateUpgradeCost),document.getElementById('claimMilkBtn').addEventListener('click',window.claimMilk),document.getElementById('upgradeStorageBtn').addEventListener('click',window.openUpgradeStorageModal),document.querySelectorAll('[data-sell-percent]').forEach(b=>{b.addEventListener('click',function(){let p=parseInt(this.dataset.sellPercent)/100,r=document.querySelector('input[name="sellResource"]:checked')?.value||'milk',b=r==='milk'?App.user.milk:App.user.eggs,a=Math.floor(b*p);document.getElementById('sellQuantity').value=Math.max(100,a),updateSellDetails()})}),document.querySelectorAll('[data-deposit]').forEach(b=>{b.addEventListener('click',function(){document.getElementById('depositAmountInput').value=this.dataset.deposit})}),document.querySelectorAll('input[name="sellResource"]').forEach(r=>{r.addEventListener('change',()=>{updateAllUI(),updateSellDetails()})}),document.getElementById('helpButton').addEventListener('click',function(){document.getElementById('helpModal').classList.add('active')}),document.getElementById('closeHelp').addEventListener('click',function(){document.getElementById('helpModal').classList.remove('active')}),document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',function(e){e.target===this&&this.classList.remove('active')})}),document.getElementById('sellQuantity').addEventListener('input',updateSellDetails),document.getElementById('sellTotalPrice').addEventListener('input',updateSellDetails)}
-        
+        function setupIntervals(){App.timerInterval&&clearInterval(App.timerInterval),App.timerInterval=setInterval(()=>{App.user&&App.user.secondsUntilNext>0?(App.user.secondsUntilNext--,updateProductionTimer()):loadGameState()},1e3),App.marketInterval&&clearInterval(App.marketInterval),App.marketInterval=setInterval(()=>{App.currentMarketResource&&updateMarketUI(1,!0)},CONFIG.MARKET_REFRESH),setInterval(()=>{loadGameState()},3e4)}
+        function setupEventListeners(){document.querySelectorAll('.nav-item').forEach(i=>{i.addEventListener('click',()=>{let s=i.dataset.section;document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')),document.getElementById(s).classList.add('active'),document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')),i.classList.add('active'),s==='sectionTasks'&&updateTasksUI(),s==='sectionLeaderboard'&&loadGameState(),s==='sectionRanch'&&updateRanchUI()})}),document.getElementById('leaderboardButton').addEventListener('click',function(){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')),document.getElementById('sectionLeaderboard').classList.add('active'),document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')),loadGameState()}),document.querySelectorAll('.lang-btn').forEach(b=>{b.addEventListener('click',function(){let l=this.dataset.lang;setLanguage(l),App.tonConnectUI&&(App.tonConnectUI.language=l==='ru'?'ru':'en'),updateAllUI()})}),document.querySelectorAll('[data-market-tab]').forEach(t=>{t.addEventListener('click',function(){document.querySelectorAll('[data-market-tab]').forEach(t=>t.classList.remove('active')),this.classList.add('active');let v=this.dataset.marketTab;document.getElementById('marketBuyView').style.display=v==='buy'?'block':'none',document.getElementById('marketMyOrdersView').style.display=v==='orders'?'block':'none',v==='orders'&&loadMyOrders()})}),document.querySelectorAll('[data-task-tab]').forEach(t=>{t.addEventListener('click',function(){document.querySelectorAll('[data-task-tab]').forEach(t=>t.classList.remove('active')),this.classList.add('active'),App.currentTaskTab=this.dataset.taskTab,updateTasksUI()})}),document.querySelectorAll('[data-resource]').forEach(r=>{r.addEventListener('click',function(){document.querySelectorAll('[data-resource]').forEach(r=>r.classList.remove('active')),this.classList.add('active'),App.currentMarketResource=this.dataset.resource,App.currentMarketPage=1,updateMarketUI(1,!0)})}),document.querySelectorAll('input[name="taskType"]').forEach(r=>{r.addEventListener('change',function(){document.getElementById('channelNote').style.display=this.value==='channel'?'block':'none'})}),document.getElementById('refreshMarketBtn').addEventListener('click',function(){App.currentMarketPage=1,updateMarketUI(1,!0),this.querySelector('i').style.animation='spin-slow 0.5s infinite linear',setTimeout(()=>{this.querySelector('i').style.animation='spin-slow 2s infinite linear'},500)}),document.getElementById('refreshTasksBtn').addEventListener('click',function(){loadGameState(),this.querySelector('i').style.animation='spin-slow 0.5s infinite linear',setTimeout(()=>{this.querySelector('i').style.animation='spin-slow 2s infinite linear'},500)}),document.getElementById('loadMoreSellBtn').addEventListener('click',function(){App.currentMarketPage++,updateMarketUI(App.currentMarketPage,!1)}),document.getElementById('loadMoreReferralsBtn').addEventListener('click',function(){App.referralsPage++,displayReferrals(App.referralsPage,!0)}),document.getElementById('loadMoreEarningsBtn').addEventListener('click',function(){App.earningsPage++,displayEarnings(App.earningsPage,!0)}),document.getElementById('buyCowBtn').addEventListener('click',window.buyCow),document.getElementById('ranchBuyCowBtn').addEventListener('click',window.buyRanchCow),document.getElementById('hatchCowBtn').addEventListener('click',window.openHatchModal),document.getElementById('hatchChickenBtn').addEventListener('click',window.openHatchModal),document.getElementById('hatchCowConfirm').addEventListener('click',window.hatchCow),document.getElementById('convertDiamondBtn').addEventListener('click',window.convertDiamond),document.getElementById('convertAmount').addEventListener('input',updateAllUI),document.getElementById('copyReferralBtn').addEventListener('click',window.copyReferralLink),document.getElementById('claimReferralBtn').addEventListener('click',window.claimReferral),document.getElementById('withdrawBtn').addEventListener('click',window.withdraw),document.getElementById('withdrawAmount').addEventListener('input',updateAllUI),document.getElementById('createSellOrderBtnTop').addEventListener('click',window.openSellOrderModal),document.getElementById('submitSellOrderBtn').addEventListener('click',window.createSellOrder),document.getElementById('depositButton').addEventListener('click',window.openDepositModal),document.getElementById('connectWalletBtn').addEventListener('click',connectWallet),document.getElementById('submitDepositBtn').addEventListener('click',window.initiateDeposit),document.getElementById('addTaskBtn').addEventListener('click',window.openAddTaskModal),document.getElementById('submitTaskBtn').addEventListener('click',window.createTask),document.getElementById('taskTarget').addEventListener('input',calculateTaskPrice),document.querySelectorAll('[data-activate]').forEach(b=>{b.addEventListener('click',function(){let v=this.dataset.activate,i=document.getElementById('activateAmount'),m=parseInt(i.max);i.value=v==='all'?m:Math.min(parseInt(v),m),updateActivateCost()})}),document.querySelectorAll('[data-upgrade]').forEach(b=>{b.addEventListener('click',function(){let v=this.dataset.upgrade,i=document.getElementById('upgradeAmount'),m=parseInt(i.max);i.value=v==='all'?m:Math.min(parseInt(v),m),updateUpgradeCost()})}),document.getElementById('activateAmount').addEventListener('input',updateActivateCost),document.getElementById('upgradeAmount').addEventListener('input',updateUpgradeCost),document.getElementById('claimMilkBtn').addEventListener('click',window.claimMilk),document.getElementById('upgradeStorageBtn').addEventListener('click',openUpgradeStorageModal),document.querySelectorAll('[data-sell-percent]').forEach(b=>{b.addEventListener('click',function(){let p=parseInt(this.dataset.sellPercent)/100,r=document.querySelector('input[name="sellResource"]:checked')?.value||'milk',b=r==='milk'?App.user.milk:App.user.eggs,a=Math.floor(b*p);document.getElementById('sellQuantity').value=Math.max(100,a),updateSellDetails()})}),document.querySelectorAll('[data-deposit]').forEach(b=>{b.addEventListener('click',function(){document.getElementById('depositAmountInput').value=this.dataset.deposit})}),document.querySelectorAll('input[name="sellResource"]').forEach(r=>{r.addEventListener('change',()=>{updateAllUI(),updateSellDetails()})}),document.getElementById('helpButton').addEventListener('click',function(){document.getElementById('helpModal').classList.add('active')}),document.getElementById('closeHelp').addEventListener('click',function(){document.getElementById('helpModal').classList.remove('active')}),document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',function(e){e.target===this&&this.classList.remove('active')})}),document.getElementById('sellQuantity').addEventListener('input',updateSellDetails),document.getElementById('sellTotalPrice').addEventListener('input',updateSellDetails)}
         document.addEventListener('DOMContentLoaded',initApp);
-        
         window.openSellOrderModal=function(){document.getElementById('sellOrderModal').classList.add('active'),updateSellDetails()};
         window.openHatchModal=function(){document.getElementById('hatchModal').classList.add('active')};
         window.openAddTaskModal=function(){document.getElementById('addTaskModal').classList.add('active'),calculateTaskPrice()};
         window.openDepositModal=function(){document.getElementById('depositModal').classList.add('active')};
         window.closeAllModals=function(){document.querySelectorAll('.modal-overlay').forEach(m=>{m.classList.remove('active')}),App.pendingOrder=null,App.pendingTask=null};
-        
         window.openActivateModal=function(l){App.currentActivateLevel=l;let m=document.getElementById('activateCowModal'),c=CONFIG.COW_LEVELS[l],e={1:'🐮',2:'🦬',3:'🐃'},t={1:'Level 1 Cows',2:'Level 2 Cows',3:'Level 3 Cows'};document.getElementById('activateLevelEmoji').innerHTML=e[l],document.getElementById('activateLevelTitle').innerHTML=t[l],document.getElementById('activateLevelInfo').innerHTML=`${c.productionPerDay} Milk/day · ${c.activationCost}🥛 activation`;let a=App.ranch.cowLevels[l]||0;document.getElementById('activateAvailable').innerHTML=a,document.getElementById('activateAmount').max=a,document.getElementById('activateAmount').value=Math.min(1,a),document.getElementById('activateBalance').innerHTML=formatNumber(App.user?.milk||0)+' 🥛',updateActivateCost(),m.classList.add('active')};
-        
         function updateActivateCost(){let l=App.currentActivateLevel,a=parseInt(document.getElementById('activateAmount').value)||0,c=a*CONFIG.COW_LEVELS[l].activationCost;document.getElementById('activateCost').innerHTML=formatNumber(c)+' 🥛';let o=App.ranch.cowLevels[l]||0,m=App.user?.milk||0,d=document.getElementById('confirmActivateBtn');d.disabled=a>o||a<=0||c>m,document.querySelectorAll('[data-activate]').forEach(b=>{b.classList.remove('active')})}
-        
         window.executeActivateCows=async function(){let b=document.getElementById('confirmActivateBtn');if(!validateAndCooldown('confirmActivateBtn',b))return;let l=App.currentActivateLevel,a=parseInt(document.getElementById('activateAmount').value);if(a<=0)return;try{await callAPI('activateCows',{level:l,amount:a}),await loadGameState(),closeAllModals(),showNotification(App.currentLanguage==='ru'?`✅ Активировано ${a} коров(а) уровня ${l}!`:`✅ Activated ${a} level ${l} cows!`,'success')}catch(e){console.error('Activation error:',e)}};
-        
         window.openUpgradeModal=function(f){if(f>=3)return showNotification('Maximum level reached','info');App.currentUpgradeFromLevel=f;let m=document.getElementById('upgradeCowModal'),t=f+1,o=CONFIG.COW_LEVELS[f],i=CONFIG.COW_LEVELS[t],e={1:'🐮',2:'🦬',3:'🐃'};document.getElementById('upgradeFromEmoji').innerHTML=`${e[f]} → ${e[t]}`,document.getElementById('upgradeLevelTitle').innerHTML=`Level ${f} → Level ${t}`,document.getElementById('upgradeLevelInfo').innerHTML=`${o.productionPerDay} → ${i.productionPerDay} Milk/day · ${o.upgradeCost}🥛 upgrade`;let a=App.ranch.cowLevels[f]||0;document.getElementById('upgradeAvailable').innerHTML=a,document.getElementById('upgradeAmount').max=a,document.getElementById('upgradeAmount').value=Math.min(1,a),document.getElementById('upgradeBalance').innerHTML=formatNumber(App.user?.milk||0)+' 🥛',updateUpgradeCost(),m.classList.add('active')};
-        
         function updateUpgradeCost(){let l=App.currentUpgradeFromLevel,a=parseInt(document.getElementById('upgradeAmount').value)||0,c=a*CONFIG.COW_LEVELS[l].upgradeCost;document.getElementById('upgradeCost').innerHTML=formatNumber(c)+' 🥛';let o=App.ranch.cowLevels[l]||0,m=App.user?.milk||0,d=document.getElementById('confirmUpgradeBtn');d.disabled=a>o||a<=0||c>m,document.querySelectorAll('[data-upgrade]').forEach(b=>{b.classList.remove('active')})}
-        
         window.executeUpgradeCows=async function(){let b=document.getElementById('confirmUpgradeBtn');if(!validateAndCooldown('confirmUpgradeBtn',b))return;let f=App.currentUpgradeFromLevel,a=parseInt(document.getElementById('upgradeAmount').value);if(a<=0)return;try{await callAPI('upgradeCowLevel',{fromLevel:f,amount:a}),await loadGameState(),closeAllModals(),showNotification(App.currentLanguage==='ru'?`✅ Улучшено ${a} коров(а) до уровня ${f+1}!`:`✅ Upgraded ${a} cows to level ${f+1}!`,'success')}catch(e){console.error('Upgrade error:',e)}};
-        
         window.claimMilk=async function(){let b=document.getElementById('claimMilkBtn');if(!validateAndCooldown('claimMilkBtn',b))return;if(App.ranch.milkStored<=0)return showNotification('No milk to claim','info');try{await callAPI('claimMilk'),await loadGameState(),showNotification(App.currentLanguage==='ru'?`✅ Забрано ${formatNumber(App.ranch.milkStored)} 🥛 из хранилища!`:`✅ Claimed ${formatNumber(App.ranch.milkStored)} 🥛 from storage!`,'success')}catch(e){console.error('Claim milk error:',e)}};
-        
+        window.upgradeStorage=executeUpgradeStorage; // ربط الدالة
         window.copyReferralLink=function(){document.getElementById('referralLink').select(),navigator.clipboard.writeText(document.getElementById('referralLink').value),showNotification(App.currentLanguage==='ru'?'✅ Ссылка скопирована!':'✅ Link copied!','success')};
-        
         window.claimReferral=async function(){let b=document.getElementById('claimReferralBtn');if(!validateAndCooldown('claimReferralBtn',b))return;try{let r=await callAPI('claimReferralEarnings');await loadGameState(),animateTonBalance(),showNotification(App.currentLanguage==='ru'?`✅ Забрано ${r.claimedAmount} TON!`:`✅ Claimed ${r.claimedAmount} TON!`,'success')}catch(e){console.error('Claim referral error:',e)}};
-        
         window.withdraw=async function(){let b=document.getElementById('withdrawBtn');if(!validateAndCooldown('withdrawBtn',b))return;let a=parseFloat(document.getElementById('withdrawAmount').value),d=document.getElementById('withdrawAddress').value.trim();if(!a||a<.1)return alert(App.currentLanguage==='ru'?'Минимальный вывод: 0.1 TON':'Minimum withdrawal: 0.1 TON');if(!d||d.length<10)return alert(App.currentLanguage==='ru'?'Введите корректный TON адрес':'Enter valid TON address');if(a>App.user.tonBalance)return alert(App.currentLanguage==='ru'?'Недостаточно средств':'Insufficient balance');try{let r=await callAPI('withdraw',{amount:a,address:d});await loadGameState(),document.getElementById('withdrawAmount').value='',document.getElementById('withdrawAddress').value='',showNotification(App.currentLanguage==='ru'?`✅ Запрос на вывод: ${r.netAmount} TON`:`✅ Withdrawal requested: ${r.netAmount} TON`,'success'),closeAllModals()}catch(e){console.error('Withdraw error:',e)}};
-        
         window.convertDiamond=async function(){let b=document.getElementById('convertDiamondBtn');if(!validateAndCooldown('convertDiamondBtn',b))return;let a=parseInt(document.getElementById('convertAmount').value);if(!a||a<=0)return alert(App.currentLanguage==='ru'?'Введите корректную сумму':'Enter valid amount');if(a>App.user.diamond)return alert(App.currentLanguage==='ru'?'Недостаточно кристаллов':'Insufficient crystals');try{let r=await callAPI('convertDiamond',{amount:a});await loadGameState(),document.getElementById('convertAmount').value='',animateTonBalance(),showNotification(App.currentLanguage==='ru'?`✅ Конвертировано ${a} 💎 в ${r.tonReceived} TON`:`✅ Converted ${a} 💎 to ${r.tonReceived} TON`,'success')}catch(e){console.error('Convert crystal error:',e)}};
-        
         window.buyCow=async function(){let b=document.getElementById('buyCowBtn');if(!validateAndCooldown('buyCowBtn',b))return;let m=document.createElement('div');m.className='modal-overlay active',m.id='buyCowModal',m.innerHTML=`<div class="modal-content"><div class="modal-header"><h3 class="modal-title"><i class="fas fa-cow" style="color:var(--neon-green)"></i> ${App.currentLanguage==='ru'?'Купить корову':'Buy Cow'}</h3><i class="fas fa-times modal-close" onclick="document.getElementById('buyCowModal').remove()"></i></div><div class="form-group"><label class="form-label">${App.currentLanguage==='ru'?'Количество':'Quantity'}</label><input type="number" id="buyCowQuantity" class="form-input" value="1" min="1" max="${App.global?.cows_remaining||1e3}" oninput="updateCowTotal()"><div class="preset-buttons" style="margin-top:10px"><span class="preset-btn" data-cow-qty="1">1</span><span class="preset-btn" data-cow-qty="5">5</span><span class="preset-btn" data-cow-qty="10">10</span><span class="preset-btn" data-cow-qty="25">25</span><span class="preset-btn" data-cow-qty="50">50</span><span class="preset-btn" data-cow-qty="100">100</span></div></div><div class="total-ton-result" id="cowTotalPrice">${App.currentLanguage==='ru'?'Итого':'Total'}: 1.0000 TON</div><div style="background:rgba(0,0,0,.2);border-radius:14px;padding:12px;margin-bottom:16px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;color:var(--text-secondary)">${App.currentLanguage==='ru'?'Ваш баланс':'Your Balance'}</span><span style="font-weight:700;color:var(--crystal-blue)" id="cowUserBalance">${formatTON(App.user?.tonBalance||0)} TON</span></div><div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--text-secondary)">${App.currentLanguage==='ru'?'Глобально доступно':'Global Available'}</span><span style="font-weight:700;color:var(--neon-green)">${App.global?.cows_remaining||1e3}</span></div></div><div style="display:flex;gap:10px"><button class="btn btn-secondary" onclick="document.getElementById('buyCowModal').remove()" style="flex:1">${App.currentLanguage==='ru'?'Отмена':'Cancel'}</button><button class="btn btn-primary" id="confirmBuyCowBtn" onclick="executeBuyCow()" style="flex:1"><i class="fas fa-shopping-cart"></i> ${App.currentLanguage==='ru'?'Купить':'Buy'}</button></div></div>`,document.body.appendChild(m),m.querySelectorAll('[data-cow-qty]').forEach(b=>{b.addEventListener('click',function(){let q=parseInt(this.dataset.cowQty);document.getElementById('buyCowQuantity').value=q,updateCowTotal()})}),document.getElementById('buyCowQuantity').addEventListener('input',updateCowTotal)};
-        
         function updateCowTotal(){let q=parseInt(document.getElementById('buyCowQuantity').value)||1,t=q*1;document.getElementById('cowTotalPrice').innerHTML=`${App.currentLanguage==='ru'?'Итого':'Total'}: ${formatTON(t)} TON`;let p=t,u=App.user?.tonBalance||0,a=App.global?.cows_remaining||1e3,c=document.getElementById('confirmBuyCowBtn');c.disabled=p>u||q>a,c.style.opacity=c.disabled?'.5':'1',document.getElementById('cowTotalPrice').style.color=c.disabled?'var(--danger-red)':'var(--crystal-blue)'}
-        
         window.executeBuyCow=async function(){let q=parseInt(document.getElementById('buyCowQuantity').value)||1;if(q<=0)return alert(App.currentLanguage==='ru'?'Пожалуйста, введите корректное количество':'Please enter valid quantity');try{let r=await callAPI('buyCow',{quantity:q});await loadGameState(),animateTonBalance(),showNotification(App.currentLanguage==='ru'?`✅ Куплено ${r.quantity_bought} коров(а) за ${r.quantity_bought} TON`:`✅ Bought ${r.quantity_bought} Cow(s) for ${r.quantity_bought} TON`,'success'),document.getElementById('buyCowModal').remove()}catch(e){console.error('Buy cow error:',e)}};
-        
         window.buyRanchCow=async function(){let b=document.getElementById('ranchBuyCowBtn');if(!validateAndCooldown('ranchBuyCowBtn',b))return;if(App.global?.cows_remaining<=0)return showNotification('No cows left to buy','warning');if(App.user?.tonBalance<1)return showNotification('Insufficient TON balance','error');try{let r=await callAPI('buyCow',{quantity:1});await loadGameState(),animateTonBalance(),showNotification('✅ Cow purchased!','success')}catch(e){console.error('Buy cow error:',e)}};
-        
         function calculateTaskPrice(){let t=parseInt(document.getElementById('taskTarget').value)||100,r=CONFIG.TASK_REWARD,c=t*r*2;document.getElementById('taskTotalCost').innerHTML=`Total Cost: ${formatTON(c)} TON`;let u=App.user?.tonBalance||0,s=document.getElementById('submitTaskBtn');s.disabled=u<c,s.style.opacity=s.disabled?'.5':'1',document.getElementById('taskTotalCost').style.color=s.disabled?'var(--danger-red)':'var(--crystal-blue)'}
-        
         window.createTask=async function(){let b=document.getElementById('submitTaskBtn');if(!validateAndCooldown('submitTaskBtn',b))return;let t=document.querySelector('input[name="taskType"]:checked')?.value,l=document.getElementById('taskLink').value.trim(),g=parseInt(document.getElementById('taskTarget').value);if(!t||!l||!g||g<100)return alert(App.currentLanguage==='ru'?'Заполните все поля корректно (минимум 100 пользователей)':'Fill all fields correctly (minimum 100 users)');let c=g*CONFIG.TASK_REWARD*2;if(c>(App.user?.tonBalance||0))return alert(App.currentLanguage==='ru'?'Недостаточно средств':'Insufficient balance');try{let r=await callAPI('createTask',{type:t,link:l,targetUsers:g,reward:CONFIG.TASK_REWARD});showNotification(App.currentLanguage==='ru'?`✅ Задание создано! Стоимость: ${formatTON(c)} TON`:`✅ Task created! Cost: ${formatTON(c)} TON`,'success'),closeAllModals(),loadGameState()}catch(e){console.error('Create task error:',e),showNotification(e.message,'error')}};
-        
         window.initiateDeposit=async function(){if(!App.wallet)return alert(App.currentLanguage==='ru'?'Сначала подключите кошелек':'Connect wallet first');let a=parseFloat(document.getElementById('depositAmountInput').value);if(!a||a<.1)return alert(App.currentLanguage==='ru'?'Минимальный депозит: 0.1 TON':'Minimum deposit: 0.1 TON');try{let c=String(App.userId),n=String(Math.floor(a*1e9));if(!window.TonWeb)throw new Error('TonWeb library not loaded');let T=window.TonWeb,w=new T,o=new T.boc.Cell;o.bits.writeUint(0,32),o.bits.writeString(c);let u=await o.toBoc(!1),p=T.utils.bytesToBase64(u),t={validUntil:Math.floor(Date.now()/1e3)+600,messages:[{address:CONFIG.DEPOSIT_WALLET,amount:n,payload:p}]},i=await App.tonConnectUI.sendTransaction(t);showNotification(App.currentLanguage==='ru'?'✅ Транзакция отправлена! Подождите около 1 минуты для зачисления':'✅ Transaction sent! Wait about 1 minute for balance to be added','success'),await handleDepositSuccess(i,a,c)}catch(e){console.error('Deposit error:',e);let s=document.getElementById('depositStatus'),m=App.currentLanguage==='ru'?'Транзакция не удалась':'Transaction failed';e.message?.includes('rejected')&&(m=App.currentLanguage==='ru'?'Транзакция отклонена в кошельке':'Transaction rejected in wallet'),e.message?.includes('insufficient')&&(m=App.currentLanguage==='ru'?'Недостаточно средств':'Insufficient balance'),s.classList.add('visible'),s.querySelector('.status-icon').innerHTML='❌',s.querySelector('.status-message').innerHTML=m,document.getElementById('depositStatusDetail').innerHTML=e.message||(App.currentLanguage==='ru'?'Пожалуйста, попробуйте снова':'Please try again')}};
-        
         async function handleDepositSuccess(r,a,c){try{let d=await callAPI('deposit',{amount:a,txHash:r.boc,comment:c});App.currentDepositId=d.depositId,App.currentTxHash=r.boc;let s=document.getElementById('depositStatus');s.classList.add('visible'),s.querySelector('.status-icon').innerHTML='⏳',s.querySelector('.status-message').innerHTML=App.currentLanguage==='ru'?'Транзакция отправлена!':'Transaction sent!',document.getElementById('depositStatusDetail').innerHTML=App.currentLanguage==='ru'?'Ожидание подтверждения (≈1 мин)...':'Waiting for confirmation (≈1 min)...',startDepositVerification(d.depositId,r.boc)}catch(e){console.error('Deposit API error:',e);let s=document.getElementById('depositStatus');s.classList.add('visible'),s.querySelector('.status-icon').innerHTML='❌',s.querySelector('.status-message').innerHTML=App.currentLanguage==='ru'?'Не удалось обработать депозит':'Failed to process deposit',document.getElementById('depositStatusDetail').innerHTML=e.message}}
-        
         function startDepositVerification(i,t){if(App.depositCheckInterval&&clearInterval(App.depositCheckInterval),!i||!t)return;let a=0,m=18;App.depositCheckInterval=setInterval(async()=>{a++;try{let r=await callAPI('verifyDeposit',{depositId:i,txHash:t});if(r.status==='completed'){clearInterval(App.depositCheckInterval);let s=document.getElementById('depositStatus');s.querySelector('.status-icon').innerHTML='✅',s.querySelector('.status-message').innerHTML=App.currentLanguage==='ru'?'Депозит подтвержден!':'Deposit confirmed!',document.getElementById('depositStatusDetail').innerHTML=App.currentLanguage==='ru'?`${r.amount} TON добавлено на баланс`:`${r.amount} TON added to your balance`,showNotification(App.currentLanguage==='ru'?`💰 Депозит подтвержден! ${r.amount} TON добавлено`:`💰 Deposit confirmed! ${r.amount} TON added`,'success'),loadGameState(),animateTonBalance(),setTimeout(()=>{s.classList.remove('visible'),closeAllModals()},3e0)}}catch(e){console.error('Verification error:',e),a>=m&&clearInterval(App.depositCheckInterval)}},1e4)}
     </script>
 </body>

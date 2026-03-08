@@ -72,232 +72,93 @@
             z-index: -1;
         }
 
-        h1 {
-            font-size: 20px;
-        }
-
-        h2 {
-            font-size: 18px;
-        }
-
-        h3 {
-            font-size: 15px;
-        }
+        h1 { font-size: 20px; }
+        h2 { font-size: 18px; }
+        h3 { font-size: 15px; }
 
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-6px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         @keyframes float-slow {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-3px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         @keyframes pulse-glow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--pink-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--pink-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--pink-glow); }
+            50% { box-shadow: 0 0 25px var(--pink-glow); }
         }
 
         @keyframes pulse-green {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--green-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--green-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--green-glow); }
+            50% { box-shadow: 0 0 25px var(--green-glow); }
         }
 
         @keyframes pulse-blue {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--blue-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--blue-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--blue-glow); }
+            50% { box-shadow: 0 0 25px var(--blue-glow); }
         }
 
         @keyframes pulse-gold {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-            }
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
         }
 
         @keyframes pulse-lock {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         @keyframes shine {
-            0% {
-                filter: drop-shadow(0 0 5px var(--crystal-blue));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 20px var(--crystal-blue));
-            }
-
-            100% {
-                filter: drop-shadow(0 0 5px var(--crystal-blue));
-            }
+            0% { filter: drop-shadow(0 0 5px var(--crystal-blue)); }
+            50% { filter: drop-shadow(0 0 20px var(--crystal-blue)); }
+            100% { filter: drop-shadow(0 0 5px var(--crystal-blue)); }
         }
 
         @keyframes soft-shine {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
         @keyframes bounce {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         @keyframes spin-slow {
-            from {
-                transform: rotate(0);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0); }
+            to { transform: rotate(360deg); }
         }
 
         @keyframes slide-out {
-            0% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateX(100px);
-            }
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(100px); }
         }
 
         @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes trophy-glow {
-            0% {
-                filter: drop-shadow(0 0 5px gold);
-                transform: scale(1);
-            }
-
-            50% {
-                filter: drop-shadow(0 0 25px gold);
-                transform: scale(1.1);
-            }
-
-            100% {
-                filter: drop-shadow(0 0 5px gold);
-                transform: scale(1);
-            }
+            0% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 25px gold); transform: scale(1.1); }
+            100% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
         }
 
-        .float {
-            animation: float 3s infinite ease-in-out;
-        }
-
-        .float-slow {
-            animation: float-slow 4s infinite ease-in-out;
-        }
-
-        .pulse-pink {
-            animation: pulse-glow 2s infinite ease-in-out;
-        }
-
-        .pulse-green {
-            animation: pulse-green 2s infinite ease-in-out;
-        }
-
-        .pulse-blue {
-            animation: pulse-blue 2s infinite ease-in-out;
-        }
-
-        .pulse-gold {
-            animation: pulse-gold 2s infinite ease-in-out;
-        }
-
-        .spin-slow {
-            animation: spin-slow 8s infinite linear;
-        }
-
-        .shine {
-            animation: shine 2.5s infinite linear;
-        }
-
-        .soft-shine {
-            animation: soft-shine 3s infinite;
-        }
-
-        .trophy-glow {
-            animation: trophy-glow 3s infinite ease-in-out;
-        }
+        .float { animation: float 3s infinite ease-in-out; }
+        .float-slow { animation: float-slow 4s infinite ease-in-out; }
+        .pulse-pink { animation: pulse-glow 2s infinite ease-in-out; }
+        .pulse-green { animation: pulse-green 2s infinite ease-in-out; }
+        .pulse-blue { animation: pulse-blue 2s infinite ease-in-out; }
+        .pulse-gold { animation: pulse-gold 2s infinite ease-in-out; }
+        .spin-slow { animation: spin-slow 8s infinite linear; }
+        .shine { animation: shine 2.5s infinite linear; }
+        .soft-shine { animation: soft-shine 3s infinite; }
+        .trophy-glow { animation: trophy-glow 3s infinite ease-in-out; }
 
         .container {
             max-width: 500px;
@@ -440,13 +301,8 @@
             white-space: nowrap;
         }
 
-        .deposit-button i {
-            font-size: 11px;
-        }
-
-        .deposit-button:active {
-            transform: scale(0.96);
-        }
+        .deposit-button i { font-size: 11px; }
+        .deposit-button:active { transform: scale(0.96); }
 
         .language-switcher {
             display: flex;
@@ -500,9 +356,7 @@
             color: #000;
         }
 
-        .leaderboard-float:active {
-            transform: scale(0.9);
-        }
+        .leaderboard-float:active { transform: scale(0.9); }
 
         .help-float {
             position: fixed;
@@ -525,9 +379,7 @@
             animation: pulse-glow 2s infinite;
         }
 
-        .help-float:active {
-            transform: scale(0.9);
-        }
+        .help-float:active { transform: scale(0.9); }
 
         .card {
             background: var(--glass-card);
@@ -541,9 +393,7 @@
             animation: fade-in 0.4s ease;
         }
 
-        .card:hover {
-            transform: scale(1.01);
-        }
+        .card:hover { transform: scale(1.01); }
 
         .card-title {
             display: flex;
@@ -555,12 +405,9 @@
             color: var(--text-primary);
         }
 
-        .card-title i {
-            color: var(--primary-pink);
-        }
+        .card-title i { color: var(--primary-pink); }
 
-        .ranch-card,
-        .level-card {
+        .ranch-card, .level-card {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
@@ -582,8 +429,7 @@
             z-index: -1;
         }
 
-        .ranch-card:hover,
-        .level-card:hover {
+        .ranch-card:hover, .level-card:hover {
             transform: translateY(-2px);
         }
 
@@ -868,10 +714,7 @@
             gap: 4px;
         }
 
-        .prize-badge i {
-            color: #FFD700;
-        }
-
+        .prize-badge i { color: #FFD700; }
         .prize-badge img {
             width: 14px;
             height: 14px;
@@ -956,9 +799,7 @@
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
 
-        .user-info {
-            flex: 1;
-        }
+        .user-info { flex: 1; }
 
         .user-name-row {
             display: flex;
@@ -1014,11 +855,7 @@
             color: #FFD700;
         }
 
-        .prize-pill i {
-            color: #FFD700;
-            font-size: 14px;
-        }
-
+        .prize-pill i { color: #FFD700; font-size: 14px; }
         .prize-pill img {
             width: 16px;
             height: 16px;
@@ -1118,9 +955,7 @@
             background: linear-gradient(145deg, rgba(0, 212, 255, 0.1), var(--glass-strong));
         }
 
-        .machine-card.locked {
-            position: relative;
-        }
+        .machine-card.locked { position: relative; }
 
         .locked-overlay {
             position: absolute;
@@ -1176,9 +1011,7 @@
             border-radius: 12px;
         }
 
-        .machine-info {
-            flex: 1;
-        }
+        .machine-info { flex: 1; }
 
         .machine-name-row {
             display: flex;
@@ -1238,52 +1071,86 @@
             font-size: 10px;
         }
 
-        .machine-stats {
+        .ranch-stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 14px;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .ranch-stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
             padding: 12px;
-            margin-bottom: 16px;
-        }
-
-        .stat-item {
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .stat-label {
-            font-size: 10px;
+        .ranch-stat-label {
+            font-size: 11px;
             color: var(--text-muted);
-            margin-bottom: 2px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
 
-        .stat-number {
-            font-size: 20px;
+        .ranch-stat-value {
+            font-size: 24px;
             font-weight: 700;
+            color: var(--crystal-blue);
+            line-height: 1.2;
         }
 
-        .stat-unit {
+        .ranch-stat-sub {
             font-size: 10px;
             color: var(--text-secondary);
-            margin-left: 2px;
+            margin-top: 4px;
         }
 
-        .progress-section {
-            margin-bottom: 16px;
+        .active-stat {
+            color: var(--neon-green);
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .inactive-stat {
+            color: var(--danger-red);
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .active-stat i, .inactive-stat i {
+            font-size: 8px;
+        }
+
+        .global-progress {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 12px;
+            margin: 16px 0;
         }
 
         .progress-header {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
 
         .progress-bar {
-            height: 6px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 3px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
             overflow: hidden;
         }
 
@@ -1294,31 +1161,55 @@
         }
 
         .open-ranch-btn {
-            position: absolute;
-            bottom: 16px;
-            right: 16px;
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             border: none;
             border-radius: 30px;
-            padding: 8px 16px;
+            padding: 12px 20px;
             color: #fff;
-            font-weight: 600;
-            font-size: 12px;
+            font-weight: 700;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 8px;
             cursor: pointer;
             box-shadow: 0 4px 12px var(--pink-glow);
-            z-index: 2;
+            width: 100%;
+            margin-top: 16px;
             transition: 0.2s;
         }
 
-        .open-ranch-btn i {
-            font-size: 14px;
+        .open-ranch-btn i { font-size: 16px; }
+        .open-ranch-btn:active { transform: scale(0.97); }
+
+        .machine-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 16px;
         }
 
-        .open-ranch-btn:active {
-            transform: scale(0.95);
+        .stat-item { text-align: center; }
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .stat-unit {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-left: 2px;
+        }
+
+        .progress-section {
+            margin-bottom: 16px;
         }
 
         .crystal-recipe {
@@ -1338,16 +1229,11 @@
             align-items: center;
             gap: 1px;
         }
-
-        .crystal-recipe-emoji {
-            font-size: 18px;
-        }
-
+        .crystal-recipe-emoji { font-size: 18px; }
         .crystal-recipe-plus {
             font-size: 14px;
             color: var(--text-muted);
         }
-
         .crystal-recipe-equal {
             font-size: 16px;
             color: var(--crystal-blue);
@@ -1368,11 +1254,7 @@
             font-family: 'Inter', sans-serif;
             width: 100%;
         }
-
-        .btn:active {
-            transform: scale(0.96);
-        }
-
+        .btn:active { transform: scale(0.96); }
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -1429,16 +1311,12 @@
             border: 1px solid var(--glass-border);
         }
 
-        .market-stat-item {
-            text-align: center;
-        }
-
+        .market-stat-item { text-align: center; }
         .market-stat-label {
             color: var(--text-muted);
             margin-bottom: 2px;
             font-size: 8px;
         }
-
         .market-stat-value {
             font-weight: 700;
             color: var(--primary-pink);
@@ -1464,7 +1342,6 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         .market-tab.active {
             background: var(--glass-strong);
             color: var(--primary-pink);
@@ -1492,7 +1369,6 @@
             font-size: 11px;
             transition: 0.2s;
         }
-
         .resource-option.active {
             background: rgba(255, 92, 168, 0.15);
             border-color: var(--primary-pink);
@@ -1535,12 +1411,10 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         .refresh-market-btn:active {
             transform: scale(0.95);
             background: rgba(255, 92, 168, 0.2);
         }
-
         .refresh-market-btn i {
             animation: spin-slow 2s infinite linear;
         }
@@ -1566,7 +1440,6 @@
             border: none;
             position: relative;
         }
-
         .market-card:hover {
             transform: scale(1.02);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 215, 0, 0.3) inset;
@@ -1595,11 +1468,6 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .market-card .card-title.sell,
-        .market-card .card-title.buy {
-            color: #fff;
-        }
-
         .amount-box {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 18px;
@@ -1616,9 +1484,7 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
-        .amount-box .egg-icon {
-            font-size: 18px;
-        }
+        .amount-box .egg-icon { font-size: 18px; }
 
         .price-label {
             font-size: 9px;
@@ -1680,15 +1546,11 @@
             align-items: center;
             justify-content: center;
         }
-
         .buy-btn:hover {
             transform: scale(1.02);
             background: linear-gradient(180deg, #b8ff1a, #55e10a);
         }
-
-        .buy-btn:active {
-            transform: scale(0.98);
-        }
+        .buy-btn:active { transform: scale(0.98); }
 
         .best-price-badge {
             background: rgba(255, 92, 168, 0.2);
@@ -1701,7 +1563,6 @@
             gap: 3px;
             border: 1px solid rgba(255, 92, 168, 0.3);
         }
-
         .best-price-badge i {
             animation: pulse-glow 1.5s infinite;
         }
@@ -1722,7 +1583,6 @@
             visibility: hidden;
             transition: 0.2s;
         }
-
         .modal-overlay.active {
             opacity: 1;
             visibility: visible;
@@ -1761,10 +1621,7 @@
             cursor: pointer;
         }
 
-        .form-group {
-            margin-bottom: 14px;
-        }
-
+        .form-group { margin-bottom: 14px; }
         .form-label {
             display: block;
             font-size: 11px;
@@ -1772,9 +1629,7 @@
             margin-bottom: 5px;
             font-weight: 500;
         }
-
-        .form-input,
-        .form-select {
+        .form-input, .form-select {
             width: 100%;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--glass-border);
@@ -1784,7 +1639,6 @@
             font-size: 13px;
             font-family: 'Inter', sans-serif;
         }
-
         .form-select {
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
@@ -1792,13 +1646,10 @@
             background-position: right 12px center;
             background-size: 20px;
         }
-
-        .form-input:focus,
-        .form-select:focus {
+        .form-input:focus, .form-select:focus {
             outline: 0;
             border-color: var(--primary-pink);
         }
-
         .form-input:read-only {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-muted);
@@ -1810,7 +1661,6 @@
             margin-top: 6px;
             flex-wrap: wrap;
         }
-
         .preset-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--glass-border);
@@ -1822,7 +1672,6 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         .preset-btn:hover {
             background: rgba(255, 92, 168, 0.2);
             color: var(--primary-pink);
@@ -1846,7 +1695,6 @@
             margin-bottom: 16px;
             text-align: center;
         }
-
         .confirm-emoji {
             font-size: 48px;
             margin-bottom: 8px;
@@ -1862,22 +1710,16 @@
             border-radius: 16px;
             padding: 14px;
         }
-
         .confirm-row {
             display: flex;
             justify-content: space-between;
             font-size: 13px;
         }
-
-        .confirm-label {
-            color: var(--text-muted);
-        }
-
+        .confirm-label { color: var(--text-muted); }
         .confirm-value {
             font-weight: 700;
             color: var(--crystal-blue);
         }
-
         .confirm-total {
             font-size: 16px;
             font-weight: 800;
@@ -1902,28 +1744,23 @@
             justify-content: space-between;
             transition: 0.2s;
         }
-
         .hatch-info {
             display: flex;
             flex-direction: column;
             gap: 3px;
         }
-
         .hatch-title {
             font-size: 14px;
             font-weight: 700;
         }
-
         .hatch-cost {
             font-size: 11px;
             color: var(--text-secondary);
         }
-
         .hatch-balance {
             font-size: 10px;
             color: var(--text-muted);
         }
-
         .hatch-input {
             width: 60px;
             background: rgba(0, 0, 0, 0.3);
@@ -1946,7 +1783,6 @@
             gap: 8px;
             font-size: 11px;
         }
-
         .deposit-warning i {
             color: var(--primary-pink);
             font-size: 16px;
@@ -1960,25 +1796,18 @@
             margin-top: 16px;
             display: none;
         }
-
-        .transaction-status.visible {
-            display: block;
-            animation: fade-in 0.3s ease;
-        }
-
+        .transaction-status.visible { display: block; animation: fade-in 0.3s ease; }
         .status-icon {
             font-size: 24px;
             text-align: center;
             margin-bottom: 4px;
         }
-
         .status-message {
             text-align: center;
             font-weight: 600;
             font-size: 12px;
             margin-bottom: 2px;
         }
-
         .status-detail {
             text-align: center;
             font-size: 10px;
@@ -2011,38 +1840,18 @@
             opacity: 1;
             transition: 0.3s;
         }
-
-        .notification.success {
-            border-left-color: var(--neon-green);
-        }
-
-        .notification.error {
-            border-left-color: var(--danger-red);
-        }
-
-        .notification.warning {
-            border-left-color: var(--warning);
-        }
-
-        .notification.info {
-            border-left-color: var(--crystal-blue);
-        }
-
+        .notification.success { border-left-color: var(--neon-green); }
+        .notification.error { border-left-color: var(--danger-red); }
+        .notification.warning { border-left-color: var(--warning); }
+        .notification.info { border-left-color: var(--crystal-blue); }
         .notification.fade-out {
             opacity: 0;
             transform: translateX(100px);
         }
 
         @keyframes slide-in {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .bottom-nav {
@@ -2070,21 +1879,15 @@
             padding: 5px 6px;
             border-radius: 14px;
         }
-
         .nav-item.active {
             color: var(--primary-pink);
             background: rgba(255, 92, 168, 0.1);
         }
-
         .nav-icon {
             font-size: 16px;
             transition: transform 0.2s;
         }
-
-        .nav-item.active .nav-icon {
-            transform: scale(1.1);
-        }
-
+        .nav-item.active .nav-icon { transform: scale(1.1); }
         .nav-text {
             font-size: 8px;
             font-weight: 600;
@@ -2092,14 +1895,8 @@
             letter-spacing: 0.2px;
         }
 
-        .section {
-            display: none;
-            animation: fade-in 0.3s ease;
-        }
-
-        .section.active {
-            display: block;
-        }
+        .section { display: none; animation: fade-in 0.3s ease; }
+        .section.active { display: block; }
 
         .help-modal {
             position: fixed;
@@ -2116,11 +1913,7 @@
             z-index: 200;
             display: none;
         }
-
-        .help-modal.active {
-            display: block;
-            animation: fade-in 0.3s ease;
-        }
+        .help-modal.active { display: block; animation: fade-in 0.3s ease; }
 
         .help-item {
             display: flex;
@@ -2130,22 +1923,16 @@
             border-radius: 14px;
             transition: 0.2s;
         }
-
-        .help-item:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
+        .help-item:hover { background: rgba(255, 255, 255, 0.03); }
         .help-emoji {
             font-size: 24px;
             min-width: 40px;
             text-align: center;
         }
-
         .help-text h4 {
             font-size: 14px;
             margin-bottom: 2px;
         }
-
         .help-text p {
             font-size: 11px;
             color: var(--text-secondary);
@@ -2173,11 +1960,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s;
         }
-
-        .task-card:hover {
-            transform: translateY(-2px);
-        }
-
+        .task-card:hover { transform: translateY(-2px); }
         .task-card.partner-task {
             background: linear-gradient(145deg, #1a2e2a, #0a1f1a);
             border: 1px solid rgba(0, 242, 122, 0.3);
@@ -2194,20 +1977,15 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         .task-btn.verify {
             background: linear-gradient(145deg, var(--neon-green), #00b35e);
         }
-
         .task-btn.completed {
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-secondary);
             cursor: default;
         }
-
-        .task-btn:active:not(.completed) {
-            transform: scale(0.95);
-        }
+        .task-btn:active:not(.completed) { transform: scale(0.95); }
 
         .leaderboard-info-modal {
             position: fixed;
@@ -2225,11 +2003,7 @@
             display: none;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
-
-        .leaderboard-info-modal.active {
-            display: block;
-            animation: fade-in 0.3s ease;
-        }
+        .leaderboard-info-modal.active { display: block; animation: fade-in 0.3s ease; }
 
         .info-title {
             display: flex;
@@ -2242,37 +2016,29 @@
             border-bottom: 1px solid rgba(255, 215, 0, 0.3);
             padding-bottom: 10px;
         }
-
-        .info-section {
-            margin-bottom: 15px;
-        }
-
+        .info-section { margin-bottom: 15px; }
         .info-section h4 {
             font-size: 14px;
             color: var(--crystal-blue);
             margin-bottom: 5px;
         }
-
         .info-section p {
             font-size: 12px;
             color: var(--text-secondary);
             line-height: 1.5;
         }
-
         .info-prize {
             background: rgba(255, 215, 0, 0.15);
             border-radius: 12px;
             padding: 10px;
             margin: 10px 0;
         }
-
         .info-prize-row {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
             margin-bottom: 5px;
         }
-
         .info-close {
             width: 100%;
             padding: 10px;
@@ -2285,10 +2051,7 @@
             cursor: pointer;
             margin-top: 10px;
         }
-
-        .info-close:active {
-            transform: scale(0.98);
-        }
+        .info-close:active { transform: scale(0.98); }
 
         .ranch-card {
             background: linear-gradient(145deg, rgba(20, 30, 40, 0.95), rgba(10, 15, 25, 0.98));
@@ -2298,18 +2061,6 @@
             margin-bottom: 16px;
             position: relative;
             overflow: hidden;
-        }
-
-        .ranch-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 92, 168, 0.1) 0%, transparent 70%);
-            animation: spin-slow 20s infinite linear;
-            z-index: -1;
         }
 
         .stats-grid {
@@ -2326,7 +2077,6 @@
             border-radius: 18px;
             padding: 14px;
         }
-
         .stat-box-large .stat-label {
             font-size: 11px;
             color: var(--text-muted);
@@ -2335,34 +2085,10 @@
             align-items: center;
             gap: 4px;
         }
-
         .stat-box-large .stat-value {
             font-size: 32px;
             font-weight: 800;
             color: var(--crystal-blue);
-        }
-
-        .active-stat {
-            color: var(--neon-green);
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 8px;
-        }
-
-        .inactive-stat {
-            color: var(--danger-red);
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 4px;
-        }
-
-        .active-stat i,
-        .inactive-stat i {
-            font-size: 10px;
         }
 
         .level-card {
@@ -2372,18 +2098,9 @@
             margin-bottom: 12px;
             border-left: 4px solid transparent;
         }
-
-        .level-card[data-level="1"] {
-            border-left-color: #FFD700;
-        }
-
-        .level-card[data-level="2"] {
-            border-left-color: #C0C0C0;
-        }
-
-        .level-card[data-level="3"] {
-            border-left-color: #CD7F32;
-        }
+        .level-card[data-level="1"] { border-left-color: #FFD700; }
+        .level-card[data-level="2"] { border-left-color: #C0C0C0; }
+        .level-card[data-level="3"] { border-left-color: #CD7F32; }
 
         .level-header {
             display: flex;
@@ -2391,7 +2108,6 @@
             gap: 12px;
             margin-bottom: 12px;
         }
-
         .level-emoji {
             width: 48px;
             height: 48px;
@@ -2402,13 +2118,11 @@
             justify-content: center;
             font-size: 28px;
         }
-
         .level-title {
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 2px;
         }
-
         .level-subtitle {
             font-size: 11px;
             color: var(--text-muted);
@@ -2432,28 +2146,17 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .timer-bar.active {
             background: rgba(0, 242, 122, 0.1);
             border: 1px solid rgba(0, 242, 122, 0.3);
         }
-
-        .timer-bar i {
-            color: var(--warning-yellow);
-        }
-
+        .timer-bar i { color: var(--warning-yellow); }
         .timer-text {
             font-size: 12px;
             font-weight: 600;
         }
-
-        .timer-text.active {
-            color: var(--neon-green);
-        }
-
-        .timer-text.expired {
-            color: var(--danger-red);
-        }
+        .timer-text.active { color: var(--neon-green); }
+        .timer-text.expired { color: var(--danger-red); }
 
         .level-actions {
             display: grid;
@@ -2462,35 +2165,22 @@
             margin-top: 12px;
         }
 
-        .storage-card {
-            background: linear-gradient(145deg, #1a2a3a, #0f1a24);
-            border-radius: 24px;
-            padding: 16px;
-            position: relative;
-            margin-top: 16px;
-        }
-
         .storage-stats {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 18px;
             padding: 16px;
             margin: 16px 0;
         }
-
         .storage-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-
         .storage-label {
             font-size: 12px;
             color: var(--text-secondary);
         }
-
-        .storage-value {
-            font-weight: 700;
-        }
+        .storage-value { font-weight: 700; }
 
         .upgrade-preview {
             background: rgba(0, 212, 255, 0.1);
@@ -2499,14 +2189,12 @@
             margin: 12px 0;
             border: 1px dashed var(--crystal-blue);
         }
-
         .upgrade-preview-row {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
             margin-bottom: 4px;
         }
-
         .upgrade-preview-row span:last-child {
             color: var(--crystal-blue);
             font-weight: 600;
@@ -2530,97 +2218,55 @@
             width: 100%;
             margin-top: 16px;
         }
-
-        .ranch-buy-btn:active {
-            transform: scale(0.97);
-        }
-
-        .ranch-buy-btn i {
-            font-size: 16px;
-        }
+        .ranch-buy-btn:active { transform: scale(0.97); }
+        .ranch-buy-btn i { font-size: 16px; }
 
         @media(max-width:400px) {
-            .status-value {
-                font-size: 14px;
-            }
-
+            .status-value { font-size: 14px; }
             .machine-emoji {
                 width: 50px;
                 height: 50px;
             }
-
-            .machine-name {
-                font-size: 16px;
-            }
-
-            .stat-number {
-                font-size: 18px;
-            }
-
+            .machine-name { font-size: 16px; }
+            .stat-number { font-size: 18px; }
             .market-stats {
                 grid-template-columns: 1fr 1fr;
                 gap: 6px;
             }
-
-            .ton-amount {
-                font-size: 13px;
-            }
-
+            .ton-amount { font-size: 13px; }
             .mining-timer {
                 font-size: 11px;
                 padding: 4px 8px;
             }
-
-            .leaderboard-title {
-                font-size: 20px;
-            }
-
-            .counter-main {
-                font-size: 24px;
-            }
-
-            .prize-amount {
-                font-size: 18px;
-            }
-
+            .leaderboard-title { font-size: 20px; }
+            .counter-main { font-size: 24px; }
+            .prize-amount { font-size: 18px; }
             .position-row {
                 flex-wrap: wrap;
                 gap: 8px;
             }
-
             .position-label {
                 min-width: 60px;
                 font-size: 12px;
             }
-
             .position-value {
                 font-size: 16px;
                 padding: 2px 8px;
                 min-width: 50px;
             }
-
             .stat-box {
                 padding: 2px 6px;
             }
-
-            .stat-box-label {
-                font-size: 9px;
-            }
-
-            .stat-box-value {
-                font-size: 12px;
-            }
-
+            .stat-box-label { font-size: 9px; }
+            .stat-box-value { font-size: 12px; }
             .points-box {
                 font-size: 14px;
                 padding: 4px 8px;
             }
-
             .prize-pill {
                 font-size: 14px;
                 padding: 4px 8px;
             }
-
             .rank-badge {
                 width: 36px;
                 height: 36px;
@@ -2629,7 +2275,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="notification-container" id="notificationContainer"></div>
     <div class="leaderboard-float" id="leaderboardButton"><i class="fas fa-trophy"></i></div>
@@ -2791,8 +2436,8 @@
         <!-- Farm Section (Main) -->
         <div id="sectionFarm" class="section active">
             <div class="machines-grid">
-                <!-- Cow Card - Click to open Ranch -->
-                <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
+                <!-- Cow Card - مع إحصائيات الرانش -->
+                <div class="machine-card cow" id="cowCard">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
                         <div class="machine-info">
@@ -2803,23 +2448,35 @@
                             <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
                         </div>
                     </div>
-                    <div class="machine-stats">
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.prod">Prod</div>
-                            <div class="stat-number">41 <span class="stat-unit">/h</span></div>
+                    
+                    <!-- إحصائيات الرانش بنفس تصميم صفحة الرانش -->
+                    <div class="ranch-stats-grid">
+                        <div class="ranch-stat-box">
+                            <div class="ranch-stat-label"><i class="fas fa-cow"></i> Total Cows</div>
+                            <div class="ranch-stat-value" id="farmTotalCows">0</div>
+                            <div class="active-stat"><i class="fas fa-circle"></i> Active: <span id="farmActiveCows">0</span></div>
+                            <div class="inactive-stat"><i class="fas fa-circle"></i> Inactive: <span id="farmInactiveCows">0</span></div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.owned">Owned</div>
-                            <div class="stat-number" id="cowsOwned">0</div>
+                        <div class="ranch-stat-box">
+                            <div class="ranch-stat-label"><i class="fas fa-chart-line"></i> Production</div>
+                            <div class="ranch-stat-value" id="farmHourlyProduction">0</div>
+                            <div class="ranch-stat-sub">Milk per hour</div>
                         </div>
                     </div>
-                    <div class="progress-section">
-                        <div class="progress-header"><span data-i18n="farm.supply">Supply</span><span id="cowProgressText">0/1000</span></div>
+                    
+                    <!-- Global Cow Sales Progress -->
+                    <div class="global-progress">
+                        <div class="progress-header">
+                            <span>Global Cow Sales</span>
+                            <span id="farmCowsSold">0/1000</span>
+                        </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" id="cowProgressFill" style="width:0%"></div>
+                            <div class="progress-fill" id="farmCowsProgress" style="width:0%"></div>
                         </div>
                     </div>
-                    <button class="open-ranch-btn" onclick="event.stopPropagation(); window.openRanchFromCow()">
+                    
+                    <!-- Open Ranch Button بدلاً من زر شراء البقرة -->
+                    <button class="open-ranch-btn" onclick="window.openRanchFromCow()">
                         <i class="fas fa-door-open"></i> Open Ranch
                     </button>
                 </div>
@@ -2895,7 +2552,7 @@
             </div>
         </div>
 
-        <!-- Ranch Section (Hidden from nav) -->
+        <!-- Ranch Section -->
         <div id="sectionRanch" class="section">
             <!-- RANCH OVERVIEW Card -->
             <div class="ranch-card">
@@ -2979,7 +2636,7 @@
                 <!-- Level 2 -->
                 <div class="level-card" data-level="2">
                     <div class="level-header">
-                        <div class="level-emoji">🦬</div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:40px;height:40px;border-radius:8px" alt="Level 2 Cow"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 2 Cow</span>
@@ -3293,7 +2950,7 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation (No Ranch) -->
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-section="sectionFarm">
             <div class="nav-icon">🚜</div>
@@ -3517,6 +3174,7 @@
             CRYSTAL_PRICE: 25,
             TASK_REWARD: 0.001,
             MAX_ACTIVE_ORDERS: 2,
+            CLICK_COOLDOWN: 3000, // تم التعديل من 10000 إلى 3000 (3 ثوان)
             COW_LEVELS: {
                 1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000, duration: 86400 },
                 2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000, duration: 86400 },
@@ -3877,15 +3535,14 @@
         };
 
         const lastClickTimers = {};
-        const CLICK_COOLDOWN = 10000;
 
         // ==================== UTILITIES ====================
         function checkClickCooldown(buttonId) {
             let now = Date.now();
             let lastClick = lastClickTimers[buttonId] || 0;
-            let timeLeft = CLICK_COOLDOWN - (now - lastClick);
+            let timeLeft = CONFIG.CLICK_COOLDOWN - (now - lastClick);
             if (timeLeft > 0) {
-                showNotification(App.currentLanguage === 'ru' ? `⏳ Пожалуйста, подождите ${Math.ceil(timeLeft / 1000)} секунд перед повторным нажатием` : `⏳ Please wait ${Math.ceil(timeLeft / 1000)} seconds before clicking again`, 'warning');
+                // تم إخفاء الإشعار - لن يظهر أي شيء
                 return false;
             }
             return true;
@@ -3895,11 +3552,11 @@
             if (!button) return;
             button.disabled = true;
             let originalText = button.innerHTML;
-            button.innerHTML = `<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CLICK_COOLDOWN / 1000)}s`;
+            button.innerHTML = `<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CONFIG.CLICK_COOLDOWN / 1000)}s`;
             setTimeout(() => {
                 button.disabled = false;
                 button.innerHTML = originalText;
-            }, CLICK_COOLDOWN);
+            }, CONFIG.CLICK_COOLDOWN);
         }
 
         function validateAndCooldown(buttonId, button) {
@@ -4244,7 +3901,6 @@
             updateCowTimers();
         }
 
-        // ========== الدالة المعدلة لحساب الوقت المتبقي ==========
         function updateCowTimers() {
             if (!App.ranch || !App.ranch.cowActiveUntil) return;
 
@@ -4257,23 +3913,25 @@
 
                 if (activeCows > 0 && App.ranch.cowActiveUntil[level]) {
                     let timeLeft = App.ranch.cowActiveUntil[level] - now;
-                    const MAX_REASONABLE_SECONDS = 30 * 24 * 60 * 60;
 
-                    if (timeLeft > 0 && timeLeft < MAX_REASONABLE_SECONDS) {
+                    if (timeLeft > 0 && timeLeft < 100000) { // تأكد من أن الوقت منطقي (أقل من 100,000 ثانية ≈ 27 ساعة)
                         let hours = Math.floor(timeLeft / 3600);
                         let minutes = Math.floor((timeLeft % 3600) / 60);
                         timerText.innerHTML = `${hours}h ${minutes}m`;
                         timerDiv.style.display = 'flex';
                         timerDiv.className = 'timer-bar active';
                         timerText.className = 'timer-text active';
-                    } else if (timeLeft <= 0) {
+                    } else if (timeLeft > 0) {
+                        // إذا كان الوقت أكبر من 100,000 ثانية، فهذا خطأ
+                        timerText.innerHTML = 'Invalid';
+                        timerDiv.style.display = 'flex';
+                        timerDiv.className = 'timer-bar';
+                        timerText.className = 'timer-text expired';
+                    } else {
                         timerText.innerHTML = 'Expired';
                         timerDiv.className = 'timer-bar';
                         timerText.className = 'timer-text expired';
                         timerDiv.style.display = 'flex';
-                    } else {
-                        console.warn(`Unreasonable timeLeft for level ${level}: ${timeLeft}s. Hiding timer.`);
-                        timerDiv.style.display = 'none';
                     }
                 } else {
                     timerDiv.style.display = 'none';
@@ -4450,6 +4108,24 @@
             document.getElementById('withdrawFee').innerHTML = `${formatTON(fee)} TON`;
             document.getElementById('withdrawNet').innerHTML = `${formatTON(net)} TON`;
             document.getElementById('taskUserBalance').innerHTML = formatTON(App.user.tonBalance || 0);
+
+            // تحديث إحصائيات الرانش في الصفحة الرئيسية
+            if (App.ranch) {
+                let r = App.ranch;
+                let totalCows = (r.cowLevels[1] || 0) + (r.cowLevels[2] || 0) + (r.cowLevels[3] || 0) +
+                    (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
+                let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
+                let inactiveCows = totalCows - activeCows;
+                
+                document.getElementById('farmTotalCows').innerHTML = totalCows;
+                document.getElementById('farmActiveCows').innerHTML = activeCows;
+                document.getElementById('farmInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
+                document.getElementById('farmHourlyProduction').innerHTML = Math.round(r.hourlyProduction || 0);
+                
+                let cowsSold = App.global?.cows_sold || 0;
+                document.getElementById('farmCowsSold').innerHTML = cowsSold + '/1000';
+                document.getElementById('farmCowsProgress').style.width = (cowsSold / 10) + '%';
+            }
         }
 
         function updateReferralUI() {
@@ -4805,8 +4481,7 @@
 
         // ==================== COW ACTIONS ====================
         window.buyCow = async function() {
-            let button = document.getElementById('buyCowBtn');
-            if (!button) button = document.getElementById('ranchBuyCowBtn');
+            let button = document.getElementById('ranchBuyCowBtn');
             if (!validateAndCooldown('buyCowBtn', button)) return;
             if (App.global?.cows_remaining <= 0) {
                 showNotification('No cows left to buy', 'warning');
@@ -4844,7 +4519,7 @@
                         <i class="fas fa-times" style="cursor:pointer" onclick="closeModal('activateCowModal')"></i>
                     </div>
                     <div style="text-align:center;margin-bottom:16px">
-                        <div style="font-size:48px">${level === 1 ? '🐮' : level === 2 ? '🦬' : '🐃'}</div>
+                        <div style="font-size:48px">${level === 1 ? '🐮' : level === 2 ? '<img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:48px;height:48px;border-radius:8px">' : '🐃'}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Стоимость' : 'Cost'}: ${levelData.activationCost} 🥛 ${App.currentLanguage === 'ru' ? 'за корову' : 'per cow'}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Длительность' : 'Duration'}: 24 ${App.currentLanguage === 'ru' ? 'часа' : 'hours'}</div>
                     </div>
@@ -4903,7 +4578,7 @@
                         <i class="fas fa-times" style="cursor:pointer" onclick="closeModal('upgradeCowModal')"></i>
                     </div>
                     <div style="text-align:center;margin-bottom:16px">
-                        <div style="font-size:48px">${fromLevel === 1 ? '🐮 → 🦬' : '🦬 → 🐃'}</div>
+                        <div style="font-size:48px">${fromLevel === 1 ? '🐮 → <img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:48px;height:48px;border-radius:8px">' : '<img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:48px;height:48px;border-radius:8px"> → 🐃'}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Стоимость' : 'Cost'}: ${levelData.upgradeCost} 🥛 ${App.currentLanguage === 'ru' ? 'за корову' : 'per cow'}</div>
                     </div>
                     <div class="form-group" style="margin-bottom:16px">
@@ -4952,9 +4627,9 @@
                 return;
             }
             try {
-                await callAPI('claimMilk');
+                let result = await callAPI('claimMilk');
                 await loadGameState();
-                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(App.ranch.milkStored)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(App.ranch.milkStored)} 🥛 from storage!`, 'success');
+                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.claimedAmount || App.ranch.milkStored)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.claimedAmount || App.ranch.milkStored)} 🥛 from storage!`, 'success');
             } catch (e) {
                 console.error('Claim milk error:', e);
             }

@@ -3665,7 +3665,8 @@
             PRODUCTION_INTERVAL: 60000,
             MARKET_REFRESH: 15000,
             DEPOSIT_VERIFY_INTERVAL: 10000,
-            CSRF_TOKEN: 'crystal-ranch-secure-token-2026',
+            CSRF_TOKEN: null, // fetched dynamically from server on startup
+            CSRF_REFRESH_INTERVAL: 55000, // refresh every 55 seconds
             CRYSTAL_PRICE: 25,
             TASK_REWARD: 0.001,
             MAX_ACTIVE_ORDERS: 2,
@@ -4196,8 +4197,25 @@
             setTimeout(() => screen.remove(), 500);
         }
 
-        async function initApp() {
+        async function fetchCsrfToken() {
+            try {
+                const res = await fetch(`${CONFIG.API_URL}/csrf-token`);
+                const json = await res.json();
+                if (json.token) {
+                    CONFIG.CSRF_TOKEN = json.token;
+                    console.log('CSRF token fetched');
+                }
+            } catch (e) {
+                console.warn('Could not fetch CSRF token:', e);
+            }
+        }
+
+                async function initApp() {
             console.log('Crystal Ranch · Initializing...');
+            setLoadingProgress(5, 'Securing connection...');
+            await fetchCsrfToken();
+            // Refresh CSRF token periodically (every 55s, token valid for ~2 min windows)
+            setInterval(fetchCsrfToken, CONFIG.CSRF_REFRESH_INTERVAL || 55000);
             setLoadingProgress(10, 'Setting language...');
             setLanguage(localStorage.getItem('crystal_ranch_lang') || 'en');
 

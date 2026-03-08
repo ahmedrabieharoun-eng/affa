@@ -72,232 +72,93 @@
             z-index: -1;
         }
 
-        h1 {
-            font-size: 20px;
-        }
-
-        h2 {
-            font-size: 18px;
-        }
-
-        h3 {
-            font-size: 15px;
-        }
+        h1 { font-size: 20px; }
+        h2 { font-size: 18px; }
+        h3 { font-size: 15px; }
 
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-6px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         @keyframes float-slow {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-3px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         @keyframes pulse-glow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--pink-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--pink-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--pink-glow); }
+            50% { box-shadow: 0 0 25px var(--pink-glow); }
         }
 
         @keyframes pulse-green {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--green-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--green-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--green-glow); }
+            50% { box-shadow: 0 0 25px var(--green-glow); }
         }
 
         @keyframes pulse-blue {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--blue-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--blue-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--blue-glow); }
+            50% { box-shadow: 0 0 25px var(--blue-glow); }
         }
 
         @keyframes pulse-gold {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-            }
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
         }
 
         @keyframes pulse-lock {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         @keyframes shine {
-            0% {
-                filter: drop-shadow(0 0 5px var(--crystal-blue));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 20px var(--crystal-blue));
-            }
-
-            100% {
-                filter: drop-shadow(0 0 5px var(--crystal-blue));
-            }
+            0% { filter: drop-shadow(0 0 5px var(--crystal-blue)); }
+            50% { filter: drop-shadow(0 0 20px var(--crystal-blue)); }
+            100% { filter: drop-shadow(0 0 5px var(--crystal-blue)); }
         }
 
         @keyframes soft-shine {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
         @keyframes bounce {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         @keyframes spin-slow {
-            from {
-                transform: rotate(0);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0); }
+            to { transform: rotate(360deg); }
         }
 
         @keyframes slide-out {
-            0% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateX(100px);
-            }
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(100px); }
         }
 
         @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes trophy-glow {
-            0% {
-                filter: drop-shadow(0 0 5px gold);
-                transform: scale(1);
-            }
-
-            50% {
-                filter: drop-shadow(0 0 25px gold);
-                transform: scale(1.1);
-            }
-
-            100% {
-                filter: drop-shadow(0 0 5px gold);
-                transform: scale(1);
-            }
+            0% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 25px gold); transform: scale(1.1); }
+            100% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
         }
 
-        .float {
-            animation: float 3s infinite ease-in-out;
-        }
-
-        .float-slow {
-            animation: float-slow 4s infinite ease-in-out;
-        }
-
-        .pulse-pink {
-            animation: pulse-glow 2s infinite ease-in-out;
-        }
-
-        .pulse-green {
-            animation: pulse-green 2s infinite ease-in-out;
-        }
-
-        .pulse-blue {
-            animation: pulse-blue 2s infinite ease-in-out;
-        }
-
-        .pulse-gold {
-            animation: pulse-gold 2s infinite ease-in-out;
-        }
-
-        .spin-slow {
-            animation: spin-slow 8s infinite linear;
-        }
-
-        .shine {
-            animation: shine 2.5s infinite linear;
-        }
-
-        .soft-shine {
-            animation: soft-shine 3s infinite;
-        }
-
-        .trophy-glow {
-            animation: trophy-glow 3s infinite ease-in-out;
-        }
+        .float { animation: float 3s infinite ease-in-out; }
+        .float-slow { animation: float-slow 4s infinite ease-in-out; }
+        .pulse-pink { animation: pulse-glow 2s infinite ease-in-out; }
+        .pulse-green { animation: pulse-green 2s infinite ease-in-out; }
+        .pulse-blue { animation: pulse-blue 2s infinite ease-in-out; }
+        .pulse-gold { animation: pulse-gold 2s infinite ease-in-out; }
+        .spin-slow { animation: spin-slow 8s infinite linear; }
+        .shine { animation: shine 2.5s infinite linear; }
+        .soft-shine { animation: soft-shine 3s infinite; }
+        .trophy-glow { animation: trophy-glow 3s infinite ease-in-out; }
 
         .container {
             max-width: 500px;
@@ -559,8 +420,7 @@
             color: var(--primary-pink);
         }
 
-        .ranch-card,
-        .level-card {
+        .ranch-card, .level-card {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
@@ -582,8 +442,7 @@
             z-index: -1;
         }
 
-        .ranch-card:hover,
-        .level-card:hover {
+        .ranch-card:hover, .level-card:hover {
             transform: translateY(-2px);
         }
 
@@ -1294,7 +1153,6 @@
         }
 
         .open-ranch-btn {
-            width: 100%;
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             border: none;
             border-radius: 30px;
@@ -1308,7 +1166,7 @@
             gap: 8px;
             cursor: pointer;
             box-shadow: 0 4px 12px var(--pink-glow);
-            z-index: 2;
+            width: 100%;
             transition: 0.2s;
             margin-top: 12px;
         }
@@ -1595,8 +1453,7 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .market-card .card-title.sell,
-        .market-card .card-title.buy {
+        .market-card .card-title.sell, .market-card .card-title.buy {
             color: #fff;
         }
 
@@ -1773,8 +1630,7 @@
             font-weight: 500;
         }
 
-        .form-input,
-        .form-select {
+        .form-input, .form-select {
             width: 100%;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--glass-border);
@@ -1793,8 +1649,7 @@
             background-size: 20px;
         }
 
-        .form-input:focus,
-        .form-select:focus {
+        .form-input:focus, .form-select:focus {
             outline: 0;
             border-color: var(--primary-pink);
         }
@@ -2012,21 +1867,10 @@
             transition: 0.3s;
         }
 
-        .notification.success {
-            border-left-color: var(--neon-green);
-        }
-
-        .notification.error {
-            border-left-color: var(--danger-red);
-        }
-
-        .notification.warning {
-            border-left-color: var(--warning);
-        }
-
-        .notification.info {
-            border-left-color: var(--crystal-blue);
-        }
+        .notification.success { border-left-color: var(--neon-green); }
+        .notification.error { border-left-color: var(--danger-red); }
+        .notification.warning { border-left-color: var(--warning); }
+        .notification.info { border-left-color: var(--crystal-blue); }
 
         .notification.fade-out {
             opacity: 0;
@@ -2034,15 +1878,8 @@
         }
 
         @keyframes slide-in {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .bottom-nav {
@@ -2360,8 +2197,7 @@
             margin-top: 4px;
         }
 
-        .active-stat i,
-        .inactive-stat i {
+        .active-stat i, .inactive-stat i {
             font-size: 10px;
         }
 
@@ -2373,17 +2209,9 @@
             border-left: 4px solid transparent;
         }
 
-        .level-card[data-level="1"] {
-            border-left-color: #FFD700;
-        }
-
-        .level-card[data-level="2"] {
-            border-left-color: #C0C0C0;
-        }
-
-        .level-card[data-level="3"] {
-            border-left-color: #CD7F32;
-        }
+        .level-card[data-level="1"] { border-left-color: #FFD700; }
+        .level-card[data-level="2"] { border-left-color: #C0C0C0; }
+        .level-card[data-level="3"] { border-left-color: #CD7F32; }
 
         .level-header {
             display: flex;
@@ -2400,12 +2228,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            font-size: 28px;
         }
+
         .level-emoji img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 12px;
         }
 
         .level-title {
@@ -2452,13 +2282,8 @@
             font-weight: 600;
         }
 
-        .timer-text.active {
-            color: var(--neon-green);
-        }
-
-        .timer-text.expired {
-            color: var(--danger-red);
-        }
+        .timer-text.active { color: var(--neon-green); }
+        .timer-text.expired { color: var(--danger-red); }
 
         .level-actions {
             display: grid;
@@ -2544,97 +2369,89 @@
             font-size: 16px;
         }
 
+        .cow-overview-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .cow-stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .cow-stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .cow-stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--crystal-blue);
+        }
+
+        .cow-stat-sub {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .global-progress {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 12px;
+            margin: 16px 0;
+        }
+
+        .global-progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .global-progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .global-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-pink), var(--crystal-blue));
+            transition: width 0.3s ease;
+        }
+
         @media(max-width:400px) {
-            .status-value {
-                font-size: 14px;
-            }
-
-            .machine-emoji {
-                width: 50px;
-                height: 50px;
-            }
-
-            .machine-name {
-                font-size: 16px;
-            }
-
-            .stat-number {
-                font-size: 18px;
-            }
-
-            .market-stats {
-                grid-template-columns: 1fr 1fr;
-                gap: 6px;
-            }
-
-            .ton-amount {
-                font-size: 13px;
-            }
-
-            .mining-timer {
-                font-size: 11px;
-                padding: 4px 8px;
-            }
-
-            .leaderboard-title {
-                font-size: 20px;
-            }
-
-            .counter-main {
-                font-size: 24px;
-            }
-
-            .prize-amount {
-                font-size: 18px;
-            }
-
-            .position-row {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .position-label {
-                min-width: 60px;
-                font-size: 12px;
-            }
-
-            .position-value {
-                font-size: 16px;
-                padding: 2px 8px;
-                min-width: 50px;
-            }
-
-            .stat-box {
-                padding: 2px 6px;
-            }
-
-            .stat-box-label {
-                font-size: 9px;
-            }
-
-            .stat-box-value {
-                font-size: 12px;
-            }
-
-            .points-box {
-                font-size: 14px;
-                padding: 4px 8px;
-            }
-
-            .prize-pill {
-                font-size: 14px;
-                padding: 4px 8px;
-            }
-
-            .rank-badge {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
+            .status-value { font-size: 14px; }
+            .machine-emoji { width: 50px; height: 50px; }
+            .machine-name { font-size: 16px; }
+            .stat-number { font-size: 18px; }
+            .market-stats { grid-template-columns: 1fr 1fr; gap: 6px; }
+            .ton-amount { font-size: 13px; }
+            .mining-timer { font-size: 11px; padding: 4px 8px; }
+            .leaderboard-title { font-size: 20px; }
+            .counter-main { font-size: 24px; }
+            .prize-amount { font-size: 18px; }
+            .position-row { flex-wrap: wrap; gap: 8px; }
+            .position-label { min-width: 60px; font-size: 12px; }
+            .position-value { font-size: 16px; padding: 2px 8px; min-width: 50px; }
+            .stat-box { padding: 2px 6px; }
+            .stat-box-label { font-size: 9px; }
+            .stat-box-value { font-size: 12px; }
+            .points-box { font-size: 14px; padding: 4px 8px; }
+            .prize-pill { font-size: 14px; padding: 4px 8px; }
+            .rank-badge { width: 36px; height: 36px; font-size: 16px; }
+            .cow-stat-number { font-size: 20px; }
         }
     </style>
 </head>
-
 <body>
     <div class="notification-container" id="notificationContainer"></div>
     <div class="leaderboard-float" id="leaderboardButton"><i class="fas fa-trophy"></i></div>
@@ -2793,10 +2610,10 @@
             </div>
         </div>
 
-        <!-- Farm Section (Main) -->
+        <!-- Farm Section (Main) - REDESIGNED WITH RANCH OVERVIEW STYLE -->
         <div id="sectionFarm" class="section active">
             <div class="machines-grid">
-                <!-- Cow Card - REDESIGNED as requested -->
+                <!-- Cow Card - Redesigned with Ranch Overview style -->
                 <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
@@ -2809,29 +2626,31 @@
                         </div>
                     </div>
                     
-                    <!-- New Stats Grid - Like Ranch Overview -->
-                    <div class="stats-grid" style="margin-bottom:12px">
-                        <div class="stat-box-large" style="padding:10px">
-                            <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
-                            <div class="stat-value" style="font-size:24px" id="cowCardTotalCows">0</div>
-                            <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="cowCardActiveCows">0</span></div>
-                            <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="cowCardInactiveCows">0</span></div>
+                    <!-- New Stats Section - Like Ranch Overview -->
+                    <div class="cow-overview-stats">
+                        <div class="cow-stat-box">
+                            <div class="cow-stat-label">Total Cows</div>
+                            <div class="cow-stat-number" id="farmTotalCows">0</div>
+                            <div class="cow-stat-sub">
+                                <span style="color:var(--neon-green)">Active: <span id="farmActiveCows">0</span></span> · 
+                                <span style="color:var(--danger-red)">Inactive: <span id="farmInactiveCows">0</span></span>
+                            </div>
                         </div>
-                        <div class="stat-box-large" style="padding:10px">
-                            <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
-                            <div class="stat-value" style="font-size:24px" id="cowCardHourlyProduction">0</div>
-                            <div style="font-size:10px;color:var(--text-muted);margin-top:8px">Milk per hour</div>
+                        <div class="cow-stat-box">
+                            <div class="cow-stat-label">Production</div>
+                            <div class="cow-stat-number" id="farmProduction">0</div>
+                            <div class="cow-stat-sub">Milk per hour</div>
                         </div>
                     </div>
                     
-                    <!-- Global Progress Bar -->
-                    <div style="background:rgba(0,0,0,.3);border-radius:16px;padding:10px;margin-bottom:8px">
-                        <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px">
+                    <!-- Global Progress -->
+                    <div class="global-progress">
+                        <div class="global-progress-header">
                             <span>Global Cow Sales</span>
-                            <span style="font-weight:700" id="cowCardCowsSold">0/1000</span>
+                            <span style="font-weight:700" id="farmCowsSold">0/1000</span>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="cowCardCowsProgress" style="width:0%"></div>
+                        <div class="global-progress-bar">
+                            <div class="global-progress-fill" id="farmCowsProgress" style="width:0%"></div>
                         </div>
                     </div>
                     
@@ -2841,7 +2660,7 @@
                     </button>
                 </div>
 
-                <!-- Chicken Card -->
+                <!-- Chicken Card (unchanged) -->
                 <div class="machine-card chicken" id="chickenCard">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken"></div>
@@ -2875,7 +2694,7 @@
                     </div>
                 </div>
 
-                <!-- Crystal Card -->
+                <!-- Crystal Card (unchanged) -->
                 <div class="machine-card diamond" id="diamondCard">
                     <div class="machine-header">
                         <div class="machine-emoji spin-slow"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal"></div>
@@ -2926,14 +2745,12 @@
                 </div>
 
                 <div class="stats-grid">
-                    <!-- Total Cows Box -->
                     <div class="stat-box-large">
                         <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
                         <div class="stat-value" id="ranchTotalCows">0</div>
                         <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="ranchActiveCows">0</span></div>
                         <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="ranchInactiveCows">0</span></div>
                     </div>
-                    <!-- Production Box -->
                     <div class="stat-box-large">
                         <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
                         <div class="stat-value" id="ranchHourlyProduction">0</div>
@@ -2941,7 +2758,6 @@
                     </div>
                 </div>
 
-                <!-- Global Progress -->
                 <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:14px;margin-bottom:16px">
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px">
                         <span>Global Cow Sales</span>
@@ -2952,7 +2768,6 @@
                     </div>
                 </div>
 
-                <!-- Buy Cow Button inside Ranch -->
                 <button class="ranch-buy-btn" id="ranchBuyCowBtn" onclick="window.buyRanchCow()">
                     <i class="fas fa-cow"></i> Buy Cow (1 TON)
                 </button>
@@ -2965,7 +2780,7 @@
                 <!-- Level 1 -->
                 <div class="level-card" data-level="1">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Level 1 Cow"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Level 1" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 1 Cow</span>
@@ -2975,7 +2790,6 @@
                         </div>
                     </div>
 
-                    <!-- Timer Display -->
                     <div class="timer-bar" id="level1Timer" style="display:none">
                         <i class="fas fa-hourglass-half"></i>
                         <span class="timer-text" id="level1TimerText"></span>
@@ -2993,10 +2807,10 @@
                     </div>
                 </div>
 
-                <!-- Level 2 - FIXED: Using image instead of text -->
+                <!-- Level 2 - FIXED: Added image -->
                 <div class="level-card" data-level="2">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Level 2 Cow"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Level 2" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 2 Cow</span>
@@ -3026,7 +2840,7 @@
                 <!-- Level 3 -->
                 <div class="level-card" data-level="3">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Level 3 Cow"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Level 3" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 3 Cow</span>
@@ -3177,7 +2991,7 @@
             </div>
         </div>
 
-        <!-- Friends/Referral Section (FIXED - Now working) -->
+        <!-- Friends/Referral Section -->
         <div id="sectionFriends" class="section">
             <div class="card" style="background:linear-gradient(145deg,rgba(255,92,168,.15),var(--glass-strong))">
                 <div class="card-title"><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></div>
@@ -3234,7 +3048,7 @@
             </div>
         </div>
 
-        <!-- Profile Section (FIXED - Now working) -->
+        <!-- Profile Section -->
         <div id="sectionProfile" class="section">
             <div class="card">
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
@@ -3310,7 +3124,7 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation (No Ranch) -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-section="sectionFarm">
             <div class="nav-icon">🚜</div>
@@ -3534,6 +3348,7 @@
             CRYSTAL_PRICE: 25,
             TASK_REWARD: 0.001,
             MAX_ACTIVE_ORDERS: 2,
+            CLICK_COOLDOWN: 3000, // Changed from 10000 to 3000 ms
             COW_LEVELS: {
                 1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000, duration: 86400 },
                 2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000, duration: 86400 },
@@ -3556,248 +3371,80 @@
         // ==================== TRANSLATIONS ====================
         const TRANSLATIONS = {
             en: {
-                'nav.farm': 'Farm',
-                'nav.market': 'Market',
-                'nav.crystal': 'Crystal',
-                'nav.friends': 'Friends',
-                'nav.tasks': 'Tasks',
-                'nav.profile': 'Profile',
-                'status.milk': 'MILK',
-                'status.eggs': 'EGGS',
-                'status.crystal': 'CRYSTAL',
-                'status.deposit': 'Deposit',
-                'farm.cow.name': 'Cow',
-                'farm.chicken.name': 'Chicken',
-                'farm.crystal.name': 'Crystal Engine',
-                'farm.prod': 'Prod',
-                'farm.owned': 'Owned',
-                'farm.supply': 'Supply',
-                'farm.buy': 'Buy Multiple',
-                'farm.hatch': 'Hatch',
-                'farm.start': 'Start',
-                'farm.yield': 'Yield',
-                'market.title': 'P2P Market',
-                'market.buy': 'Buy',
-                'market.myOrders': 'My Orders',
-                'market.milk': 'Milk',
-                'market.eggs': 'Eggs',
-                'market.totalOrders': 'Total Orders',
-                'market.milkQty': 'Milk',
-                'market.eggsQty': 'Eggs',
-                'market.bestPrice': 'Best Price',
-                'market.createSell': 'Create Sell Order',
-                'market.refresh': 'Refresh',
-                'market.loadMore': 'Show More',
-                'market.noOrders': 'No active sell orders',
-                'market.activeOrders': 'Active Orders',
-                'market.history': 'History',
-                'crystal.title': 'Crystal Conversion',
-                'crystal.perTon': 'TON per Crystal',
-                'crystal.yourCrystals': 'Your Crystals',
-                'crystal.youReceive': 'You Receive',
-                'crystal.convert': 'Convert',
-                'crystal.milkAvailable': 'Milk available',
-                'crystal.eggsAvailable': 'Eggs available',
-                'referral.title': 'Referral Program',
-                'referral.description': 'Earn 10% commission when your friends buy machines with TON!',
-                'referral.share': 'Share this link with friends',
-                'referral.friends': 'Friends',
-                'referral.claim': 'Claim Earnings',
-                'referral.recent': 'Recent Referrals',
-                'referral.noReferrals': 'No referrals yet',
-                'referral.earningsHistory': 'Earnings History',
-                'referral.noEarnings': 'No earnings yet',
-                'tasks.title': 'Tasks & Rewards',
-                'tasks.partner': 'Partner Tasks',
-                'tasks.community': 'Community Tasks',
-                'tasks.addTask': 'Add Task',
-                'tasks.refresh': 'Refresh',
-                'tasks.noTasks': 'No tasks available',
-                'tasks.taskType': 'Task Type',
-                'tasks.channel': 'Channel',
-                'tasks.bot': 'Bot',
-                'tasks.channelNote': '⚠️ Bot must be admin in the channel for verification to work!',
-                'tasks.link': 'Link',
-                'tasks.targetUsers': 'Target Users (min 100)',
-                'tasks.rewardPerUser': 'Reward Per User (TON)',
-                'tasks.rewardFixed': 'Fixed at 0.001 TON per completion',
-                'tasks.yourBalance': 'Your Balance',
-                'tasks.confirm': 'Confirm & Pay',
-                'tasks.verify': 'Task Verification',
-                'tasks.join': 'Join',
-                'tasks.check': 'Verify & Claim',
-                'tasks.reward': 'Reward',
-                'profile.totalMachines': 'Total Machines',
-                'profile.production': 'Production',
-                'profile.assets': 'Assets',
-                'profile.balance': 'Balance',
-                'profile.withdraw': 'Withdraw TON',
-                'profile.withdrawAmount': 'Amount (min 0.1 TON)',
-                'profile.withdrawAddress': 'TON Wallet Address',
-                'profile.fee': 'Fee (5%)',
-                'profile.youReceive': 'You receive',
-                'profile.withdrawBtn': 'Withdraw',
-                'modal.sell.title': 'Sell Order',
-                'modal.sell.resource': 'Resource',
-                'modal.sell.quantity': 'Quantity (min 100)',
-                'modal.sell.place': 'Place Sell Order',
-                'modal.confirm.title': 'Confirm Purchase',
-                'modal.confirm.package': 'Milk Package',
-                'modal.confirm.cancel': 'Cancel',
-                'modal.confirm.confirm': 'Confirm & Pay',
-                'modal.hatch.title': 'Hatch Machine',
-                'modal.hatch.cowCost': '50,000 Milk',
-                'modal.hatch.chickenCost': '5,000 Eggs',
-                'modal.hatch.hatchBtn': 'Hatch',
-                'modal.deposit.title': 'Deposit TON',
-                'modal.deposit.wallet': 'Wallet',
-                'modal.deposit.notConnected': 'Not connected',
-                'modal.deposit.connect': 'Connect',
-                'modal.deposit.important': 'IMPORTANT:',
-                'modal.deposit.warning': 'Your User ID',
-                'modal.deposit.mustBeComment': 'must be the ONLY comment',
-                'modal.deposit.amount': 'Amount (TON)',
-                'modal.deposit.submit': 'Deposit TON',
-                'modal.deposit.processing': 'Processing deposit...',
-                'help.title': 'How to Play',
-                'help.cow.title': 'Cow Machine',
-                'help.cow.desc': '1 TON · 41 Milk/h<br>Global cap: 1000<br>Hatch: 50,000 Milk = 1 Cow',
-                'help.chicken.title': 'Chicken Machine',
-                'help.chicken.desc': '1 TON · 41 Eggs/h<br>Unlocks after all Cows sold',
-                'help.crystal.title': 'Crystal Engine',
-                'help.crystal.desc': '20 TON · 20k Milk + 20k Eggs = 1 Crystal<br>Convert Crystals → TON',
-                'help.hatch.title': 'Hatch System',
-                'help.hatch.desc': '50,000 Milk = 1 Cow<br>5,000 Eggs = 1 Chicken<br>No global cap limit',
-                'help.market.title': 'P2P Market',
-                'help.market.desc': 'Trade Milk & Eggs with other players',
-                'help.referral.title': 'Referral',
-                'help.referral.desc': 'Earn 10% of every TON purchase made by your friends',
-                'help.tasks.title': 'Tasks & Rewards',
-                'help.tasks.desc': 'Complete tasks to earn 0.001 TON<br>Create your own community tasks (min 100 users)',
-                'help.leaderboard.title': 'Leaderboard Competition',
-                'help.leaderboard.desc': '1 new cow = 10 points · Top 20 win 150 TON total<br>Ends when 1000 cows sold<br>⚠️ You must buy a cow to appear on leaderboard!'
+                'nav.farm': 'Farm', 'nav.market': 'Market', 'nav.crystal': 'Crystal', 'nav.friends': 'Friends', 'nav.tasks': 'Tasks', 'nav.profile': 'Profile',
+                'status.milk': 'MILK', 'status.eggs': 'EGGS', 'status.crystal': 'CRYSTAL', 'status.deposit': 'Deposit',
+                'farm.cow.name': 'Cow', 'farm.chicken.name': 'Chicken', 'farm.crystal.name': 'Crystal Engine',
+                'farm.prod': 'Prod', 'farm.owned': 'Owned', 'farm.supply': 'Supply', 'farm.buy': 'Buy Multiple', 'farm.hatch': 'Hatch', 'farm.start': 'Start', 'farm.yield': 'Yield',
+                'market.title': 'P2P Market', 'market.buy': 'Buy', 'market.myOrders': 'My Orders', 'market.milk': 'Milk', 'market.eggs': 'Eggs',
+                'market.totalOrders': 'Total Orders', 'market.milkQty': 'Milk', 'market.eggsQty': 'Eggs', 'market.bestPrice': 'Best Price',
+                'market.createSell': 'Create Sell Order', 'market.refresh': 'Refresh', 'market.loadMore': 'Show More', 'market.noOrders': 'No active sell orders',
+                'market.activeOrders': 'Active Orders', 'market.history': 'History',
+                'crystal.title': 'Crystal Conversion', 'crystal.perTon': 'TON per Crystal', 'crystal.yourCrystals': 'Your Crystals',
+                'crystal.youReceive': 'You Receive', 'crystal.convert': 'Convert', 'crystal.milkAvailable': 'Milk available', 'crystal.eggsAvailable': 'Eggs available',
+                'referral.title': 'Referral Program', 'referral.description': 'Earn 10% commission when your friends buy machines with TON!',
+                'referral.share': 'Share this link with friends', 'referral.friends': 'Friends', 'referral.claim': 'Claim Earnings',
+                'referral.recent': 'Recent Referrals', 'referral.noReferrals': 'No referrals yet', 'referral.earningsHistory': 'Earnings History', 'referral.noEarnings': 'No earnings yet',
+                'tasks.title': 'Tasks & Rewards', 'tasks.partner': 'Partner Tasks', 'tasks.community': 'Community Tasks',
+                'tasks.addTask': 'Add Task', 'tasks.refresh': 'Refresh', 'tasks.noTasks': 'No tasks available',
+                'tasks.taskType': 'Task Type', 'tasks.channel': 'Channel', 'tasks.bot': 'Bot', 'tasks.channelNote': '⚠️ Bot must be admin in the channel for verification to work!',
+                'tasks.link': 'Link', 'tasks.targetUsers': 'Target Users (min 100)', 'tasks.rewardPerUser': 'Reward Per User (TON)',
+                'tasks.rewardFixed': 'Fixed at 0.001 TON per completion', 'tasks.yourBalance': 'Your Balance', 'tasks.confirm': 'Confirm & Pay',
+                'tasks.verify': 'Task Verification', 'tasks.join': 'Join', 'tasks.check': 'Verify & Claim', 'tasks.reward': 'Reward',
+                'profile.totalMachines': 'Total Machines', 'profile.production': 'Production', 'profile.assets': 'Assets',
+                'profile.balance': 'Balance', 'profile.withdraw': 'Withdraw TON', 'profile.withdrawAmount': 'Amount (min 0.1 TON)',
+                'profile.withdrawAddress': 'TON Wallet Address', 'profile.fee': 'Fee (5%)', 'profile.youReceive': 'You receive', 'profile.withdrawBtn': 'Withdraw',
+                'modal.sell.title': 'Sell Order', 'modal.sell.resource': 'Resource', 'modal.sell.quantity': 'Quantity (min 100)', 'modal.sell.place': 'Place Sell Order',
+                'modal.confirm.title': 'Confirm Purchase', 'modal.confirm.package': 'Milk Package', 'modal.confirm.cancel': 'Cancel', 'modal.confirm.confirm': 'Confirm & Pay',
+                'modal.hatch.title': 'Hatch Machine', 'modal.hatch.cowCost': '50,000 Milk', 'modal.hatch.chickenCost': '5,000 Eggs', 'modal.hatch.hatchBtn': 'Hatch',
+                'modal.deposit.title': 'Deposit TON', 'modal.deposit.wallet': 'Wallet', 'modal.deposit.notConnected': 'Not connected', 'modal.deposit.connect': 'Connect',
+                'modal.deposit.important': 'IMPORTANT:', 'modal.deposit.warning': 'Your User ID', 'modal.deposit.mustBeComment': 'must be the ONLY comment',
+                'modal.deposit.amount': 'Amount (TON)', 'modal.deposit.submit': 'Deposit TON', 'modal.deposit.processing': 'Processing deposit...',
+                'help.title': 'How to Play', 'help.cow.title': 'Cow Machine', 'help.cow.desc': '1 TON · 41 Milk/h<br>Global cap: 1000<br>Hatch: 50,000 Milk = 1 Cow',
+                'help.chicken.title': 'Chicken Machine', 'help.chicken.desc': '1 TON · 41 Eggs/h<br>Unlocks after all Cows sold',
+                'help.crystal.title': 'Crystal Engine', 'help.crystal.desc': '20 TON · 20k Milk + 20k Eggs = 1 Crystal<br>Convert Crystals → TON',
+                'help.hatch.title': 'Hatch System', 'help.hatch.desc': '50,000 Milk = 1 Cow<br>5,000 Eggs = 1 Chicken<br>No global cap limit',
+                'help.market.title': 'P2P Market', 'help.market.desc': 'Trade Milk & Eggs with other players',
+                'help.referral.title': 'Referral', 'help.referral.desc': 'Earn 10% of every TON purchase made by your friends',
+                'help.tasks.title': 'Tasks & Rewards', 'help.tasks.desc': 'Complete tasks to earn 0.001 TON<br>Create your own community tasks (min 100 users)',
+                'help.leaderboard.title': 'Leaderboard Competition', 'help.leaderboard.desc': '1 new cow = 10 points · Top 20 win 150 TON total<br>Ends when 1000 cows sold<br>⚠️ You must buy a cow to appear on leaderboard!'
             },
             ru: {
-                'nav.farm': 'Ферма',
-                'nav.market': 'Рынок',
-                'nav.crystal': 'Кристалл',
-                'nav.friends': 'Друзья',
-                'nav.tasks': 'Задания',
-                'nav.profile': 'Профиль',
-                'status.milk': 'МОЛОКО',
-                'status.eggs': 'ЯЙЦА',
-                'status.crystal': 'КРИСТАЛЛ',
-                'status.deposit': 'Депозит',
-                'farm.cow.name': 'Корова',
-                'farm.chicken.name': 'Курица',
-                'farm.crystal.name': 'Кристальный двигатель',
-                'farm.prod': 'Произ',
-                'farm.owned': 'Влад',
-                'farm.supply': 'Предл',
-                'farm.buy': 'Купить несколько',
-                'farm.hatch': 'Вывести',
-                'farm.start': 'Запустить',
-                'farm.yield': 'Выход',
-                'market.title': 'P2P Рынок',
-                'market.buy': 'Купить',
-                'market.myOrders': 'Мои заказы',
-                'market.milk': 'Молоко',
-                'market.eggs': 'Яйца',
-                'market.totalOrders': 'Всего',
-                'market.milkQty': 'Молоко',
-                'market.eggsQty': 'Яйца',
-                'market.bestPrice': 'Лучшая цена',
-                'market.createSell': 'Создать ордер',
-                'market.refresh': 'Обновить',
-                'market.loadMore': 'Показать еще',
-                'market.noOrders': 'Нет активных ордеров',
-                'market.activeOrders': 'Активные',
-                'market.history': 'История',
-                'crystal.title': 'Конвертация кристаллов',
-                'crystal.perTon': 'TON за кристалл',
-                'crystal.yourCrystals': 'Ваши кристаллы',
-                'crystal.youReceive': 'Вы получите',
-                'crystal.convert': 'Конвертировать',
-                'crystal.milkAvailable': 'Молоко доступно',
-                'crystal.eggsAvailable': 'Яйца доступны',
-                'referral.title': 'Реферальная программа',
-                'referral.description': 'Зарабатывайте 10% комиссии, когда ваши друзья покупают машины!',
-                'referral.share': 'Поделитесь этой ссылкой с друзьями',
-                'referral.friends': 'Друзей',
-                'referral.claim': 'Забрать доход',
-                'referral.recent': 'Недавние рефералы',
-                'referral.noReferrals': 'Пока нет рефералов',
-                'referral.earningsHistory': 'История доходов',
-                'referral.noEarnings': 'Пока нет доходов',
-                'tasks.title': 'Задания и награды',
-                'tasks.partner': 'Партнерские',
-                'tasks.community': 'Сообщества',
-                'tasks.addTask': 'Добавить задание',
-                'tasks.refresh': 'Обновить',
-                'tasks.noTasks': 'Нет доступных заданий',
-                'tasks.taskType': 'Тип задания',
-                'tasks.channel': 'Канал',
-                'tasks.bot': 'Бот',
-                'tasks.channelNote': '⚠️ Бот должен быть администратором канала!',
-                'tasks.link': 'Ссылка',
-                'tasks.targetUsers': 'Цель (мин 100)',
-                'tasks.rewardPerUser': 'Награда за пользователя',
-                'tasks.rewardFixed': 'Фиксировано 0.001 TON',
-                'tasks.yourBalance': 'Ваш баланс',
-                'tasks.confirm': 'Подтвердить и оплатить',
-                'tasks.verify': 'Проверка задания',
-                'tasks.join': 'Присоединиться',
-                'tasks.check': 'Проверить и получить',
-                'tasks.reward': 'Награда',
-                'profile.totalMachines': 'Всего машин',
-                'profile.production': 'Производство',
-                'profile.assets': 'Активы',
-                'profile.balance': 'Баланс',
-                'profile.withdraw': 'Вывести TON',
-                'profile.withdrawAmount': 'Сумма (мин 0.1 TON)',
-                'profile.withdrawAddress': 'TON адрес кошелька',
-                'profile.fee': 'Комиссия (5%)',
-                'profile.youReceive': 'Вы получите',
-                'profile.withdrawBtn': 'Вывести',
-                'modal.sell.title': 'Ордер на продажу',
-                'modal.sell.resource': 'Ресурс',
-                'modal.sell.quantity': 'Количество (мин 100)',
-                'modal.sell.place': 'Разместить ордер',
-                'modal.confirm.title': 'Подтверждение покупки',
-                'modal.confirm.package': 'Пакет молока',
-                'modal.confirm.cancel': 'Отмена',
-                'modal.confirm.confirm': 'Подтвердить и оплатить',
-                'modal.hatch.title': 'Вывести машину',
-                'modal.hatch.cowCost': '50,000 Молока',
-                'modal.hatch.chickenCost': '5,000 Яиц',
-                'modal.hatch.hatchBtn': 'Вывести',
-                'modal.deposit.title': 'Депозит TON',
-                'modal.deposit.wallet': 'Кошелек',
-                'modal.deposit.notConnected': 'Не подключен',
-                'modal.deposit.connect': 'Подключить',
-                'modal.deposit.important': 'ВАЖНО:',
-                'modal.deposit.warning': 'Ваш User ID',
-                'modal.deposit.mustBeComment': 'должен быть ЕДИНСТВЕННЫМ комментарием',
-                'modal.deposit.amount': 'Сумма (TON)',
-                'modal.deposit.submit': 'Депозит TON',
-                'modal.deposit.processing': 'Обработка депозита...',
-                'help.title': 'Как играть',
-                'help.cow.title': 'Корова',
-                'help.cow.desc': '1 TON · 41 Молоко/час<br>Всего: 1000 машин<br>Вывод: 50,000 Молока = 1 Корова',
-                'help.chicken.title': 'Курица',
-                'help.chicken.desc': '1 TON · 41 Яйца/час<br>Открывается после всех коров',
-                'help.crystal.title': 'Кристальный двигатель',
-                'help.crystal.desc': '20 TON · 20k Молока + 20k Яиц = 1 Кристалл<br>Конвертация в TON',
-                'help.hatch.title': 'Система вывода',
-                'help.hatch.desc': '50,000 Молока = 1 Корова<br>5,000 Яиц = 1 Курица<br>Без лимита',
-                'help.market.title': 'P2P Рынок',
-                'help.market.desc': 'Торгуйте молоком и яйцами',
-                'help.referral.title': 'Рефералы',
-                'help.referral.desc': '10% от покупок друзей',
-                'help.tasks.title': 'Задания',
-                'help.tasks.desc': 'Выполняйте задания за 0.001 TON',
-                'help.leaderboard.title': 'Соревнование',
-                'help.leaderboard.desc': '1 новая корова = 10 очков · Топ-20 выигрывают 150 TON<br>Заканчивается когда продано 1000 коров'
+                'nav.farm': 'Ферма', 'nav.market': 'Рынок', 'nav.crystal': 'Кристалл', 'nav.friends': 'Друзья', 'nav.tasks': 'Задания', 'nav.profile': 'Профиль',
+                'status.milk': 'МОЛОКО', 'status.eggs': 'ЯЙЦА', 'status.crystal': 'КРИСТАЛЛ', 'status.deposit': 'Депозит',
+                'farm.cow.name': 'Корова', 'farm.chicken.name': 'Курица', 'farm.crystal.name': 'Кристальный двигатель',
+                'farm.prod': 'Произ', 'farm.owned': 'Влад', 'farm.supply': 'Предл', 'farm.buy': 'Купить несколько', 'farm.hatch': 'Вывести', 'farm.start': 'Запустить', 'farm.yield': 'Выход',
+                'market.title': 'P2P Рынок', 'market.buy': 'Купить', 'market.myOrders': 'Мои заказы', 'market.milk': 'Молоко', 'market.eggs': 'Яйца',
+                'market.totalOrders': 'Всего', 'market.milkQty': 'Молоко', 'market.eggsQty': 'Яйца', 'market.bestPrice': 'Лучшая цена',
+                'market.createSell': 'Создать ордер', 'market.refresh': 'Обновить', 'market.loadMore': 'Показать еще', 'market.noOrders': 'Нет активных ордеров',
+                'market.activeOrders': 'Активные', 'market.history': 'История',
+                'crystal.title': 'Конвертация кристаллов', 'crystal.perTon': 'TON за кристалл', 'crystal.yourCrystals': 'Ваши кристаллы',
+                'crystal.youReceive': 'Вы получите', 'crystal.convert': 'Конвертировать', 'crystal.milkAvailable': 'Молоко доступно', 'crystal.eggsAvailable': 'Яйца доступны',
+                'referral.title': 'Реферальная программа', 'referral.description': 'Зарабатывайте 10% комиссии, когда ваши друзья покупают машины!',
+                'referral.share': 'Поделитесь этой ссылкой с друзьями', 'referral.friends': 'Друзей', 'referral.claim': 'Забрать доход',
+                'referral.recent': 'Недавние рефералы', 'referral.noReferrals': 'Пока нет рефералов', 'referral.earningsHistory': 'История доходов', 'referral.noEarnings': 'Пока нет доходов',
+                'tasks.title': 'Задания и награды', 'tasks.partner': 'Партнерские', 'tasks.community': 'Сообщества',
+                'tasks.addTask': 'Добавить задание', 'tasks.refresh': 'Обновить', 'tasks.noTasks': 'Нет доступных заданий',
+                'tasks.taskType': 'Тип задания', 'tasks.channel': 'Канал', 'tasks.bot': 'Бот', 'tasks.channelNote': '⚠️ Бот должен быть администратором канала!',
+                'tasks.link': 'Ссылка', 'tasks.targetUsers': 'Цель (мин 100)', 'tasks.rewardPerUser': 'Награда за пользователя',
+                'tasks.rewardFixed': 'Фиксировано 0.001 TON', 'tasks.yourBalance': 'Ваш баланс', 'tasks.confirm': 'Подтвердить и оплатить',
+                'tasks.verify': 'Проверка задания', 'tasks.join': 'Присоединиться', 'tasks.check': 'Проверить и получить', 'tasks.reward': 'Награда',
+                'profile.totalMachines': 'Всего машин', 'profile.production': 'Производство', 'profile.assets': 'Активы',
+                'profile.balance': 'Баланс', 'profile.withdraw': 'Вывести TON', 'profile.withdrawAmount': 'Сумма (мин 0.1 TON)',
+                'profile.withdrawAddress': 'TON адрес кошелька', 'profile.fee': 'Комиссия (5%)', 'profile.youReceive': 'Вы получите', 'profile.withdrawBtn': 'Вывести',
+                'modal.sell.title': 'Ордер на продажу', 'modal.sell.resource': 'Ресурс', 'modal.sell.quantity': 'Количество (мин 100)', 'modal.sell.place': 'Разместить ордер',
+                'modal.confirm.title': 'Подтверждение покупки', 'modal.confirm.package': 'Пакет молока', 'modal.confirm.cancel': 'Отмена', 'modal.confirm.confirm': 'Подтвердить и оплатить',
+                'modal.hatch.title': 'Вывести машину', 'modal.hatch.cowCost': '50,000 Молока', 'modal.hatch.chickenCost': '5,000 Яиц', 'modal.hatch.hatchBtn': 'Вывести',
+                'modal.deposit.title': 'Депозит TON', 'modal.deposit.wallet': 'Кошелек', 'modal.deposit.notConnected': 'Не подключен', 'modal.deposit.connect': 'Подключить',
+                'modal.deposit.important': 'ВАЖНО:', 'modal.deposit.warning': 'Ваш User ID', 'modal.deposit.mustBeComment': 'должен быть ЕДИНСТВЕННЫМ комментарием',
+                'modal.deposit.amount': 'Сумма (TON)', 'modal.deposit.submit': 'Депозит TON', 'modal.deposit.processing': 'Обработка депозита...',
+                'help.title': 'Как играть', 'help.cow.title': 'Корова', 'help.cow.desc': '1 TON · 41 Молоко/час<br>Всего: 1000 машин<br>Вывод: 50,000 Молока = 1 Корова',
+                'help.chicken.title': 'Курица', 'help.chicken.desc': '1 TON · 41 Яйца/час<br>Открывается после всех коров',
+                'help.crystal.title': 'Кристальный двигатель', 'help.crystal.desc': '20 TON · 20k Молока + 20k Яиц = 1 Кристалл<br>Конвертация в TON',
+                'help.hatch.title': 'Система вывода', 'help.hatch.desc': '50,000 Молока = 1 Корова<br>5,000 Яиц = 1 Курица<br>Без лимита',
+                'help.market.title': 'P2P Рынок', 'help.market.desc': 'Торгуйте молоком и яйцами',
+                'help.referral.title': 'Рефералы', 'help.referral.desc': '10% от покупок друзей',
+                'help.tasks.title': 'Задания', 'help.tasks.desc': 'Выполняйте задания за 0.001 TON',
+                'help.leaderboard.title': 'Соревнование', 'help.leaderboard.desc': '1 новая корова = 10 очков · Топ-20 выигрывают 150 TON<br>Заканчивается когда продано 1000 коров'
             }
         };
 
@@ -3812,17 +3459,10 @@
                 whenDesc: 'The competition ends when 1000 cows are sold',
                 gotIt: '✅ Got it',
                 prizeList: [
-                    { rank: '1st', prize: '40 TON' },
-                    { rank: '2nd', prize: '30 TON' },
-                    { rank: '3rd', prize: '20 TON' },
-                    { rank: '4th', prize: '10 TON' },
-                    { rank: '5th', prize: '8 TON' },
-                    { rank: '6th', prize: '6 TON' },
-                    { rank: '7th', prize: '5 TON' },
-                    { rank: '8th', prize: '4 TON' },
-                    { rank: '9th-10th', prize: '3 TON' },
-                    { rank: '11th-18th', prize: '2 TON' },
-                    { rank: '19th-20th', prize: '1 TON' }
+                    { rank: '1st', prize: '40 TON' }, { rank: '2nd', prize: '30 TON' }, { rank: '3rd', prize: '20 TON' },
+                    { rank: '4th', prize: '10 TON' }, { rank: '5th', prize: '8 TON' }, { rank: '6th', prize: '6 TON' },
+                    { rank: '7th', prize: '5 TON' }, { rank: '8th', prize: '4 TON' }, { rank: '9th-10th', prize: '3 TON' },
+                    { rank: '11th-18th', prize: '2 TON' }, { rank: '19th-20th', prize: '1 TON' }
                 ]
             },
             ru: {
@@ -3835,17 +3475,10 @@
                 whenDesc: 'Соревнование заканчивается, когда продано 1000 коров',
                 gotIt: '✅ Понятно',
                 prizeList: [
-                    { rank: '1 место', prize: '40 TON' },
-                    { rank: '2 место', prize: '30 TON' },
-                    { rank: '3 место', prize: '20 TON' },
-                    { rank: '4 место', prize: '10 TON' },
-                    { rank: '5 место', prize: '8 TON' },
-                    { rank: '6 место', prize: '6 TON' },
-                    { rank: '7 место', prize: '5 TON' },
-                    { rank: '8 место', prize: '4 TON' },
-                    { rank: '9-10 место', prize: '3 TON' },
-                    { rank: '11-18 место', prize: '2 TON' },
-                    { rank: '19-20 место', prize: '1 TON' }
+                    { rank: '1 место', prize: '40 TON' }, { rank: '2 место', prize: '30 TON' }, { rank: '3 место', prize: '20 TON' },
+                    { rank: '4 место', prize: '10 TON' }, { rank: '5 место', prize: '8 TON' }, { rank: '6 место', prize: '6 TON' },
+                    { rank: '7 место', prize: '5 TON' }, { rank: '8 место', prize: '4 TON' }, { rank: '9-10 место', prize: '3 TON' },
+                    { rank: '11-18 место', prize: '2 TON' }, { rank: '19-20 место', prize: '1 TON' }
                 ]
             }
         };
@@ -3894,8 +3527,7 @@
         };
 
         const lastClickTimers = {};
-        // FIXED: Changed from 10000 to 3000 (3 seconds)
-        const CLICK_COOLDOWN = 3000;
+        const CLICK_COOLDOWN = CONFIG.CLICK_COOLDOWN; // 3000ms now
 
         // ==================== UTILITIES ====================
         function checkClickCooldown(buttonId) {
@@ -3903,7 +3535,7 @@
             let lastClick = lastClickTimers[buttonId] || 0;
             let timeLeft = CLICK_COOLDOWN - (now - lastClick);
             if (timeLeft > 0) {
-                // FIXED: Removed the notification message
+                // HIDDEN NOTIFICATION - removed the popup message
                 return false;
             }
             return true;
@@ -3960,6 +3592,17 @@
             if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
             if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
             return n.toLocaleString();
+        }
+
+        function formatTimeRemaining(seconds) {
+            if (seconds <= 0) return 'Expired';
+            if (seconds > 1000000000) return 'Calculating...'; // Handle large invalid timestamps
+            
+            let hours = Math.floor(seconds / 3600);
+            let minutes = Math.floor((seconds % 3600) / 60);
+            let secs = Math.floor(seconds % 60);
+            
+            return `${hours}h ${minutes}m ${secs}s`;
         }
 
         function setLanguage(lang) {
@@ -4131,9 +3774,7 @@
                     App.tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
                         manifestUrl: manifestUrl,
                         language: App.currentLanguage === 'ru' ? 'ru' : 'en',
-                        uiPreferences: {
-                            theme: 'DARK'
-                        }
+                        uiPreferences: { theme: 'DARK' }
                     });
                     App.tonConnectUI.onStatusChange(wallet => {
                         if (wallet) {
@@ -4259,6 +3900,14 @@
             document.getElementById('storageCapacity').innerHTML = formatNumber(storageCapacity);
             document.getElementById('storageProgressFill').style.width = (milkStored / storageCapacity * 100) + '%';
 
+            // Update farm overview stats
+            document.getElementById('farmTotalCows').innerHTML = totalCows;
+            document.getElementById('farmActiveCows').innerHTML = activeCows;
+            document.getElementById('farmInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
+            document.getElementById('farmProduction').innerHTML = Math.round(hourlyProduction);
+            document.getElementById('farmCowsSold').innerHTML = cowsSold + '/1000';
+            document.getElementById('farmCowsProgress').style.width = (cowsSold / 10) + '%';
+
             updateCowTimers();
         }
 
@@ -4275,13 +3924,14 @@
                 if (activeCows > 0 && App.ranch.cowActiveUntil[level]) {
                     let timeLeft = App.ranch.cowActiveUntil[level] - now;
 
-                    if (timeLeft > 0) {
-                        let hours = Math.floor(timeLeft / 3600);
-                        let minutes = Math.floor((timeLeft % 3600) / 60);
-                        let seconds = Math.floor((timeLeft % 60));
-                        
-                        // FIXED: Properly display time remaining
-                        timerText.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+                    // FIXED: Handle large invalid timestamps
+                    if (timeLeft > 86400 * 30) { // More than 30 days - likely invalid
+                        timerText.innerHTML = 'Invalid time';
+                        timerDiv.style.display = 'flex';
+                        timerDiv.className = 'timer-bar';
+                        timerText.className = 'timer-text expired';
+                    } else if (timeLeft > 0) {
+                        timerText.innerHTML = formatTimeRemaining(timeLeft);
                         timerDiv.style.display = 'flex';
                         timerDiv.className = 'timer-bar active';
                         timerText.className = 'timer-text active';
@@ -4467,23 +4117,8 @@
             document.getElementById('withdrawNet').innerHTML = `${formatTON(net)} TON`;
             document.getElementById('taskUserBalance').innerHTML = formatTON(App.user.tonBalance || 0);
             
-            // Update Cow Card (Farm page) with Ranch data
-            if (App.ranch) {
-                let r = App.ranch;
-                let totalCows = (r.cowLevels[1] || 0) + (r.cowLevels[2] || 0) + (r.cowLevels[3] || 0) +
-                    (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
-                let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
-                let inactiveCows = totalCows - activeCows;
-                let hourlyProduction = r.hourlyProduction || 0;
-                let cowsSold = App.global?.cows_sold || 0;
-
-                document.getElementById('cowCardTotalCows').innerHTML = totalCows;
-                document.getElementById('cowCardActiveCows').innerHTML = activeCows;
-                document.getElementById('cowCardInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
-                document.getElementById('cowCardHourlyProduction').innerHTML = Math.round(hourlyProduction);
-                document.getElementById('cowCardCowsSold').innerHTML = cowsSold + '/1000';
-                document.getElementById('cowCardCowsProgress').style.width = (cowsSold / 10) + '%';
-            }
+            // Update ranch UI to ensure farm overview is updated
+            updateRanchUI();
         }
 
         function updateReferralUI() {
@@ -4839,8 +4474,8 @@
 
         // ==================== COW ACTIONS ====================
         window.buyCow = async function() {
-            let button = document.getElementById('buyCowBtn');
-            if (!button) button = document.getElementById('ranchBuyCowBtn');
+            let button = document.getElementById('ranchBuyCowBtn');
+            if (!button) button = document.getElementById('buyCowBtn');
             if (!validateAndCooldown('buyCowBtn', button)) return;
             if (App.global?.cows_remaining <= 0) {
                 showNotification('No cows left to buy', 'warning');
@@ -4981,15 +4616,19 @@
         window.claimMilk = async function() {
             let button = document.getElementById('claimMilkBtn');
             if (!validateAndCooldown('claimMilkBtn', button)) return;
-            if (App.ranch.milkStored <= 0) {
+            
+            let storedMilk = App.ranch.milkStored || 0;
+            if (storedMilk <= 0) {
                 showNotification(App.currentLanguage === 'ru' ? 'Нет молока для получения' : 'No milk to claim', 'info');
                 return;
             }
+            
             try {
                 let result = await callAPI('claimMilk');
                 await loadGameState();
-                // FIXED: Use the claimed amount from the API result instead of the old stored value
-                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.claimedAmount)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.claimedAmount)} 🥛 from storage!`, 'success');
+                // FIXED: Show correct claimed amount from result
+                let claimedAmount = result.claimedAmount || storedMilk;
+                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(claimedAmount)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(claimedAmount)} 🥛 from storage!`, 'success');
             } catch (e) {
                 console.error('Claim milk error:', e);
             }

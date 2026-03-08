@@ -1062,6 +1062,7 @@ async function calculateRanchProduction(env, userId, ranch = null) {
     }
 }
 
+// ===== FIXED: handleGetRanchState with correct calculations =====
 async function handleGetRanchState(env, userId) {
     try {
         const ranchResult = await dbGet(env, `users/${userId}/ranch`);
@@ -3753,6 +3754,7 @@ async function handleConvertDiamond(env, userId, data) {
 // MARKET - P2P ORDER BOOK - REMOVED PRICE FLOOR
 // ============================================
 
+// ===== MODIFIED: handleCreateSellOrder with price floor removed =====
 async function handleCreateSellOrder(env, userId, data) {
     let attempt = 0;
     const maxAttempts = GAME_CONSTANTS.MAX_RETRY_ATTEMPTS;
@@ -3788,7 +3790,7 @@ async function handleCreateSellOrder(env, userId, data) {
             }
             
             // ===== REMOVED: Price floor requirement =====
-            // No minimum price anymore
+            // No minimum price anymore - users can set any price they want
             
             // ===== CHECK MAX ACTIVE ORDERS (LIMIT 2) =====
             const activeOrdersCheck = await checkUserActiveOrders(env, userId);
@@ -3931,6 +3933,7 @@ async function handleCreateSellOrder(env, userId, data) {
     };
 }
 
+// ===== MODIFIED: handleCreateBuyOrder with price floor removed =====
 async function handleCreateBuyOrder(env, userId, data) {
     let attempt = 0;
     const maxAttempts = GAME_CONSTANTS.MAX_RETRY_ATTEMPTS;
@@ -3966,7 +3969,7 @@ async function handleCreateBuyOrder(env, userId, data) {
             }
             
             // ===== REMOVED: Price floor requirement =====
-            // No minimum price anymore
+            // No minimum price anymore - users can set any price they want
             
             // ===== CHECK MAX ACTIVE ORDERS (LIMIT 2) =====
             const activeOrdersCheck = await checkUserActiveOrders(env, userId);

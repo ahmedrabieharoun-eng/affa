@@ -2420,14 +2420,24 @@
         }
 
         .level-emoji {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            background: transparent;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .level-emoji img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
         }
 
         .level-title {
@@ -2658,6 +2668,31 @@
 </head>
 
 <body>
+
+    <!-- LOADING SCREEN -->
+    <div id="loadingScreen" style="
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0a0a18 url('https://i.ibb.co/kVGZmG6x/Chat-GPT-Image-15-2026-06-52-13.png') center/cover no-repeat;
+    ">
+        <div style="position:absolute;inset:0;background:rgba(5,5,20,0.72)"></div>
+        <div style="position:relative;z-index:1;text-align:center;padding:20px">
+            <div style="font-size:72px;animation:float 2s infinite ease-in-out;margin-bottom:8px">🐄</div>
+            <div style="font-size:26px;font-weight:800;background:linear-gradient(145deg,#fff,#FF5CA8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px">Crystal Ranch</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:32px">Loading your farm...</div>
+
+            <div style="width:220px;height:6px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;margin:0 auto 14px">
+                <div id="loadingBar" style="height:100%;width:0%;background:linear-gradient(90deg,#FF5CA8,#00D4FF);border-radius:10px;transition:width 0.4s ease"></div>
+            </div>
+            <div id="loadingStatus" style="font-size:11px;color:rgba(255,255,255,0.45)">Connecting...</div>
+        </div>
+    </div>
+
     <div class="notification-container" id="notificationContainer"></div>
     <div class="leaderboard-float" id="leaderboardButton"><i class="fas fa-trophy"></i></div>
     <div class="help-float" id="helpButton"><i class="fas fa-question"></i></div>
@@ -2978,7 +3013,7 @@
                 <!-- Level 1 -->
                 <div class="level-card" data-level="1">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/XZ0c9nFv/1.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:12px;border:2px solid rgba(255,215,0,0.4)"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/XZ0c9nFv/1.jpg" alt="Level 1 Cow"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 1 Cow</span>
@@ -3009,7 +3044,7 @@
                 <!-- Level 2 -->
                 <div class="level-card" data-level="2">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/ZC6mzck/2.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:12px;border:2px solid rgba(192,192,192,0.4)"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/ZC6mzck/2.jpg" alt="Level 2 Cow"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 2 Cow</span>
@@ -3039,7 +3074,7 @@
                 <!-- Level 3 -->
                 <div class="level-card" data-level="3">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/pjpBW8dn/3.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:12px;border:2px solid rgba(205,127,50,0.5)"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/pjpBW8dn/3.jpg" alt="Level 3 Cow"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 3 Cow</span>
@@ -4062,15 +4097,37 @@
         }
 
         // ==================== INITIALIZATION ====================
+        function setLoadingProgress(pct, msg) {
+            let bar = document.getElementById('loadingBar');
+            let status = document.getElementById('loadingStatus');
+            if (bar) bar.style.width = pct + '%';
+            if (status) status.textContent = msg;
+        }
+
+        function hideLoadingScreen() {
+            let screen = document.getElementById('loadingScreen');
+            if (!screen) return;
+            screen.style.transition = 'opacity 0.5s ease';
+            screen.style.opacity = '0';
+            setTimeout(() => screen.remove(), 500);
+        }
+
         async function initApp() {
             console.log('Crystal Ranch · Initializing...');
+            setLoadingProgress(10, 'Setting language...');
             setLanguage(localStorage.getItem('crystal_ranch_lang') || 'en');
+            setLoadingProgress(25, 'Connecting to Telegram...');
             await setupTelegram();
+            setLoadingProgress(45, 'Initializing account...');
             await initializeUser();
+            setLoadingProgress(65, 'Loading farm data...');
             setTimeout(() => initTONConnect(), 1000);
             await loadGameState();
+            setLoadingProgress(90, 'Setting up...');
             setupIntervals();
             setupEventListeners();
+            setLoadingProgress(100, 'Ready!');
+            setTimeout(() => hideLoadingScreen(), 400);
             console.log('Crystal Ranch · Ready');
         }
 

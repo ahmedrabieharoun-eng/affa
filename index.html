@@ -85,219 +85,88 @@
         }
 
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-6px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         @keyframes float-slow {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-3px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         @keyframes pulse-glow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--pink-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--pink-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--pink-glow); }
+            50% { box-shadow: 0 0 25px var(--pink-glow); }
         }
 
         @keyframes pulse-green {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--green-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--green-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--green-glow); }
+            50% { box-shadow: 0 0 25px var(--green-glow); }
         }
 
         @keyframes pulse-blue {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px var(--blue-glow);
-            }
-
-            50% {
-                box-shadow: 0 0 25px var(--blue-glow);
-            }
+            0%, 100% { box-shadow: 0 0 10px var(--blue-glow); }
+            50% { box-shadow: 0 0 25px var(--blue-glow); }
         }
 
         @keyframes pulse-gold {
-
-            0%,
-            100% {
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-            }
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
         }
 
         @keyframes pulse-lock {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         @keyframes shine {
-            0% {
-                filter: drop-shadow(0 0 5px var(--crystal-blue));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 20px var(--crystal-blue));
-            }
-
-            100% {
-                filter: drop-shadow(0 0 5px var(--crystal-blue));
-            }
+            0% { filter: drop-shadow(0 0 5px var(--crystal-blue)); }
+            50% { filter: drop-shadow(0 0 20px var(--crystal-blue)); }
+            100% { filter: drop-shadow(0 0 5px var(--crystal-blue)); }
         }
 
         @keyframes soft-shine {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
         @keyframes bounce {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         @keyframes spin-slow {
-            from {
-                transform: rotate(0);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0); }
+            to { transform: rotate(360deg); }
         }
 
         @keyframes slide-out {
-            0% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateX(100px);
-            }
+            0% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(100px); }
         }
 
         @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes trophy-glow {
-            0% {
-                filter: drop-shadow(0 0 5px gold);
-                transform: scale(1);
-            }
-
-            50% {
-                filter: drop-shadow(0 0 25px gold);
-                transform: scale(1.1);
-            }
-
-            100% {
-                filter: drop-shadow(0 0 5px gold);
-                transform: scale(1);
-            }
+            0% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 25px gold); transform: scale(1.1); }
+            100% { filter: drop-shadow(0 0 5px gold); transform: scale(1); }
         }
 
-        .float {
-            animation: float 3s infinite ease-in-out;
-        }
-
-        .float-slow {
-            animation: float-slow 4s infinite ease-in-out;
-        }
-
-        .pulse-pink {
-            animation: pulse-glow 2s infinite ease-in-out;
-        }
-
-        .pulse-green {
-            animation: pulse-green 2s infinite ease-in-out;
-        }
-
-        .pulse-blue {
-            animation: pulse-blue 2s infinite ease-in-out;
-        }
-
-        .pulse-gold {
-            animation: pulse-gold 2s infinite ease-in-out;
-        }
-
-        .spin-slow {
-            animation: spin-slow 8s infinite linear;
-        }
-
-        .shine {
-            animation: shine 2.5s infinite linear;
-        }
-
-        .soft-shine {
-            animation: soft-shine 3s infinite;
-        }
-
-        .trophy-glow {
-            animation: trophy-glow 3s infinite ease-in-out;
-        }
+        .float { animation: float 3s infinite ease-in-out; }
+        .float-slow { animation: float-slow 4s infinite ease-in-out; }
+        .pulse-pink { animation: pulse-glow 2s infinite ease-in-out; }
+        .pulse-green { animation: pulse-green 2s infinite ease-in-out; }
+        .pulse-blue { animation: pulse-blue 2s infinite ease-in-out; }
+        .pulse-gold { animation: pulse-gold 2s infinite ease-in-out; }
+        .spin-slow { animation: spin-slow 8s infinite linear; }
+        .shine { animation: shine 2.5s infinite linear; }
+        .soft-shine { animation: soft-shine 3s infinite; }
+        .trophy-glow { animation: trophy-glow 3s infinite ease-in-out; }
 
         .container {
             max-width: 500px;
@@ -438,10 +307,6 @@
             transition: 0.2s;
             box-shadow: 0 4px 12px var(--pink-glow);
             white-space: nowrap;
-        }
-
-        .deposit-button i {
-            font-size: 11px;
         }
 
         .deposit-button:active {
@@ -1294,22 +1159,21 @@
         }
 
         .open-ranch-btn {
+            width: 100%;
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             border: none;
             border-radius: 30px;
-            padding: 12px 16px;
+            padding: 12px;
             color: #fff;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 12px var(--pink-glow);
-            z-index: 2;
+            box-shadow: 0 4px 15px var(--pink-glow);
             transition: 0.2s;
-            width: 100%;
             margin-top: 12px;
         }
 
@@ -1318,7 +1182,7 @@
         }
 
         .open-ranch-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.97);
         }
 
         .crystal-recipe {
@@ -1994,6 +1858,7 @@
             flex-direction: column;
             gap: 10px;
             max-width: 300px;
+            pointer-events: none;
         }
 
         .notification {
@@ -2038,7 +1903,6 @@
                 opacity: 0;
                 transform: translateX(100px);
             }
-
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -2791,7 +2655,7 @@
         <!-- Farm Section (Main) -->
         <div id="sectionFarm" class="section active">
             <div class="machines-grid">
-                <!-- Cow Card - Main Page with Ranch Overview Style -->
+                <!-- Cow Card - Modified with Ranch Overview style -->
                 <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
@@ -2804,33 +2668,35 @@
                         </div>
                     </div>
                     
-                    <!-- New Stats Grid like Ranch Overview -->
+                    <!-- New stats grid matching Ranch Overview -->
                     <div class="stats-grid" style="margin-bottom: 12px;">
+                        <!-- Total Cows Box -->
                         <div class="stat-box-large" style="padding: 10px;">
                             <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
-                            <div class="stat-value" style="font-size: 24px;" id="mainTotalCows">0</div>
-                            <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="mainActiveCows">0</span></div>
-                            <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="mainInactiveCows">0</span></div>
+                            <div class="stat-value" style="font-size: 24px;" id="ranchTotalCowsFarm">0</div>
+                            <div class="active-stat" style="font-size: 10px;"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="ranchActiveCowsFarm">0</span></div>
+                            <div class="inactive-stat" style="font-size: 10px;"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="ranchInactiveCowsFarm">0</span></div>
                         </div>
+                        <!-- Production Box -->
                         <div class="stat-box-large" style="padding: 10px;">
                             <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
-                            <div class="stat-value" style="font-size: 24px;" id="mainHourlyProduction">0</div>
-                            <div style="font-size: 10px;color:var(--text-muted);margin-top:8px">Milk per hour</div>
+                            <div class="stat-value" style="font-size: 24px;" id="ranchHourlyProductionFarm">0</div>
+                            <div style="font-size: 10px;color:var(--text-muted);margin-top:4px">Milk per hour</div>
                         </div>
                     </div>
-                    
+
                     <!-- Global Progress -->
-                    <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:12px;margin-bottom:12px">
-                        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                    <div style="background:rgba(0,0,0,.3);border-radius:16px;padding:10px;margin-bottom:12px">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:11px">
                             <span>Global Cow Sales</span>
-                            <span style="font-weight:700" id="mainCowsSold">0/1000</span>
+                            <span style="font-weight:700" id="ranchCowsSoldFarm">0/1000</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" id="mainCowsProgress" style="width:0%"></div>
+                            <div class="progress-fill" id="ranchCowsProgressFarm" style="width:0%"></div>
                         </div>
                     </div>
-                    
-                    <!-- Open Ranch Button (Wide) -->
+
+                    <!-- Open Ranch Button -->
                     <button class="open-ranch-btn" onclick="event.stopPropagation(); window.openRanchFromCow()">
                         <i class="fas fa-door-open"></i> Open Ranch
                     </button>
@@ -2907,7 +2773,7 @@
             </div>
         </div>
 
-        <!-- Ranch Section -->
+        <!-- Ranch Section (Hidden from nav) -->
         <div id="sectionRanch" class="section">
             <!-- RANCH OVERVIEW Card -->
             <div class="ranch-card">
@@ -2991,7 +2857,7 @@
                 <!-- Level 2 -->
                 <div class="level-card" data-level="2">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" style="width:40px;height:40px;border-radius:8px;object-fit:cover"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:40px;height:40px;border-radius:8px;object-fit:cover" alt="Level 2 Cow"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 2 Cow</span>
@@ -3529,6 +3395,7 @@
             CRYSTAL_PRICE: 25,
             TASK_REWARD: 0.001,
             MAX_ACTIVE_ORDERS: 2,
+            CLICK_COOLDOWN: 3000, // Changed from 10000 to 3000 ms
             COW_LEVELS: {
                 1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000, duration: 86400 },
                 2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000, duration: 86400 },
@@ -3545,8 +3412,7 @@
                 8: { capacity: 320000, cost: 160000 },
                 9: { capacity: 640000, cost: 320000 },
                 10: { capacity: 1000000, cost: 600000 }
-            },
-            CLICK_COOLDOWN: 3000 // تم التعديل من 10000 إلى 3000
+            }
         };
 
         // ==================== TRANSLATIONS ====================
@@ -3890,7 +3756,7 @@
         };
 
         const lastClickTimers = {};
-        const CLICK_COOLDOWN = CONFIG.CLICK_COOLDOWN;
+        const CLICK_COOLDOWN = CONFIG.CLICK_COOLDOWN || 3000; // 3 seconds
 
         // ==================== UTILITIES ====================
         function checkClickCooldown(buttonId) {
@@ -3898,7 +3764,7 @@
             let lastClick = lastClickTimers[buttonId] || 0;
             let timeLeft = CLICK_COOLDOWN - (now - lastClick);
             if (timeLeft > 0) {
-                // تم إخفاء الإشعار - لا يظهر أي رسالة
+                // Removed notification - just return false silently
                 return false;
             }
             return true;
@@ -4224,16 +4090,25 @@
             let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
             let inactiveCows = totalCows - activeCows;
 
+            // Update Ranch section
             document.getElementById('ranchTotalCows').innerHTML = totalCows;
             document.getElementById('ranchActiveCows').innerHTML = activeCows;
             document.getElementById('ranchInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
 
+            // Update Farm section
+            document.getElementById('ranchTotalCowsFarm').innerHTML = totalCows;
+            document.getElementById('ranchActiveCowsFarm').innerHTML = activeCows;
+            document.getElementById('ranchInactiveCowsFarm').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
+
             let hourlyProduction = r.hourlyProduction || 0;
             document.getElementById('ranchHourlyProduction').innerHTML = Math.round(hourlyProduction);
+            document.getElementById('ranchHourlyProductionFarm').innerHTML = Math.round(hourlyProduction);
 
             let cowsSold = App.global?.cows_sold || 0;
             document.getElementById('ranchCowsSold').innerHTML = cowsSold + '/1000';
+            document.getElementById('ranchCowsSoldFarm').innerHTML = cowsSold + '/1000';
             document.getElementById('ranchCowsProgress').style.width = (cowsSold / 10) + '%';
+            document.getElementById('ranchCowsProgressFarm').style.width = (cowsSold / 10) + '%';
 
             for (let level = 1; level <= 3; level++) {
                 let levelCows = (r.cowLevels[level] || 0);
@@ -4271,14 +4146,12 @@
                     let timeLeft = App.ranch.cowActiveUntil[level] - now;
 
                     if (timeLeft > 0) {
-                        // إصلاح عرض الوقت - تحويل الثواني إلى ساعات ودقائق
-                        let hours = Math.floor(timeLeft / 3600);
-                        let minutes = Math.floor((timeLeft % 3600) / 60);
-                        
-                        // التأكد من عدم وجود أخطاء
-                        if (hours > 1000) {
-                            timerText.innerHTML = `Error: ${timeLeft}`;
+                        // Check if timeLeft is valid (less than 100 days)
+                        if (timeLeft > 8640000) { // 100 days in seconds
+                            timerText.innerHTML = '∞';
                         } else {
+                            let hours = Math.floor(timeLeft / 3600);
+                            let minutes = Math.floor((timeLeft % 3600) / 60);
                             timerText.innerHTML = `${hours}h ${minutes}m`;
                         }
                         timerDiv.style.display = 'flex';
@@ -4380,22 +4253,6 @@
             document.getElementById('eggsPerHour').innerHTML = App.user.eggsPerHour || 0;
             document.getElementById('crystalPriceHeader').innerHTML = CONFIG.CRYSTAL_PRICE;
             updateProductionTimer();
-
-            // Main page cow stats
-            let r = App.ranch;
-            let totalCows = (r.cowLevels[1] || 0) + (r.cowLevels[2] || 0) + (r.cowLevels[3] || 0) +
-                (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
-            let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
-            let inactiveCows = totalCows - activeCows;
-            let hourlyProduction = r.hourlyProduction || 0;
-            let cowsSold = App.global?.cows_sold || 0;
-
-            document.getElementById('mainTotalCows').innerHTML = totalCows;
-            document.getElementById('mainActiveCows').innerHTML = activeCows;
-            document.getElementById('mainInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
-            document.getElementById('mainHourlyProduction').innerHTML = Math.round(hourlyProduction);
-            document.getElementById('mainCowsSold').innerHTML = cowsSold + '/1000';
-            document.getElementById('mainCowsProgress').style.width = (cowsSold / 10) + '%';
 
             document.getElementById('cowsOwned').innerHTML = App.user.cows_owned || 0;
             let cowsProgress = App.global.cows_progress || 0;
@@ -4875,7 +4732,7 @@
                         <i class="fas fa-times" style="cursor:pointer" onclick="closeModal('activateCowModal')"></i>
                     </div>
                     <div style="text-align:center;margin-bottom:16px">
-                        <div style="font-size:48px">${level === 1 ? '🐮' : level === 2 ? '🦬' : '🐃'}</div>
+                        <div style="font-size:48px">${level === 1 ? '🐮' : level === 2 ? '<img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:48px;height:48px;border-radius:8px;object-fit:cover">' : '🐃'}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Стоимость' : 'Cost'}: ${levelData.activationCost} 🥛 ${App.currentLanguage === 'ru' ? 'за корову' : 'per cow'}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Длительность' : 'Duration'}: 24 ${App.currentLanguage === 'ru' ? 'часа' : 'hours'}</div>
                     </div>
@@ -4934,7 +4791,7 @@
                         <i class="fas fa-times" style="cursor:pointer" onclick="closeModal('upgradeCowModal')"></i>
                     </div>
                     <div style="text-align:center;margin-bottom:16px">
-                        <div style="font-size:48px">${fromLevel === 1 ? '🐮 → 🦬' : '🦬 → 🐃'}</div>
+                        <div style="font-size:48px">${fromLevel === 1 ? '🐮 → <img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:48px;height:48px;border-radius:8px;object-fit:cover">' : '<img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:48px;height:48px;border-radius:8px;object-fit:cover"> → 🐃'}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Стоимость' : 'Cost'}: ${levelData.upgradeCost} 🥛 ${App.currentLanguage === 'ru' ? 'за корову' : 'per cow'}</div>
                     </div>
                     <div class="form-group" style="margin-bottom:16px">
@@ -4985,8 +4842,7 @@
             try {
                 let result = await callAPI('claimMilk');
                 await loadGameState();
-                // إصلاح رسالة Claim Milk - عرض الرقم الصحيح
-                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.claimedAmount)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.claimedAmount)} 🥛 from storage!`, 'success');
+                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.amountClaimed || App.ranch.milkStored)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.amountClaimed || App.ranch.milkStored)} 🥛 from storage!`, 'success');
             } catch (e) {
                 console.error('Claim milk error:', e);
             }

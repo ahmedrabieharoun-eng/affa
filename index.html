@@ -10,7 +10,6 @@
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://unpkg.com/tonweb/dist/tonweb.js"></script>
     <style>
-        /* [تم الحفاظ على جميع الأنماط الأصلية كاملة] */
         * {
             margin: 0;
             padding: 0;
@@ -73,40 +72,239 @@
             z-index: -1;
         }
 
-        h1 { font-size: 20px; }
-        h2 { font-size: 18px; }
-        h3 { font-size: 15px; }
+        h1 {
+            font-size: 20px;
+        }
 
-        /* Animations (محفوظة كاملة) */
-        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        @keyframes float-slow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-        @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 10px var(--pink-glow); } 50% { box-shadow: 0 0 25px var(--pink-glow); } }
-        @keyframes pulse-green { 0%,100% { box-shadow: 0 0 10px var(--green-glow); } 50% { box-shadow: 0 0 25px var(--green-glow); } }
-        @keyframes pulse-blue { 0%,100% { box-shadow: 0 0 10px var(--blue-glow); } 50% { box-shadow: 0 0 25px var(--blue-glow); } }
-        @keyframes pulse-gold { 0%,100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); } 50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); } }
-        @keyframes pulse-lock { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-        @keyframes shine { 0% { filter: drop-shadow(0 0 5px var(--crystal-blue)); } 50% { filter: drop-shadow(0 0 20px var(--crystal-blue)); } 100% { filter: drop-shadow(0 0 5px var(--crystal-blue)); } }
-        @keyframes soft-shine { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
-        @keyframes bounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        @keyframes spin-slow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-        @keyframes slide-out { 0% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; transform: translateX(100px); } }
-        @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes trophy-glow { 0% { filter: drop-shadow(0 0 5px gold); transform: scale(1); } 50% { filter: drop-shadow(0 0 25px gold); transform: scale(1.1); } 100% { filter: drop-shadow(0 0 5px gold); transform: scale(1); } }
+        h2 {
+            font-size: 18px;
+        }
 
-        .float { animation: float 3s infinite ease-in-out; }
-        .float-slow { animation: float-slow 4s infinite ease-in-out; }
-        .pulse-pink { animation: pulse-glow 2s infinite ease-in-out; }
-        .pulse-green { animation: pulse-green 2s infinite ease-in-out; }
-        .pulse-blue { animation: pulse-blue 2s infinite ease-in-out; }
-        .pulse-gold { animation: pulse-gold 2s infinite ease-in-out; }
-        .spin-slow { animation: spin-slow 8s infinite linear; }
-        .shine { animation: shine 2.5s infinite linear; }
-        .soft-shine { animation: soft-shine 3s infinite; }
-        .trophy-glow { animation: trophy-glow 3s infinite ease-in-out; }
+        h3 {
+            font-size: 15px;
+        }
 
-        .container { max-width: 500px; margin: 0 auto; padding: 12px; }
+        @keyframes float {
 
-        /* Status Bar (محفوظ كامل) */
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @keyframes float-slow {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px var(--pink-glow);
+            }
+
+            50% {
+                box-shadow: 0 0 25px var(--pink-glow);
+            }
+        }
+
+        @keyframes pulse-green {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px var(--green-glow);
+            }
+
+            50% {
+                box-shadow: 0 0 25px var(--green-glow);
+            }
+        }
+
+        @keyframes pulse-blue {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px var(--blue-glow);
+            }
+
+            50% {
+                box-shadow: 0 0 25px var(--blue-glow);
+            }
+        }
+
+        @keyframes pulse-gold {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        @keyframes pulse-lock {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                filter: drop-shadow(0 0 5px var(--crystal-blue));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px var(--crystal-blue));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 5px var(--crystal-blue));
+            }
+        }
+
+        @keyframes soft-shine {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes slide-out {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes trophy-glow {
+            0% {
+                filter: drop-shadow(0 0 5px gold);
+                transform: scale(1);
+            }
+
+            50% {
+                filter: drop-shadow(0 0 25px gold);
+                transform: scale(1.1);
+            }
+
+            100% {
+                filter: drop-shadow(0 0 5px gold);
+                transform: scale(1);
+            }
+        }
+
+        .float {
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .float-slow {
+            animation: float-slow 4s infinite ease-in-out;
+        }
+
+        .pulse-pink {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        .pulse-green {
+            animation: pulse-green 2s infinite ease-in-out;
+        }
+
+        .pulse-blue {
+            animation: pulse-blue 2s infinite ease-in-out;
+        }
+
+        .pulse-gold {
+            animation: pulse-gold 2s infinite ease-in-out;
+        }
+
+        .spin-slow {
+            animation: spin-slow 8s infinite linear;
+        }
+
+        .shine {
+            animation: shine 2.5s infinite linear;
+        }
+
+        .soft-shine {
+            animation: soft-shine 3s infinite;
+        }
+
+        .trophy-glow {
+            animation: trophy-glow 3s infinite ease-in-out;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
         .status-bar {
             background: var(--glass-strong);
             backdrop-filter: blur(20px);
@@ -117,12 +315,14 @@
             top: 0;
             z-index: 100;
         }
+
         .status-row-1 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 6px;
             margin-bottom: 8px;
         }
+
         .status-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
@@ -130,13 +330,19 @@
             padding: 6px 4px;
             backdrop-filter: blur(5px);
         }
+
         .status-header {
             display: flex;
             align-items: center;
             gap: 4px;
             margin-bottom: 2px;
         }
-        .status-emoji { font-size: 14px; animation: soft-shine 3s infinite; }
+
+        .status-emoji {
+            font-size: 14px;
+            animation: soft-shine 3s infinite;
+        }
+
         .status-label {
             font-size: 9px;
             font-weight: 600;
@@ -144,12 +350,14 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
+
         .status-value {
             font-size: 16px;
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 2px;
         }
+
         .status-sub {
             font-size: 8px;
             color: var(--text-muted);
@@ -157,13 +365,19 @@
             align-items: center;
             gap: 2px;
         }
-        .status-sub i { font-size: 7px; color: var(--neon-green); }
+
+        .status-sub i {
+            font-size: 7px;
+            color: var(--neon-green);
+        }
+
         .status-row-2 {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 8px;
         }
+
         .ton-status {
             display: flex;
             align-items: center;
@@ -174,16 +388,22 @@
             padding: 6px 12px 6px 8px;
             flex: 1;
         }
+
         .ton-icon {
             width: 18px;
             height: 18px;
             object-fit: contain;
         }
+
         .ton-amount {
             font-size: 15px;
             font-weight: 700;
         }
-        .ton-amount.increased { animation: bounce 0.3s ease; }
+
+        .ton-amount.increased {
+            animation: bounce 0.3s ease;
+        }
+
         .mining-timer {
             display: flex;
             align-items: center;
@@ -197,7 +417,12 @@
             color: var(--primary-pink);
             white-space: nowrap;
         }
-        .mining-timer i { font-size: 11px; animation: soft-shine 2s infinite; }
+
+        .mining-timer i {
+            font-size: 11px;
+            animation: soft-shine 2s infinite;
+        }
+
         .deposit-button {
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             border: none;
@@ -214,14 +439,22 @@
             box-shadow: 0 4px 12px var(--pink-glow);
             white-space: nowrap;
         }
-        .deposit-button i { font-size: 11px; }
-        .deposit-button:active { transform: scale(0.96); }
+
+        .deposit-button i {
+            font-size: 11px;
+        }
+
+        .deposit-button:active {
+            transform: scale(0.96);
+        }
+
         .language-switcher {
             display: flex;
             align-items: center;
             gap: 4px;
             margin-left: 8px;
         }
+
         .lang-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--glass-border);
@@ -233,13 +466,13 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         .lang-btn.active {
             background: var(--primary-pink);
             color: #fff;
             border-color: var(--primary-pink);
         }
 
-        /* Floating buttons */
         .leaderboard-float {
             position: fixed;
             bottom: 160px;
@@ -261,8 +494,16 @@
             border: 3px solid rgba(255, 255, 255, 0.3);
             animation: trophy-glow 2s infinite;
         }
-        .leaderboard-float i { font-size: 28px; color: #000; }
-        .leaderboard-float:active { transform: scale(0.9); }
+
+        .leaderboard-float i {
+            font-size: 28px;
+            color: #000;
+        }
+
+        .leaderboard-float:active {
+            transform: scale(0.9);
+        }
+
         .help-float {
             position: fixed;
             bottom: 90px;
@@ -283,9 +524,11 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: pulse-glow 2s infinite;
         }
-        .help-float:active { transform: scale(0.9); }
 
-        /* Cards and common elements */
+        .help-float:active {
+            transform: scale(0.9);
+        }
+
         .card {
             background: var(--glass-card);
             backdrop-filter: blur(12px);
@@ -297,7 +540,11 @@
             transition: transform 0.2s;
             animation: fade-in 0.4s ease;
         }
-        .card:hover { transform: scale(1.01); }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
         .card-title {
             display: flex;
             align-items: center;
@@ -307,9 +554,13 @@
             margin-bottom: 12px;
             color: var(--text-primary);
         }
-        .card-title i { color: var(--primary-pink); }
 
-        .ranch-card, .level-card {
+        .card-title i {
+            color: var(--primary-pink);
+        }
+
+        .ranch-card,
+        .level-card {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
@@ -318,6 +569,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .ranch-card::before {
             content: '';
             position: absolute;
@@ -329,7 +581,12 @@
             animation: spin-slow 20s infinite linear;
             z-index: -1;
         }
-        .ranch-card:hover, .level-card:hover { transform: translateY(-2px); }
+
+        .ranch-card:hover,
+        .level-card:hover {
+            transform: translateY(-2px);
+        }
+
         .level-card:hover {
             transform: translateX(4px);
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
@@ -342,6 +599,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .storage-card::after {
             content: '';
             position: absolute;
@@ -352,6 +610,7 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
             animation: shine 3s infinite;
         }
+
         .storage-full-badge {
             position: absolute;
             top: 12px;
@@ -364,10 +623,12 @@
             font-weight: 600;
             animation: pulse-glow 1.5s infinite;
         }
+
         .glass-effect {
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
+
         .counter-number {
             font-size: 24px;
             font-weight: 800;
@@ -377,7 +638,6 @@
             background-clip: text;
         }
 
-        /* Leaderboard specific (محفوظ بالكامل) */
         .leaderboard-header {
             background: linear-gradient(145deg, rgba(106, 13, 173, 0.8), rgba(193, 67, 255, 0.8));
             border-radius: 24px;
@@ -386,6 +646,7 @@
             border: 2px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
+
         .leaderboard-title {
             display: flex;
             align-items: center;
@@ -398,11 +659,13 @@
             justify-content: center;
             position: relative;
         }
+
         .leaderboard-title i {
             color: #FFD700;
             font-size: 28px;
             animation: trophy-glow 2s infinite;
         }
+
         .leaderboard-help-icon {
             position: absolute;
             right: 0;
@@ -421,11 +684,13 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         .leaderboard-help-icon:hover {
             background: #FFD700;
             color: #000;
             transform: translateY(-50%) scale(1.1);
         }
+
         .prize-pool {
             display: flex;
             align-items: center;
@@ -436,6 +701,7 @@
             margin-bottom: 12px;
             border: 1px solid #FFD700;
         }
+
         .prize-label {
             font-size: 12px;
             font-weight: 500;
@@ -444,6 +710,7 @@
             align-items: center;
             gap: 5px;
         }
+
         .prize-amount {
             font-size: 20px;
             font-weight: 700;
@@ -452,10 +719,12 @@
             align-items: center;
             gap: 4px;
         }
+
         .prize-amount span {
             font-size: 12px;
             color: var(--text-secondary);
         }
+
         .leaderboard-note {
             background: rgba(255, 215, 0, 0.15);
             border-radius: 20px;
@@ -465,10 +734,12 @@
             text-align: center;
             border: 1px dashed #FFD700;
         }
+
         .leaderboard-note i {
             color: #FFD700;
             margin-right: 4px;
         }
+
         .progress-counter {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 24px;
@@ -476,17 +747,20 @@
             text-align: center;
             margin-bottom: 12px;
         }
+
         .counter-main {
             font-size: 28px;
             font-weight: 800;
             color: var(--crystal-blue);
             margin-bottom: 4px;
         }
+
         .counter-label {
             font-size: 11px;
             color: var(--text-secondary);
             margin-bottom: 4px;
         }
+
         .counter-progress {
             height: 8px;
             background: rgba(255, 255, 255, 0.1);
@@ -494,12 +768,14 @@
             overflow: hidden;
             margin-top: 8px;
         }
+
         .counter-progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--crystal-blue), var(--primary-pink));
             border-radius: 4px;
             transition: width 0.3s ease;
         }
+
         .end-message {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 16px;
@@ -509,10 +785,12 @@
             text-align: center;
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
+
         .end-message i {
             margin-right: 4px;
             color: #FFD700;
         }
+
         .your-position-card {
             background: linear-gradient(145deg, rgba(255, 92, 168, 0.2), rgba(0, 212, 255, 0.2));
             border-radius: 30px;
@@ -521,6 +799,7 @@
             border: 1px solid rgba(255, 215, 0, 0.3);
             backdrop-filter: blur(10px);
         }
+
         .position-row {
             display: flex;
             align-items: center;
@@ -528,11 +807,13 @@
             margin-bottom: 0;
             flex-wrap: wrap;
         }
+
         .position-label {
             font-size: 13px;
             color: var(--text-secondary);
             min-width: 70px;
         }
+
         .position-value {
             font-size: 20px;
             font-weight: 700;
@@ -543,11 +824,13 @@
             min-width: 60px;
             text-align: center;
         }
+
         .stats-row {
             display: flex;
             gap: 8px;
             margin-left: auto;
         }
+
         .stat-box {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 30px;
@@ -557,10 +840,12 @@
             gap: 4px;
             backdrop-filter: blur(5px);
         }
+
         .stat-box-label {
             font-size: 10px;
             color: var(--text-muted);
         }
+
         .stat-box-value {
             font-size: 14px;
             font-weight: 700;
@@ -569,6 +854,7 @@
             align-items: center;
             gap: 2px;
         }
+
         .prize-badge {
             background: rgba(255, 215, 0, 0.15);
             border: 1px solid #FFD700;
@@ -581,17 +867,23 @@
             align-items: center;
             gap: 4px;
         }
-        .prize-badge i { color: #FFD700; }
+
+        .prize-badge i {
+            color: #FFD700;
+        }
+
         .prize-badge img {
             width: 14px;
             height: 14px;
             object-fit: contain;
         }
+
         .leaderboard-grid {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
+
         .leaderboard-card {
             background: linear-gradient(145deg, #1a1a2e, #16213e);
             border-radius: 20px;
@@ -601,28 +893,34 @@
             position: relative;
             overflow: hidden;
         }
+
         .leaderboard-card:hover {
             transform: translateX(4px);
             border-color: rgba(255, 92, 168, 0.3);
         }
+
         .leaderboard-card.top-1 {
             background: linear-gradient(145deg, #2a1b3d, #4a1f4a);
             border: 2px solid #FFD700;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
         }
+
         .leaderboard-card.top-2 {
             background: linear-gradient(145deg, #1a2a3a, #2a3a4a);
             border: 2px solid #C0C0C0;
         }
+
         .leaderboard-card.top-3 {
             background: linear-gradient(145deg, #2a1a1a, #3a2a1a);
             border: 2px solid #CD7F32;
         }
+
         .card-content {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .rank-badge {
             width: 42px;
             height: 42px;
@@ -636,44 +934,55 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
+
         .rank-badge.gold {
             background: var(--leaderboard-gold-gradient);
             color: #000;
             border: 2px solid #FFD700;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
+
         .rank-badge.silver {
             background: var(--leaderboard-silver-gradient);
             color: #000;
             border: 2px solid #C0C0C0;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
+
         .rank-badge.bronze {
             background: var(--leaderboard-bronze-gradient);
             color: #000;
             border: 2px solid #CD7F32;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
-        .user-info { flex: 1; }
+
+        .user-info {
+            flex: 1;
+        }
+
         .user-name-row {
             display: flex;
             align-items: center;
             gap: 4px;
             margin-bottom: 2px;
         }
+
         .user-name {
             font-size: 15px;
             font-weight: 700;
         }
+
         .user-crown {
             color: #FFD700;
             font-size: 14px;
         }
+
         .points-section {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .points-box {
             background: rgba(0, 212, 255, 0.15);
             border: 1px solid rgba(0, 212, 255, 0.3);
@@ -686,10 +995,12 @@
             font-weight: 700;
             color: var(--crystal-blue);
         }
+
         .points-box i {
             color: var(--crystal-blue);
             font-size: 14px;
         }
+
         .prize-pill {
             background: rgba(255, 215, 0, 0.15);
             border: 1px solid #FFD700;
@@ -702,18 +1013,25 @@
             font-weight: 700;
             color: #FFD700;
         }
-        .prize-pill i { color: #FFD700; font-size: 14px; }
+
+        .prize-pill i {
+            color: #FFD700;
+            font-size: 14px;
+        }
+
         .prize-pill img {
             width: 16px;
             height: 16px;
             object-fit: contain;
         }
+
         .winners-section {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
             padding: 16px;
             margin-top: 16px;
         }
+
         .winners-title {
             font-size: 14px;
             font-weight: 600;
@@ -723,11 +1041,13 @@
             align-items: center;
             gap: 6px;
         }
+
         .winners-grid {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
+
         .winner-item {
             display: flex;
             align-items: center;
@@ -737,32 +1057,36 @@
             padding: 8px 12px;
             font-size: 12px;
         }
+
         .winner-rank {
             font-weight: 700;
             color: #FFD700;
             margin-right: 10px;
         }
+
         .winner-name {
             flex: 1;
             color: var(--text-secondary);
         }
+
         .winner-prize {
             color: #FFD700;
             font-weight: 600;
         }
 
-        /* Farm Grid (تم تعديله كما هو مطلوب) */
         .farm-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-bottom: 10px;
         }
+
         .machines-grid {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
+
         .machine-card {
             background: var(--glass-strong);
             backdrop-filter: blur(12px);
@@ -774,22 +1098,30 @@
             animation: fade-in 0.5s ease;
             width: 100%;
         }
+
         .machine-card.cow {
             border-left: 4px solid var(--primary-pink);
             cursor: pointer;
         }
+
         .machine-card.cow:hover {
             transform: scale(1.01);
             border-color: var(--primary-pink);
         }
+
         .machine-card.chicken {
             border-left: 4px solid var(--neon-green);
         }
+
         .machine-card.diamond {
             border-left: 4px solid var(--crystal-blue);
             background: linear-gradient(145deg, rgba(0, 212, 255, 0.1), var(--glass-strong));
         }
-        .machine-card.locked { position: relative; }
+
+        .machine-card.locked {
+            position: relative;
+        }
+
         .locked-overlay {
             position: absolute;
             inset: 0;
@@ -804,10 +1136,12 @@
             text-align: center;
             padding: 10px;
         }
+
         .big-lock {
             font-size: 36px;
             animation: pulse-lock 1.5s infinite;
         }
+
         .unlock-timer {
             font-size: 11px;
             color: var(--text-secondary);
@@ -816,12 +1150,14 @@
             padding: 4px 8px;
             border-radius: 20px;
         }
+
         .machine-header {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 16px;
         }
+
         .machine-emoji {
             width: 60px;
             height: 60px;
@@ -832,23 +1168,30 @@
             justify-content: center;
             overflow: hidden;
         }
+
         .machine-emoji img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 12px;
         }
-        .machine-info { flex: 1; }
+
+        .machine-info {
+            flex: 1;
+        }
+
         .machine-name-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 2px;
         }
+
         .machine-name {
             font-size: 18px;
             font-weight: 700;
         }
+
         .machine-badge {
             font-size: 10px;
             font-weight: 600;
@@ -856,26 +1199,31 @@
             border-radius: 20px;
             display: inline-block;
         }
+
         .badge-available {
             background: rgba(0, 242, 122, 0.15);
             color: var(--neon-green);
             border: 1px solid rgba(0, 242, 122, 0.3);
         }
+
         .badge-owned {
             background: rgba(255, 92, 168, 0.15);
             color: var(--primary-pink);
             border: 1px solid rgba(255, 92, 168, 0.3);
         }
+
         .badge-soldout {
             background: rgba(255, 75, 92, 0.15);
             color: var(--danger-red);
             border: 1px solid rgba(255, 75, 92, 0.3);
         }
+
         .badge-locked {
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-secondary);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .machine-price {
             display: flex;
             align-items: center;
@@ -884,58 +1232,34 @@
             color: var(--text-secondary);
             margin-top: 4px;
         }
+
         .machine-price i {
             color: var(--crystal-blue);
             font-size: 10px;
         }
 
-        /* الهيكل الجديد لبطاقة البقرة */
-        .cow-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 12px 0;
-        }
-        .cow-stat-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 14px;
-        }
-        .cow-stat-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .cow-stat-value {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--crystal-blue);
-            line-height: 1.2;
-        }
-        .cow-stat-detail {
-            font-size: 10px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .cow-stat-detail i {
-            font-size: 8px;
-        }
-        .active-stat { color: var(--neon-green); }
-        .inactive-stat { color: var(--danger-red); }
-
-        .cow-global-progress {
-            background: rgba(0,0,0,.3);
-            border-radius: 20px;
-            padding: 14px;
+        .progress-section {
             margin-bottom: 16px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-pink), var(--crystal-blue));
+            transition: width 0.3s ease;
         }
 
         .open-ranch-btn {
@@ -945,62 +1269,25 @@
             border-radius: 30px;
             padding: 12px 16px;
             color: #fff;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 15px var(--pink-glow);
+            box-shadow: 0 4px 12px var(--pink-glow);
+            z-index: 2;
             transition: 0.2s;
-            margin-top: 8px;
+            margin-top: 16px;
         }
-        .open-ranch-btn i { font-size: 16px; }
-        .open-ranch-btn:active { transform: scale(0.97); }
 
-        /* باقي الأنماط للعناصر الأخرى (محفوظة بالكامل) */
-        .machine-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 16px;
+        .open-ranch-btn i {
+            font-size: 16px;
         }
-        .stat-item { text-align: center; }
-        .stat-label {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin-bottom: 2px;
-        }
-        .stat-number {
-            font-size: 20px;
-            font-weight: 700;
-        }
-        .stat-unit {
-            font-size: 10px;
-            color: var(--text-secondary);
-            margin-left: 2px;
-        }
-        .progress-section { margin-bottom: 16px; }
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            margin-bottom: 4px;
-        }
-        .progress-bar {
-            height: 6px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-pink), var(--crystal-blue));
-            transition: width 0.3s ease;
+
+        .open-ranch-btn:active {
+            transform: scale(0.95);
         }
 
         .crystal-recipe {
@@ -1013,17 +1300,23 @@
             border-radius: 14px;
             padding: 12px;
         }
+
         .crystal-recipe-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1px;
         }
-        .crystal-recipe-emoji { font-size: 18px; }
+
+        .crystal-recipe-emoji {
+            font-size: 18px;
+        }
+
         .crystal-recipe-plus {
             font-size: 14px;
             color: var(--text-muted);
         }
+
         .crystal-recipe-equal {
             font-size: 16px;
             color: var(--crystal-blue);
@@ -1044,39 +1337,49 @@
             font-family: 'Inter', sans-serif;
             width: 100%;
         }
-        .btn:active { transform: scale(0.96); }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
+
         .btn-primary {
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             color: #fff;
             box-shadow: 0 4px 12px var(--pink-glow);
             animation: pulse-glow 3s infinite;
         }
+
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--glass-border);
             color: var(--text-primary);
         }
+
         .btn-hatch {
             background: rgba(0, 242, 122, 0.15);
             border: 1px solid rgba(0, 242, 122, 0.3);
             color: var(--neon-green);
             font-size: 11px;
         }
+
         .btn-buy {
             background: rgba(0, 242, 122, 0.15);
             border: 1px solid rgba(0, 242, 122, 0.3);
             color: var(--neon-green);
         }
+
         .btn-sell {
             background: rgba(255, 75, 92, 0.15);
             border: 1px solid rgba(255, 75, 92, 0.3);
             color: var(--danger-red);
         }
+
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1094,17 +1397,23 @@
             padding: 8px;
             border: 1px solid var(--glass-border);
         }
-        .market-stat-item { text-align: center; }
+
+        .market-stat-item {
+            text-align: center;
+        }
+
         .market-stat-label {
             color: var(--text-muted);
             margin-bottom: 2px;
             font-size: 8px;
         }
+
         .market-stat-value {
             font-weight: 700;
             color: var(--primary-pink);
             font-size: 11px;
         }
+
         .market-tabs {
             display: flex;
             background: rgba(0, 0, 0, 0.3);
@@ -1112,6 +1421,7 @@
             padding: 4px;
             margin-bottom: 12px;
         }
+
         .market-tab {
             flex: 1;
             text-align: center;
@@ -1123,11 +1433,13 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         .market-tab.active {
             background: var(--glass-strong);
             color: var(--primary-pink);
             border: 1px solid var(--glass-border);
         }
+
         .resource-switch {
             display: flex;
             align-items: center;
@@ -1135,6 +1447,7 @@
             gap: 8px;
             margin-bottom: 14px;
         }
+
         .resource-option {
             display: flex;
             align-items: center;
@@ -1148,16 +1461,19 @@
             font-size: 11px;
             transition: 0.2s;
         }
+
         .resource-option.active {
             background: rgba(255, 92, 168, 0.15);
             border-color: var(--primary-pink);
             color: var(--primary-pink);
         }
+
         .market-actions {
             display: flex;
             gap: 8px;
             margin-bottom: 14px;
         }
+
         .create-order-top {
             flex: 1;
             background: linear-gradient(145deg, var(--neon-green), #00b35e);
@@ -1174,6 +1490,7 @@
             cursor: pointer;
             box-shadow: 0 4px 12px var(--green-glow);
         }
+
         .refresh-market-btn {
             background: var(--glass-strong);
             border: 1px solid var(--glass-border);
@@ -1187,19 +1504,23 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         .refresh-market-btn:active {
             transform: scale(0.95);
             background: rgba(255, 92, 168, 0.2);
         }
+
         .refresh-market-btn i {
             animation: spin-slow 2s infinite linear;
         }
+
         .market-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-bottom: 16px;
         }
+
         .market-card {
             width: 100%;
             padding: 10px 8px;
@@ -1214,10 +1535,12 @@
             border: none;
             position: relative;
         }
+
         .market-card:hover {
             transform: scale(1.02);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 215, 0, 0.3) inset;
         }
+
         .card-inner {
             text-align: center;
             display: flex;
@@ -1225,6 +1548,7 @@
             align-items: center;
             width: 100%;
         }
+
         .market-card .card-title {
             font-size: 12px;
             font-weight: 800;
@@ -1239,8 +1563,12 @@
             text-transform: uppercase;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
+
         .market-card .card-title.sell,
-        .market-card .card-title.buy { color: #fff; }
+        .market-card .card-title.buy {
+            color: #fff;
+        }
+
         .amount-box {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 18px;
@@ -1256,7 +1584,11 @@
             width: 100%;
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
-        .amount-box .egg-icon { font-size: 18px; }
+
+        .amount-box .egg-icon {
+            font-size: 18px;
+        }
+
         .price-label {
             font-size: 9px;
             font-weight: 600;
@@ -1265,6 +1597,7 @@
             letter-spacing: 0.4px;
             color: #ddd;
         }
+
         .price-box {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 18px;
@@ -1280,6 +1613,7 @@
             width: 100%;
             border: 1px solid rgba(255, 215, 0, 0.3);
         }
+
         .price-box img {
             width: 18px;
             height: 18px;
@@ -1287,12 +1621,14 @@
             vertical-align: middle;
             filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
         }
+
         .unit-price {
             font-size: 9px;
             opacity: 0.8;
             margin-bottom: 8px;
             color: #eee;
         }
+
         .buy-btn {
             width: 100%;
             height: 38px;
@@ -1313,11 +1649,16 @@
             align-items: center;
             justify-content: center;
         }
+
         .buy-btn:hover {
             transform: scale(1.02);
             background: linear-gradient(180deg, #b8ff1a, #55e10a);
         }
-        .buy-btn:active { transform: scale(0.98); }
+
+        .buy-btn:active {
+            transform: scale(0.98);
+        }
+
         .best-price-badge {
             background: rgba(255, 92, 168, 0.2);
             color: var(--primary-pink);
@@ -1329,11 +1670,11 @@
             gap: 3px;
             border: 1px solid rgba(255, 92, 168, 0.3);
         }
+
         .best-price-badge i {
             animation: pulse-glow 1.5s infinite;
         }
 
-        /* Modal Styles (محفوظة بالكامل) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1350,10 +1691,12 @@
             visibility: hidden;
             transition: 0.2s;
         }
+
         .modal-overlay.active {
             opacity: 1;
             visibility: visible;
         }
+
         .modal-content {
             background: var(--glass-strong);
             border: 1px solid var(--glass-border);
@@ -1363,12 +1706,14 @@
             max-width: 360px;
             animation: fade-in 0.3s ease;
         }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
         }
+
         .modal-title {
             font-size: 16px;
             font-weight: 700;
@@ -1376,6 +1721,7 @@
             align-items: center;
             gap: 6px;
         }
+
         .modal-close {
             background: 0 0;
             border: none;
@@ -1383,7 +1729,11 @@
             font-size: 20px;
             cursor: pointer;
         }
-        .form-group { margin-bottom: 14px; }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
         .form-label {
             display: block;
             font-size: 11px;
@@ -1391,7 +1741,9 @@
             margin-bottom: 5px;
             font-weight: 500;
         }
-        .form-input, .form-select {
+
+        .form-input,
+        .form-select {
             width: 100%;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--glass-border);
@@ -1401,6 +1753,7 @@
             font-size: 13px;
             font-family: 'Inter', sans-serif;
         }
+
         .form-select {
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
@@ -1408,20 +1761,25 @@
             background-position: right 12px center;
             background-size: 20px;
         }
-        .form-input:focus, .form-select:focus {
+
+        .form-input:focus,
+        .form-select:focus {
             outline: 0;
             border-color: var(--primary-pink);
         }
+
         .form-input:read-only {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-muted);
         }
+
         .preset-buttons {
             display: flex;
             gap: 5px;
             margin-top: 6px;
             flex-wrap: wrap;
         }
+
         .preset-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--glass-border);
@@ -1433,10 +1791,12 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         .preset-btn:hover {
             background: rgba(255, 92, 168, 0.2);
             color: var(--primary-pink);
         }
+
         .total-ton-result {
             margin-top: 6px;
             padding: 8px;
@@ -1447,6 +1807,7 @@
             text-align: center;
             color: var(--crystal-blue);
         }
+
         .confirm-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 18px;
@@ -1454,11 +1815,13 @@
             margin-bottom: 16px;
             text-align: center;
         }
+
         .confirm-emoji {
             font-size: 48px;
             margin-bottom: 8px;
             animation: bounce 1s infinite;
         }
+
         .confirm-details {
             display: flex;
             flex-direction: column;
@@ -1468,27 +1831,35 @@
             border-radius: 16px;
             padding: 14px;
         }
+
         .confirm-row {
             display: flex;
             justify-content: space-between;
             font-size: 13px;
         }
-        .confirm-label { color: var(--text-muted); }
+
+        .confirm-label {
+            color: var(--text-muted);
+        }
+
         .confirm-value {
             font-weight: 700;
             color: var(--crystal-blue);
         }
+
         .confirm-total {
             font-size: 16px;
             font-weight: 800;
             color: var(--neon-green);
         }
+
         .confirm-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 16px;
         }
+
         .hatch-option {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--glass-border);
@@ -1500,23 +1871,28 @@
             justify-content: space-between;
             transition: 0.2s;
         }
+
         .hatch-info {
             display: flex;
             flex-direction: column;
             gap: 3px;
         }
+
         .hatch-title {
             font-size: 14px;
             font-weight: 700;
         }
+
         .hatch-cost {
             font-size: 11px;
             color: var(--text-secondary);
         }
+
         .hatch-balance {
             font-size: 10px;
             color: var(--text-muted);
         }
+
         .hatch-input {
             width: 60px;
             background: rgba(0, 0, 0, 0.3);
@@ -1528,6 +1904,7 @@
             font-weight: 600;
             font-size: 12px;
         }
+
         .deposit-warning {
             background: rgba(255, 92, 168, 0.1);
             border: 1px solid rgba(255, 92, 168, 0.2);
@@ -1538,10 +1915,12 @@
             gap: 8px;
             font-size: 11px;
         }
+
         .deposit-warning i {
             color: var(--primary-pink);
             font-size: 16px;
         }
+
         .transaction-status {
             background: rgba(0, 242, 122, 0.1);
             border: 1px solid rgba(0, 242, 122, 0.2);
@@ -1550,25 +1929,31 @@
             margin-top: 16px;
             display: none;
         }
-        .transaction-status.visible { display: block; animation: fade-in 0.3s ease; }
+
+        .transaction-status.visible {
+            display: block;
+            animation: fade-in 0.3s ease;
+        }
+
         .status-icon {
             font-size: 24px;
             text-align: center;
             margin-bottom: 4px;
         }
+
         .status-message {
             text-align: center;
             font-weight: 600;
             font-size: 12px;
             margin-bottom: 2px;
         }
+
         .status-detail {
             text-align: center;
             font-size: 10px;
             color: var(--text-secondary);
         }
 
-        /* Notification */
         .notification-container {
             position: fixed;
             top: 20px;
@@ -1578,7 +1963,9 @@
             flex-direction: column;
             gap: 10px;
             max-width: 300px;
+            pointer-events: none;
         }
+
         .notification {
             background: var(--glass-strong);
             backdrop-filter: blur(10px);
@@ -1594,21 +1981,40 @@
             opacity: 1;
             transition: 0.3s;
         }
-        .notification.success { border-left-color: var(--neon-green); }
-        .notification.error { border-left-color: var(--danger-red); }
-        .notification.warning { border-left-color: var(--warning); }
-        .notification.info { border-left-color: var(--crystal-blue); }
+
+        .notification.success {
+            border-left-color: var(--neon-green);
+        }
+
+        .notification.error {
+            border-left-color: var(--danger-red);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
+        .notification.info {
+            border-left-color: var(--crystal-blue);
+        }
+
         .notification.fade-out {
             opacity: 0;
             transform: translateX(100px);
         }
 
         @keyframes slide-in {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -1622,6 +2028,7 @@
             padding: 8px 4px;
             z-index: 100;
         }
+
         .nav-item {
             display: flex;
             flex-direction: column;
@@ -1633,15 +2040,21 @@
             padding: 5px 6px;
             border-radius: 14px;
         }
+
         .nav-item.active {
             color: var(--primary-pink);
             background: rgba(255, 92, 168, 0.1);
         }
+
         .nav-icon {
             font-size: 16px;
             transition: transform 0.2s;
         }
-        .nav-item.active .nav-icon { transform: scale(1.1); }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+
         .nav-text {
             font-size: 8px;
             font-weight: 600;
@@ -1649,11 +2062,15 @@
             letter-spacing: 0.2px;
         }
 
-        /* Sections */
-        .section { display: none; animation: fade-in 0.3s ease; }
-        .section.active { display: block; }
+        .section {
+            display: none;
+            animation: fade-in 0.3s ease;
+        }
 
-        /* Help Modal */
+        .section.active {
+            display: block;
+        }
+
         .help-modal {
             position: fixed;
             top: 50%;
@@ -1669,7 +2086,12 @@
             z-index: 200;
             display: none;
         }
-        .help-modal.active { display: block; animation: fade-in 0.3s ease; }
+
+        .help-modal.active {
+            display: block;
+            animation: fade-in 0.3s ease;
+        }
+
         .help-item {
             display: flex;
             gap: 12px;
@@ -1678,16 +2100,22 @@
             border-radius: 14px;
             transition: 0.2s;
         }
-        .help-item:hover { background: rgba(255, 255, 255, 0.03); }
+
+        .help-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
         .help-emoji {
             font-size: 24px;
             min-width: 40px;
             text-align: center;
         }
+
         .help-text h4 {
             font-size: 14px;
             margin-bottom: 2px;
         }
+
         .help-text p {
             font-size: 11px;
             color: var(--text-secondary);
@@ -1706,6 +2134,7 @@
             gap: 8px;
             margin-bottom: 16px;
         }
+
         .task-card {
             background: linear-gradient(145deg, #2a1b3d, #1a1a2e);
             border: 1px solid rgba(255, 92, 168, 0.3);
@@ -1714,11 +2143,16 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s;
         }
-        .task-card:hover { transform: translateY(-2px); }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+        }
+
         .task-card.partner-task {
             background: linear-gradient(145deg, #1a2e2a, #0a1f1a);
             border: 1px solid rgba(0, 242, 122, 0.3);
         }
+
         .task-btn {
             padding: 4px 12px;
             border-radius: 20px;
@@ -1730,13 +2164,20 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .task-btn.verify { background: linear-gradient(145deg, var(--neon-green), #00b35e); }
+
+        .task-btn.verify {
+            background: linear-gradient(145deg, var(--neon-green), #00b35e);
+        }
+
         .task-btn.completed {
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-secondary);
             cursor: default;
         }
-        .task-btn:active:not(.completed) { transform: scale(0.95); }
+
+        .task-btn:active:not(.completed) {
+            transform: scale(0.95);
+        }
 
         .leaderboard-info-modal {
             position: fixed;
@@ -1754,7 +2195,12 @@
             display: none;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
-        .leaderboard-info-modal.active { display: block; animation: fade-in 0.3s ease; }
+
+        .leaderboard-info-modal.active {
+            display: block;
+            animation: fade-in 0.3s ease;
+        }
+
         .info-title {
             display: flex;
             align-items: center;
@@ -1766,29 +2212,37 @@
             border-bottom: 1px solid rgba(255, 215, 0, 0.3);
             padding-bottom: 10px;
         }
-        .info-section { margin-bottom: 15px; }
+
+        .info-section {
+            margin-bottom: 15px;
+        }
+
         .info-section h4 {
             font-size: 14px;
             color: var(--crystal-blue);
             margin-bottom: 5px;
         }
+
         .info-section p {
             font-size: 12px;
             color: var(--text-secondary);
             line-height: 1.5;
         }
+
         .info-prize {
             background: rgba(255, 215, 0, 0.15);
             border-radius: 12px;
             padding: 10px;
             margin: 10px 0;
         }
+
         .info-prize-row {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
             margin-bottom: 5px;
         }
+
         .info-close {
             width: 100%;
             padding: 10px;
@@ -1801,7 +2255,10 @@
             cursor: pointer;
             margin-top: 10px;
         }
-        .info-close:active { transform: scale(0.98); }
+
+        .info-close:active {
+            transform: scale(0.98);
+        }
 
         .ranch-card {
             background: linear-gradient(145deg, rgba(20, 30, 40, 0.95), rgba(10, 15, 25, 0.98));
@@ -1812,6 +2269,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .ranch-card::before {
             content: '';
             position: absolute;
@@ -1830,6 +2288,7 @@
             gap: 12px;
             margin-bottom: 16px;
         }
+
         .stat-box-large {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -1837,6 +2296,7 @@
             border-radius: 18px;
             padding: 14px;
         }
+
         .stat-box-large .stat-label {
             font-size: 11px;
             color: var(--text-muted);
@@ -1845,11 +2305,13 @@
             align-items: center;
             gap: 4px;
         }
+
         .stat-box-large .stat-value {
             font-size: 32px;
             font-weight: 800;
             color: var(--crystal-blue);
         }
+
         .active-stat {
             color: var(--neon-green);
             font-size: 12px;
@@ -1858,6 +2320,7 @@
             gap: 4px;
             margin-top: 8px;
         }
+
         .inactive-stat {
             color: var(--danger-red);
             font-size: 12px;
@@ -1866,7 +2329,11 @@
             gap: 4px;
             margin-top: 4px;
         }
-        .active-stat i, .inactive-stat i { font-size: 10px; }
+
+        .active-stat i,
+        .inactive-stat i {
+            font-size: 10px;
+        }
 
         .level-card {
             background: rgba(255, 255, 255, 0.03);
@@ -1875,15 +2342,26 @@
             margin-bottom: 12px;
             border-left: 4px solid transparent;
         }
-        .level-card[data-level="1"] { border-left-color: #FFD700; }
-        .level-card[data-level="2"] { border-left-color: #C0C0C0; }
-        .level-card[data-level="3"] { border-left-color: #CD7F32; }
+
+        .level-card[data-level="1"] {
+            border-left-color: #FFD700;
+        }
+
+        .level-card[data-level="2"] {
+            border-left-color: #C0C0C0;
+        }
+
+        .level-card[data-level="3"] {
+            border-left-color: #CD7F32;
+        }
+
         .level-header {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 12px;
         }
+
         .level-emoji {
             width: 48px;
             height: 48px;
@@ -1894,15 +2372,25 @@
             justify-content: center;
             font-size: 28px;
         }
+
+        .level-emoji img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
         .level-title {
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 2px;
         }
+
         .level-subtitle {
             font-size: 11px;
             color: var(--text-muted);
         }
+
         .count-badge {
             background: rgba(255, 215, 0, 0.15);
             border: 1px solid var(--gold);
@@ -1911,6 +2399,7 @@
             font-size: 10px;
             color: var(--gold);
         }
+
         .timer-bar {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
@@ -1920,14 +2409,29 @@
             align-items: center;
             justify-content: space-between;
         }
+
         .timer-bar.active {
             background: rgba(0, 242, 122, 0.1);
             border: 1px solid rgba(0, 242, 122, 0.3);
         }
-        .timer-bar i { color: var(--warning-yellow); }
-        .timer-text { font-size: 12px; font-weight: 600; }
-        .timer-text.active { color: var(--neon-green); }
-        .timer-text.expired { color: var(--danger-red); }
+
+        .timer-bar i {
+            color: var(--warning-yellow);
+        }
+
+        .timer-text {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .timer-text.active {
+            color: var(--neon-green);
+        }
+
+        .timer-text.expired {
+            color: var(--danger-red);
+        }
+
         .level-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1942,22 +2446,29 @@
             position: relative;
             margin-top: 16px;
         }
+
         .storage-stats {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 18px;
             padding: 16px;
             margin: 16px 0;
         }
+
         .storage-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
+
         .storage-label {
             font-size: 12px;
             color: var(--text-secondary);
         }
-        .storage-value { font-weight: 700; }
+
+        .storage-value {
+            font-weight: 700;
+        }
+
         .upgrade-preview {
             background: rgba(0, 212, 255, 0.1);
             border-radius: 12px;
@@ -1965,16 +2476,19 @@
             margin: 12px 0;
             border: 1px dashed var(--crystal-blue);
         }
+
         .upgrade-preview-row {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
             margin-bottom: 4px;
         }
+
         .upgrade-preview-row span:last-child {
             color: var(--crystal-blue);
             font-weight: 600;
         }
+
         .ranch-buy-btn {
             background: linear-gradient(145deg, var(--neon-green), #00b35e);
             border: none;
@@ -1993,33 +2507,162 @@
             width: 100%;
             margin-top: 16px;
         }
-        .ranch-buy-btn:active { transform: scale(0.97); }
-        .ranch-buy-btn i { font-size: 16px; }
+
+        .ranch-buy-btn:active {
+            transform: scale(0.97);
+        }
+
+        .ranch-buy-btn i {
+            font-size: 16px;
+        }
 
         @media(max-width:400px) {
-            .status-value { font-size: 14px; }
-            .machine-emoji { width: 50px; height: 50px; }
-            .machine-name { font-size: 16px; }
-            .stat-number { font-size: 18px; }
-            .market-stats { grid-template-columns: 1fr 1fr; gap: 6px; }
-            .ton-amount { font-size: 13px; }
-            .mining-timer { font-size: 11px; padding: 4px 8px; }
-            .leaderboard-title { font-size: 20px; }
-            .counter-main { font-size: 24px; }
-            .prize-amount { font-size: 18px; }
-            .position-row { flex-wrap: wrap; gap: 8px; }
-            .position-label { min-width: 60px; font-size: 12px; }
-            .position-value { font-size: 16px; padding: 2px 8px; min-width: 50px; }
-            .stat-box { padding: 2px 6px; }
-            .stat-box-label { font-size: 9px; }
-            .stat-box-value { font-size: 12px; }
-            .points-box { font-size: 14px; padding: 4px 8px; }
-            .prize-pill { font-size: 14px; padding: 4px 8px; }
-            .rank-badge { width: 36px; height: 36px; font-size: 16px; }
-            .cow-stat-value { font-size: 24px; }
+            .status-value {
+                font-size: 14px;
+            }
+
+            .machine-emoji {
+                width: 50px;
+                height: 50px;
+            }
+
+            .machine-name {
+                font-size: 16px;
+            }
+
+            .market-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .ton-amount {
+                font-size: 13px;
+            }
+
+            .mining-timer {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+
+            .leaderboard-title {
+                font-size: 20px;
+            }
+
+            .counter-main {
+                font-size: 24px;
+            }
+
+            .prize-amount {
+                font-size: 18px;
+            }
+
+            .position-row {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .position-label {
+                min-width: 60px;
+                font-size: 12px;
+            }
+
+            .position-value {
+                font-size: 16px;
+                padding: 2px 8px;
+                min-width: 50px;
+            }
+
+            .stat-box {
+                padding: 2px 6px;
+            }
+
+            .stat-box-label {
+                font-size: 9px;
+            }
+
+            .stat-box-value {
+                font-size: 12px;
+            }
+
+            .points-box {
+                font-size: 14px;
+                padding: 4px 8px;
+            }
+
+            .prize-pill {
+                font-size: 14px;
+                padding: 4px 8px;
+            }
+
+            .rank-badge {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+        }
+        
+        .ranch-overview-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .ranch-overview-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .ranch-overview-box .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ranch-overview-box .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--crystal-blue);
+        }
+
+        .ranch-overview-details {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .ranch-detail-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .ranch-detail-icon {
+            color: var(--crystal-blue);
+            font-size: 14px;
+        }
+
+        .ranch-detail-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .ranch-detail-value {
+            margin-left: auto;
+            font-weight: 700;
+            color: var(--neon-green);
         }
     </style>
 </head>
+
 <body>
     <div class="notification-container" id="notificationContainer"></div>
     <div class="leaderboard-float" id="leaderboardButton"><i class="fas fa-trophy"></i></div>
@@ -2181,7 +2824,7 @@
         <!-- Farm Section (Main) -->
         <div id="sectionFarm" class="section active">
             <div class="machines-grid">
-                <!-- Cow Card - Redesigned -->
+                <!-- Cow Card - Updated with Ranch Overview style -->
                 <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
@@ -2194,35 +2837,36 @@
                         </div>
                     </div>
                     
-                    <!-- New Stats Grid like Ranch Overview -->
-                    <div class="cow-stats-grid">
-                        <div class="cow-stat-box">
-                            <div class="cow-stat-label"><i class="fas fa-cow"></i> Total Cows</div>
-                            <div class="cow-stat-value" id="cowCardTotalCows">0</div>
-                            <div class="cow-stat-detail">
-                                <i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="cowCardActiveCows">0</span>
-                                <span style="margin-left:6px"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="cowCardInactiveCows">0</span></span>
-                            </div>
+                    <!-- Ranch Overview Stats inside Cow Card -->
+                    <div class="ranch-overview-stats">
+                        <!-- Total Cows Box -->
+                        <div class="ranch-overview-box">
+                            <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
+                            <div class="stat-value" id="cowCardTotalCows">0</div>
+                            <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="cowCardActiveCows">0</span></div>
+                            <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="cowCardInactiveCows">0</span></div>
                         </div>
-                        <div class="cow-stat-box">
-                            <div class="cow-stat-label"><i class="fas fa-chart-line"></i> Production</div>
-                            <div class="cow-stat-value" id="cowCardHourlyProduction">0</div>
-                            <div class="cow-stat-detail">Milk per hour</div>
+                        <!-- Production Box -->
+                        <div class="ranch-overview-box">
+                            <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
+                            <div class="stat-value" id="cowCardHourlyProduction">0</div>
+                            <div style="font-size:11px;color:var(--text-muted);margin-top:8px">Milk per hour</div>
                         </div>
                     </div>
-
-                    <!-- Global Cow Sales Progress -->
-                    <div class="cow-global-progress">
-                        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-                            <span>Global Cow Sales</span>
-                            <span style="font-weight:700" id="cowCardCowsSold">0/1000</span>
+                    
+                    <!-- Global Progress -->
+                    <div class="ranch-overview-details">
+                        <div class="ranch-detail-row">
+                            <i class="fas fa-globe ranch-detail-icon"></i>
+                            <span class="ranch-detail-text">Global Cow Sales</span>
+                            <span class="ranch-detail-value" id="cowCardCowsSold">0/1000</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" id="cowCardCowsProgress" style="width:0%"></div>
                         </div>
                     </div>
-
-                    <!-- Wide Open Ranch Button -->
+                    
+                    <!-- Open Ranch Button -->
                     <button class="open-ranch-btn" onclick="event.stopPropagation(); window.openRanchFromCow()">
                         <i class="fas fa-door-open"></i> Open Ranch
                     </button>
@@ -2299,7 +2943,7 @@
             </div>
         </div>
 
-        <!-- Ranch Section (Hidden from nav) -->
+        <!-- Ranch Section -->
         <div id="sectionRanch" class="section">
             <!-- RANCH OVERVIEW Card -->
             <div class="ranch-card">
@@ -2352,7 +2996,7 @@
                 <!-- Level 1 -->
                 <div class="level-card" data-level="1">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:48px;height:48px;border-radius:12px;object-fit:cover"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 1 Cow</span>
@@ -2380,10 +3024,10 @@
                     </div>
                 </div>
 
-                <!-- Level 2 -->
+                <!-- Level 2 - Updated with image -->
                 <div class="level-card" data-level="2">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" style="width:48px;height:48px;border-radius:12px;object-fit:cover"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 2 Cow</span>
@@ -2413,7 +3057,7 @@
                 <!-- Level 3 -->
                 <div class="level-card" data-level="3">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" style="width:48px;height:48px;border-radius:12px;object-fit:cover"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 3 Cow</span>
@@ -3281,8 +3925,7 @@
         };
 
         const lastClickTimers = {};
-        // تعديل وقت الانتظار من 10 إلى 3 ثواني
-        const CLICK_COOLDOWN = 3000;
+        const CLICK_COOLDOWN = 3000; // تغيير من 10 ثواني إلى 3 ثواني
 
         // ==================== UTILITIES ====================
         function checkClickCooldown(buttonId) {
@@ -3290,7 +3933,6 @@
             let lastClick = lastClickTimers[buttonId] || 0;
             let timeLeft = CLICK_COOLDOWN - (now - lastClick);
             if (timeLeft > 0) {
-                // إخفاء الإشعار نهائياً
                 return false;
             }
             return true;
@@ -3315,6 +3957,11 @@
         }
 
         function showNotification(message, type = 'success', duration = 5000) {
+            // تم إخفاء الإشعارات الخاصة بالـ cooldown
+            if (message.includes('Please wait') || message.includes('подождите')) {
+                return; // لا تظهر إشعارات الـ cooldown
+            }
+            
             let container = document.getElementById('notificationContainer');
             let notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -3378,7 +4025,6 @@
         function updateLeaderboardInfoLanguage() {
             let lang = App.currentLanguage || 'en';
             let info = LEADERBOARD_INFO_TRANSLATIONS[lang];
-            if (!document.getElementById('infoTitle')) return;
             document.getElementById('infoTitle').innerHTML = info.title;
             document.getElementById('infoGrandPrize').innerHTML = info.grandPrize;
             document.getElementById('infoTotalPrize').innerHTML = info.totalPrize;
@@ -3595,6 +4241,7 @@
                 }
                 updateAllUI();
                 updateRanchUI();
+                updateCowCardUI(); // تحديث كارت البقرة الرئيسي
                 updateReferralUI();
                 updateTasksUI();
                 updateLeaderboardUI();
@@ -3607,8 +4254,29 @@
                 console.error('Load game state error:', e);
             }
         }
+        
+        // ==================== UPDATE COW CARD UI ====================
+        function updateCowCardUI() {
+            if (!App.ranch || !App.user || !App.global) return;
+            
+            let r = App.ranch;
+            let totalCows = (r.cowLevels[1] || 0) + (r.cowLevels[2] || 0) + (r.cowLevels[3] || 0) +
+                (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
+            let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
+            let inactiveCows = totalCows - activeCows;
 
-        // ==================== UPDATE FUNCTIONS ====================
+            document.getElementById('cowCardTotalCows').innerHTML = totalCows;
+            document.getElementById('cowCardActiveCows').innerHTML = activeCows;
+            document.getElementById('cowCardInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
+
+            let hourlyProduction = r.hourlyProduction || 0;
+            document.getElementById('cowCardHourlyProduction').innerHTML = Math.round(hourlyProduction);
+
+            let cowsSold = App.global?.cows_sold || 0;
+            document.getElementById('cowCardCowsSold').innerHTML = cowsSold + '/1000';
+            document.getElementById('cowCardCowsProgress').style.width = (cowsSold / 10) + '%';
+        }
+
         function updateRanchUI() {
             if (!App.ranch) return;
             let r = App.ranch;
@@ -3664,15 +4332,19 @@
                     let timeLeft = App.ranch.cowActiveUntil[level] - now;
 
                     if (timeLeft > 0) {
+                        // التأكد من أن الوقت ليس كبير بشكل غير منطقي
+                        if (timeLeft > 1000000) {
+                            console.warn(`Large timeLeft value detected: ${timeLeft} for level ${level}`);
+                            // إعادة تعيين المؤقت
+                            timerDiv.style.display = 'none';
+                            continue;
+                        }
+                        
                         let hours = Math.floor(timeLeft / 3600);
                         let minutes = Math.floor((timeLeft % 3600) / 60);
                         let seconds = Math.floor((timeLeft % 60));
                         
-                        if (hours > 1000) {
-                            timerText.innerHTML = `Error: ${timeLeft}`;
-                        } else {
-                            timerText.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
-                        }
+                        timerText.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
                         timerDiv.style.display = 'flex';
                         timerDiv.className = 'timer-bar active';
                         timerText.className = 'timer-text active';
@@ -3857,23 +4529,6 @@
             document.getElementById('withdrawFee').innerHTML = `${formatTON(fee)} TON`;
             document.getElementById('withdrawNet').innerHTML = `${formatTON(net)} TON`;
             document.getElementById('taskUserBalance').innerHTML = formatTON(App.user.tonBalance || 0);
-
-            // تحديث بطاقة البقرة الرئيسية (الصفحة الرئيسية)
-            if (App.ranch) {
-                let totalCows = (App.ranch.cowLevels[1] || 0) + (App.ranch.cowLevels[2] || 0) + (App.ranch.cowLevels[3] || 0) +
-                    (App.ranch.cowActive[1] || 0) + (App.ranch.cowActive[2] || 0) + (App.ranch.cowActive[3] || 0);
-                let activeCows = (App.ranch.cowActive[1] || 0) + (App.ranch.cowActive[2] || 0) + (App.ranch.cowActive[3] || 0);
-                let inactiveCows = totalCows - activeCows;
-                let hourlyProduction = App.ranch.hourlyProduction || 0;
-                let cowsSold = App.global?.cows_sold || 0;
-
-                document.getElementById('cowCardTotalCows').innerHTML = totalCows;
-                document.getElementById('cowCardActiveCows').innerHTML = activeCows;
-                document.getElementById('cowCardInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
-                document.getElementById('cowCardHourlyProduction').innerHTML = Math.round(hourlyProduction);
-                document.getElementById('cowCardCowsSold').innerHTML = cowsSold + '/1000';
-                document.getElementById('cowCardCowsProgress').style.width = (cowsSold / 10) + '%';
-            }
         }
 
         function updateReferralUI() {
@@ -4229,8 +4884,7 @@
 
         // ==================== COW ACTIONS ====================
         window.buyCow = async function() {
-            let button = document.getElementById('buyCowBtn');
-            if (!button) button = document.getElementById('ranchBuyCowBtn');
+            let button = document.getElementById('ranchBuyCowBtn');
             if (!validateAndCooldown('buyCowBtn', button)) return;
             if (App.global?.cows_remaining <= 0) {
                 showNotification('No cows left to buy', 'warning');
@@ -4378,8 +5032,8 @@
             try {
                 let result = await callAPI('claimMilk');
                 await loadGameState();
-                // إصلاح رسالة الإشعار لعرض القيمة المسحوبة بشكل صحيح
-                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.claimedAmount)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.claimedAmount)} 🥛 from storage!`, 'success');
+                // استخدام المبلغ الفعلي الذي تم إرجاعه من API
+                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.claimedAmount || App.ranch.milkStored)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.claimedAmount || App.ranch.milkStored)} 🥛 from storage!`, 'success');
             } catch (e) {
                 console.error('Claim milk error:', e);
             }

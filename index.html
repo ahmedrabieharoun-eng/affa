@@ -1294,27 +1294,27 @@
         }
 
         .open-ranch-btn {
-            position: absolute;
-            bottom: 16px;
-            right: 16px;
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             border: none;
             border-radius: 30px;
-            padding: 8px 16px;
+            padding: 12px 16px;
             color: #fff;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 8px;
             cursor: pointer;
             box-shadow: 0 4px 12px var(--pink-glow);
             z-index: 2;
             transition: 0.2s;
+            width: 100%;
+            margin-top: 8px;
         }
 
         .open-ranch-btn i {
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .open-ranch-btn:active {
@@ -2791,7 +2791,7 @@
         <!-- Farm Section (Main) -->
         <div id="sectionFarm" class="section active">
             <div class="machines-grid">
-                <!-- Cow Card - Click to open Ranch -->
+                <!-- Cow Card - Redesigned to match Ranch Overview -->
                 <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
@@ -2803,22 +2803,36 @@
                             <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
                         </div>
                     </div>
-                    <div class="machine-stats">
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.prod">Prod</div>
-                            <div class="stat-number">41 <span class="stat-unit">/h</span></div>
+                    
+                    <!-- New Stats Section: Two boxes side by side like in Ranch -->
+                    <div class="stats-grid" style="margin-bottom: 12px;">
+                        <div class="stat-box-large" style="padding: 10px;">
+                            <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
+                            <div class="stat-value" style="font-size: 24px;" id="farmTotalCows">0</div>
+                            <div style="display: flex; gap: 8px; margin-top: 4px; font-size: 10px;">
+                                <span class="active-stat" style="font-size: 10px;"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="farmActiveCows">0</span></span>
+                                <span class="inactive-stat" style="font-size: 10px;"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="farmInactiveCows">0</span></span>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.owned">Owned</div>
-                            <div class="stat-number" id="cowsOwned">0</div>
+                        <div class="stat-box-large" style="padding: 10px;">
+                            <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
+                            <div class="stat-value" style="font-size: 24px;" id="farmHourlyProduction">0</div>
+                            <div style="font-size: 9px;color:var(--text-muted);margin-top:4px">Milk per hour</div>
                         </div>
                     </div>
-                    <div class="progress-section">
-                        <div class="progress-header"><span data-i18n="farm.supply">Supply</span><span id="cowProgressText">0/1000</span></div>
+                    
+                    <!-- Global Progress Section -->
+                    <div style="background:rgba(0,0,0,.3);border-radius:16px;padding:10px;margin-bottom:12px">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px">
+                            <span>Global Cow Sales</span>
+                            <span style="font-weight:700" id="farmCowsSold">0/1000</span>
+                        </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" id="cowProgressFill" style="width:0%"></div>
+                            <div class="progress-fill" id="farmCowsProgress" style="width:0%"></div>
                         </div>
                     </div>
+                    
+                    <!-- Open Ranch Button - Wide button at bottom -->
                     <button class="open-ranch-btn" onclick="event.stopPropagation(); window.openRanchFromCow()">
                         <i class="fas fa-door-open"></i> Open Ranch
                     </button>
@@ -3877,7 +3891,7 @@
         };
 
         const lastClickTimers = {};
-        const CLICK_COOLDOWN = 10000;
+        const CLICK_COOLDOWN = 3000; // Changed from 10000 to 3000
 
         // ==================== UTILITIES ====================
         function checkClickCooldown(buttonId) {
@@ -3885,7 +3899,7 @@
             let lastClick = lastClickTimers[buttonId] || 0;
             let timeLeft = CLICK_COOLDOWN - (now - lastClick);
             if (timeLeft > 0) {
-                showNotification(App.currentLanguage === 'ru' ? `⏳ Пожалуйста, подождите ${Math.ceil(timeLeft / 1000)} секунд перед повторным нажатием` : `⏳ Please wait ${Math.ceil(timeLeft / 1000)} seconds before clicking again`, 'warning');
+                // Notification removed - just return false
                 return false;
             }
             return true;
@@ -3942,6 +3956,17 @@
             if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
             if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
             return n.toLocaleString();
+        }
+
+        function formatTimeRemaining(seconds) {
+            if (seconds < 0) return "Expired";
+            if (seconds > 86400 * 365) return "∞"; // If more than a year, show infinity
+            
+            let hours = Math.floor(seconds / 3600);
+            let minutes = Math.floor((seconds % 3600) / 60);
+            let secs = Math.floor(seconds % 60);
+            
+            return `${hours}h ${minutes}m ${secs}s`;
         }
 
         function setLanguage(lang) {
@@ -4222,6 +4247,14 @@
             document.getElementById('ranchCowsSold').innerHTML = cowsSold + '/1000';
             document.getElementById('ranchCowsProgress').style.width = (cowsSold / 10) + '%';
 
+            // Also update farm cow card stats
+            document.getElementById('farmTotalCows').innerHTML = totalCows;
+            document.getElementById('farmActiveCows').innerHTML = activeCows;
+            document.getElementById('farmInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
+            document.getElementById('farmHourlyProduction').innerHTML = Math.round(hourlyProduction);
+            document.getElementById('farmCowsSold').innerHTML = cowsSold + '/1000';
+            document.getElementById('farmCowsProgress').style.width = (cowsSold / 10) + '%';
+
             for (let level = 1; level <= 3; level++) {
                 let levelCows = (r.cowLevels[level] || 0);
                 let activeCowsLevel = (r.cowActive[level] || 0);
@@ -4258,17 +4291,8 @@
                     let timeLeft = App.ranch.cowActiveUntil[level] - now;
 
                     if (timeLeft > 0) {
-                        let hours = Math.floor(timeLeft / 3600);
-                        let minutes = Math.floor((timeLeft % 3600) / 60);
-                        let seconds = Math.floor((timeLeft % 60));
-                        
-                        // إصلاح عرض الوقت - التأكد من عدم ظهور أرقام كبيرة غير منطقية
-                        if (hours > 1000) {
-                            // إذا كان الوقت كبير جداً، ربما هناك خطأ
-                            timerText.innerHTML = `Error: ${timeLeft}`;
-                        } else {
-                            timerText.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
-                        }
+                        // Use the formatTimeRemaining function instead of raw calculation
+                        timerText.innerHTML = formatTimeRemaining(timeLeft);
                         timerDiv.style.display = 'flex';
                         timerDiv.className = 'timer-bar active';
                         timerText.className = 'timer-text active';
@@ -4839,6 +4863,8 @@
             let modal = document.getElementById('activateCowModal');
             let levelData = CONFIG.COW_LEVELS[level];
             let availableCows = App.ranch.cowLevels[level] || 0;
+            
+            let emoji = level === 1 ? '🐮' : level === 2 ? '🦬' : '🐃';
 
             modal.innerHTML = `
                 <div class="modal-content">
@@ -4847,7 +4873,7 @@
                         <i class="fas fa-times" style="cursor:pointer" onclick="closeModal('activateCowModal')"></i>
                     </div>
                     <div style="text-align:center;margin-bottom:16px">
-                        <div style="font-size:48px">${level === 1 ? '🐮' : level === 2 ? '🦬' : '🐃'}</div>
+                        <div style="font-size:48px">${emoji}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Стоимость' : 'Cost'}: ${levelData.activationCost} 🥛 ${App.currentLanguage === 'ru' ? 'за корову' : 'per cow'}</div>
                         <div>${App.currentLanguage === 'ru' ? 'Длительность' : 'Duration'}: 24 ${App.currentLanguage === 'ru' ? 'часа' : 'hours'}</div>
                     </div>
@@ -4954,10 +4980,13 @@
                 showNotification(App.currentLanguage === 'ru' ? 'Нет молока для получения' : 'No milk to claim', 'info');
                 return;
             }
+            
+            let claimAmount = App.ranch.milkStored;
+            
             try {
                 await callAPI('claimMilk');
                 await loadGameState();
-                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(App.ranch.milkStored)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(App.ranch.milkStored)} 🥛 from storage!`, 'success');
+                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(claimAmount)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(claimAmount)} 🥛 from storage!`, 'success');
             } catch (e) {
                 console.error('Claim milk error:', e);
             }

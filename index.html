@@ -1238,6 +1238,59 @@
             font-size: 10px;
         }
 
+        .ranch-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .ranch-stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .ranch-stat-box .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ranch-stat-box .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--crystal-blue);
+        }
+
+        .active-stat {
+            color: var(--neon-green);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .inactive-stat {
+            color: var(--danger-red);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .active-stat i,
+        .inactive-stat i {
+            font-size: 10px;
+        }
+
         .machine-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1305,16 +1358,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
             box-shadow: 0 4px 12px var(--pink-glow);
-            z-index: 2;
             transition: 0.2s;
-            margin-top: 16px;
+            margin-top: 12px;
         }
 
         .open-ranch-btn i {
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .open-ranch-btn:active {
@@ -1994,7 +2046,6 @@
             flex-direction: column;
             gap: 10px;
             max-width: 300px;
-            pointer-events: none;
         }
 
         .notification {
@@ -2404,13 +2455,6 @@
             font-size: 28px;
         }
 
-        .level-emoji img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
         .level-title {
             font-size: 16px;
             font-weight: 700;
@@ -2799,7 +2843,7 @@
         <!-- Farm Section (Main) -->
         <div id="sectionFarm" class="section active">
             <div class="machines-grid">
-                <!-- Cow Card - تم تعديله ليطابق تصميم RANCH OVERVIEW -->
+                <!-- Cow Card - Modified with Ranch Overview style -->
                 <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
@@ -2812,37 +2856,37 @@
                         </div>
                     </div>
                     
-                    <!-- تم استبدال الـ stats القديمة بنفس تصميم RANCH OVERVIEW -->
-                    <div class="stats-grid" style="margin-bottom: 8px;">
+                    <!-- Ranch Overview Style Stats -->
+                    <div class="ranch-stats-grid">
                         <!-- Total Cows Box -->
-                        <div class="stat-box-large" style="padding: 10px;">
+                        <div class="ranch-stat-box">
                             <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
-                            <div class="stat-value" style="font-size: 24px;" id="cowCardTotalCows">0</div>
-                            <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="cowCardActiveCows">0</span></div>
-                            <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="cowCardInactiveCows">0</span></div>
+                            <div class="stat-value" id="farmTotalCows">0</div>
+                            <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="farmActiveCows">0</span></div>
+                            <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="farmInactiveCows">0</span></div>
                         </div>
                         <!-- Production Box -->
-                        <div class="stat-box-large" style="padding: 10px;">
+                        <div class="ranch-stat-box">
                             <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
-                            <div class="stat-value" style="font-size: 24px;" id="cowCardHourlyProduction">0</div>
+                            <div class="stat-value" id="farmHourlyProduction">0</div>
                             <div style="font-size:11px;color:var(--text-muted);margin-top:8px">Milk per hour</div>
                         </div>
                     </div>
 
                     <!-- Global Progress -->
-                    <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:14px;margin-bottom:8px">
+                    <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:14px;margin-bottom:16px">
                         <div style="display:flex;justify-content:space-between;margin-bottom:8px">
                             <span>Global Cow Sales</span>
-                            <span style="font-weight:700" id="cowCardCowsSold">0/1000</span>
+                            <span style="font-weight:700" id="farmCowsSold">0/1000</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" id="cowCardCowsProgress" style="width:0%"></div>
+                            <div class="progress-fill" id="farmCowsProgress" style="width:0%"></div>
                         </div>
                     </div>
-                    
-                    <!-- Open Ranch Button بدلاً من Buy Cow -->
+
+                    <!-- Open Ranch Button -->
                     <button class="open-ranch-btn" onclick="event.stopPropagation(); window.openRanchFromCow()">
-                        <i class="fas fa-door-open"></i> OPEN RANCH
+                        <i class="fas fa-door-open"></i> Open Ranch
                     </button>
                 </div>
 
@@ -2970,7 +3014,7 @@
                 <!-- Level 1 -->
                 <div class="level-card" data-level="1">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
+                        <div class="level-emoji">🐮</div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 1 Cow</span>
@@ -2998,10 +3042,10 @@
                     </div>
                 </div>
 
-                <!-- Level 2 -->
+                <!-- Level 2 - with fixed image -->
                 <div class="level-card" data-level="2">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" style="width:48px;height:48px;object-fit:cover;border-radius:12px"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 2 Cow</span>
@@ -3031,7 +3075,7 @@
                 <!-- Level 3 -->
                 <div class="level-card" data-level="3">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
+                        <div class="level-emoji">🐃</div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 3 Cow</span>
@@ -3539,7 +3583,7 @@
             CRYSTAL_PRICE: 25,
             TASK_REWARD: 0.001,
             MAX_ACTIVE_ORDERS: 2,
-            CLICK_COOLDOWN: 3000, // تم التعديل من 10000 إلى 3000 (3 ثواني)
+            CLICK_COOLDOWN: 3000,
             COW_LEVELS: {
                 1: { productionPerDay: 500, activationCost: 200, upgradeCost: 6000, duration: 86400 },
                 2: { productionPerDay: 1000, activationCost: 350, upgradeCost: 20000, duration: 86400 },
@@ -3907,17 +3951,16 @@
             let lastClick = lastClickTimers[buttonId] || 0;
             let timeLeft = CONFIG.CLICK_COOLDOWN - (now - lastClick);
             if (timeLeft > 0) {
-                // تم إخفاء رسالة الإشعار تماماً
                 return false;
             }
             return true;
         }
 
-        async function disableButtonTemporarily(button, buttonId) {
+        function disableButtonTemporarily(button, buttonId) {
             if (!button) return;
             button.disabled = true;
             let originalText = button.innerHTML;
-            button.innerHTML = `<i class="fas fa-hourglass-half"></i> ⏳ ${Math.ceil(CONFIG.CLICK_COOLDOWN / 1000)}s`;
+            button.innerHTML = `<i class="fas fa-hourglass-half"></i> ${Math.ceil(CONFIG.CLICK_COOLDOWN / 1000)}s`;
             setTimeout(() => {
                 button.disabled = false;
                 button.innerHTML = originalText;
@@ -3964,13 +4007,6 @@
             if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
             if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
             return n.toLocaleString();
-        }
-
-        function formatTimeFromSeconds(seconds) {
-            if (seconds < 0 || seconds > 1000000000) return '0h 0m';
-            let hours = Math.floor(seconds / 3600);
-            let minutes = Math.floor((seconds % 3600) / 60);
-            return `${hours}h ${minutes}m`;
         }
 
         function setLanguage(lang) {
@@ -4218,6 +4254,7 @@
                 }
                 updateAllUI();
                 updateRanchUI();
+                updateFarmUI();
                 updateReferralUI();
                 updateTasksUI();
                 updateLeaderboardUI();
@@ -4232,6 +4269,27 @@
         }
 
         // ==================== UPDATE FUNCTIONS ====================
+        function updateFarmUI() {
+            if (!App.ranch || !App.user || !App.global) return;
+            
+            let r = App.ranch;
+            let totalCows = (r.cowLevels[1] || 0) + (r.cowLevels[2] || 0) + (r.cowLevels[3] || 0) +
+                (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
+            let activeCows = (r.cowActive[1] || 0) + (r.cowActive[2] || 0) + (r.cowActive[3] || 0);
+            let inactiveCows = totalCows - activeCows;
+
+            document.getElementById('farmTotalCows').innerHTML = totalCows;
+            document.getElementById('farmActiveCows').innerHTML = activeCows;
+            document.getElementById('farmInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
+
+            let hourlyProduction = r.hourlyProduction || 0;
+            document.getElementById('farmHourlyProduction').innerHTML = Math.round(hourlyProduction);
+
+            let cowsSold = App.global?.cows_sold || 0;
+            document.getElementById('farmCowsSold').innerHTML = cowsSold + '/1000';
+            document.getElementById('farmCowsProgress').style.width = (cowsSold / 10) + '%';
+        }
+
         function updateRanchUI() {
             if (!App.ranch) return;
             let r = App.ranch;
@@ -4244,20 +4302,12 @@
             document.getElementById('ranchActiveCows').innerHTML = activeCows;
             document.getElementById('ranchInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
 
-            // تحديث كارت البقرة في الصفحة الرئيسية
-            document.getElementById('cowCardTotalCows').innerHTML = totalCows;
-            document.getElementById('cowCardActiveCows').innerHTML = activeCows;
-            document.getElementById('cowCardInactiveCows').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
-
             let hourlyProduction = r.hourlyProduction || 0;
             document.getElementById('ranchHourlyProduction').innerHTML = Math.round(hourlyProduction);
-            document.getElementById('cowCardHourlyProduction').innerHTML = Math.round(hourlyProduction);
 
             let cowsSold = App.global?.cows_sold || 0;
             document.getElementById('ranchCowsSold').innerHTML = cowsSold + '/1000';
             document.getElementById('ranchCowsProgress').style.width = (cowsSold / 10) + '%';
-            document.getElementById('cowCardCowsSold').innerHTML = cowsSold + '/1000';
-            document.getElementById('cowCardCowsProgress').style.width = (cowsSold / 10) + '%';
 
             for (let level = 1; level <= 3; level++) {
                 let levelCows = (r.cowLevels[level] || 0);
@@ -4294,15 +4344,15 @@
                 if (activeCows > 0 && App.ranch.cowActiveUntil[level]) {
                     let timeLeft = App.ranch.cowActiveUntil[level] - now;
 
-                    if (timeLeft > 0 && timeLeft < 1000000000) { // التحقق من أن الرقم منطقي
-                        let timeString = formatTimeFromSeconds(timeLeft);
-                        timerText.innerHTML = timeString;
+                    if (timeLeft > 0 && timeLeft < 86400 * 30) {
+                        let hours = Math.floor(timeLeft / 3600);
+                        let minutes = Math.floor((timeLeft % 3600) / 60);
+                        timerText.innerHTML = `${hours}h ${minutes}m`;
                         timerDiv.style.display = 'flex';
                         timerDiv.className = 'timer-bar active';
                         timerText.className = 'timer-text active';
-                    } else if (timeLeft > 0 && timeLeft >= 1000000000) {
-                        // إذا كان الرقم كبير جداً، نعرض صفر
-                        timerText.innerHTML = '0h 0m';
+                    } else if (timeLeft > 86400 * 30) {
+                        timerText.innerHTML = 'Active';
                         timerDiv.style.display = 'flex';
                         timerDiv.className = 'timer-bar active';
                         timerText.className = 'timer-text active';
@@ -4843,7 +4893,6 @@
         // ==================== COW ACTIONS ====================
         window.buyCow = async function() {
             let button = document.getElementById('ranchBuyCowBtn');
-            if (!button) return;
             if (!validateAndCooldown('buyCowBtn', button)) return;
             if (App.global?.cows_remaining <= 0) {
                 showNotification('No cows left to buy', 'warning');
@@ -4991,7 +5040,6 @@
             try {
                 let result = await callAPI('claimMilk');
                 await loadGameState();
-                // تصحيح الرقم في الإشعار لعرض الرقم الصحيح
                 showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.claimedAmount || App.ranch.milkStored)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.claimedAmount || App.ranch.milkStored)} 🥛 from storage!`, 'success');
             } catch (e) {
                 console.error('Claim milk error:', e);

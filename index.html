@@ -1238,7 +1238,7 @@
             font-size: 10px;
         }
 
-        .machine-stats {
+        .ranch-mini-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
@@ -1294,7 +1294,6 @@
         }
 
         .open-ranch-btn {
-            width: 100%;
             background: linear-gradient(145deg, var(--primary-pink), #D94A8F);
             border: none;
             border-radius: 30px;
@@ -1305,16 +1304,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
             box-shadow: 0 4px 12px var(--pink-glow);
             z-index: 2;
             transition: 0.2s;
-            margin-top: 16px;
+            width: 100%;
+            margin-top: 8px;
         }
 
         .open-ranch-btn i {
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .open-ranch-btn:active {
@@ -2400,6 +2400,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 28px;
             overflow: hidden;
         }
 
@@ -2407,6 +2408,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 12px;
         }
 
         .level-title {
@@ -2797,7 +2799,7 @@
         <!-- Farm Section (Main) -->
         <div id="sectionFarm" class="section active">
             <div class="machines-grid">
-                <!-- Cow Card - Updated with Ranch Overview style -->
+                <!-- Cow Card - Click to open Ranch -->
                 <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
                     <div class="machine-header">
                         <div class="machine-emoji float-slow"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow"></div>
@@ -2806,38 +2808,31 @@
                                 <span class="machine-name" data-i18n="farm.cow.name">Cow</span>
                                 <span class="machine-badge" id="cowBadge">Available</span>
                             </div>
+                            <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
                         </div>
                     </div>
                     
-                    <!-- Ranch Overview style stats -->
-                    <div class="stats-grid" style="grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-                        <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:10px;text-align:center">
-                            <div style="font-size:10px;color:var(--text-muted)">Total Cows</div>
-                            <div style="font-size:22px;font-weight:800;color:var(--crystal-blue)" id="cowTotalDisplay">0</div>
-                            <div style="display:flex;justify-content:center;gap:8px;margin-top:4px">
-                                <span><i class="fas fa-circle" style="color:var(--neon-green);font-size:8px"></i> <span id="cowActiveDisplay">0</span></span>
-                                <span><i class="fas fa-circle" style="color:var(--danger-red);font-size:8px"></i> <span id="cowInactiveDisplay">0</span></span>
-                            </div>
+                    <!-- New Stats Section: Two boxes side by side -->
+                    <div class="ranch-mini-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Total Cows</div>
+                            <div class="stat-number" id="cowTotalStats">0</div>
                         </div>
-                        <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:10px;text-align:center">
-                            <div style="font-size:10px;color:var(--text-muted)">Production</div>
-                            <div style="font-size:22px;font-weight:800;color:var(--crystal-blue)" id="cowProductionDisplay">0</div>
-                            <div style="font-size:10px;color:var(--text-muted);margin-top:4px">Milk per hour</div>
+                        <div class="stat-item">
+                            <div class="stat-label">Production</div>
+                            <div class="stat-number" id="cowProductionStats">0 <span class="stat-unit">/h</span></div>
                         </div>
                     </div>
-
-                    <!-- Global Progress -->
-                    <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:14px;margin-bottom:16px">
-                        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-                            <span>Global Cow Sales</span>
-                            <span style="font-weight:700" id="cowGlobalSales">0/1000</span>
-                        </div>
+                    
+                    <!-- Progress Section (Supply Bar) -->
+                    <div class="progress-section">
+                        <div class="progress-header"><span data-i18n="farm.supply">Global Cow Sales</span><span id="cowProgressText">0/1000</span></div>
                         <div class="progress-bar">
-                            <div class="progress-fill" id="cowGlobalProgress" style="width:0%"></div>
+                            <div class="progress-fill" id="cowProgressFill" style="width:0%"></div>
                         </div>
                     </div>
-
-                    <!-- Open Ranch Button -->
+                    
+                    <!-- Open Ranch Button (Full Width) -->
                     <button class="open-ranch-btn" onclick="event.stopPropagation(); window.openRanchFromCow()">
                         <i class="fas fa-door-open"></i> Open Ranch
                     </button>
@@ -2855,7 +2850,7 @@
                             <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
                         </div>
                     </div>
-                    <div class="machine-stats">
+                    <div class="ranch-mini-stats">
                         <div class="stat-item">
                             <div class="stat-label" data-i18n="farm.prod">Prod</div>
                             <div class="stat-number">41 <span class="stat-unit">/h</span></div>
@@ -2914,7 +2909,7 @@
             </div>
         </div>
 
-        <!-- Ranch Section -->
+        <!-- Ranch Section (Hidden from nav) -->
         <div id="sectionRanch" class="section">
             <!-- RANCH OVERVIEW Card -->
             <div class="ranch-card">
@@ -2967,7 +2962,7 @@
                 <!-- Level 1 -->
                 <div class="level-card" data-level="1">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow Level 1" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 1 Cow</span>
@@ -2998,7 +2993,7 @@
                 <!-- Level 2 -->
                 <div class="level-card" data-level="2">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" alt="Cow Level 2" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 2 Cow</span>
@@ -3028,7 +3023,7 @@
                 <!-- Level 3 -->
                 <div class="level-card" data-level="3">
                     <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div>
+                        <div class="level-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Cow Level 3" style="width:100%;height:100%;object-fit:cover"></div>
                         <div style="flex:1">
                             <div style="display:flex;justify-content:space-between">
                                 <span class="level-title">Level 3 Cow</span>
@@ -3896,7 +3891,8 @@
         };
 
         const lastClickTimers = {};
-        const CLICK_COOLDOWN = 3000; // تعديل وقت الانتظار من 10 إلى 3 ثواني
+        // ===== التعديل 3: تقليل وقت الانتظار من 10 ثواني إلى 3 ثواني =====
+        const CLICK_COOLDOWN = 3000; // 3 seconds
 
         // ==================== UTILITIES ====================
         function checkClickCooldown(buttonId) {
@@ -3904,8 +3900,9 @@
             let lastClick = lastClickTimers[buttonId] || 0;
             let timeLeft = CLICK_COOLDOWN - (now - lastClick);
             if (timeLeft > 0) {
-                // إخفاء الإشعار - عدم إظهار أي رسالة
-                return false;
+                // ===== التعديل 2: إخفاء رسالة الكولدون تمامًا =====
+                // showNotification(App.currentLanguage === 'ru' ? `⏳ Пожалуйста, подождите ${Math.ceil(timeLeft / 1000)} секунд перед повторным нажатием` : `⏳ Please wait ${Math.ceil(timeLeft / 1000)} seconds before clicking again`, 'warning');
+                return false; // لا تظهر الإشعار ولكن تعتبر النقرة غير صالحة
             }
             return true;
         }
@@ -4263,7 +4260,6 @@
             updateCowTimers();
         }
 
-        // 1. تعديل دالة updateCowTimers لإصلاح عرض الوقت
         function updateCowTimers() {
             if (!App.ranch || !App.ranch.cowActiveUntil) return;
 
@@ -4277,23 +4273,12 @@
                 if (activeCows > 0 && App.ranch.cowActiveUntil[level]) {
                     let timeLeft = App.ranch.cowActiveUntil[level] - now;
 
-                    if (timeLeft > 0 && timeLeft < 86400 * 30) { // أقل من 30 يوم
+                    if (timeLeft > 0) {
+                        // ===== التعديل 1: عرض الوقت المتبقي بشكل صحيح بدلاً من رسالة الخطأ =====
                         let hours = Math.floor(timeLeft / 3600);
                         let minutes = Math.floor((timeLeft % 3600) / 60);
-                        let seconds = Math.floor((timeLeft % 60));
-                        
+                        let seconds = Math.floor(timeLeft % 60);
                         timerText.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
-                        timerDiv.style.display = 'flex';
-                        timerDiv.className = 'timer-bar active';
-                        timerText.className = 'timer-text active';
-                    } else if (timeLeft > 0) {
-                        // إذا كان الوقت كبير جداً، نحسبه بشكل طبيعي
-                        let totalSeconds = timeLeft;
-                        let days = Math.floor(totalSeconds / 86400);
-                        let hours = Math.floor((totalSeconds % 86400) / 3600);
-                        let minutes = Math.floor((totalSeconds % 3600) / 60);
-                        
-                        timerText.innerHTML = `${days}d ${hours}h ${minutes}m`;
                         timerDiv.style.display = 'flex';
                         timerDiv.className = 'timer-bar active';
                         timerText.className = 'timer-text active';
@@ -4394,24 +4379,16 @@
             document.getElementById('crystalPriceHeader').innerHTML = CONFIG.CRYSTAL_PRICE;
             updateProductionTimer();
 
+            // تحديث إحصائيات البقرة الرئيسية
+            let totalCows = (App.ranch.cowLevels[1] || 0) + (App.ranch.cowLevels[2] || 0) + (App.ranch.cowLevels[3] || 0) +
+                           (App.ranch.cowActive[1] || 0) + (App.ranch.cowActive[2] || 0) + (App.ranch.cowActive[3] || 0);
+            document.getElementById('cowTotalStats').innerHTML = totalCows;
+            document.getElementById('cowProductionStats').innerHTML = (App.user.milkPerHour || 0) + ' <span class="stat-unit">/h</span>';
+
             document.getElementById('cowsOwned').innerHTML = App.user.cows_owned || 0;
             let cowsProgress = App.global.cows_progress || 0;
             document.getElementById('cowProgressText').innerHTML = `${App.global.cows_sold || 0}/${App.global.cows_cap}`;
             document.getElementById('cowProgressFill').style.width = cowsProgress + '%';
-
-            // تحديث عرض إحصائيات البقرة في الصفحة الرئيسية
-            let totalCows = (App.ranch?.cowLevels[1] || 0) + (App.ranch?.cowLevels[2] || 0) + (App.ranch?.cowLevels[3] || 0) +
-                (App.ranch?.cowActive[1] || 0) + (App.ranch?.cowActive[2] || 0) + (App.ranch?.cowActive[3] || 0);
-            let activeCows = (App.ranch?.cowActive[1] || 0) + (App.ranch?.cowActive[2] || 0) + (App.ranch?.cowActive[3] || 0);
-            let inactiveCows = totalCows - activeCows;
-            document.getElementById('cowTotalDisplay').innerHTML = totalCows;
-            document.getElementById('cowActiveDisplay').innerHTML = activeCows;
-            document.getElementById('cowInactiveDisplay').innerHTML = inactiveCows >= 0 ? inactiveCows : 0;
-            document.getElementById('cowProductionDisplay').innerHTML = Math.round(App.ranch?.hourlyProduction || 0);
-            
-            let cowsSold = App.global?.cows_sold || 0;
-            document.getElementById('cowGlobalSales').innerHTML = cowsSold + '/1000';
-            document.getElementById('cowGlobalProgress').style.width = (cowsSold / 10) + '%';
 
             let cowBadge = document.getElementById('cowBadge');
             if (App.global.cows_remaining <= 0) {
@@ -4986,7 +4963,6 @@
         };
 
         // ==================== STORAGE FUNCTIONS ====================
-        // 5. تعديل دالة claimMilk لإظهار الرقم الصحيح
         window.claimMilk = async function() {
             let button = document.getElementById('claimMilkBtn');
             if (!validateAndCooldown('claimMilkBtn', button)) return;
@@ -4995,10 +4971,11 @@
                 return;
             }
             try {
-                let claimedAmount = App.ranch.milkStored; // حفظ القيمة قبل التحديث
+                // ===== التعديل 5: جلب الرقم الصحيح من نتيجة الـ API وعرضه في الإشعار =====
                 let result = await callAPI('claimMilk');
                 await loadGameState();
-                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(claimedAmount)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(claimedAmount)} 🥛 from storage!`, 'success');
+                // استخدام result.claimedAmount الذي يأتي من الـ API
+                showNotification(App.currentLanguage === 'ru' ? `✅ Забрано ${formatNumber(result.claimedAmount)} 🥛 из хранилища!` : `✅ Claimed ${formatNumber(result.claimedAmount)} 🥛 from storage!`, 'success');
             } catch (e) {
                 console.error('Claim milk error:', e);
             }

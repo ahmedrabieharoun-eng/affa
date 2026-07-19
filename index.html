@@ -1,931 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Crystal Ranch · Leaderboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- External Libraries -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    <script src="https://unpkg.com/tonweb/dist/tonweb.js"></script>
-    <!-- App Styles -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
+<meta charset="UTF-8">
+<title>Pipeworks Idle — Factory Chain</title>
+<style>
+  :root{
+    --panel-bg: rgba(18,22,30,0.82);
+    --panel-border: rgba(140,170,255,0.18);
+    --text-main: #eaf0ff;
+    --text-dim: #9fb0d0;
+    --accent-green: #59e39d;
+    --accent-amber: #ffb84d;
+    --accent-blue: #5fb6ff;
+  }
+  html,body{height:100%;}
+  body{
+    margin:0; display:flex; align-items:center; justify-content:center;
+    min-height:100vh;
+    background: radial-gradient(ellipse at 50% -10%, #24303f 0%, #0d1420 55%, #070b12 100%);
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    color: var(--text-main);
+    overflow:hidden;
+  }
+  #stage{
+    position:relative;
+    width:960px; height:860px;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(140,170,255,0.08);
+  }
+  canvas{ position:absolute; top:0; left:0; display:block; }
+  #loading{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:10px; background:#0b1018; z-index:50;
+    font-size:14px; color:var(--text-dim); letter-spacing:.5px;
+  }
+  #loading .bar{ width:220px; height:6px; border-radius:4px; background:#1c2534; overflow:hidden; }
+  #loading .fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--accent-green),var(--accent-blue)); transition:width .15s ease-out; }
 
-</head>
+  /* ---- HUD ---- */
+  .hud-pill{
+    position:absolute; display:flex; align-items:center; gap:8px;
+    background:var(--panel-bg); border:1px solid var(--panel-border);
+    border-radius:10px; padding:6px 12px; font-size:13px; font-weight:600;
+    backdrop-filter: blur(6px); box-shadow:0 4px 14px rgba(0,0,0,.35);
+    pointer-events:none;
+  }
+  .hud-pill .lbl{ color:var(--text-dim); font-weight:500; font-size:11px; }
+  #rateFurnace{ top:26px; left:24px; }
+  #rateTanks{ top:26px; right:24px; }
+  #coinsPill{
+    top:26px; left:50%; transform:translateX(-50%);
+    font-size:16px; padding:8px 18px; gap:10px;
+  }
+  #coinsPill .coin-icon{
+    width:16px;height:16px;border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #ffe9a8, var(--accent-amber) 60%, #b0781f 100%);
+    box-shadow:0 0 8px rgba(255,184,77,.7);
+  }
+  #upgradeBtn{
+    position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+    background:linear-gradient(180deg,#2a3a52,#182234);
+    border:1px solid rgba(140,170,255,0.35);
+    color:var(--text-main); border-radius:12px; padding:12px 22px;
+    font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.3px;
+    box-shadow:0 6px 18px rgba(0,0,0,.4);
+    transition:transform .12s ease;
+  }
+  #upgradeBtn small{ display:block; font-weight:500; font-size:11px; color:var(--accent-amber); margin-top:2px;}
+  #upgradeBtn:active{ transform:translateX(-50%) scale(.96); }
+  #upgradeBtn.pulse{ animation: btnpulse 1.6s ease-in-out infinite; }
+  @keyframes btnpulse{
+    0%,100%{ box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 0 0 rgba(89,227,157,.45); }
+    50%{ box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 0 8px rgba(89,227,157,0); }
+  }
+  #upgradeBtn:disabled{ opacity:.45; cursor:not-allowed; animation:none; }
 
+  #footer-credit{
+    position:absolute; bottom:8px; right:12px; font-size:10px; color:rgba(255,255,255,0.25);
+    pointer-events:none;
+  }
+</style>
+</head>
 <body>
 
-    <!-- LOADING SCREEN -->
-    <div id="loadingScreen" style="
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #0a0a18 url('https://i.ibb.co/kVGZmG6x/Chat-GPT-Image-15-2026-06-52-13.png') center/cover no-repeat;
-    ">
-        <div style="position:absolute;inset:0;background:rgba(5,5,20,0.72)"></div>
-        <div style="position:relative;z-index:1;text-align:center;padding:20px">
-            <div style="font-size:72px;animation:float 2s infinite ease-in-out;margin-bottom:8px">🐄</div>
-            <div style="font-size:26px;font-weight:800;background:linear-gradient(145deg,#fff,#FF5CA8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px">Crystal Ranch</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:32px">Loading your farm...</div>
+<div id="stage">
+  <div id="loading">
+    <div>Loading assets…</div>
+    <div class="bar"><div class="fill" id="loadFill"></div></div>
+  </div>
 
-            <div style="width:220px;height:6px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;margin:0 auto 14px">
-                <div id="loadingBar" style="height:100%;width:0%;background:linear-gradient(90deg,#FF5CA8,#00D4FF);border-radius:10px;transition:width 0.4s ease"></div>
-            </div>
-            <div id="loadingStatus" style="font-size:11px;color:rgba(255,255,255,0.45)">Connecting...</div>
-        </div>
-    </div>
+  <canvas id="scene" width="960" height="860"></canvas>
 
-    <div class="notification-container" id="notificationContainer"></div>
-    <div class="leaderboard-float" id="leaderboardButton"><i class="fas fa-trophy"></i></div>
-    <div class="help-float" id="helpButton"><i class="fas fa-question"></i></div>
+  <div class="hud-pill" id="rateFurnace"><span class="lbl">GLASS</span><span id="rateFurnaceVal">0/min</span></div>
+  <div class="hud-pill" id="coinsPill"><div class="coin-icon"></div><span id="coinsVal">0</span></div>
+  <div class="hud-pill" id="rateTanks"><span class="lbl">CHIPS</span><span id="rateTanksVal">0/min</span></div>
 
-    <!-- Leaderboard Info Modal -->
-    <div class="leaderboard-info-modal" id="leaderboardInfoModal">
-        <div class="info-title"><i class="fas fa-trophy" style="color:#FFD700;"></i><span id="infoTitle">🏆 How does the competition work?</span></div>
-        <div class="info-section">
-            <h4 id="infoGrandPrize">🏆 Grand Prize</h4>
-            <p id="infoTotalPrize">Total prize pool 150 TON distributed to top 20 players</p>
-            <div class="info-prize" id="infoPrizeList"></div>
-        </div>
-        <div class="info-section">
-            <h4 id="infoHowToParticipate">🐮 How to participate?</h4>
-            <p id="infoHowToDesc">Each new cow you buy = 10 points<br>You must buy at least one cow to appear</p>
-        </div>
-        <div class="info-section">
-            <h4 id="infoWhenEnds">⏰ When does it end?</h4>
-            <p id="infoWhenDesc">The competition ends when 1000 cows are sold</p>
-        </div>
-        <button class="info-close" onclick="document.getElementById('leaderboardInfoModal').classList.remove('active')"><span id="infoGotIt">✅ Got it</span></button>
-    </div>
+  <button id="upgradeBtn" class="pulse">
+    Speed Up Production
+    <small id="upgradeCost">Cost: 20</small>
+  </button>
+  <div id="footer-credit">original assets &amp; code</div>
+</div>
 
-    <!-- Help Modal -->
-    <div class="help-modal" id="helpModal">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-            <h2 style="font-size:18px;font-weight:700;display:flex;gap:6px" data-i18n="help.title"><i class="fas fa-info-circle" style="color:var(--primary-pink)"></i> How to Play</h2>
-            <i class="fas fa-times" id="closeHelp" style="font-size:18px;color:var(--text-secondary);cursor:pointer"></i>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji"><img src="https://i.ibb.co/j9zxzsQB/photo-5807836880429583588-m.jpg" style="width:30px;height:30px;border-radius:8px"></div>
-            <div class="help-text">
-                <h4 data-i18n="help.cow.title">Cow Machine</h4>
-                <p data-i18n="help.cow.desc">1 TON · 41 Milk/h<br>Global cap: 1000<br>Hatch: 50,000 Milk = 1 Cow</p>
-            </div>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" style="width:30px;height:30px;border-radius:8px"></div>
-            <div class="help-text">
-                <h4 data-i18n="help.chicken.title">Chicken Machine</h4>
-                <p data-i18n="help.chicken.desc">1 TON · 41 Eggs/h<br>Unlocks after all Cows sold</p>
-            </div>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" style="width:30px;height:30px;border-radius:8px"></div>
-            <div class="help-text">
-                <h4 data-i18n="help.crystal.title">Crystal Engine</h4>
-                <p data-i18n="help.crystal.desc">20 TON · 20k Milk + 20k Eggs = 1 Crystal<br>Convert Crystals → TON</p>
-            </div>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji">🥛→🐮</div>
-            <div class="help-text">
-                <h4 data-i18n="help.hatch.title">Hatch System</h4>
-                <p data-i18n="help.hatch.desc">50,000 Milk = 1 Cow<br>5,000 Eggs = 1 Chicken<br>No global cap limit</p>
-            </div>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji">📊</div>
-            <div class="help-text">
-                <h4 data-i18n="help.market.title">P2P Market</h4>
-                <p data-i18n="help.market.desc">Trade Milk & Eggs with other players</p>
-            </div>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji">👥</div>
-            <div class="help-text">
-                <h4 data-i18n="help.referral.title">Referral</h4>
-                <p data-i18n="help.referral.desc">Earn 10% of every TON purchase made by friends</p>
-            </div>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji">✅</div>
-            <div class="help-text">
-                <h4 data-i18n="help.tasks.title">Tasks & Rewards</h4>
-                <p data-i18n="help.tasks.desc">Complete tasks to earn TON<br>Create your own tasks (min 100 users)</p>
-            </div>
-        </div>
-        <div class="help-item">
-            <div class="help-emoji">🏆</div>
-            <div class="help-text">
-                <h4 data-i18n="help.leaderboard.title">Leaderboard</h4>
-                <p data-i18n="help.leaderboard.desc">1 new cow = 10 points · Top 20 win 150 TON total<br>Ends when 1000 cows sold<br>⚠️ You must buy a cow to appear</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Status Bar -->
-    <div class="status-bar">
-        <div class="status-row-1">
-            <div class="status-card">
-                <div class="status-header"><span class="status-emoji soft-shine">🥛</span><span class="status-label" data-i18n="status.milk">MILK</span></div>
-                <div class="status-value" id="statusMilk">0</div>
-                <div class="status-sub"><i class="fas fa-arrow-up"></i> <span id="milkPerHour">0</span>/h</div>
-            </div>
-            <div class="status-card">
-                <div class="status-header"><span class="status-emoji soft-shine">🥚</span><span class="status-label" data-i18n="status.eggs">EGGS</span></div>
-                <div class="status-value" id="statusEggs">0</div>
-                <div class="status-sub"><i class="fas fa-arrow-up"></i> <span id="eggsPerHour">0</span>/h</div>
-            </div>
-            <div class="status-card">
-                <div class="status-header"><span class="status-emoji soft-shine">💎</span><span class="status-label" data-i18n="status.crystal">CRYSTAL</span></div>
-                <div class="status-value" id="statusDiamond">0</div>
-                <div class="status-sub"><i class="fas fa-gem"></i> 1 = <span id="crystalPriceHeader">25</span> TON</div>
-            </div>
-        </div>
-        <div class="status-row-2">
-            <div class="ton-status"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" class="ton-icon" alt="TON"><span class="ton-amount" id="statusTon">0.0000</span><span style="font-size:10px;color:var(--text-secondary)">TON</span></div>
-            <div class="mining-timer" id="miningTimer"><i class="fas fa-clock"></i><span id="productionTimer">00:00</span></div>
-            <div class="language-switcher">
-                <button class="lang-btn active" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="ru">RU</button>
-            </div>
-            <button class="deposit-button" id="depositButton"><i class="fas fa-plus-circle"></i> <span data-i18n="status.deposit">Deposit</span></button>
-        </div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container" id="appContainer">
-        <!-- Leaderboard Section -->
-        <div id="sectionLeaderboard" class="section">
-            <div class="leaderboard-header">
-                <div class="leaderboard-title"><i class="fas fa-trophy"></i> LEADERBOARD <span class="leaderboard-help-icon" onclick="document.getElementById('leaderboardInfoModal').classList.add('active');updateLeaderboardInfoLanguage()"><i class="fas fa-question"></i></span></div>
-                <div class="prize-pool"><span class="prize-label">🏆 TOTAL PRIZE</span><span class="prize-amount"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:18px;height:18px;object-fit:contain"> 150</span></div>
-                <div class="leaderboard-note"><i class="fas fa-info-circle"></i> You must buy a cow to appear! (10 points per new cow)</div>
-                <div class="progress-counter">
-                    <div class="counter-main" id="leaderboardCowsSold">0</div>
-                    <div class="counter-label">COWS SOLD / 1000</div>
-                    <div class="counter-progress">
-                        <div class="counter-progress-fill" id="leaderboardProgressFill" style="width:0%"></div>
-                    </div>
-                    <div class="counter-label" style="margin-top:8px" id="leaderboardRemaining">Remaining: 1000</div>
-                </div>
-                <div class="end-message" id="leaderboardEndMessage"><i class="fas fa-info-circle"></i> Competition ends when 1000 cows are sold</div>
-            </div>
-            <div class="your-position-card">
-                <div class="position-row"><span class="position-label">Your Position</span><span class="position-value" id="userRank">#0</span>
-                    <div class="stats-row">
-                        <div class="stat-box"><span class="stat-box-label">Points</span><span class="stat-box-value" id="userPoints">0</span></div>
-                        <div class="stat-box"><span class="stat-box-label">Prize</span><span class="stat-box-value prize-badge" id="userPrize"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:12px;height:12px;object-fit:contain"> 0</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-ranking-star" style="color:#FFD700"></i> Top Farmers</div>
-                <div class="leaderboard-grid" id="leaderboardList">
-                    <div style="text-align:center;padding:40px;color:var(--text-secondary)"><i class="fas fa-trophy" style="font-size:48px;margin-bottom:15px;opacity:.5"></i>
-                        <p>Loading leaderboard...</p>
-                    </div>
-                </div>
-            </div>
-            <div class="winners-section" id="winnersSection" style="display:none">
-                <div class="winners-title"><i class="fas fa-crown"></i> Competition Winners</div>
-                <div class="winners-grid" id="winnersList"></div>
-            </div>
-        </div>
-
-        <!-- Farm Section (Main) -->
-        <div id="sectionFarm" class="section active">
-            <div class="machines-grid">
-                <!-- Cow Card - Click to open Ranch -->
-                <div class="machine-card cow" id="cowCard" onclick="window.openRanchFromCow()">
-                    <div class="machine-header">
-                        <div class="machine-emoji float-slow"><img src="https://i.ibb.co/8D2S5nXS/image.jpg" alt="Cow"></div>
-                        <div class="machine-info">
-                            <div class="machine-name-row">
-                                <span class="machine-name" data-i18n="farm.cow.name">Cow</span>
-                                <span class="machine-badge" id="cowBadge">Available</span>
-                            </div>
-                            <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
-                        </div>
-                    </div>
-                    <div class="stats-grid" style="margin-bottom:8px">
-                        <div class="stat-box-large">
-                            <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
-                            <div class="stat-value" id="cowsOwned">0</div>
-                            <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="homeCowActive">0</span></div>
-                            <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="homeCowInactive">0</span></div>
-                        </div>
-                        <div class="stat-box-large">
-                            <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
-                            <div class="stat-value" id="homeCowProduction">0</div>
-                            <div class="active-stat" style="color:var(--text-muted)">Milk per hour</div>
-                        </div>
-                    </div>
-                    <div class="progress-section">
-                        <div class="progress-header"><span>Global Cow Sales</span><span id="cowProgressText">0/1000</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="cowProgressFill" style="width:0%"></div>
-                        </div>
-                    </div>
-                    <button class="open-ranch-btn" style="width:100%;margin-top:10px;justify-content:center" onclick="event.stopPropagation(); window.openRanchFromCow()">
-                        <i class="fas fa-warehouse"></i> Open Ranch
-                    </button>
-                </div>
-
-                <!-- Chicken Card -->
-                <div class="machine-card chicken" id="chickenCard">
-                    <div class="machine-header">
-                        <div class="machine-emoji float-slow"><img src="https://i.ibb.co/23cXtGD1/photo-5807836880429583589-m.jpg" alt="Chicken"></div>
-                        <div class="machine-info">
-                            <div class="machine-name-row">
-                                <span class="machine-name" data-i18n="farm.chicken.name">Chicken</span>
-                                <span class="machine-badge" id="chickenBadge">Locked</span>
-                            </div>
-                            <div class="machine-price"><i class="fas fa-bolt"></i> 1 TON</div>
-                        </div>
-                    </div>
-                    <div class="machine-stats">
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.prod">Prod</div>
-                            <div class="stat-number">41 <span class="stat-unit">/h</span></div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label" data-i18n="farm.owned">Owned</div>
-                            <div class="stat-number" id="chickensOwned">0</div>
-                        </div>
-                    </div>
-                    <div class="progress-section">
-                        <div class="progress-header"><span data-i18n="farm.supply">Supply</span><span id="chickenProgressText">0/1000</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="chickenProgressFill" style="width:0%"></div>
-                        </div>
-                    </div>
-                    <div class="locked-overlay" id="chickenLockedOverlay" style="display:flex">
-                        <div class="big-lock">🔒</div>
-                        <div class="unlock-timer" id="chickenUnlockTimer"></div>
-                    </div>
-                </div>
-
-                <!-- Crystal Card -->
-                <div class="machine-card diamond" id="diamondCard">
-                    <div class="machine-header">
-                        <div class="machine-emoji spin-slow"><img src="https://i.ibb.co/JFb1bY8K/photo-5807836880429583587-m.jpg" alt="Crystal"></div>
-                        <div class="machine-info">
-                            <div class="machine-name-row">
-                                <span class="machine-name" data-i18n="farm.crystal.name">Crystal Engine</span>
-                                <span class="machine-badge" id="diamondBadge">Locked</span>
-                            </div>
-                            <div class="machine-price"><i class="fas fa-bolt"></i> 20 TON</div>
-                        </div>
-                    </div>
-                    <div class="crystal-recipe">
-                        <div class="crystal-recipe-item"><span class="crystal-recipe-emoji">🥛</span><span>20k</span></div>
-                        <span class="crystal-recipe-plus">+</span>
-                        <div class="crystal-recipe-item"><span class="crystal-recipe-emoji">🥚</span><span>20k</span></div>
-                        <span class="crystal-recipe-equal">=</span>
-                        <div class="crystal-recipe-item"><span class="crystal-recipe-emoji">💎</span><span>1</span></div>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;margin-bottom:14px;background:rgba(0,0,0,.2);border-radius:14px;padding:8px">
-                        <div style="text-align:center;flex:1">
-                            <div style="font-size:10px;color:var(--text-muted)" data-i18n="farm.owned">Owned</div>
-                            <div style="font-size:16px;font-weight:700" id="diamondEnginesOwned">0</div>
-                        </div>
-                        <div style="text-align:center;flex:1">
-                            <div style="font-size:10px;color:var(--text-muted)" data-i18n="farm.yield">Yield</div>
-                            <div style="font-size:16px;font-weight:700">1 💎</div>
-                        </div>
-                    </div>
-                    <div class="locked-overlay" id="diamondLockedOverlay" style="display:flex">
-                        <div class="big-lock">🔒</div>
-                        <div class="unlock-timer" id="diamondUnlockTimer"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Ranch Section (Hidden from nav) -->
-        <div id="sectionRanch" class="section">
-            <!-- RANCH OVERVIEW Card -->
-            <div class="ranch-card">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-                    <div style="width:50px;height:50px;background:linear-gradient(145deg,var(--primary-pink),var(--crystal-blue));border-radius:16px;display:flex;align-items:center;justify-content:center">
-                        <i class="fas fa-cow" style="color:#fff;font-size:28px"></i>
-                    </div>
-                    <div>
-                        <h2 style="font-size:24px;font-weight:800;background:linear-gradient(145deg,#fff,var(--primary-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent">RANCH OVERVIEW</h2>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <!-- Total Cows Box -->
-                    <div class="stat-box-large">
-                        <div class="stat-label"><i class="fas fa-cow"></i> Total Cows</div>
-                        <div class="stat-value" id="ranchTotalCows">0</div>
-                        <div class="active-stat"><i class="fas fa-circle" style="color:var(--neon-green)"></i> Active: <span id="ranchActiveCows">0</span></div>
-                        <div class="inactive-stat"><i class="fas fa-circle" style="color:var(--danger-red)"></i> Inactive: <span id="ranchInactiveCows">0</span></div>
-                    </div>
-                    <!-- Production Box -->
-                    <div class="stat-box-large">
-                        <div class="stat-label"><i class="fas fa-chart-line"></i> Production</div>
-                        <div class="stat-value" id="ranchHourlyProduction">0</div>
-                        <div style="font-size:11px;color:var(--text-muted);margin-top:8px">Milk per hour</div>
-                    </div>
-                </div>
-
-                <!-- Global Progress -->
-                <div style="background:rgba(0,0,0,.3);border-radius:20px;padding:14px;margin-bottom:16px">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-                        <span>Global Cow Sales</span>
-                        <span style="font-weight:700" id="ranchCowsSold">0/1000</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="ranchCowsProgress" style="width:0%"></div>
-                    </div>
-                </div>
-
-                <!-- Buy Cow Button inside Ranch -->
-                <button class="ranch-buy-btn" id="ranchBuyCowBtn" onclick="window.buyRanchCow()">
-                    <i class="fas fa-cow"></i> Buy Cow (1 TON)
-                </button>
-            </div>
-
-            <!-- COW LEVELS -->
-            <div style="background:linear-gradient(145deg,rgba(30,20,40,.95),rgba(20,10,30,.98));border:2px solid var(--crystal-blue);border-radius:24px;padding:16px;margin-bottom:16px">
-                <h2 style="font-size:20px;font-weight:700;margin-bottom:16px">📊 COW LEVELS</h2>
-
-                <!-- Level 1 -->
-                <div class="level-card" data-level="1">
-                    <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/XZ0c9nFv/1.jpg" alt="Level 1 Cow"></div>
-                        <div style="flex:1">
-                            <div style="display:flex;justify-content:space-between">
-                                <span class="level-title">Level 1 Cow</span>
-                                <span class="count-badge" id="level1Count">0 cows</span>
-                            </div>
-                            <div class="level-subtitle">500 Milk/day | 200🥛 activate</div>
-                        </div>
-                    </div>
-
-                    <!-- Timer Display -->
-                    <div class="timer-bar" id="level1Timer" style="display:none">
-                        <i class="fas fa-hourglass-half"></i>
-                        <span class="timer-text" id="level1TimerText"></span>
-                        <span style="font-size:10px">until reactivation</span>
-                    </div>
-
-                    <div style="display:flex;justify-content:space-between;margin:12px 0">
-                        <span><i class="fas fa-check-circle" style="color:var(--neon-green)"></i> Active: <span id="level1Active">0</span></span>
-                        <span><i class="fas fa-clock" style="color:var(--warning-yellow)"></i> Inactive: <span id="level1Inactive">0</span></span>
-                    </div>
-
-                    <div class="level-actions">
-                        <button class="btn" style="background:rgba(0,242,122,.2);border:1px solid rgba(0,242,122,.3);color:var(--neon-green);padding:8px;border-radius:14px" onclick="openActivateModal(1)">Activate</button>
-                        <button class="btn" style="background:rgba(155,89,182,.2);border:1px solid #9b59b6;color:#9b59b6;padding:8px;border-radius:14px" onclick="openUpgradeModal(1)">Upgrade</button>
-                    </div>
-                </div>
-
-                <!-- Level 2 -->
-                <div class="level-card" data-level="2">
-                    <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/ZC6mzck/2.jpg" alt="Level 2 Cow"></div>
-                        <div style="flex:1">
-                            <div style="display:flex;justify-content:space-between">
-                                <span class="level-title">Level 2 Cow</span>
-                                <span class="count-badge" id="level2Count">0 cows</span>
-                            </div>
-                            <div class="level-subtitle">1000 Milk/day | 350🥛 activate</div>
-                        </div>
-                    </div>
-
-                    <div class="timer-bar" id="level2Timer" style="display:none">
-                        <i class="fas fa-hourglass-half"></i>
-                        <span class="timer-text" id="level2TimerText"></span>
-                        <span style="font-size:10px">until reactivation</span>
-                    </div>
-
-                    <div style="display:flex;justify-content:space-between;margin:12px 0">
-                        <span><i class="fas fa-check-circle" style="color:var(--neon-green)"></i> Active: <span id="level2Active">0</span></span>
-                        <span><i class="fas fa-clock" style="color:var(--warning-yellow)"></i> Inactive: <span id="level2Inactive">0</span></span>
-                    </div>
-
-                    <div class="level-actions">
-                        <button class="btn" style="background:rgba(0,242,122,.2);border:1px solid rgba(0,242,122,.3);color:var(--neon-green);padding:8px;border-radius:14px" onclick="openActivateModal(2)">Activate</button>
-                        <button class="btn" style="background:rgba(155,89,182,.2);border:1px solid #9b59b6;color:#9b59b6;padding:8px;border-radius:14px" onclick="openUpgradeModal(2)">Upgrade</button>
-                    </div>
-                </div>
-
-                <!-- Level 3 -->
-                <div class="level-card" data-level="3">
-                    <div class="level-header">
-                        <div class="level-emoji"><img src="https://i.ibb.co/pjpBW8dn/3.jpg" alt="Level 3 Cow"></div>
-                        <div style="flex:1">
-                            <div style="display:flex;justify-content:space-between">
-                                <span class="level-title">Level 3 Cow</span>
-                                <span class="count-badge" id="level3Count">0 cows</span>
-                            </div>
-                            <div class="level-subtitle">2500 Milk/day | 1200🥛 activate</div>
-                        </div>
-                    </div>
-
-                    <div class="timer-bar" id="level3Timer" style="display:none">
-                        <i class="fas fa-hourglass-half"></i>
-                        <span class="timer-text" id="level3TimerText"></span>
-                        <span style="font-size:10px">until reactivation</span>
-                    </div>
-
-                    <div style="display:flex;justify-content:space-between;margin:12px 0">
-                        <span><i class="fas fa-check-circle" style="color:var(--neon-green)"></i> Active: <span id="level3Active">0</span></span>
-                        <span><i class="fas fa-clock" style="color:var(--warning-yellow)"></i> Inactive: <span id="level3Inactive">0</span></span>
-                    </div>
-
-                    <button class="btn" style="background:rgba(0,242,122,.2);border:1px solid rgba(0,242,122,.3);color:var(--neon-green);padding:8px;border-radius:14px;width:100%" onclick="openActivateModal(3)">Activate</button>
-                </div>
-            </div>
-
-            <!-- MILK STORAGE -->
-            <div class="storage-card">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-                    <div style="width:55px;height:55px;border-radius:16px;overflow:hidden;border:2px solid rgba(0,212,255,0.4);flex-shrink:0">
-                        <img src="https://i.ibb.co/NgvhqLK5/image.jpg" style="width:100%;height:100%;object-fit:cover">
-                    </div>
-                    <h2 style="font-size:20px;font-weight:700">🥛 MILK STORAGE</h2>
-                </div>
-
-                <div class="storage-stats">
-                    <div class="storage-row">
-                        <span class="storage-label">Storage Level</span>
-                        <span class="storage-value" id="storageLevel">1/10</span>
-                    </div>
-                    <div class="storage-row">
-                        <span class="storage-label">Capacity</span>
-                        <span class="storage-value" id="storageCapacity">2,000</span>
-                    </div>
-                    <div class="storage-row">
-                        <span class="storage-label">Stored Milk</span>
-                        <span class="storage-value" style="color:var(--neon-green)" id="milkStored">0</span>
-                    </div>
-                    <div class="progress-bar" style="margin-top:10px">
-                        <div class="progress-fill" id="storageProgressFill" style="width:0%"></div>
-                    </div>
-                </div>
-
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-                    <button class="btn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e);color:#fff;padding:12px;border-radius:14px;border:none" id="claimMilkBtn" onclick="window.claimMilk()">CLAIM</button>
-                    <button class="btn" style="background:linear-gradient(145deg,var(--crystal-blue),#0099cc);color:#fff;padding:12px;border-radius:14px;border:none" id="upgradeStorageBtn" onclick="window.upgradeStorage()">UPGRADE</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Market Section -->
-        <div id="sectionMarket" class="section">
-            <div class="card" style="background-image:url('https://i.ibb.co/ns7zkFHy/image.jpg');background-size:cover;background-position:center;position:relative;overflow:hidden">
-                <div style="position:absolute;inset:0;background:rgba(8,10,20,0.65);border-radius:19px;z-index:0"></div>
-                <div style="position:relative;z-index:1">
-                <div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="market.title">P2P Market</span></div>
-                <div class="market-tabs">
-                    <div class="market-tab active" data-market-tab="buy" data-i18n="market.buy">Buy</div>
-                    <div class="market-tab" data-market-tab="orders" data-i18n="market.myOrders">My Orders</div>
-                </div>
-                <div class="resource-switch">
-                    <div class="resource-option active" data-resource="milk">🥛 <span data-i18n="market.milk">Milk</span></div>
-                    <div class="resource-option" data-resource="eggs">🥚 <span data-i18n="market.eggs">Eggs</span></div>
-                </div>
-                <div class="market-stats">
-                    <div class="market-stat-item">
-                        <div class="market-stat-label" data-i18n="market.totalOrders">Total Orders</div>
-                        <div class="market-stat-value" id="marketTotalOrders">0</div>
-                    </div>
-                    <div class="market-stat-item">
-                        <div class="market-stat-label" data-i18n="market.milkQty">Milk</div>
-                        <div class="market-stat-value" id="marketMilkQty">0</div>
-                    </div>
-                    <div class="market-stat-item">
-                        <div class="market-stat-label" data-i18n="market.eggsQty">Eggs</div>
-                        <div class="market-stat-value" id="marketEggsQty">0</div>
-                    </div>
-                    <div class="market-stat-item">
-                        <div class="market-stat-label" data-i18n="market.bestPrice">Best Price</div>
-                        <div class="market-stat-value" id="marketBestPrice">0.0001</div>
-                    </div>
-                </div>
-                <div class="market-actions">
-                    <button class="create-order-top" id="createSellOrderBtnTop" onclick="document.getElementById('sellOrderModal').classList.add('active'); updateSellDetails();"><i class="fas fa-plus-circle"></i> <span data-i18n="market.createSell">Create Sell Order</span></button>
-                    <button class="refresh-market-btn" id="refreshMarketBtn" onclick="refreshMarket()"><i class="fas fa-sync-alt"></i> <span data-i18n="market.refresh">Refresh</span></button>
-                </div>
-                <div id="marketBuyView">
-                    <div id="sellOrdersGrid" class="market-grid">
-                        <div style="grid-column:span 2;text-align:center;padding:25px;color:var(--text-secondary)"><i class="fas fa-inbox" style="font-size:32px;margin-bottom:10px;opacity:.5"></i>
-                            <p data-i18n="market.noOrders">No active sell orders</p>
-                        </div>
-                    </div>
-                    <button class="load-more-btn" id="loadMoreSellBtn" style="display:none"><i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span></button>
-                </div>
-                <div id="marketMyOrdersView" style="display:none">
-                    <div style="margin-bottom:14px">
-                        <h3 style="font-size:13px;margin-bottom:8px" data-i18n="market.activeOrders">Active Orders</h3>
-                        <div id="myActiveOrders" class="market-grid"></div>
-                    </div>
-                    <div>
-                        <h3 style="font-size:13px;margin-bottom:8px" data-i18n="market.history">History</h3>
-                        <div id="myFilledOrders" style="max-height:180px;overflow-y:auto"></div>
-                    </div>
-                </div>
-                </div><!-- end z-index wrapper -->
-            </div>
-        </div>
-
-        <!-- Diamond/Crystal Section -->
-        <div id="sectionDiamond" class="section">
-            <div class="card" style="background:transparent;border:none;backdrop-filter:none">
-                <div class="card-title"><i class="fas fa-gem" style="color:var(--crystal-blue)"></i> <span data-i18n="crystal.title">Crystal Conversion</span></div>
-                <div style="text-align:center">
-                    <div class="diamond-glow">💎</div>
-                    <div class="counter-number" id="crystalPriceMain">25</div>
-                    <div style="font-size:13px;color:var(--text-secondary);margin-bottom:14px" data-i18n="crystal.perTon">TON per Crystal</div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
-                    <div style="flex:1;background:rgba(0,0,0,.2);border-radius:14px;padding:12px">
-                        <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px" data-i18n="crystal.yourCrystals">Your Crystals</div>
-                        <div style="font-size:24px;font-weight:800;color:var(--crystal-blue)" id="diamondBalanceMain">0</div>
-                    </div>
-                    <div style="font-size:18px;color:var(--text-secondary)"><i class="fas fa-arrow-right"></i></div>
-                    <div style="flex:1;background:rgba(0,0,0,.2);border-radius:14px;padding:12px">
-                        <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px" data-i18n="crystal.youReceive">You Receive</div>
-                        <div style="font-size:24px;font-weight:800;color:var(--neon-green)" id="tonReceiveMain">0</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:8px">
-                    <input type="number" id="convertAmount" class="form-input" placeholder="Amount" min="1" style="flex:1">
-                    <button class="btn btn-primary" id="convertDiamondBtn" style="width:auto;padding:0 16px" onclick="window.convertDiamond()"><span data-i18n="crystal.convert">Convert</span></button>
-                </div>
-                <div style="margin-top:12px;padding:12px;background:rgba(0,0,0,.2);border-radius:14px">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                        <span style="font-size:11px;color:var(--text-secondary)" data-i18n="crystal.milkAvailable">Milk available</span>
-                        <span style="font-weight:700;animation:soft-shine 3s infinite" id="milkForDiamond">0</span>
-                    </div>
-                    <div style="display:flex;justify-content:space-between">
-                        <span style="font-size:11px;color:var(--text-secondary)" data-i18n="crystal.eggsAvailable">Eggs available</span>
-                        <span style="font-weight:700;animation:soft-shine 3s infinite" id="eggsForDiamond">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Friends/Referral Section -->
-        <div id="sectionFriends" class="section">
-            <div class="card" style="background:linear-gradient(145deg,rgba(255,92,168,.15),var(--glass-strong))">
-                <div class="card-title"><i class="fas fa-users"></i> <span data-i18n="referral.title">Referral Program</span></div>
-                <div style="background:rgba(255,255,255,.03);border-radius:14px;padding:14px;margin-bottom:14px">
-                    <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px" data-i18n="referral.description">Earn <strong style="color:var(--primary-pink);font-size:20px">10%</strong> commission when friends buy!</div>
-                    <div style="display:flex;gap:5px;margin-bottom:5px">
-                        <input type="text" id="referralLink" class="form-input" readonly style="flex:1;background:rgba(0,0,0,.3);font-size:11px">
-                        <button class="btn btn-primary" id="copyReferralBtn" style="width:auto;padding:0 14px" onclick="window.copyReferralLink()"><i class="fas fa-copy"></i></button>
-                    </div>
-                    <div style="font-size:9px;color:var(--text-muted)" data-i18n="referral.share">Share this link with friends</div>
-                </div>
-                <button class="btn btn-primary" id="claimReferralBtn" onclick="window.claimReferral()"><i class="fas fa-hand-holding-usd"></i> <span data-i18n="referral.claim">Claim Earnings</span></button>
-            </div>
-            <div class="card">
-                <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
-                    <div style="display:flex;align-items:center;gap:6px"><i class="fas fa-history"></i> <span data-i18n="referral.recent">Recent Referrals</span></div>
-                    <div style="display:flex;align-items:center;gap:4px;background:rgba(0,242,122,.15);padding:4px 10px;border-radius:30px;border:1px solid rgba(0,242,122,.3)"><span style="font-size:12px;font-weight:700" id="totalReferrals">0</span><span style="font-size:10px;color:var(--text-secondary)" data-i18n="referral.friends">Friends</span></div>
-                </div>
-                <div id="recentReferralsList" style="min-height:70px;max-height:300px;overflow-y:auto">
-                    <div style="text-align:center;padding:18px;color:var(--text-secondary)"><i class="fas fa-users" style="font-size:24px;margin-bottom:8px;opacity:.5"></i>
-                        <p data-i18n="referral.noReferrals">No referrals yet</p>
-                    </div>
-                </div>
-                <button class="load-more-btn" id="loadMoreReferralsBtn" style="margin-top:10px;display:none"><i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span></button>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="referral.earningsHistory">Earnings History</span></div>
-                <div id="earningsHistoryList" style="min-height:70px;max-height:200px;overflow-y:auto">
-                    <div style="text-align:center;padding:18px;color:var(--text-secondary)"><i class="fas fa-coins" style="font-size:24px;margin-bottom:8px;opacity:.5"></i>
-                        <p data-i18n="referral.noEarnings">No earnings yet</p>
-                    </div>
-                </div>
-                <button class="load-more-btn" id="loadMoreEarningsBtn" style="margin-top:10px;display:none"><i class="fas fa-chevron-down"></i> <span data-i18n="market.loadMore">Show More</span></button>
-            </div>
-        </div>
-
-        <!-- Tasks Section -->
-        <div id="sectionTasks" class="section">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-tasks"></i> <span data-i18n="tasks.title">Tasks & Rewards</span></div>
-                <div class="market-tabs" style="margin-bottom:16px">
-                    <div class="market-tab active" data-task-tab="partner" data-i18n="tasks.partner">Partner Tasks</div>
-                    <div class="market-tab" data-task-tab="community" data-i18n="tasks.community">Community Tasks</div>
-                </div>
-                <div class="market-actions" style="margin-bottom:16px" id="addTaskContainer">
-                    <button class="create-order-top" id="addTaskBtn" style="background:linear-gradient(145deg,#FF5CA8,#D94A8F)" onclick="window.openAddTaskModal()"><i class="fas fa-plus-circle"></i> <span data-i18n="tasks.addTask">Add Task</span></button>
-                    <button class="refresh-market-btn" id="refreshTasksBtn" onclick="loadGameState()"><i class="fas fa-sync-alt"></i> <span data-i18n="tasks.refresh">Refresh</span></button>
-                </div>
-                <div id="tasksGrid" class="task-grid">
-                    <div style="text-align:center;padding:40px;color:var(--text-secondary)"><i class="fas fa-clipboard-list" style="font-size:48px;margin-bottom:15px;opacity:.5"></i>
-                        <p data-i18n="tasks.noTasks">No tasks available</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Profile Section -->
-        <div id="sectionProfile" class="section">
-            <div class="card">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-                    <div style="width:50px;height:50px;background:linear-gradient(145deg,var(--primary-pink),var(--crystal-blue));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden" id="profileAvatar">👨‍🌾</div>
-                    <div>
-                        <div style="font-size:16px;font-weight:700" id="profileName">Farmer</div>
-                        <div style="font-size:11px;color:var(--text-secondary)" id="profileUsername">@crystal_ranch</div>
-                        <div style="font-size:10px;color:var(--text-muted);margin-top:2px" id="profileUserId">ID: </div>
-                    </div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-                    <div style="background:rgba(255,255,255,.03);border-radius:14px;padding:10px">
-                        <div style="font-size:10px;color:var(--text-muted)" data-i18n="profile.totalMachines">Total Machines</div>
-                        <div style="font-size:20px;font-weight:700" id="totalMachines">0</div>
-                    </div>
-                    <div style="background:rgba(255,255,255,.03);border-radius:14px;padding:10px">
-                        <div style="font-size:10px;color:var(--text-muted)" data-i18n="profile.production">Production</div>
-                        <div style="font-size:20px;font-weight:700" id="totalProduction">0/h</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-wallet"></i> <span data-i18n="profile.assets">Assets</span></div>
-                <div style="display:flex;flex-direction:column;gap:8px">
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px">
-                        <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">🥛</span>
-                            <div>
-                                <div style="font-weight:600;font-size:12px" data-i18n="status.milk">Milk</div>
-                                <div style="font-size:9px;color:var(--text-muted)"><span id="profileMilkRate">0</span>/h</div>
-                            </div>
-                        </div>
-                        <div style="font-size:18px;font-weight:700" id="profileMilk">0</div>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px">
-                        <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">🥚</span>
-                            <div>
-                                <div style="font-weight:600;font-size:12px" data-i18n="status.eggs">Eggs</div>
-                                <div style="font-size:9px;color:var(--text-muted)"><span id="profileEggsRate">0</span>/h</div>
-                            </div>
-                        </div>
-                        <div style="font-size:18px;font-weight:700" id="profileEggs">0</div>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px">
-                        <div style="display:flex;align-items:center;gap:8px"><span style="font-size:20px;animation:soft-shine 3s infinite">💎</span>
-                            <div>
-                                <div style="font-weight:600;font-size:12px" data-i18n="status.crystal">Crystal</div>
-                                <div style="font-size:9px;color:var(--text-muted)">1 = <span id="profileDiamondPrice">25</span> TON</div>
-                            </div>
-                        </div>
-                        <div style="font-size:18px;font-weight:700" id="profileDiamond">0</div>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,.02);border-radius:12px">
-                        <div style="display:flex;align-items:center;gap:8px"><img src="https://i.ibb.co/WNfvBK9h/toncoin-1.webp" style="width:20px;height:20px;object-fit:contain;animation:soft-shine 3s infinite">
-                            <div>
-                                <div style="font-weight:600;font-size:12px">TON</div>
-                                <div style="font-size:9px;color:var(--text-muted)" data-i18n="profile.balance">Balance</div>
-                            </div>
-                        </div>
-                        <div style="font-size:18px;font-weight:700" id="profileTon">0.0000</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-arrow-up"></i> <span data-i18n="profile.withdraw">Withdraw TON</span></div>
-                <div class="form-group"><label class="form-label" data-i18n="profile.withdrawAmount">Amount (min 0.1 TON)</label><input type="number" id="withdrawAmount" class="form-input" placeholder="0.1" step="0.1" min="0.1"></div>
-                <div class="form-group"><label class="form-label" data-i18n="profile.withdrawAddress">TON Wallet Address</label><input type="text" id="withdrawAddress" class="form-input" placeholder="EQD..."></div>
-                <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:12px;margin-bottom:14px">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;color:var(--text-secondary)" data-i18n="profile.fee">Fee (5%)</span><span style="font-weight:600" id="withdrawFee">0 TON</span></div>
-                    <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--text-secondary)" data-i18n="profile.youReceive">You receive</span><span style="font-size:14px;font-weight:700;color:var(--neon-green)" id="withdrawNet">0 TON</span></div>
-                </div>
-                <button class="btn btn-primary" id="withdrawBtn" onclick="window.withdraw()"><i class="fas fa-paper-plane"></i> <span data-i18n="profile.withdrawBtn">Withdraw</span></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bottom Navigation (No Ranch) -->
-    <nav class="bottom-nav">
-        <div class="nav-item active" data-section="sectionFarm">
-            <div class="nav-icon">🚜</div>
-            <div class="nav-text" data-i18n="nav.farm">Farm</div>
-        </div>
-        <div class="nav-item" data-section="sectionMarket">
-            <div class="nav-icon">📊</div>
-            <div class="nav-text" data-i18n="nav.market">Market</div>
-        </div>
-        <div class="nav-item" data-section="sectionDiamond">
-            <div class="nav-icon">💎</div>
-            <div class="nav-text" data-i18n="nav.crystal">Crystal</div>
-        </div>
-        <div class="nav-item" data-section="sectionFriends">
-            <div class="nav-icon">👥</div>
-            <div class="nav-text" data-i18n="nav.friends">Friends</div>
-        </div>
-        <div class="nav-item" data-section="sectionTasks">
-            <div class="nav-icon">✅</div>
-            <div class="nav-text" data-i18n="nav.tasks">Tasks</div>
-        </div>
-        <div class="nav-item" data-section="sectionProfile">
-            <div class="nav-icon">👤</div>
-            <div class="nav-text" data-i18n="nav.profile">Profile</div>
-        </div>
-    </nav>
-
-    <!-- Modals -->
-    <div class="modal-overlay" id="sellOrderModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fas fa-tag" style="color:var(--neon-green)"></i> <span data-i18n="modal.sell.title">Sell Order</span></h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
-            </div>
-            <div class="form-group">
-                <label class="form-label" data-i18n="modal.sell.resource">Resource</label>
-                <div style="display:flex;gap:8px">
-                    <label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer">
-                        <input type="radio" name="sellResource" value="milk" checked style="accent-color:var(--neon-green)"> 🥛 <span data-i18n="market.milk">Milk</span>
-                    </label>
-                    <label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer">
-                        <input type="radio" name="sellResource" value="eggs" style="accent-color:var(--primary-pink)"> 🥚 <span data-i18n="market.eggs">Eggs</span>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="form-label" data-i18n="modal.sell.quantity">Quantity (min 100)</label>
-                <input type="number" id="sellQuantity" class="form-input" placeholder="1000" min="100" oninput="updateSellDetails()">
-                <div class="preset-buttons">
-                    <span class="preset-btn" data-sell-percent="25">25%</span>
-                    <span class="preset-btn" data-sell-percent="50">50%</span>
-                    <span class="preset-btn" data-sell-percent="75">75%</span>
-                    <span class="preset-btn" data-sell-percent="100">MAX</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Total Price (TON)</label>
-                <input type="number" id="sellTotalPrice" class="form-input" placeholder="0.01" step="any" min="0.0001" oninput="updateSellDetails()">
-                <div style="font-size:10px;color:var(--text-secondary);margin-top:5px" id="sellPerUnitHint">≈ 0.0000 TON per unit</div>
-                <div style="font-size:10px;color:var(--text-muted);margin-top:5px" id="sellBalanceHint">Available: 0 Milk</div>
-                <div class="total-ton-result" id="sellTotalTon">Total: 0.0000 TON (You get: 0.0000 TON after 10% fee)</div>
-                <div style="font-size:9px;color:var(--warning);margin-top:4px" id="sellFeeDisplay">⚠️ 10% market fee will be deducted when sold</div>
-            </div>
-            <button class="btn btn-primary" id="submitSellOrderBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e)" onclick="window.createSellOrder()"><i class="fas fa-check-circle"></i> <span data-i18n="modal.sell.place">Place Sell Order</span></button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="confirmPurchaseModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fas fa-shopping-cart" style="color:var(--neon-green)"></i> <span data-i18n="modal.confirm.title">Confirm Purchase</span></h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
-            </div>
-            <div class="confirm-card" id="confirmCard">
-                <div class="confirm-emoji" id="confirmEmoji">🥛</div>
-                <div style="font-size:16px;font-weight:700" id="confirmResource" data-i18n="modal.confirm.package">Milk Package</div>
-            </div>
-            <div class="confirm-details" id="confirmDetails"></div>
-            <div class="confirm-buttons">
-                <button class="btn btn-secondary" onclick="closeAllModals()"><span data-i18n="modal.confirm.cancel">Cancel</span></button>
-                <button class="btn btn-primary" id="confirmExecuteBtn" onclick="window.executeOrder()"><span data-i18n="modal.confirm.confirm">Confirm & Pay</span></button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="hatchModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fas fa-egg" style="color:var(--neon-green)"></i> <span data-i18n="modal.hatch.title">Hatch Machine</span></h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
-            </div>
-            <div class="hatch-option" id="hatchCowOption">
-                <div class="hatch-info">
-                    <span class="hatch-title">🐮 <span data-i18n="farm.cow.name">Cow</span></span>
-                    <span class="hatch-cost" data-i18n="modal.hatch.cowCost">50,000 Milk</span>
-                    <span class="hatch-balance" id="hatchCowBalance">Your milk: 0</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:5px">
-                    <input type="number" id="hatchCowAmount" class="hatch-input" placeholder="1" min="1" value="1">
-                    <button class="btn btn-hatch" id="hatchCowConfirm" style="padding:6px 10px" onclick="window.hatchCow()" data-i18n="modal.hatch.hatchBtn">Hatch</button>
-                </div>
-            </div>
-            <div class="hatch-option" id="hatchChickenOption">
-                <div class="hatch-info">
-                    <span class="hatch-title">🐔 <span data-i18n="farm.chicken.name">Chicken</span></span>
-                    <span class="hatch-cost" data-i18n="modal.hatch.chickenCost">5,000 Eggs</span>
-                    <span class="hatch-balance" id="hatchChickenBalance">Your eggs: 0</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:5px">
-                    <input type="number" id="hatchChickenAmount" class="hatch-input" placeholder="1" min="1" value="1">
-                    <button class="btn btn-hatch" id="hatchChickenConfirm" style="padding:6px 10px" onclick="window.hatchChicken()" data-i18n="modal.hatch.hatchBtn">Hatch</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="depositModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fas fa-arrow-down" style="color:var(--neon-green)"></i> <span data-i18n="modal.deposit.title">Deposit TON</span></h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
-            </div>
-            <div id="walletStatus" style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border-radius:12px;padding:12px;margin-bottom:14px">
-                <div>
-                    <div style="font-size:12px;font-weight:600" data-i18n="modal.deposit.wallet">Wallet</div>
-                    <div style="font-size:10px;color:var(--text-secondary)" id="walletAddressDisplay" data-i18n="modal.deposit.notConnected">Not connected</div>
-                </div>
-                <button class="btn btn-primary" id="connectWalletBtn" style="width:auto;padding:6px 14px" onclick="connectWallet()"><i class="fas fa-plug"></i> <span data-i18n="modal.deposit.connect">Connect</span></button>
-            </div>
-            <div class="deposit-warning">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div class="deposit-warning-text"><strong data-i18n="modal.deposit.important">IMPORTANT:</strong> <span data-i18n="modal.deposit.warning">Your User ID</span> <span id="depositUserIdDisplay" style="background:rgba(255,255,255,.1);padding:2px 5px;border-radius:20px"></span> <span data-i18n="modal.deposit.mustBeComment">must be the ONLY comment</span>.</div>
-            </div>
-            <div class="form-group">
-                <label class="form-label" data-i18n="modal.deposit.amount">Amount (TON)</label>
-                <input type="number" id="depositAmountInput" class="form-input" placeholder="0.1" step="0.1" min="0.1">
-                <div class="preset-buttons">
-                    <span class="preset-btn" data-deposit="0.5">0.5</span>
-                    <span class="preset-btn" data-deposit="1">1</span>
-                    <span class="preset-btn" data-deposit="2">2</span>
-                    <span class="preset-btn" data-deposit="5">5</span>
-                    <span class="preset-btn" data-deposit="10">10</span>
-                </div>
-            </div>
-            <button class="btn btn-primary" id="submitDepositBtn" disabled onclick="window.initiateDeposit()"><i class="fas fa-arrow-down"></i> <span data-i18n="modal.deposit.submit">Deposit TON</span></button>
-            <div class="transaction-status" id="depositStatus">
-                <div class="status-icon">⏳</div>
-                <div class="status-message" data-i18n="modal.deposit.processing">Processing deposit...</div>
-                <div class="status-detail" id="depositStatusDetail"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="addTaskModal">
-        <div class="modal-content" style="max-width:400px">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fas fa-plus-circle" style="color:var(--neon-green)"></i> <span data-i18n="tasks.addTask">Add Community Task</span></h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
-            </div>
-            <div class="form-group">
-                <label class="form-label" data-i18n="tasks.taskType">Task Type</label>
-                <div style="display:flex;gap:8px;margin-bottom:10px">
-                    <label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer">
-                        <input type="radio" name="taskType" value="channel" checked style="accent-color:var(--crystal-blue)"> 📢 <span data-i18n="tasks.channel">Channel</span>
-                    </label>
-                    <label style="flex:1;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.03);border-radius:12px;padding:10px;cursor:pointer">
-                        <input type="radio" name="taskType" value="bot" style="accent-color:var(--primary-pink)"> 🤖 <span data-i18n="tasks.bot">Bot</span>
-                    </label>
-                </div>
-            </div>
-            <div class="form-group" id="channelNote" style="background:rgba(255,92,168,.1);border-radius:10px;padding:10px;margin-bottom:14px;display:none"><i class="fas fa-info-circle" style="color:var(--primary-pink);margin-right:5px"></i><span data-i18n="tasks.channelNote">⚠️ Bot must be admin in the channel for verification to work!</span></div>
-            <div class="form-group"><label class="form-label" data-i18n="tasks.link">Link</label><input type="text" id="taskLink" class="form-input" placeholder="https://t.me/..." value=""></div>
-            <div class="form-group"><label class="form-label" data-i18n="tasks.targetUsers">Target Users (min 100)</label><input type="number" id="taskTarget" class="form-input" placeholder="100" min="100" value="100" oninput="calculateTaskPrice()"></div>
-            <div class="form-group"><label class="form-label" data-i18n="tasks.rewardPerUser">Reward Per User (TON)</label><input type="number" id="taskReward" class="form-input" value="0.001" step="0.0001" min="0.0001" readonly style="background:rgba(255,255,255,.05);color:var(--neon-green);font-weight:600">
-                <div style="font-size:9px;color:var(--text-muted);margin-top:3px" data-i18n="tasks.rewardFixed">Fixed at 0.001 TON per completion</div>
-            </div>
-            <div class="total-ton-result" id="taskTotalCost" style="margin-bottom:16px">Total Cost: 0.0000 TON</div>
-            <div class="form-group"><label class="form-label" data-i18n="tasks.yourBalance">Your Balance</label>
-                <div style="background:rgba(0,212,255,.1);border-radius:10px;padding:10px;text-align:center"><span style="font-size:16px;font-weight:700;color:var(--crystal-blue)" id="taskUserBalance">0.0000</span> TON</div>
-            </div>
-            <button class="btn btn-primary" id="submitTaskBtn" style="background:linear-gradient(145deg,var(--neon-green),#00b35e);margin-top:10px" onclick="window.createTask()"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.confirm">Confirm & Pay</span></button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="taskVerifyModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fas fa-clipboard-check" style="color:var(--neon-green)"></i> <span data-i18n="tasks.verify">Task Verification</span></h3>
-                <i class="fas fa-times modal-close" onclick="closeAllModals()"></i>
-            </div>
-            <div style="text-align:center;padding:20px">
-                <div style="font-size:48px;margin-bottom:15px" id="verifyEmoji">🤖</div>
-                <div style="font-size:16px;font-weight:700;margin-bottom:5px" id="verifyTitle">Join Channel</div>
-                <div style="font-size:12px;color:var(--text-secondary);margin-bottom:20px" id="verifyLink">https://t.me/...</div>
-                <div class="confirm-details" style="margin:20px 0">
-                    <div class="confirm-row"><span class="confirm-label" data-i18n="tasks.reward">Reward:</span><span class="confirm-value" style="color:var(--neon-green)" id="verifyReward">0.0010 TON</span></div>
-                </div>
-                <div class="task-actions" style="flex-direction:column;gap:10px">
-                    <a href="#" target="_blank" id="verifyJoinLink" class="task-btn join" style="width:100%;text-decoration:none;display:inline-block;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--crystal-blue),#0099cc);color:#fff"><i class="fas fa-external-link-alt"></i> <span data-i18n="tasks.join">Join</span></a>
-                    <button class="task-btn check" id="verifyCheckBtn" style="width:100%;padding:8px;border-radius:20px;background:linear-gradient(145deg,var(--neon-green),#00b35e);color:#fff;border:none;margin-top:10px"><i class="fas fa-check-circle"></i> <span data-i18n="tasks.check">Verify & Claim</span></button>
-                </div>
-                <div id="verifyStatus" style="margin-top:15px;padding:10px;border-radius:10px;display:none"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="activateCowModal"></div>
-    <div class="modal-overlay" id="upgradeCowModal"></div>
-    <div class="modal-overlay" id="storageUpgradeModal"></div>
-
-
-    <!-- App Scripts (order matters!) -->
-    <script src="js/config.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/ui.js"></script>
+<!-- Modules load in dependency order. Each attaches itself to the shared
+     window.PW namespace instead of polluting globals; Game.js is the only
+     file that wires them together. -->
+<script src="js/AnimationSystem.js"></script>
+<script src="js/Renderer.js"></script>
+<script src="js/ParticleSystem.js"></script>
+<script src="js/PipeSystem.js"></script>
+<script src="js/ResourceSystem.js"></script>
+<script src="js/ProductionSystem.js"></script>
+<script src="js/FactorySystem.js"></script>
+<script src="js/UISystem.js"></script>
+<script src="js/AssetLoader.js"></script>
+<script src="js/Game.js"></script>
 </body>
 </html>

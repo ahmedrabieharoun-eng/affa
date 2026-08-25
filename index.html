@@ -1,120 +1,202 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>Pipeworks Idle — Factory Chain</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محفظة TON — إيداع وسحب</title>
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<script src="https://unpkg.com/tonweb/dist/tonweb.js"></script>
 <style>
-  :root{
-    --panel-bg: rgba(18,22,30,0.82);
-    --panel-border: rgba(140,170,255,0.18);
-    --text-main: #eaf0ff;
-    --text-dim: #9fb0d0;
-    --accent-green: #59e39d;
-    --accent-amber: #ffb84d;
-    --accent-blue: #5fb6ff;
-  }
-  html,body{height:100%;}
-  body{
-    margin:0; display:flex; align-items:center; justify-content:center;
-    min-height:100vh;
-    background: radial-gradient(ellipse at 50% -10%, #24303f 0%, #0d1420 55%, #070b12 100%);
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    color: var(--text-main);
-    overflow:hidden;
-  }
-  #stage{
-    position:relative;
-    width:960px; height:860px;
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(140,170,255,0.08);
-  }
-  canvas{ position:absolute; top:0; left:0; display:block; }
-  #loading{
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    flex-direction:column; gap:10px; background:#0b1018; z-index:50;
-    font-size:14px; color:var(--text-dim); letter-spacing:.5px;
-  }
-  #loading .bar{ width:220px; height:6px; border-radius:4px; background:#1c2534; overflow:hidden; }
-  #loading .fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--accent-green),var(--accent-blue)); transition:width .15s ease-out; }
-
-  /* ---- HUD ---- */
-  .hud-pill{
-    position:absolute; display:flex; align-items:center; gap:8px;
-    background:var(--panel-bg); border:1px solid var(--panel-border);
-    border-radius:10px; padding:6px 12px; font-size:13px; font-weight:600;
-    backdrop-filter: blur(6px); box-shadow:0 4px 14px rgba(0,0,0,.35);
-    pointer-events:none;
-  }
-  .hud-pill .lbl{ color:var(--text-dim); font-weight:500; font-size:11px; }
-  #rateFurnace{ top:26px; left:24px; }
-  #rateTanks{ top:26px; right:24px; }
-  #coinsPill{
-    top:26px; left:50%; transform:translateX(-50%);
-    font-size:16px; padding:8px 18px; gap:10px;
-  }
-  #coinsPill .coin-icon{
-    width:16px;height:16px;border-radius:50%;
-    background: radial-gradient(circle at 35% 30%, #ffe9a8, var(--accent-amber) 60%, #b0781f 100%);
-    box-shadow:0 0 8px rgba(255,184,77,.7);
-  }
-  #upgradeBtn{
-    position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
-    background:linear-gradient(180deg,#2a3a52,#182234);
-    border:1px solid rgba(140,170,255,0.35);
-    color:var(--text-main); border-radius:12px; padding:12px 22px;
-    font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.3px;
-    box-shadow:0 6px 18px rgba(0,0,0,.4);
-    transition:transform .12s ease;
-  }
-  #upgradeBtn small{ display:block; font-weight:500; font-size:11px; color:var(--accent-amber); margin-top:2px;}
-  #upgradeBtn:active{ transform:translateX(-50%) scale(.96); }
-  #upgradeBtn.pulse{ animation: btnpulse 1.6s ease-in-out infinite; }
-  @keyframes btnpulse{
-    0%,100%{ box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 0 0 rgba(89,227,157,.45); }
-    50%{ box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 0 8px rgba(89,227,157,0); }
-  }
-  #upgradeBtn:disabled{ opacity:.45; cursor:not-allowed; animation:none; }
-
-  #footer-credit{
-    position:absolute; bottom:8px; right:12px; font-size:10px; color:rgba(255,255,255,0.25);
-    pointer-events:none;
-  }
+  body{font-family:sans-serif;background:#111;color:#eee;padding:20px;max-width:480px;margin:auto}
+  .card{background:#1b1b1b;border:1px solid #333;border-radius:12px;padding:16px;margin-bottom:16px}
+  h2{margin-bottom:10px;font-size:16px;color:#9c9}
+  button{padding:10px 16px;border-radius:8px;border:none;font-weight:700;cursor:pointer;width:100%;margin-top:8px}
+  button:disabled{opacity:.4;cursor:default}
+  #connectBtn{background:#2d6a2d;color:#fff}
+  .deposit-btn{background:#4e7a20;color:#fff}
+  .withdraw-btn{background:#7a4e20;color:#fff}
+  input{padding:8px;border-radius:6px;border:1px solid #444;background:#222;color:#fff;width:100%;margin-top:6px}
+  #status,#wdStatus{margin-top:10px;font-size:13px;color:#9c9;min-height:18px}
+  #balance{font-size:22px;font-weight:800;color:#ffd700}
+  small{color:#888}
 </style>
 </head>
 <body>
 
-<div id="stage">
-  <div id="loading">
-    <div>Loading assets…</div>
-    <div class="bar"><div class="fill" id="loadFill"></div></div>
-  </div>
-
-  <canvas id="scene" width="960" height="860"></canvas>
-
-  <div class="hud-pill" id="rateFurnace"><span class="lbl">GLASS</span><span id="rateFurnaceVal">0/min</span></div>
-  <div class="hud-pill" id="coinsPill"><div class="coin-icon"></div><span id="coinsVal">0</span></div>
-  <div class="hud-pill" id="rateTanks"><span class="lbl">CHIPS</span><span id="rateTanksVal">0/min</span></div>
-
-  <button id="upgradeBtn" class="pulse">
-    Speed Up Production
-    <small id="upgradeCost">Cost: 20</small>
-  </button>
-  <div id="footer-credit">original assets &amp; code</div>
+<div class="card">
+  <h2>المحفظة</h2>
+  <button id="connectBtn" onclick="connectWallet()">🔌 اتصال بالمحفظة</button>
+  <div id="walletInfo" style="margin-top:8px">غير متصل</div>
 </div>
 
-<!-- Modules load in dependency order. Each attaches itself to the shared
-     window.PW namespace instead of polluting globals; Game.js is the only
-     file that wires them together. -->
-<script src="js/AnimationSystem.js"></script>
-<script src="js/Renderer.js"></script>
-<script src="js/ParticleSystem.js"></script>
-<script src="js/PipeSystem.js"></script>
-<script src="js/ResourceSystem.js"></script>
-<script src="js/ProductionSystem.js"></script>
-<script src="js/FactorySystem.js"></script>
-<script src="js/UISystem.js"></script>
-<script src="js/AssetLoader.js"></script>
-<script src="js/Game.js"></script>
+<div class="card">
+  <h2>رصيدك</h2>
+  <div id="balance">— TON</div>
+  <button onclick="refreshBalance()">🔄 تحديث الرصيد</button>
+</div>
+
+<div class="card">
+  <h2>💰 إيداع</h2>
+  <input type="number" id="depAmount" placeholder="القيمة بـ TON" min="0.1" step="0.1">
+  <button class="deposit-btn" id="depositBtn" disabled onclick="sendDeposit()">إرسال إيداع</button>
+  <div id="status"></div>
+</div>
+
+<div class="card">
+  <h2>💸 سحب</h2>
+  <input type="number" id="wdAmount" placeholder="القيمة بـ TON">
+  <input type="text" id="wdAddress" placeholder="عنوان المحفظة المستلمة">
+  <button class="withdraw-btn" onclick="requestWithdraw()">طلب سحب</button>
+  <div id="wdStatus"></div>
+</div>
+
+<script>
+/* ═══════ إعدادات ═══════ */
+const API_BASE = "https://silent-mode-0a66.ahmedrabieharoun.workers.dev"; // دومين الـ Worker بتاعك
+const RECEIVER_WALLET_ADDRESS = "PUT_YOUR_RECEIVER_TON_WALLET_ADDRESS_HERE"; // نفس العنوان اللي في worker.js
+const USER_ID = getOrCreateUserId(); // بديل بسيط عن نظام تسجيل دخول كامل
+
+let tonConnectUI = null;
+let currentWallet = null;
+
+/* ═══════ هوية بسيطة للمستخدم (بدون قاعدة بيانات مستخدمين) ═══════ */
+function getOrCreateUserId(){
+  let id = localStorage.getItem('app_user_id');
+  if(!id){
+    id = crypto.randomUUID();
+    localStorage.setItem('app_user_id', id);
+  }
+  return id;
+}
+
+/* ═══════ TonConnect ═══════ */
+function initTonConnect(){
+  tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: `${API_BASE}/tonconnect-manifest.json`,
+    uiPreferences: { theme: 'DARK' }
+  });
+  tonConnectUI.onStatusChange(w => w ? onWalletConnected(w) : onWalletDisconnected());
+}
+
+function onWalletConnected(wallet){
+  currentWallet = { address: wallet.account.address };
+  document.getElementById('walletInfo').textContent =
+    `متصل: ${currentWallet.address.slice(0,6)}...${currentWallet.address.slice(-4)}`;
+  document.getElementById('connectBtn').textContent = '🔌 قطع الاتصال';
+  document.getElementById('connectBtn').onclick = disconnectWallet;
+  document.getElementById('depositBtn').disabled = false;
+  refreshBalance();
+}
+function onWalletDisconnected(){
+  currentWallet = null;
+  document.getElementById('walletInfo').textContent = 'غير متصل';
+  document.getElementById('connectBtn').textContent = '🔌 اتصال بالمحفظة';
+  document.getElementById('connectBtn').onclick = connectWallet;
+  document.getElementById('depositBtn').disabled = true;
+}
+async function connectWallet(){ await tonConnectUI.openModal(); }
+async function disconnectWallet(){ await tonConnectUI.disconnect(); }
+
+/* ═══════ الرصيد (بنجيبه من السيرفر مش بنحسبه محليًا) ═══════ */
+async function refreshBalance(){
+  try{
+    const res = await fetch(`${API_BASE}/api/balance?userId=${USER_ID}`);
+    const data = await res.json();
+    document.getElementById('balance').textContent = `${data.balance ?? 0} TON`;
+  }catch(e){
+    document.getElementById('balance').textContent = '— TON';
+  }
+}
+
+/* ═══════ الإيداع ═══════ */
+async function sendDeposit(){
+  const amountTon = parseFloat(document.getElementById('depAmount').value);
+  const statusEl = document.getElementById('status');
+  if(!amountTon || amountTon <= 0){ alert('من فضلك ادخل قيمة صحيحة'); return; }
+  if(!currentWallet){ alert('وصّل محفظتك الأول'); return; }
+
+  try{
+    const amountNano = String(Math.floor(amountTon * 1e9));
+
+    // تعليق نصي على المعاملة = USER_ID، عشان نربط المعاملة بالمستخدم وقت التحقق
+    const cell = new TonWeb.boc.Cell();
+    cell.bits.writeUint(0, 32);
+    cell.bits.writeString(USER_ID);
+    const payload = TonWeb.utils.bytesToBase64(await cell.toBoc(false));
+
+    const transaction = {
+      validUntil: Math.floor(Date.now()/1000) + 600,
+      messages: [{ address: RECEIVER_WALLET_ADDRESS, amount: amountNano, payload }]
+    };
+
+    statusEl.textContent = '⏳ في انتظار موافقتك داخل المحفظة...';
+    const result = await tonConnectUI.sendTransaction(transaction);
+
+    statusEl.textContent = '📡 تسجيل الإيداع...';
+    const reg = await fetch(`${API_BASE}/api/deposit`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ userId: USER_ID, amount: amountTon, txHash: result.boc })
+    });
+    const { depositId } = await reg.json();
+
+    statusEl.textContent = '🔎 جاري التأكد من البلوكتشين...';
+    pollDepositStatus(depositId, statusEl);
+
+  }catch(err){
+    statusEl.textContent = err.message?.includes('reject')
+      ? '❌ تم رفض المعاملة'
+      : '❌ خطأ: ' + (err.message || 'غير معروف');
+  }
+}
+
+function pollDepositStatus(depositId, statusEl){
+  let attempts = 0;
+  const interval = setInterval(async () => {
+    attempts++;
+    try{
+      const res = await fetch(`${API_BASE}/api/verify-deposit?id=${depositId}`);
+      const data = await res.json();
+      if(data.status === 'completed'){
+        clearInterval(interval);
+        statusEl.textContent = `✅ تم تأكيد الإيداع: ${data.amount} TON`;
+        refreshBalance();
+      }else if(attempts >= 18){ // 3 دقايق تقريبًا (18 × 10 ثانية)
+        clearInterval(interval);
+        statusEl.textContent = '⏳ لسه مأكدناش المعاملة، جرّب "تحديث الرصيد" بعد شوية.';
+      }
+    }catch(e){ /* هنحاول تاني في الدورة الجاية */ }
+  }, 10000);
+}
+
+/* ═══════ السحب ═══════ */
+async function requestWithdraw(){
+  const amount = parseFloat(document.getElementById('wdAmount').value);
+  const toAddress = document.getElementById('wdAddress').value.trim();
+  const wdStatus = document.getElementById('wdStatus');
+
+  if(!amount || amount <= 0){ alert('ادخل قيمة صحيحة'); return; }
+  if(!toAddress){ alert('ادخل عنوان المحفظة'); return; }
+
+  wdStatus.textContent = '📡 جاري إرسال طلب السحب...';
+  try{
+    const res = await fetch(`${API_BASE}/api/withdraw`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ userId: USER_ID, amount, toAddress })
+    });
+    const data = await res.json();
+    if(!res.ok){ wdStatus.textContent = '❌ ' + (data.error || 'فشل السحب'); return; }
+    wdStatus.textContent = '✅ ' + (data.message || 'تم تسجيل طلب السحب');
+    refreshBalance();
+  }catch(e){
+    wdStatus.textContent = '❌ فشل الاتصال بالسيرفر';
+  }
+}
+
+initTonConnect();
+refreshBalance();
+</script>
 </body>
 </html>
